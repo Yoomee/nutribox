@@ -1,3 +1,28 @@
-.row
-  .span12
-    %h1=title("Home")
+.container
+.paper-top
+  .container
+    .row
+      .healthy-snacking-made-easier.span10.offset1.fade_in
+        %h1=title("The Nutribox - Healthy Snacking Made Easier")
+        %p.holding-intro In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. 
+#intro.snacks.fade_in.fade_two
+  .container
+    .row
+      .lower-boxes.span10.offset1.fade_in.fade_three
+        .row
+          .coming-soon.span6
+            %h2.coming-soon-title
+              Coming Soon
+            .lower-box.email-signup
+              .inner-padding
+                %p.email-signup-intro Sign up below to be notified when we launch.
+                =form_tag('#') do
+                  %input#email-signup-input{:name => "email", :type=>"text", :placeholder=>"your email address"}
+                  =link_to_function "Submit", "$('#email_signup form').submit()", :class=>"btn email-signup-button"
+          .span4
+            .lower-box.follow-us-box
+              .inner-padding
+                %h2.follow-us-title
+                  Follow us
+                =link_to "Facebook", "#", :class=>"social-media-link facebook-link"
+                =link_to "Twitter", "#", :class=>"social-media-link twitter-link"

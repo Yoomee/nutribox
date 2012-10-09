@@ -11,7 +11,7 @@
     =google_analytics_js
   -body_tag do
     .main-wrapper
-      =render("layouts/header")
+      =#render("layouts/header")
       -if flash.present?
         =yield_with_bootstrap(render_flash)
       =yield_with_bootstrap(yield)

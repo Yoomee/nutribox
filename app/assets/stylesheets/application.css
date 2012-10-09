@@ -25,7 +25,7 @@
     opacity: 0;
 }
 }
- 
+
 @-webkit-keyframes fade_in {
 0% {
     opacity: 0;
@@ -43,11 +43,183 @@
   -webkit-animation-duration: 1s;
   -webkit-animation-timing-function: ease-in;
   -webkit-animation-iteration-count: 1;
+
 }
- 
+
 .fade_in.fade_one {-webkit-animation-delay: 0, 0;}
 .fade_in.fade_two {-webkit-animation-delay: 0, 0.3s;}
 .fade_in.fade_three {-webkit-animation-delay: 0, 0.6s;}
 .fade_in.fade_four {-webkit-animation-delay: 0, 0.9s;}
 .fade_in.fade_five {-webkit-animation-delay: 0, 1.2s;}
 .fade_in.fade_six {-webkit-animation-delay: 0, 1.5s;}
+
+
+/* ========== General ========== */
+body {
+  background: #c69f7a url(/assets/bg_card.jpg);
+}
+
+
+
+
+
+.paper-top {
+  background: #fff url(/assets/paper_texture.jpg);
+  padding: 60px 0;
+  position: relative;
+  z-index: 6;
+
+  -webkit-box-shadow:0px 0px 20px rgba(0,0,0,0.7);
+  -moz-box-shadow:0px 0px 20px rgba(0,0,0,0.7);  
+  box-shadow:0px 0px 20px rgba(0,0,0,0.7);
+}
+
+.healthy-snacking-made-easier {
+	height: 300px;
+	position: relative;
+	background: url(/assets/healthy-snacking-made-easier.png) no-repeat 0 0; 
+}
+.healthy-snacking-made-easier h1 {
+  display: none;
+}
+.holding-intro {
+  font-size: 16px;
+  line-height: 1.47;
+  width: 380px;
+  display: block;
+  position: absolute;
+  top: 195px;
+  left: 260px;
+  color: #666;
+}
+.snacks {
+  padding-top: 160px;
+  height: 300px;
+  position: relative;
+  z-index: 5;
+  background: url(/assets/snacks.png) no-repeat center 0px;
+}
+
+h2.coming-soon-title {
+	background: #99b936 url(/assets/coming-soon-title.png) no-repeat center;
+	color: #fff;
+	text-indent: -9000em;
+	float: left;
+	width: 420px;
+	height: 60px;
+	margin: 0 0 0 20px;
+	text-align: center;
+	
+	-moz-box-shadow: 0px 1px 20px rgba(0,0,0,0.2), 0px 1px 6px rgba(0,0,0,0.2);
+-webkit-box-shadow: 0px 1px 20px rgba(0,0,0,0.2), 0px 1px 6px rgba(0,0,0,0.2);
+box-shadow: 0px 1px 20px rgba(0,0,0,0.2), 0px 1px 6px rgba(0,0,0,0.2);
+
+  
+}
+
+p.email-signup-intro {
+	font-weight: bold;
+	color: #5e3f23;
+	text-align: center;
+	margin: 0 0 20px;
+  
+}
+.lower-box {
+background: #d4bb9e; /* Old browsers */
+background: -moz-linear-gradient(top,  #d4bb9e 0%, #c6a57f 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d4bb9e), color-stop(100%,#c6a57f)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #d4bb9e 0%,#c6a57f 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #d4bb9e 0%,#c6a57f 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #d4bb9e 0%,#c6a57f 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #d4bb9e 0%,#c6a57f 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4bb9e', endColorstr='#c6a57f',GradientType=0 ); /* IE6-9 */
+
+
+float:left;
+width: 100%;
+
+-moz-box-shadow: 0px 1px 20px rgba(0,0,0,0.2), 0px 1px 6px rgba(0,0,0,0.2);
+-webkit-box-shadow: 0px 1px 20px rgba(0,0,0,0.2), 0px 1px 6px rgba(0,0,0,0.2);
+box-shadow: 0px 1px 20px rgba(0,0,0,0.2), 0px 1px 6px rgba(0,0,0,0.2);
+}
+
+.inner-padding {
+  padding: 20px;
+}
+
+#email-signup-input, .email-signup-button {
+	border: none;
+	border-radius:0;
+	-webkit-border-radius:0;
+	-moz-border-radius:0; 
+	 
+}
+
+input#email-signup-input {
+  width: 283px;
+  padding: 15px;
+  color: #333;
+  margin: 0;
+}
+
+a.btn.email-signup-button {
+  background: #5e3f23;
+  color: #fff;
+  text-shadow: none;
+  font-weight: bold;
+  padding: 15px 20px;
+  margin: 0 0 0 10px;
+}
+
+.follow-us-box {
+  height: 210px;
+}
+.follow-us-title {
+  	background: url(/assets/follow-us-title.png) no-repeat center -5px;
+	color: #fff;
+	text-indent: -9000em;
+	float: left;
+	width: 100%;
+	height: 50px;
+	margin: 0;
+	text-align: center;
+}
+
+.social-media-link {
+	display: block;
+	float: left;
+	background: url(/assets/facebook-link.png) 0 0 no-repeat;
+	width: 240px;
+	text-indent: -9000em;
+	height: 50px;
+	margin: 0 0 15px 10px;
+	text-align: center;
+	
+	
+		-moz-box-shadow:  0px 1px 6px rgba(0,0,0,0.2);
+-webkit-box-shadow: 0px 1px 6px rgba(0,0,0,0.2);
+box-shadow:  0px 1px 6px rgba(0,0,0,0.2);
+
+  
+}
+
+a.twitter-link {
+  background-image: url(/assets/twitter-link.png);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
