@@ -75,7 +75,7 @@ body {
 }
 
 .healthy-snacking-made-easier {
-	height: 300px;
+	height: 260px;
 	position: relative;
 	background: url(/assets/healthy-snacking-made-easier.png) no-repeat 0 0; 
 }
@@ -83,7 +83,7 @@ body {
   display: none;
 }
 .holding-intro {
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.47;
   width: 380px;
   display: block;
