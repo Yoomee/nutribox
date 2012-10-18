@@ -53,19 +53,57 @@
 .fade_in.fade_five {-webkit-animation-delay: 0, 1.2s;}
 .fade_in.fade_six {-webkit-animation-delay: 0, 1.5s;}
 
+/* ========== Fonts ========== */
+
+@font-face {
+    font-family: 'Museo300';
+    src: url('/assets/museo300-regular-webfont.eot?') format('eot'),
+         url('/assets/museo300-regular-webfont.woff') format('woff'),
+         url('/assets/museo300-regular-webfont.ttf') format('truetype'),
+         url('/assets/museo300-regular-webfont.svg#webfontRtMhiHFb') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Museo500';
+    src: url('/assets/museo500-regular-webfont.eot?') format('eot'),
+         url('/assets/museo500-regular-webfont.woff') format('woff'),
+         url('/assets/museo500-regular-webfont.ttf') format('truetype'),
+         url('/assets/museo500-regular-webfont.svg#webfontQAokDGGB') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Museo700';
+    src: url('/assets/museo700-regular-webfont.eot?') format('eot'),
+         url('/assets/museo700-regular-webfont.woff') format('woff'),
+         url('/assets/museo700-regular-webfont.ttf') format('truetype'),
+         url('/assets/museo700-regular-webfont.svg#webfont2sSCxFOk') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 
 /* ========== General ========== */
 body {
   background: #c69f7a url(/assets/bg_card.jpg);
 }
 
-
-
-
-
+a {
+  color: #99b936;
+}
+a:hover {
+  color: #4b8472;
+}
 .paper-top {
   background: #fff url(/assets/paper_texture.jpg);
   padding: 60px 0;
+  margin: 0;
   position: relative;
   z-index: 6;
 
@@ -75,7 +113,7 @@ body {
 }
 
 .healthy-snacking-made-easier {
-	height: 260px;
+	min-height: 242px;
 	position: relative;
 	background: url(/assets/healthy-snacking-made-easier.png) no-repeat 0 0; 
 }
@@ -83,14 +121,93 @@ body {
   display: none;
 }
 .holding-intro {
-  font-size: 17px;
-  line-height: 1.47;
+  font-size: 16px;
+  line-height: 1.45;
   width: 380px;
   display: block;
-  position: absolute;
-  top: 195px;
-  left: 260px;
   color: #666;
+  float: left;
+
+  margin: 190px 0 0 256px;
+}
+
+#read-more-wrapper {
+  position: relative;
+  z-index: 2;
+  float: left;
+  width: 100%;
+
+}
+
+.holding-read-more {
+  float: left;
+  clear: both;
+  background: #fff;
+  padding: 30px;
+
+  
+  margin: 40px 40px 20px;
+  
+  box-shadow:1px 1px 1px rgba(0,0,0,0.1), 1px 1px 20px rgba(0,0,0,0.2), -1px -1px 1px rgba(0,0,0,0.06);
+  -webkit-box-shadow:1px 1px 1px rgba(0,0,0,0.1), 1px 1px 20px rgba(0,0,0,0.2), -1px -1px 1px rgba(0,0,0,0.06);
+  -moz-box-shadow:1px 1px 1px rgba(0,0,0,0.1), 1px 1px 20px rgba(0,0,0,0.2), -1px -1px 1px rgba(0,0,0,0.06);
+}
+
+.holding-read-more a {
+  float: right;
+}
+
+.holding-read-more a.sign-up-arrow {
+  position: absolute;
+  bottom: 30px;
+  background: url(/assets/sign_up_below.png) no-repeat 0 0;
+  color: #fff;
+  text-indent: -9000em;
+  padding: 0px 10px;
+  float: left;
+  width: 140px;
+  height: 30px;
+  font-weight: normal;
+  left: 70px;
+  font-size: 16px;
+  font-family: museo500;
+}
+
+.holding-read-more p {
+	color: #666;
+	font-size: 16px;
+	line-height: 1.45;
+	margin: 0 0 20px;
+}
+#launching_in_wrapper {
+  position: absolute;
+  top: -40px;
+  right: -120px;
+  z-index: 4;
+}
+#launching_in_wrapper p {
+  display: none;
+}
+#launch-countdown {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  background: url(/assets/launching_in.png) no-repeat 0 0;
+  color: #fff;
+  width: 130px;
+  height: 130px;
+  padding: 10px;
+}
+#launch-countdown span {
+  position: absolute;
+  top: 40px;
+  left: 30px;
+  font-size: 30px;
+  line-height: 26px;
+  display: block;
+  width: 70px;
+  text-align: center;
+  font-family: Museo500, arial, sans-serif;
 }
 .snacks {
   padding-top: 160px;
@@ -188,10 +305,12 @@ a.btn.email-signup-button {
 .social-media-link {
 	display: block;
 	float: left;
+	clear: both;
 	background: url(/assets/facebook-link.png) 0 0 no-repeat;
 	width: 240px;
 	text-indent: -9000em;
 	height: 50px;
+
 	margin: 0 0 15px 10px;
 	text-align: center;
 	

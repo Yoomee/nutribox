@@ -1,16 +1,34 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      $('#read-more-wrapper').on('show', function () {
+        $('#holding-read-more-link').fadeOut();
+      })
+    });
 .container
 .paper-top
-  .container
+  .container  
     .row
       .healthy-snacking-made-easier.span10.offset1.fade_in
+        #launching_in_wrapper
+          %p Launching in
+          =launch_countdown          
         %h1=title("The Nutribox - Healthy Snacking Made Easier")
-        %p.holding-intro We scour the land for deliciously nutritious snacks then deliver them to your door, monthly. 
+        %p.holding-intro
+          We search the land for deliciously nutritious snacks then deliver them to your door, monthly.
+          =link_to("Read more", '#', :id => "holding-read-more-link", :data => {:toggle => 'collapse', :target => '#read-more-wrapper'})
+        .clearfix
+        #read-more-wrapper.collapse
+          .holding-read-more
+            =simple_format(snippet_text(:holding_read_more))
+            =edit_snippet_link(:holding_read_more)
+            =link_to "Sign up below", "#coming-soon", :class=>"sign-up-arrow"
 #intro.snacks.fade_in.fade_two
   .container
     .row
       .lower-boxes.span10.offset1.fade_in.fade_three
         .row
-          .coming-soon.span6
+          #coming-soon.coming-soon.span6
             %h2.coming-soon-title
               Coming Soon
             .lower-box.email-signup

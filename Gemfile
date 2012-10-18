@@ -41,6 +41,7 @@ gem "ym_core"
 gem "ym_cms"
 gem "ym_users"
 gem "ym_permalinks"
+gem "ym_snippets"
 
 group :development do
   gem 'growl'
