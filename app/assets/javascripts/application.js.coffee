@@ -9,4 +9,5 @@
 #= require ym_core
 #= require ym_cms
 #= require redactor
-#= require_tree .
+#= require bootstrap
+#= require jquery.smooth-scroll

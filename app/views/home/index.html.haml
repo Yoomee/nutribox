@@ -3,7 +3,16 @@
     $(document).ready(function() {
       $('#read-more-wrapper').on('show', function () {
         $('#holding-read-more-link').fadeOut();
-      })
+      });
+      $('#coming-soon').click(function(){$('#email-signup-input').focus();});
+      $('#sign-up-below-link').click(function (e) {
+        e.preventDefault();
+        $.smoothScroll({
+          scrollTarget: '#coming-soon',
+          speed:800,
+          afterScroll: function(){$('#email-signup-input').focus();}
+        });
+      });
     });
 .container
 .paper-top
@@ -16,13 +25,13 @@
         %h1=title("The Nutribox - Healthy Snacking Made Easier")
         %p.holding-intro
           We search the land for deliciously nutritious snacks then deliver them to your door, monthly.
-          =link_to("Read more", '#', :id => "holding-read-more-link", :data => {:toggle => 'collapse', :target => '#read-more-wrapper'})
+          =link_to("Read more", '#read-more', :id => "holding-read-more-link", :data => {:toggle => 'collapse', :target => '#read-more-wrapper'})
         .clearfix
         #read-more-wrapper.collapse
           .holding-read-more
             =simple_format(snippet_text(:holding_read_more))
             =edit_snippet_link(:holding_read_more)
-            =link_to "Sign up below", "#coming-soon", :class=>"sign-up-arrow"
+            =link_to "Sign up below", "#coming-soon", :class=>"sign-up-arrow", :id => "sign-up-below-link"
 #intro.snacks.fade_in.fade_two
   .container
     .row
