@@ -34,9 +34,9 @@
             .lower-box.email-signup
               .inner-padding
                 %p.email-signup-intro Sign up below to be notified when we launch.
-                =form_tag('#') do
-                  %input#email-signup-input{:name => "email", :type=>"text", :placeholder=>"your email address"}
-                  =link_to_function "Submit", "$('#email_signup form').submit()", :class=>"btn email-signup-button"
+                =form_tag('http://thenutribox.us6.list-manage1.com/subscribe/post?u=44bdbc0e5b3036d3b03028268&amp;id=f573663757') do
+                  %input#email-signup-input{:name => "EMAIL", :type=>"text", :placeholder=>"your email address"}
+                  =submit_tag("Submit", :class=>'btn email-signup-button')  
           .span4
             .lower-box.follow-us-box
               .inner-padding

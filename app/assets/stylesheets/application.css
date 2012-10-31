@@ -279,7 +279,7 @@ input#email-signup-input {
   margin: 0;
 }
 
-a.btn.email-signup-button {
+.email-signup-button {
   background: #5e3f23;
   color: #fff;
   text-shadow: none;
