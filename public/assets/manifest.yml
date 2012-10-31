@@ -28,6 +28,7 @@ paper_texture.jpg: paper_texture-bad0c812312595d67ac6ca00c2190586.jpg
 sign_up_below.png: sign_up_below-56588c87a1b80dd79990b5645c93ff52.png
 snacks.png: snacks-534d447e2af7b22db820b00af0eaec72.png
 twitter-link.png: twitter-link-90b0fee95823937c07f3a59b22bc9211.png
+jquery.smooth-scroll.js: jquery.smooth-scroll-98c10713388705d70e5ae096a5b2b95b.js
 jquery-ui/ui-bg_diagonals-thick_18_b81900_40x40.png: jquery-ui/ui-bg_diagonals-thick_18_b81900_40x40-c3e0e1955420032feb67368f05648ded.png
 jquery-ui/ui-bg_diagonals-thick_20_666666_40x40.png: jquery-ui/ui-bg_diagonals-thick_20_666666_40x40-b54ce924a9f2343e1aada33aba870889.png
 jquery-ui/ui-bg_flat_10_000000_40x100.png: jquery-ui/ui-bg_flat_10_000000_40x100-cd2e3b2d176258c1e138e82b015b3c2d.png
@@ -50,5 +51,5 @@ jquery-ui-1.8.18.min.js: jquery-ui-1.8.18.min-dff515822d55d13f64b01beeeb73eaff.j
 jquery-ui-1.8.18.css: jquery-ui-1.8.18-525b8fc57478eb4d921d21ea053f2634.css
 jquery-ui.min.js: jquery-ui.min-449c6576aff2d5aef9fea2c0b667083b.js
 jquery.min.js: jquery.min-c17ee58f451d313a5585c3a1b1571ff2.js
-application.js: application-89b685111f76c0365a8f1f53941295df.js
+application.js: application-da29d7b9560110e1f038466ade188a72.js
 application.css: application-90c7f9a4c93ed987aacbdaa6d0a4f853.css
