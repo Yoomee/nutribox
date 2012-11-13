@@ -1,0 +1,55 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      $('#read-more-wrapper').on('show', function () {
+        $('#holding-read-more-link').fadeOut();
+      });
+      $('#coming-soon').click(function(){$('#email-signup-input').focus();});
+      $('#sign-up-below-link').click(function (e) {
+        e.preventDefault();
+        $.smoothScroll({
+          scrollTarget: '#coming-soon',
+          speed:800,
+          afterScroll: function(){$('#email-signup-input').focus();}
+        });
+      });
+    });
+.container
+.paper-top
+  .container  
+    .row
+      .healthy-snacking-made-easier.span10.offset1.fade_in
+        #launching_in_wrapper
+          %p Launching in
+          =launch_countdown          
+        %h1=title("The Nutribox - Healthy Snacking Made Easier")
+        %p.holding-intro
+          We search the land for deliciously nutritious snacks then deliver them to your door, monthly.
+          =link_to("Read more", '#read-more', :id => "holding-read-more-link", :data => {:toggle => 'collapse', :target => '#read-more-wrapper'})
+        .clearfix
+        #read-more-wrapper.collapse
+          .holding-read-more
+            =simple_format(snippet_text(:holding_read_more))
+            =edit_snippet_link(:holding_read_more)
+            =link_to "Sign up below", "#coming-soon", :class=>"sign-up-arrow", :id => "sign-up-below-link"
+#intro.snacks.fade_in.fade_two
+  .container
+    .row
+      .lower-boxes.span10.offset1.fade_in.fade_three
+        .row
+          #coming-soon.coming-soon.span6
+            %h2.coming-soon-title
+              Coming Soon
+            .lower-box.email-signup
+              .inner-padding
+                %p.email-signup-intro Sign up below to be notified when we launch.
+                =form_tag('http://thenutribox.us6.list-manage1.com/subscribe/post?u=44bdbc0e5b3036d3b03028268&amp;id=f573663757') do
+                  %input#email-signup-input{:name => "EMAIL", :type=>"text", :placeholder=>"your email address"}
+                  =submit_tag("Submit", :class=>'btn email-signup-button')  
+          .span4
+            .lower-box.follow-us-box
+              .inner-padding
+                %h2.follow-us-title
+                  Follow us
+                =link_to "Facebook", "http://www.facebook.com/TheNutribox", :class=>"social-media-link facebook-link"
+                =link_to "Twitter", "http://twitter.com/thenutribox", :class=>"social-media-link twitter-link"

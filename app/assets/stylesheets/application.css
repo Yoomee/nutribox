@@ -12,10 +12,11 @@
  *= require font-awesome
  *= require sticky-footer 
  *= require_self
+ *= require mobile
  
 */
 
-/*========== CSS3 magic (move to ym_core) ==========*/
+/*========== CSS3 magic  ==========*/
 
 @-webkit-keyframes reset {
 0% {
@@ -54,51 +55,154 @@
 .fade_in.fade_six {-webkit-animation-delay: 0, 1.5s;}
 
 /* ========== Fonts ========== */
+body {
+	font-family: 'Museo Sans W01 300', arial, sans-serif;
+	color: #666666;
+	font-size: 15px;
+	line-height: 1.45;
+}
+h1,
+h2,
+h3,
+#top-nav a,
+.btn-homepage-cta {
+  font-family: 'Clarendon BT W01 Heavy', arial, sans-serif;
+  font-weight: normal;
+  color: #4a8270;
+}
+h2, h3 {
+  color: #755436;
+}
+th, h4, h5, h6, strong, .header-alert a.close {
+	color: #333;
+	font-family: 'Museo Sans W01 500', arial, sans-serif;
 
-@font-face {
-    font-family: 'Museo300';
-    src: url('/assets/museo300-regular-webfont.eot?') format('eot'),
-         url('/assets/museo300-regular-webfont.woff') format('woff'),
-         url('/assets/museo300-regular-webfont.ttf') format('truetype'),
-         url('/assets/museo300-regular-webfont.svg#webfontRtMhiHFb') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
+  
 }
 
-@font-face {
-    font-family: 'Museo500';
-    src: url('/assets/museo500-regular-webfont.eot?') format('eot'),
-         url('/assets/museo500-regular-webfont.woff') format('woff'),
-         url('/assets/museo500-regular-webfont.ttf') format('truetype'),
-         url('/assets/museo500-regular-webfont.svg#webfontQAokDGGB') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-@font-face {
-    font-family: 'Museo700';
-    src: url('/assets/museo700-regular-webfont.eot?') format('eot'),
-         url('/assets/museo700-regular-webfont.woff') format('woff'),
-         url('/assets/museo700-regular-webfont.ttf') format('truetype'),
-         url('/assets/museo700-regular-webfont.svg#webfont2sSCxFOk') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-
-/* ========== General ========== */
+/* ========== General (bootstrap overrived etc) ========== */
 body {
   background: #c69f7a url(/assets/bg_card.jpg);
-}
 
+}
+.navbar-inner {
+  background: #fff;
+
+}
+.navbar-inverse .navbar-inner {
+  background: #755436;
+}
+.navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
+  background-color: rgba(0,0,0,0.04);
+}
 a {
   color: #99b936;
 }
 a:hover {
   color: #4b8472;
+}
+.btn {
+  border-radius:2px;
+  -webkit-border-radius:2px;
+  -moz-border-radius:2px;
+  background:#755436;
+  text-shadow: none;
+  color: #fff;
+  font-weight: 400;
+  
+  font-size: 16px;
+  padding: 10px 15px;
+  
+  -moz-box-shadow:0 0px 5px rgba(0,0,0,0.1), 0 1px 1px rgba(0,0,0,0.1);
+  -webkit-box-shadow:0 0px 5px rgba(0,0,0,0.1), 0 1px 1px rgba(0,0,0,0.1);
+  box-shadow:0 0px 5px rgba(0,0,0,0.1), 0 1px 1px rgba(0,0,0,0.1);
+  
+  
+  border: none;
+}
+.btn.disabled {
+  background: #a48e7b;
+  color: #fff;
+}
+.btn:hover, .btn-group.open .btn.dropdown-toggle, .btn-group .btn.dropdown-toggle {
+  background: #755436;
+  color: #fff;
+}
+.btn-primary, .btn-primary:hover, .btn-group > .btn-primary + .dropdown-toggle {
+  background-color: #99b936;
+}
+.btn-primary.disabled {
+  background: #bdd27d;
+}
+.btn-info, .btn-info:hover {
+  background-color: #4a8270;
+} 
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+  padding: 9px 10px;
+}
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
+  border-color:#99b936;
+  
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(135, 170, 32, 0.2);
+-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(135, 170, 32, 0.2);
+box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(135, 170, 32, 0.2);
+  
+}
+
+.well {
+  background: #fff;
+  border: none;
+  
+  -moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.1);
+  -webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 4px rgba(0,0,0,0.1);
+}
+.no-shadow, 
+#top-nav .active a,
+#top-navbar,
+.give-box-btn {
+  	box-shadow:none;
+	-webkit-box-shadow:none;
+	-moz-box-shadow:none;
+
+}
+
+.header-alert {
+  background:#9abe1b;
+  color: #fff;
+  float: left;
+  width: 100%;
+  
+  -moz-box-shadow:inset 0 -2px 17px rgba(0,0,0,0.1), inset 0 -2px 1px rgba(0,0,0,0.1);
+  -webkit-box-shadow:inset 0 -2px 17px rgba(0,0,0,0.1), inset 0 -2px 1px rgba(0,0,0,0.1);
+  box-shadow:inset 0 -2px 17px rgba(0,0,0,0.1), inset 0 -2px 1px rgba(0,0,0,0.1);
+  
+}
+.header-alert .alert {
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 20px 0;
+  margin: 0;
+  font-size: 22px;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+  
+  -moz-box-shadow:none;
+  -webkit-box-shadow:none;
+  box-shadow:none;
+}
+.header-alert a.close {
+  font-size: 30px;
+  margin: 2px 0 0;
+}
+
+
+/* ========== Holding page stuff ========== */
+.page-header {
+  border-color: rgba(0,0,0,0.2);
+}
+.table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th {
+  background-color: rgba(0,0,0,0.02);
 }
 .paper-top {
   background: #fff url(/assets/paper_texture.jpg);
@@ -329,8 +433,131 @@ a.twitter-link {
 
 
 
+/* ========== homepage ========== */
+.home-header {
+  background: #fff url(/assets/header_bg.jpg) top center;
+  
+  padding: 0px 0 50px;
+  margin: 0;
+  
+  -webkit-box-shadow:1px 1px 10px rgba(0,0,0,0.3);
+  -moz-box-shadow:1px 1px 10px rgba(0,0,0,0.3);
+  box-shadow:1px 1px 10px rgba(0,0,0,0.3);  
+}
+#top-navbar {
+  border: none;
+  position: relative;
+  background: none;
+	padding: 0;
+}
+#top-navbar .brand {
+  padding: 0;
+}
+#top-nav {
+  margin:56px 0 0;
+  position: relative;
+  z-index: 20;
+  float: right;
+  padding: 0 10px;
+  
+  border-radius:6px;
+  
+  background: #fff;
+  box-shadow:0 0px 5px rgba(0,0,0,0.2)
+  
 
 
+  
+
+}
+#top-nav li a {
+  font-size: 22px;
+  color: #999;
+  padding: 20px 18px;
+  text-shadow: none;
+}
+#top-nav li a.nav-my-account {
+  font-family: 'Museo Sans W01 700', arial, sans-serif;
+  font-size: 17px;
+}
+#top-nav .active a {
+	background: none;
+	color: #99b936;
+}
+#my-account {
+  position: absolute;
+  top: 07px;
+  right: 20px;
+  left: auto;
+  
+  z-index: 10;
+  background: #ebe5ce;
+  
+  box-shadow:1px 1px 1px rgba(0,0,0,0.3), 0px 0px 5px rgba(0,0,0,0.3);
+}
+#my-account a.dropdown-toggle {
+  text-shadow: none;
+  padding-top: 17px;
+}
+#site-logo {
+  margin: 10px 0 10px 30px;
+  padding: 0;
+}
+.home-header .row {
+  position: relative;
+}
+#site-logo a {
+  background: url(/assets/logo.png);
+  width: 177px;
+  height: 211px;
+  display: block;
+  text-indent: -9000em;
+}
+.big-box-image {
+  background: url(/assets/box.png) 0 0 no-repeat;
+  height: 600px;
+  width: 600px;
+  position: absolute;
+  z-index: 2;
+  top: -220px;
+  right: -40px;
+}
+.home-tagline {
+  font-size: 40px;
+  line-height: 1.04;
+  margin: 0 0 20px;
+}
+.site-intro-text {
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.23;
+  margin: 0 20px 20px 0;
+}
+.home-strip-1 {
+  padding: 40px 0;
+}
+.home-strip-box .well {	
+
+  min-height: 300px;
+}
+.home-ctas {
+  margin-right: -30px;
+  float: left;
+}
+.btn-homepage-cta {
+	font-size: 26px;
+	margin: 0;
+	padding: 20px;
+}
+.give-box-btn, .give-box-btn:hover {
+  background: url(/assets/give-box-btn.png) no-repeat;
+  color: #99b936;
+  width: 172px;
+  margin: 0 0 0 20px;
+}
+.home-strip-title a {
+  color: #755436;
+}
 
 
 

@@ -1,16 +1,28 @@
-.container
-  .navbar
-    .navbar-inner
-      =link_to(Settings.site_name, root_path, :class => "brand")
-      %ul.nav
-        %li{:class => "#{current_page?(root_path) ? 'active' : ''}"}
-          =link_to("Home", root_path)
-      %ul.nav.pull-right
+.navbar
+  #top-navbar.navbar-inner
+    .brand
+      %h1#site-logo
+        =link_to(Settings.site_name, root_path)
+    %ul#top-nav.nav
+      %li{:class => "#{current_page?(root_path) ? 'active' : ''}"}
+        =link_to("Home", root_path)
+      =li_with_active slug_active?(:how_it_works) do
+        =link_to_slug "How it works", :how_it_works, :class=>"nav-how-it-works"
+      =li_with_active slug_active?(:join) do
+        =link_to_slug "Join", :join, :class=>"nav-join"
+      =li_with_active slug_active?(:gift) do
+        =link_to_slug "Gift", :gift, :class=>"nav-gift"
+      =li_with_active slug_active?(:blog) do
+        =link_to_slug "Blog", :blog, :class=>"nav-blog"
+      %li=link_to "My account", '#', :class=>"nav-my-account"
+      
+    -if false  
+      %ul#my-account.nav.pull-right
         -if logged_in?
           %li.dropdown
             =link_to("#", :class => "dropdown-toggle", :data => {:toggle => "dropdown"}) do
-              %i.icon-user
-              =current_user
+              %i.icon-shopping-cart
+              My account
               %b.caret
             %ul.dropdown-menu
               %li
