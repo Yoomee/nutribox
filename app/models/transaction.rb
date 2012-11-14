@@ -34,7 +34,7 @@ class Transaction < ActiveRecord::Base
   def gateway
     @gateway ||= begin
       gwy = ActiveMerchant::Billing::SagePayGateway.new(:login => Settings.sage_pay_vendor_name)
-      #gwy = ActiveMerchant::Billing::SagePayGateway.new(:login => "yoomeedeveloper")#Settings.sage_pay_vendor_name)
+      #gwy = ActiveMerchant::Billing::SagePayGateway.new(:login => "yoomeedeveloper")
       #gwy.simulate = true
       gwy
     end
