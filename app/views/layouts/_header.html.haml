@@ -5,16 +5,38 @@
         =link_to(Settings.site_name, root_path)
     %ul#top-nav.nav
       %li{:class => "#{current_page?(root_path) ? 'active' : ''}"}
-        =link_to("Home", root_path)
+        =link_to("Home", root_path, :class=>"nav-link")
       =li_with_active slug_active?(:how_it_works) do
-        =link_to_slug "How it works", :how_it_works, :class=>"nav-how-it-works"
+        =link_to_slug "How it works", :how_it_works, :class=>"nav-how-it-works nav-link"
       =li_with_active slug_active?(:join) do
-        =link_to_slug "Join", :join, :class=>"nav-join"
+        =link_to_slug "Join", :join, :class=>"nav-join nav-link"
       =li_with_active slug_active?(:gift) do
-        =link_to_slug "Gift", :gift, :class=>"nav-gift"
+        =link_to_slug "Gift", :gift, :class=>"nav-gift nav-link"
       =li_with_active slug_active?(:blog) do
-        =link_to_slug "Blog", :blog, :class=>"nav-blog"
-      %li=link_to "My account", '#', :class=>"nav-my-account"
+        =link_to_slug "Blog", :blog, :class=>"nav-blog nav-link"
+      %ul#my-account.nav.pull-right
+        -if logged_in?
+          %li.dropdown
+            =link_to("#", :class => "dropdown-toggle", :data => {:toggle => "dropdown"}) do
+              %i.icon-shopping-cart
+              My account
+              %b.caret
+            %ul.dropdown-menu
+              %li
+                =link_to("View profile", current_user)
+              %li
+                =link_to("Sitemap", pages_path)
+              %li
+                =link_to(sign_out_path, :method => :delete) do
+                  %i.icon-signout
+                  =t(:logout)
+        -else
+          %li
+            =link_to("Login", sign_in_path)
+
+
+      -if false  
+        %li=link_to "My account", '#', :class=>"nav-my-account"
       
     -if false  
       %ul#my-account.nav.pull-right

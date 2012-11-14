@@ -1,8 +1,11 @@
--if false
-  .container
-    .row.footer  
-      .span12
-        %p.copyright
-          &copy; 2012
-          =Settings.site_name
-        =link_to("Yoomee", "http://www.yoomee.com", :id => "siteby", :target=>"_blank")
+.container
+  .row.footer  
+    .span12
+      %p.copyright
+        &copy; 2012
+        =Settings.site_name
+      %ul.footer-links.unstyled  
+        %li=link_to "About us", "#"
+        %li=link_to "FAQs"
+        %li=link_to "Contact us", "#"
+      =link_to("Yoomee", "http://www.yoomee.com", :id => "siteby", :target=>"_blank")

@@ -13,11 +13,11 @@
     =google_analytics_js
   -body_tag do
     .main-wrapper
-      -unless controller_name.home?
-        =yield_with_bootstrap(render("layouts/header"))
       -if flash.present?
         .header-alert
-          =yield_with_bootstrap(render_flash)
+          =yield_with_bootstrap(render_flash)    
+      -unless controller_name.home?
+        =yield_with_bootstrap(render("layouts/header"))
       =yield_with_bootstrap(yield)
       .push
     .footer-wrapper

@@ -14,16 +14,57 @@
 .home-strip-1
   .container
     .row
-      #how-it-works-summary.home-strip-box.span6
-        .well
-          %h2.home-strip-title
-            =link_to "How it works", "#"
+      .span6
+        .row
+          #how-it-works-summary.home-strip-box.span6
+            .well
+              %h2.home-strip-title
+                =link_to "How it works", "#"
+                =image_tag "illustration_here_home.png", :class=>"temp-illustration"
+          #featured-product.home-strip-box.span6
+            .well
+              %h2.home-strip-title
+                =link_to "Featured product", "#"
+              =image_tag "featured-product.jpg"
+                
       #blog-summary.home-strip-box.span6
         .well
           %h2.home-strip-title
-            =link_to "Latest from the blog", "#"
+            =link_to "Latest from the blog", "#"            
+          .latest-blog-image.mb-2  
+            =link_to "/blog" do
+              =image_tag "latest_blog_image.jpg"
+          %p.blog-summary-intro.mb-1
+            Nothing could be worse then when you think that you are making a healthy food choice only to uncover that it really isn’t healthy.  In other words, your healthy food choice backfires.   The latest “good news” from a study conducted by the USDA Economic Research Service (ERS) about the decreased levels of trans fats in food products can feed into this potential backfiring.
+          =link_to "Read more", "/blog", :class=>"latest-blog-read-more"
 .home-strip-2
   .container
     .row
+      #coming-soon.coming-soon.span6
+        %h2.coming-soon-title
+          Stay in touch
+        .lower-box.email-signup
+          .inner-padding
+            %p.email-signup-intro Sign up to our email newsletter for our latest news
+            =form_tag('http://thenutribox.us6.list-manage1.com/subscribe/post?u=44bdbc0e5b3036d3b03028268&amp;id=f573663757') do
+              %input#email-signup-input{:name => "EMAIL", :type=>"text", :placeholder=>"your email address"}
+              =submit_tag("Submit", :class=>'btn email-signup-button')
+        =link_to "http://twitter.com/thenutribox", :target=>"_blank", :class=>"twitter-btn social-media-btn" do
+          %i.icon-twitter
+          %span
+            Twitter
+        =link_to "#", :target=>"_blank", :class=>"pinterest-btn social-media-btn" do
+          %i.icon-pinterest
+          %span
+            Pinterest
+            
+      #facebook-box.span6
+        =link_to "http://facebook.com/thenutribox", :target=>"_blank", :class=>"facebook-btn social-media-btn" do
+          %i.icon-facebook
+          %span
+            Facebook
+        .facebook-box-wrapper
+          :plain
+            <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fthenutribox&amp;width=460&amp;height=290&amp;colorscheme=light&amp;show_faces=true&amp;border_color&amp;stream=false&amp;header=true&amp;appId=157913157580785" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:460px; height:290px;" allowTransparency="true"></iframe>
         
         
