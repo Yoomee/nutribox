@@ -1,0 +1,36 @@
+/* @override http://localhost:3000/assets/mobile.css?body=1 */
+
+/* Large desktop */
+@media (min-width: 1200px) {
+body {
+  font-size: 16px;
+}  	
+
+
+
+}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+
+
+}
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+body {
+  padding: 0;
+}
+.row {
+  clear: both;
+}
+
+
+}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) {
+	
+
+
+}

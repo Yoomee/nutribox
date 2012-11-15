@@ -1,0 +1,42 @@
+.span12
+  %h1.mb-3=@page.title
+  -if @page.image
+    .row
+      .span8
+        =image_for(@page, "620x")
+  .row
+    .span8
+      =#contentize(@page.text)
+  .row
+    .span4.how-it-works-item
+      .well.how-it-works-well
+        =image_tag "illustration_here.png", :class=>"temp-illustration-inside"
+        %h2.how-it-works-title
+          Choose
+        %p.how-it-works-desc
+          Select the plan that works for you. Plans start as low as £10.42 per month.
+        =link_to "See plans", "/join", :class=>"how-it-works-cta btn btn-primary"
+    .span4.how-it-works-item
+      .well.how-it-works-well
+        =image_tag "illustration_here.png", :class=>"temp-illustration-inside"
+        %h2.how-it-works-title
+          Receive
+        %p.how-it-works-desc
+          So you don't have to wait too long before receiving your first Box, we have created not one but two, order and distribution windows each month.
+        =link_to "Find out more", "#", :class=>"how-it-works-cta btn btn-primary"
+    .span4.how-it-works-item
+      .well.how-it-works-well
+        =image_tag "illustration_here.png", :class=>"temp-illustration-inside"
+        %h2.how-it-works-title
+          Surprise
+        %p.how-it-works-desc
+          Enjoy the surprise of finding out what's in your box each month and reap the benefits of healthier snacking.
+        =link_to "Subscribe", "#", :class=>"how-it-works-cta btn btn-primary"
+      
+      
+      
+    .span8
+      =options_panel do
+        =link_if_can("Edit page", [:edit, @page])
+        =link_if_can("Delete page", [:destroy, @page], :confirm => "Are you sure?") unless @page.slug.present?
+        =link_if_can("New page", [:new, Page])

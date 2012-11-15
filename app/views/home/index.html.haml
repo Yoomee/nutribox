@@ -1,55 +1,70 @@
--content_for :head do
-  :javascript
-    $(document).ready(function() {
-      $('#read-more-wrapper').on('show', function () {
-        $('#holding-read-more-link').fadeOut();
-      });
-      $('#coming-soon').click(function(){$('#email-signup-input').focus();});
-      $('#sign-up-below-link').click(function (e) {
-        e.preventDefault();
-        $.smoothScroll({
-          scrollTarget: '#coming-soon',
-          speed:800,
-          afterScroll: function(){$('#email-signup-input').focus();}
-        });
-      });
-    });
 .container
-.paper-top
-  .container  
-    .row
-      .healthy-snacking-made-easier.span10.offset1.fade_in
-        #launching_in_wrapper
-          %p Launching in
-          =launch_countdown          
-        %h1=title("The Nutribox - Healthy Snacking Made Easier")
-        %p.holding-intro
-          We search the land for deliciously nutritious snacks then deliver them to your door, monthly.
-          =link_to("Read more", '#read-more', :id => "holding-read-more-link", :data => {:toggle => 'collapse', :target => '#read-more-wrapper'})
-        .clearfix
-        #read-more-wrapper.collapse
-          .holding-read-more
-            =simple_format(snippet_text(:holding_read_more))
-            =edit_snippet_link(:holding_read_more)
-            =link_to "Sign up below", "#coming-soon", :class=>"sign-up-arrow", :id => "sign-up-below-link"
-#intro.snacks.fade_in.fade_two
+.home-header
+  .container
+    =render ("layouts/header")
   .container
     .row
-      .lower-boxes.span10.offset1.fade_in.fade_three
+      .site-intro.span5
+        %h1.home-tagline Healthy Snacking Made Easier
+        %p.site-intro-text Deliciously nutritious snacks delivered to your door, monthly. From under £11 per month
+        .home-ctas
+          =link_to "Get a box", "#", :class=>"get-box-btn btn btn-primary btn-homepage-cta"
+          =link_to "or give a box", "#", :class=>"give-box-btn btn btn-homepage-cta"
+      .big-box-image.span7
+.home-strip-1
+  .container
+    .row
+      .span6
         .row
-          #coming-soon.coming-soon.span6
-            %h2.coming-soon-title
-              Coming Soon
-            .lower-box.email-signup
-              .inner-padding
-                %p.email-signup-intro Sign up below to be notified when we launch.
-                =form_tag('http://thenutribox.us6.list-manage1.com/subscribe/post?u=44bdbc0e5b3036d3b03028268&amp;id=f573663757') do
-                  %input#email-signup-input{:name => "EMAIL", :type=>"text", :placeholder=>"your email address"}
-                  =submit_tag("Submit", :class=>'btn email-signup-button')  
-          .span4
-            .lower-box.follow-us-box
-              .inner-padding
-                %h2.follow-us-title
-                  Follow us
-                =link_to "Facebook", "http://www.facebook.com/TheNutribox", :class=>"social-media-link facebook-link"
-                =link_to "Twitter", "http://twitter.com/thenutribox", :class=>"social-media-link twitter-link"
+          #how-it-works-summary.home-strip-box.span6
+            .well
+              %h2.home-strip-title
+                =link_to "How it works", "#"
+                =image_tag "illustration_here_home.png", :class=>"temp-illustration"
+          #featured-product.home-strip-box.span6
+            .well
+              %h2.home-strip-title
+                =link_to "Featured product", "#"
+              =image_tag "featured-product.jpg"
+                
+      #blog-summary.home-strip-box.span6
+        .well
+          %h2.home-strip-title
+            =link_to "Latest from the blog", "#"            
+          .latest-blog-image.mb-2  
+            =link_to "/blog" do
+              =image_tag "latest_blog_image.jpg"
+          %p.blog-summary-intro.mb-1
+            Nothing could be worse then when you think that you are making a healthy food choice only to uncover that it really isn’t healthy.  In other words, your healthy food choice backfires.   The latest “good news” from a study conducted by the USDA Economic Research Service (ERS) about the decreased levels of trans fats in food products can feed into this potential backfiring.
+          =link_to "Read more", "/blog", :class=>"latest-blog-read-more"
+.home-strip-2
+  .container
+    .row
+      #coming-soon.coming-soon.span6
+        %h2.coming-soon-title
+          Stay in touch
+        .lower-box.email-signup
+          .inner-padding
+            %p.email-signup-intro Sign up to our email newsletter for our latest news
+            =form_tag('http://thenutribox.us6.list-manage1.com/subscribe/post?u=44bdbc0e5b3036d3b03028268&amp;id=f573663757') do
+              %input#email-signup-input{:name => "EMAIL", :type=>"text", :placeholder=>"your email address"}
+              =submit_tag("Submit", :class=>'btn email-signup-button')
+        =link_to "http://twitter.com/thenutribox", :target=>"_blank", :class=>"twitter-btn social-media-btn" do
+          %i.icon-twitter
+          %span
+            Twitter
+        =link_to "#", :target=>"_blank", :class=>"pinterest-btn social-media-btn" do
+          %i.icon-pinterest
+          %span
+            Pinterest
+            
+      #facebook-box.span6
+        =link_to "http://facebook.com/thenutribox", :target=>"_blank", :class=>"facebook-btn social-media-btn" do
+          %i.icon-facebook
+          %span
+            Facebook
+        .facebook-box-wrapper
+          :plain
+            <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fthenutribox&amp;width=460&amp;height=290&amp;colorscheme=light&amp;show_faces=true&amp;border_color&amp;stream=false&amp;header=true&amp;appId=157913157580785" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:460px; height:290px;" allowTransparency="true"></iframe>
+        
+        

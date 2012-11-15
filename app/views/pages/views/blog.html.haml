@@ -1,0 +1,30 @@
+.blog_message
+.row
+  .span8.offset3.mb-2
+    %h1=@page.title
+    -if @page.image
+      .row
+        .span8
+          =image_for(@page, "620x")
+.row
+  .span8.offset3.mb-2
+    %h3 Blog post title
+    =image_tag "blog_post_image.jpg", :class=>"mb-2"
+    %p
+      Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed molestie augue sit amet leo consequat posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin vel ante a orci tempus eleifend ut et magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis.
+    %hr
+  .span8.offset3.mb-2
+    %h3 Blog post title
+    =image_tag "blog_post_image-2.jpg", :class=>"mb-2"
+    %p
+      Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed molestie augue sit amet leo consequat posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin vel ante a orci tempus eleifend ut et magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis.
+    =#contentize(@page.text)    
+
+    
+    
+  -if false  
+    .span8
+      =options_panel do
+        =link_if_can("Edit page", [:edit, @page])
+        =link_if_can("Delete page", [:destroy, @page], :confirm => "Are you sure?") unless @page.slug.present?
+        =link_if_can("New page", [:new, Page])
