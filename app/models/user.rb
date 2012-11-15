@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   include YmUsers::User
   
-  has_many :credit_card_details, :class_name => "CreditCardDetails"
+  has_many :orders
+  has_many :addresses
   
 end

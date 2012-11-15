@@ -11,16 +11,13 @@ module ActiveMerchant #:nodoc:
         :repeat => 'REPEAT'
       }
       
-      def repeat(money, credit_card, options = {})
+      def repeat(money, options = {})
         requires!(options, :order_id)
         requires!(options, :related_transaction)
         post = {}
 
         add_amount(post, money, options)
         add_invoice(post, options)
-        #add_credit_card(post, credit_card)
-        #add_address(post, options)
-        #add_customer_data(post, options)
         
         # Add related transaction details
         transaction_to_repeat = options[:related_transaction]
@@ -36,3 +33,14 @@ module ActiveMerchant #:nodoc:
   end
 end
 
+module ActiveMerchant  
+  module Billing  
+    class CreditCard  
+      def persisted?  
+        false  
+      end  
+    end  
+  end  
+end  
+
+ActiveMerchant::Billing::Base.mode = :test unless Rails.env.production?
