@@ -6,6 +6,7 @@ class Ability
   def initialize(user)
     
     # open ability
+    can :read, Page
     
     if user.try(:admin?)
       can :manage, :all      
