@@ -26,6 +26,7 @@ box.png: box-23b79c7217e9f84627a1eddb538f4bb8.png
 coming-soon-title.png: coming-soon-title-38b1e90a3c0b41fd333b5ee9ca99fdc3.png
 coming_very_soon.png: coming_very_soon-15fe131e785c468dd3d6761c15dba82d.png
 facebook-link.png: facebook-link-f3c06eeb437902bb8c25d1a08717726a.png
+favicon.ico: favicon-312a99ca9a0e276c35586d1f80aa9e91.ico
 featured-product.jpg: featured-product-bbf4eb3380876ed0a942b52b6eda89eb.jpg
 follow-us-title.png: follow-us-title-4f436371ed78e57ea417a1f14e0b50e9.png
 give-box-btn.png: give-box-btn-fd2939f15a952f889ed8e30a0c2f2b20.png
@@ -38,10 +39,12 @@ illustration_here_home.png: illustration_here_home-fce91f0a21b1c78d6cb36dc016177
 latest_blog_image.jpg: latest_blog_image-24e494137d7e4dd3a11dc1cf9048186e.jpg
 launching_in.png: launching_in-30469ae693e11778ae266236e8620409.png
 logo.png: logo-68d8cd31db35739c59c85466930e46db.png
+multi-box.png: multi-box-65f9043c82fdb24fd104f5f34af4c68c.png
 paper_texture.jpg: paper_texture-bad0c812312595d67ac6ca00c2190586.jpg
 paper_texture_body.jpg: paper_texture_body-2ca142cf6b0acfec8f42d0955e8532d5.jpg
 sign_up_below.png: sign_up_below-56588c87a1b80dd79990b5645c93ff52.png
 snacks.png: snacks-534d447e2af7b22db820b00af0eaec72.png
+taster-box.png: taster-box-46662b9e0c22390d8ae178508aa779e0.png
 twitter-link.png: twitter-link-90b0fee95823937c07f3a59b22bc9211.png
 yoomee_logo.png: yoomee_logo-fa022040f9bce3877704c4fb6ff6d934.png
 jquery.smooth-scroll.js: jquery.smooth-scroll-98c10713388705d70e5ae096a5b2b95b.js
@@ -68,4 +71,4 @@ jquery-ui-1.8.18.css: jquery-ui-1.8.18-525b8fc57478eb4d921d21ea053f2634.css
 jquery-ui.min.js: jquery-ui.min-449c6576aff2d5aef9fea2c0b667083b.js
 jquery.min.js: jquery.min-c17ee58f451d313a5585c3a1b1571ff2.js
 application.js: application-a550d13947dcdf78df9f585a51b24769.js
-application.css: application-e41099782458f4d0b3e9326d42332299.css
+application.css: application-7e2a90357b30614e9078f25f123a0167.css
