@@ -7,7 +7,7 @@ gem 'mysql2'
 
 gem 'jquery-rails'
 gem "rake", "0.8.7"
-gem "exception_notification"
+gem 'exception_notification', "2.6.1", git:'git://github.com/alanjds/exception_notification.git'
 gem "country-select"
 gem "formtastic-bootstrap", :git => "git://github.com/cgunther/formtastic-bootstrap.git", :branch => "bootstrap-2"
 gem "whenever", :require => false
