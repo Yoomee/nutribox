@@ -6,9 +6,9 @@
       ="- #{@page_title}" if @page_title.present?
     =stylesheet_link_tag 'http://fast.fonts.com/cssapi/bb868a11-c5d5-4bea-a682-2dcd52ad1e63.css'
     =stylesheet_link_tag("application")
-    
     =javascript_include_tag("application")
     =csrf_meta_tags
+    =favicon_link_tag('/assets/favicon.ico')
     =yield :head
     =google_analytics_js
   -body_tag do

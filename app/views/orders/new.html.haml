@@ -1,16 +1,18 @@
-.span8.offset2
+.span10.offset1
   =semantic_form_for @order, :html => {:class => 'form-horizontal'}  do |form|
     =form.hidden_field :current_step
     #box_step{:class => @order.current_step_box? ? '' : 'hide'}
       =render("orders/steps/box", :form => form)
+    #register_step{:class => @order.current_step_register? ? '' : 'hide'}
+      =render("orders/steps/register", :form => form)
     #delivery_step{:class => @order.current_step_delivery? ? '' : 'hide'}
       =render("orders/steps/delivery", :form => form)
     #billing_step{:class => @order.current_step_billing? ? '' : 'hide'}
       =render("orders/steps/billing", :form => form)
-    #confirm_step{:class => @order.current_step_confirm? ? '' : 'hide'}
-      =render("orders/steps/confirm", :form => form)
-  
-    .form-actions
-      =form.submit(@order.last_step? ? "Take my money!" : "Next", :class => "btn btn-primary pull-right")
-      -unless @order.first_step?
+    -if @order.current_step_confirm?
+      #confirm_step
+        =render("orders/steps/confirm", :form => form)
+    -unless @order.first_step?
+      .form-actions
+        =form.submit(@order.last_step? ? "Take my money!" : "Next", :class => "btn btn-primary pull-right")
         =form.submit('Back', :name => 'back', :class => "btn pull-left")

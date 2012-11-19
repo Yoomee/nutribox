@@ -1,8 +1,0 @@
-=form.semantic_fields_for :delivery_address, :html => {:class => ('hide' unless form.object.user.addresses.reject(&:new_record?).empty?)} do |fields|
-  =fields.input :user_id, :as => :hidden
-  =fields.input :name
-  =fields.input :address1, :label => "Address"
-  =fields.input :address2, :label => false
-  =fields.input :city
-  =fields.input :postcode
-  =fields.input :country, :as => :string

@@ -1,3 +1,38 @@
-%h1 Choose your box
-=form.input :box_type, :as => :select, :collection => order_box_options, :prompt => "Please select...", :label => "Box"
-=form.input :number_of_months, :as => :select, :collection => order_month_options, :prompt => "Please select...", :label => "Subscription"
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      $('#box_step input[type="radio"]').change(function(){
+        $('#box_step label.active').removeClass('active');
+        $(this).parent().addClass('active');
+        $('form.order').submit();
+      })
+    });
+-if @order.gift?
+  %h2 Which box would you like to give?
+-else
+  %h2 Choose your box
+.thumbnails
+  -["taster","multi"].each do |box_type|
+    %li.span5
+      .thumbnail
+        .caption
+          %h4="#{box_type.capitalize} Box"
+          =image_tag("#{box_type}-box.png")
+          %ul.unstyled.box-options
+            -[1,3,6,12].each do |num|
+              %li
+                .pull-left
+                  %h4
+                    =pluralize(num,'month')
+                    %br
+                    %small
+                      ="£#{Order.cost(box_type,num)}"
+                      -if num > 1
+                        %span.saving
+                          \- save
+                          %span.percentage="#{Order.saving_percentage(box_type,num)}%"
+                .pull-right
+                  %label{:class => ('active' if @order.box_type_and_number_of_months == "#{box_type}-#{num}")}
+                    =form.radio_button('box_type_and_number_of_months',"#{box_type}-#{num}",)
+                    .btn Subscribe
+          .clearfix

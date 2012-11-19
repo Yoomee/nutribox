@@ -1,10 +1,6 @@
-:javascript
-  OrderForm.newAddressFormHtml = '#{escape_javascript(render('orders/address_form', :form => form))}';
 %h2 Delivery address
--if 
-  =form.input :delivery_address, :as => :select, :collection => @order.user.addresses.reject(&:new_record?).map{|a| [a.to_s, a.id]}, :prompt => "Please select...", :label => "Use a saved address"
-  .control-group
-    %label.control-label
-      Or
-    .controls
-      %u=link_to "Add a new address", '#', :id => 'new-delivery-address-link'
+=form.input :delivery_name
+=form.input :delivery_address1, :label => "Address"
+=form.input :delivery_address2, :label => false
+=form.input :delivery_city
+=form.input :delivery_postcode

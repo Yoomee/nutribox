@@ -1,0 +1,31 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      $('#user-login').on('hidden', function(){
+        console.log('ad')
+        $('#order_login_email,#order_login_email').val('');
+      });  
+    });
+-if @order.user_id.present?
+  =form.input :user_id
+-else
+  %h2 About you
+  #accordion
+    .accordion-group
+      #user-register.collapse{:class => ('in' unless @order.errors[:login_email].present?)}
+        =form.semantic_fields_for :user do |fields|    
+          =fields.input :first_name
+          =fields.input :last_name
+          =fields.input :email
+          =fields.input :email_confirmation
+          =fields.input :password
+          =fields.input :password_confirmation
+        %a.accordion-toggle{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#user-login"} I already have an account
+    .accordion-group
+      #user-login.collapse{:class => ('in' if @order.errors[:login_email].present?)}
+        %h4 Log in to your account
+        =form.input :login_email, :label => "Email"
+        =form.input :login_password, :label => "Password"
+        %a.accordion-toggle{"data-parent" => "#accordion", "data-toggle" => "collapse", :href => "#user-register"} I don't have an account
+
+  

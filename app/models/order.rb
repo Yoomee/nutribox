@@ -2,35 +2,59 @@ class Order < ActiveRecord::Base
   include YmCore::Model
   include YmCore::Multistep
     
-  belongs_to :user
-  belongs_to :delivery_address, :class_name => "Address"
-  accepts_nested_attributes_for :delivery_address, :reject_if => proc { |attributes| attributes.all?{|k,v| v.blank?}}
-  
+  belongs_to :user  
   amount_accessor
+  
+  attr_accessor :login_email, :login_password
 
-  validates :user, :box_type, :number_of_months, :presence => true, :if => :current_step_box?
+  validates :box_type, :number_of_months, :presence => true, :if => :current_step_box?
+  validates :user, :delivery_address1, :delivery_city, :delivery_postcode, :delivery_country,  :presence => true, :if => :current_step_delivery?
+  validates :delivery_postcode, :postcode => true, :if => :current_step_delivery?
   validates :billing_address1, :billing_city, :billing_postcode, :billing_country,  :presence => true, :if => :current_step_billing?
+  validates :billing_postcode, :postcode => true, :if => :current_step_billing?
   validate :credit_card_is_valid, :if => :current_step_billing? 
   
   before_validation :set_amount
   before_validation :set_billing_name
   
-  def self.cost_in_pence(box_type,number_of_months)
-    cost_matrix = {
-      :taster =>  { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },
-      :booster => { 1 =>  2500, 3 =>  6800, 6 =>  12800, 12 => 24500 }
-    }
-    cost_matrix[box_type.to_sym].try(:[], number_of_months).to_i
+  accepts_nested_attributes_for :user
+  
+  class << self
+  
+    def cost_in_pence(box_type,number_of_months)
+      Order::COST_MATRIX[box_type.to_sym].try(:[], number_of_months).to_i
+    end
+  
+    def cost(box_type,number_of_months)
+      YmCore::Model::AmountAccessor::Float.new((self.cost_in_pence(box_type,number_of_months).to_f / 100).round(2))
+    end
+    
+    def saving_in_pence(box_type,number_of_months)
+      (cost_in_pence(box_type,1) * number_of_months) - cost_in_pence(box_type,number_of_months)
+    end
+    
+    def saving_percentage(box_type,number_of_months)
+      ((saving_in_pence(box_type,number_of_months).to_f / cost_in_pence(box_type,number_of_months)) * 100).to_i
+    end
+    
   end
   
   def set_billing_address_from_delivery_address
     if billing_address1.blank?
-      self.billing_address1 = delivery_address.address1
-      self.billing_address2 = delivery_address.address2
-      self.billing_city = delivery_address.city
-      self.billing_postcode = delivery_address.postcode
-      self.billing_country = delivery_address.country
+      self.billing_address1 = delivery_address1
+      self.billing_address2 = delivery_address2
+      self.billing_city = delivery_city
+      self.billing_postcode = delivery_postcode
+      self.billing_country = delivery_country
     end
+  end
+  
+  def box_type_and_number_of_months
+    [box_type,number_of_months].compact.join('-')
+  end
+  
+  def box_type_and_number_of_months=(value)
+    self.box_type, self.number_of_months = value.split('-')
   end
   
   def credit_card  
@@ -44,6 +68,18 @@ class Order < ActiveRecord::Base
   def credit_card_attributes=(attrs)  
     attrs.reject!{|a| a.blank?}  
     @credit_card = ActiveMerchant::Billing::CreditCard.new(attrs)  
+  end
+  
+  def delivery_address(separator = ', ')
+    [delivery_name,delivery_address1,delivery_address2,delivery_city,delivery_postcode].select(&:present?).join(separator)
+  end
+  
+  def billing_country
+    "GB"
+  end  
+  
+  def delivery_country
+    "GB"
   end  
   
   def failed?
@@ -55,7 +91,7 @@ class Order < ActiveRecord::Base
   end
   
   def steps
-    %w{box delivery billing confirm}
+    %w{box register delivery billing confirm}
   end
   
   def take_payment!
@@ -145,4 +181,7 @@ class Order < ActiveRecord::Base
   
 end
 
-Order::BOX_TYPES = ['taster','booster']
+Order::COST_MATRIX = {
+  :taster => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },
+  :multi  => { 1 =>  2500, 3 =>  6800, 6 =>  12800, 12 => 24500 }
+}

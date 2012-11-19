@@ -55,7 +55,8 @@
 .fade_in.fade_six {-webkit-animation-delay: 0, 1.5s;}
 
 /* ========== Fonts ========== */
-body {
+body,
+#box_step h4 .saving{
 	font-family: 'Museo Sans W01 300', arial, sans-serif;
 	color: #666666;
 	font-size: 15px;
@@ -80,8 +81,6 @@ h2, h3 {
 th, h4, h5, h6, strong, .header-alert a.close  {
 	color: #333;
 	font-family: 'Museo Sans W01 700', arial, sans-serif;
-
-  
 }
 
 /* ========== General (bootstrap overrived etc) ========== */
@@ -775,17 +774,69 @@ img.temp-illustration-inside {
 
 
 
+/*========== Sign up ==========*/
+form.order .form-actions{
+  padding-left:20px;
+}
+ul.box-options {
+  float:left;
+  clear:both;
+  width:100%;
+  margin:5px 0px -10px;
+}
+ul.box-options li {
+  border-top: 1px solid #ccc;
+  float: left;
+  clear: both;
+  width: 100%;
+  padding:8px 0px;
+}
+#box_step .thumbnails .btn{
+  padding:5px 7px;
+  margin-top:5px;
+}
+#box_step .thumbnails h4{
+  margin:0px;
+}
+#box_step .thumbnails .saving{
+  font-weight:normal;
+  font-style:italic;
+}
+#box_step .thumbnails .saving .percentage{
+  font-size:13px;
+}
+#box_step .thumbnails .active .btn{
+  background-color: #99b936;
+}
 
+#box_step .thumbnails input {
+  display:none;
+}
 
+#register_step .accordion-group {
+  border:none;
+}
 
+.form-horizontal #billing_step .control-label{
+  width:80px;
+}
+.form-horizontal #billing_step .controls{
+  margin-left:100px;
+}
 
+#order_credit_card_attributes_month_input {
+  float:left;
+}
 
-
-
-
-
-
-
-
-
+#order_credit_card_attributes_year_input {
+  float:left;  
+}
+.form-horizontal #order_credit_card_attributes_year_input .control-label {
+  width:15px;
+  font-size:25px;
+  line-height:25px;
+}
+.form-horizontal #order_credit_card_attributes_year_input .controls{
+  margin-left:20px;
+}
 
