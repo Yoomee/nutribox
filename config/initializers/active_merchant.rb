@@ -43,4 +43,4 @@ module ActiveMerchant
   end  
 end  
 
-ActiveMerchant::Billing::Base.mode = :test unless Rails.env.production?
+ActiveMerchant::Billing::Base.mode = :test #unless Rails.env.production?
