@@ -5,71 +5,43 @@
     .row
       .span8.mb-2
         %h1.blog-main-title=@page.title
-        -if @page.image
-          .row
-            .span8
-              =image_for(@page, "620x")
     .row
       .blog-roll.span8
         .blog-roll-inner
-          .blog-post.post-summary
-            .post-summary-left
-              =link_to "#", :class=>"post-summary-img" do
-                =image_tag "summary-img.jpg", :width=>"200px", :height=>"160px"
-              %ul.unstyled.post-info  
-                %li.post-author
-                  =link_to "#", :class=>"post-author-img" do
-                    =image_tag "post-author.jpg", :width=>"20px", :height=>"20px"
-                    %span
-                      Emma Hookham
-                %li.post-date
-                  %i.icon-calendar
-                  %span
-                    Nov 15, 2012
-                %li.post-comments
-                  =link_to "#" do
+          -@page.children.latest.each do |page|
+            .blog-post.post-summary
+              .post-summary-left
+                =link_to page, :class=>"post-summary-img" do
+                  =image_for(page, "200x160#")
+                %ul.unstyled.post-info  
+                  %li.post-author
+                    =image_for(page.user, "20x20#")
+                    =link_to '#', :class=>"post-author-img" do
+                      %span=page.user
+                  %li.post-date
+                    %i.icon-calendar
+                    %span=page.publication_date.try(:stamp,"Nov 31, 2012")
+                  %li.post-comments
                     %i.icon-comments-alt
-                    %span
-                      15 comments                                  
-            .post-summary-right
-              %h2.summary-title
-                =link_to "#" do
-                  Live-well tip- Choose low-GI foods
-              %p.summary-intro
-                GI or Glycaemic Index is a ranking system of carbohydrates which describes the way they will affect blood glucose. Low-GI foods tend to cause lower and more sustained rises in blood, leaving you feeling full for longer whilst stabilising energy levels. Good GI choices include sweet potato....
-              =link_to "Read more", "#", :class=>"summary-read-more"
-
-          .blog-post.post-summary
-            .post-summary-left
-              =link_to "#", :class=>"post-summary-img" do
-                =image_tag "summary-img.jpg"
-              %ul.unstyled.post-info  
-                %li.post-author
-                  =link_to "#", :class=>"post-author-img" do
-                    =image_tag "post-author.jpg"
-                    %span
-                      Emma Hookham
-                %li.post-date
-                  %i.icon-calendar
-                  %span
-                    Nov 15, 2012
-                %li.post-comments
-                  =link_to "#" do
-                    %i.icon-comments-alt
-                    %span
-                      15 comments                                  
-            .post-summary-right
-              %h2.summary-title
-                =link_to "#" do
-                  Live-well tip- Choose low-GI foods
-              %p.summary-intro
-                GI or Glycaemic Index is a ranking system of carbohydrates which describes the way they will affect blood glucose. Low-GI foods tend to cause lower and more sustained rises in blood, leaving you feeling full for longer whilst stabilising energy levels. Good GI choices include sweet potato....
-              =link_to "Read more", "#", :class=>"summary-read-more"              
-
+                    %span=link_to 'Comments', page_path(page, :anchor => 'disqus_thread'), "data-disqus-identifier" => disqus_id(page), :class => 'comment-count'
+              .post-summary-right
+                %h2.summary-title
+                  =link_to page do
+                    =page.title
+                %p.summary-intro
+                  =strip_tags(page.text.truncate(350))
+                =link_to "Read more", "#", :class=>"summary-read-more"
+            .clearfix
+          -if can?(:edit, @page)
+            =options_panel do
+              =link_to("Blog settings", edit_page_path(@page))
+              =link_to("New blog post", new_page_path(:parent => Page.find_by_slug("blog").id))
+          .clearfix
 
                 
                 
       #blog_right_col.span4
+      -#
         #blog_archive.blog_box
           %h3 Archive
           %select
@@ -89,13 +61,6 @@
               =link_to "#", :class => 'tag' do
                 %span.label.tag-label
                   Healthy eating
-                  
 .clearfix
+=disqus_counts(Settings.disqus_shortname)
 =render "layouts/stay_in_touch"
-
--if false  
-  .span8
-    =options_panel do
-      =link_if_can("Edit page", [:edit, @page])
-      =link_if_can("Delete page", [:destroy, @page], :confirm => "Are you sure?") unless @page.slug.present?
-      =link_if_can("New page", [:new, Page])

@@ -10,7 +10,7 @@ module ApplicationHelper
   end
   
   def slug_active?(slug)
-    return false unless @page
+    return false unless @page && @page.slug
     @page.slug.to_sym == slug || @page.descendant_of_slug(slug)
   end
   

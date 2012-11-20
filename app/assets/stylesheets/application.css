@@ -867,18 +867,22 @@ ul.box-options li {
 .blog-roll-inner {
 	background: url(/assets/blog-roll-inner.png) top center;
   margin: 30px 11px;
-  min-height: 1200px;
   
   box-shadow:0 0 5px rgba(0,0,0,0.5);,
   -webkit-box-shadow:0 0 5px rgba(0,0,0,0.5);
 }
-.post-summary {
+.blog-roll-inner .options_panel{
+  margin:20px;
+}
+
+.blog-post {
   padding: 20px;
   float: left;
   width: 558px;
   clear: both; 	
   border-bottom: 1px solid #99b936;
 }
+
 .post-summary-left {
   float: left;
   width: 200px;
@@ -925,7 +929,21 @@ ul.post-info li, ul.post-info li a, ul.post-info li a:hover {
   color: #999;
 }
 
-
-
+.disqus_thread {
+  padding:20px;
+}
+#dsq-content #dsq-global-toolbar {
+  margin:0px !important;
+}
+#disqus_thread .dsq-reply{
+  margin-top:10px;
+}
+#disqus_thread h3 {
+  margin-bottom:10px;
+  font-size:18px;
+}
+#dsq-subscribe {
+  display:none;
+}
 
 

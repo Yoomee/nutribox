@@ -1,0 +1,47 @@
+.container
+.blog-wrapper
+  .blog-wrapper-top
+  .container
+    .row
+      .span8
+        =link_to_slug "&larr; Back to the blog".html_safe, :blog, :class => 'btn mb-1'
+        .clearfix
+      .blog-roll.span8
+        .blog-roll-inner
+          .blog-post
+            %h1.mb-2=title(@page.title)
+            =image_for(@page, "558x", :class => 'mb-2')
+            =raw @page.text
+          .clearfix
+          .disqus_thread=disqus_thread(@page, Settings.disqus_shortname)
+          =options_panel do
+            =link_if_can("Edit post", [:edit, @page])
+            =link_if_can("Delete post", [:destroy, @page], :confirm => "Are you sure?") unless @page.slug.present?
+            =link_if_can("New post", [:new, Page])
+          .clearfix
+
+                
+                
+      #blog_right_col.span4
+        -#
+          #blog_archive.blog_box
+            %h3 Archive
+            %select
+              %option
+                Jan 2012
+              %option
+                Feb 2012
+               
+          #blog_categories.blog_box
+            %h3 Categories
+            %ul.lst
+              %li
+                =link_to "#", :class => 'tag' do
+                  %span.label.tag-label
+                    News
+              %li
+                =link_to "#", :class => 'tag' do
+                  %span.label.tag-label
+                    Healthy eating
+.clearfix
+=render "layouts/stay_in_touch"
