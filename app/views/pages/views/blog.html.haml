@@ -1,30 +1,101 @@
-.blog_message
-.row
-  .span8.offset3.mb-2
-    %h1=@page.title
-    -if @page.image
-      .row
-        .span8
-          =image_for(@page, "620x")
-.row
-  .span8.offset3.mb-2
-    %h3 Blog post title
-    =image_tag "blog_post_image.jpg", :class=>"mb-2"
-    %p
-      Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed molestie augue sit amet leo consequat posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin vel ante a orci tempus eleifend ut et magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis.
-    %hr
-  .span8.offset3.mb-2
-    %h3 Blog post title
-    =image_tag "blog_post_image-2.jpg", :class=>"mb-2"
-    %p
-      Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed molestie augue sit amet leo consequat posuere. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin vel ante a orci tempus eleifend ut et magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis.
-    =#contentize(@page.text)    
+.container
+.blog-wrapper
+  .blog-wrapper-top
+  .container
+    .row
+      .span8.mb-2
+        %h1.blog-main-title=@page.title
+        -if @page.image
+          .row
+            .span8
+              =image_for(@page, "620x")
+    .row
+      .blog-roll.span8
+        .blog-roll-inner
+          .blog-post.post-summary
+            .post-summary-left
+              =link_to "#", :class=>"post-summary-img" do
+                =image_tag "summary-img.jpg", :width=>"200px", :height=>"160px"
+              %ul.unstyled.post-info  
+                %li.post-author
+                  =link_to "#", :class=>"post-author-img" do
+                    =image_tag "post-author.jpg", :width=>"20px", :height=>"20px"
+                    %span
+                      Emma Hookham
+                %li.post-date
+                  %i.icon-calendar
+                  %span
+                    Nov 15, 2012
+                %li.post-comments
+                  =link_to "#" do
+                    %i.icon-comments-alt
+                    %span
+                      15 comments                                  
+            .post-summary-right
+              %h2.summary-title
+                =link_to "#" do
+                  Live-well tip- Choose low-GI foods
+              %p.summary-intro
+                GI or Glycaemic Index is a ranking system of carbohydrates which describes the way they will affect blood glucose. Low-GI foods tend to cause lower and more sustained rises in blood, leaving you feeling full for longer whilst stabilising energy levels. Good GI choices include sweet potato....
+              =link_to "Read more", "#", :class=>"summary-read-more"
 
-    
-    
-  -if false  
-    .span8
-      =options_panel do
-        =link_if_can("Edit page", [:edit, @page])
-        =link_if_can("Delete page", [:destroy, @page], :confirm => "Are you sure?") unless @page.slug.present?
-        =link_if_can("New page", [:new, Page])
+          .blog-post.post-summary
+            .post-summary-left
+              =link_to "#", :class=>"post-summary-img" do
+                =image_tag "summary-img.jpg"
+              %ul.unstyled.post-info  
+                %li.post-author
+                  =link_to "#", :class=>"post-author-img" do
+                    =image_tag "post-author.jpg"
+                    %span
+                      Emma Hookham
+                %li.post-date
+                  %i.icon-calendar
+                  %span
+                    Nov 15, 2012
+                %li.post-comments
+                  =link_to "#" do
+                    %i.icon-comments-alt
+                    %span
+                      15 comments                                  
+            .post-summary-right
+              %h2.summary-title
+                =link_to "#" do
+                  Live-well tip- Choose low-GI foods
+              %p.summary-intro
+                GI or Glycaemic Index is a ranking system of carbohydrates which describes the way they will affect blood glucose. Low-GI foods tend to cause lower and more sustained rises in blood, leaving you feeling full for longer whilst stabilising energy levels. Good GI choices include sweet potato....
+              =link_to "Read more", "#", :class=>"summary-read-more"              
+
+
+                
+                
+      #blog_right_col.span4
+        #blog_archive.blog_box
+          %h3 Archive
+          %select
+            %option
+              Jan 2012
+            %option
+              Feb 2012
+               
+        #blog_categories.blog_box
+          %h3 Categories
+          %ul.lst
+            %li
+              =link_to "#", :class => 'tag' do
+                %span.label.tag-label
+                  News
+            %li
+              =link_to "#", :class => 'tag' do
+                %span.label.tag-label
+                  Healthy eating
+                  
+.clearfix
+=render "layouts/stay_in_touch"
+
+-if false  
+  .span8
+    =options_panel do
+      =link_if_can("Edit page", [:edit, @page])
+      =link_if_can("Delete page", [:destroy, @page], :confirm => "Are you sure?") unless @page.slug.present?
+      =link_if_can("New page", [:new, Page])
