@@ -1,0 +1,12 @@
+.row
+  .span4
+    .thumbnail
+      .caption
+        =image_tag("#{@order.box_type}-box.png")
+  .span6
+    %h4 Product
+    ="#{@order.box_type.capitalize} Box for #{pluralize(@order.number_of_months,'month')}"
+    %h4 Delivery address
+    %address=simple_format(@order.delivery_address("\n"))
+    %h4 Cost
+    ="£#{@order.amount}"

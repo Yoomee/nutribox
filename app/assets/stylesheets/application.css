@@ -55,7 +55,8 @@
 .fade_in.fade_six {-webkit-animation-delay: 0, 1.5s;}
 
 /* ========== Fonts ========== */
-body {
+body,
+#box_step h4 .saving{
 	font-family: 'Museo Sans W01 300', arial, sans-serif;
 	color: #666666;
 	font-size: 15px;
@@ -80,8 +81,6 @@ h2, h3 {
 th, h4, h5, h6, strong, .header-alert a.close  {
 	color: #333;
 	font-family: 'Museo Sans W01 700', arial, sans-serif;
-
-  
 }
 
 /* ========== General (bootstrap overrived etc) ========== */
@@ -485,11 +484,6 @@ a.twitter-link {
   
   background: #fff;
   box-shadow:0 0px 5px rgba(0,0,0,0.2)
-  
-
-
-  
-
 }
 #top-nav a.nav-link {
   font-size: 22px;
@@ -504,11 +498,23 @@ a.twitter-link {
 	background: none;
 	color: #99b936;
 }
+#top-subnav{
+  float:right;
+  clear:right;
+  background:#fff;
+  background:rgba(255,255,255,0.9);
+  z-index:80;
+  margin:-10px 35px 0px 0px;
+  box-shadow:0 0px 5px rgba(0,0,0,0.2);
+  border-radius: 6px;
+  padding:10px 8px 0px;
+}
+#top-subnav li a{
+  padding:6px 12px;
+}
 #my-account {
   left: auto;
-
   z-index: 10;
-  
 }
 
 #my-account a.dropdown-toggle {
@@ -760,6 +766,79 @@ img.temp-illustration-inside {
 }
 
 
+/*========== Sign up ==========*/
+form.order .form-actions{
+  padding-left:20px;
+}
+form.order abbr{
+  display:none;
+}
+
+ul.box-options {
+  float:left;
+  clear:both;
+  width:100%;
+  margin:5px 0px -10px;
+}
+ul.box-options li {
+  border-top: 1px solid #ccc;
+  float: left;
+  clear: both;
+  width: 100%;
+  padding:8px 0px;
+}
+#box_step .thumbnails .btn{
+  padding:5px 7px;
+  margin-top:5px;
+}
+#box_step .thumbnails h4{
+  margin:0px;
+}
+#box_step .thumbnails .saving{
+  font-weight:normal;
+  font-style:italic;
+}
+#box_step .thumbnails .saving .percentage{
+  font-size:13px;
+}
+#box_step .thumbnails .active .btn{
+  background-color: #99b936;
+}
+
+#box_step .thumbnails input {
+  display:none;
+}
+#box_step .box-photo{
+  width:80%;
+  margin:0px 10%;
+}
+#register_step .accordion-group {
+  border:none;
+}
+
+.form-horizontal #billing_step .control-label{
+  width:80px;
+}
+.form-horizontal #billing_step .controls{
+  margin-left:100px;
+}
+
+#order_credit_card_attributes_month_input {
+  float:left;
+}
+
+#order_credit_card_attributes_year_input {
+  float:left;  
+}
+.form-horizontal #order_credit_card_attributes_year_input .control-label {
+  width:15px;
+  font-size:25px;
+  line-height:25px;
+}
+.form-horizontal #order_credit_card_attributes_year_input .controls{
+  margin-left:20px;
+}
+
 /* ========== Blog ========== */
 .blog-wrapper {
   background: #c69f7a url(/assets/blog-wrapper.png);
@@ -845,14 +924,6 @@ ul.post-info li, ul.post-info li a, ul.post-info li a:hover {
   text-decoration: none;
   color: #999;
 }
-
-
-
-
-
-
-
-
 
 
 

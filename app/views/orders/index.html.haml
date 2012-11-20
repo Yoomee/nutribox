@@ -1,0 +1,13 @@
+.row
+  .span8
+    %h1=title("My orders")
+    %table.table.table-striped
+      %tbody
+        -@orders.each do |order|
+          %tr
+            %td.span1
+              =image_tag("#{order.box_type}-box.png")
+            %td
+              %p.lead=order.product
+            %td.span2
+              =link_to("View",order, :class => 'btn pull-right')

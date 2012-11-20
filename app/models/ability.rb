@@ -7,12 +7,15 @@ class Ability
     
     # open ability
     can :read, Page
+    can :create, Order
     
     if user.try(:admin?)
       can :manage, :all      
       # admin ability
     elsif user
       # user ability
+      can :index, Order
+      can [:update, :show], Order, :user_id => user.id
       can :manage, User, :id => user.id      
     end
     

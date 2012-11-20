@@ -1,0 +1,17 @@
+%h2 Enter your payment details
+.row
+  .span5
+    %h4 Card details
+    =form.semantic_fields_for :credit_card do |fields|    
+      =fields.input :name
+      =fields.input :number
+      =fields.input :month, :placeholder => "MM", :input_html => {:class => 'input-mini'}, :label => "Expiry date"
+      =fields.input :year, :placeholder => "YYYY", :input_html => {:class => 'input-mini'}, :label => "/", :required => false
+      .clearfix
+      =fields.input :verification_value, :label => "CVV",:input_html => {:class => 'input-mini'}
+  .span5
+    %h4 Billing address
+    =form.input :billing_address1, :label => "Address"
+    =form.input :billing_address2, :label => false
+    =form.input :billing_city, :label => "City"
+    =form.input :billing_postcode, :as => :string, :label => "Postcode"
