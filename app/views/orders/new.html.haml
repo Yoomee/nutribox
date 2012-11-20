@@ -1,10 +1,11 @@
 .span10.offset1
-  =semantic_form_for @order, :html => {:class => 'form-horizontal'}  do |form|
+  =semantic_form_for @order, :html => {:class => 'form-horizontal loading-text-disabled'}  do |form|
     =form.hidden_field :current_step
     #box_step{:class => @order.current_step_box? ? '' : 'hide'}
       =render("orders/steps/box", :form => form)
-    #register_step{:class => @order.current_step_register? ? '' : 'hide'}
-      =render("orders/steps/register", :form => form)
+    -unless @order.current_step_box?
+      #register_step{:class => @order.current_step_register? ? '' : 'hide'}
+        =render("orders/steps/register", :form => form)
     #delivery_step{:class => @order.current_step_delivery? ? '' : 'hide'}
       =render("orders/steps/delivery", :form => form)
     #billing_step{:class => @order.current_step_billing? ? '' : 'hide'}

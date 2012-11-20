@@ -12,7 +12,7 @@ class Order < ActiveRecord::Base
   validates :delivery_postcode, :postcode => true, :if => :current_step_delivery?
   validates :billing_address1, :billing_city, :billing_postcode, :billing_country,  :presence => true, :if => :current_step_billing?
   validates :billing_postcode, :postcode => true, :if => :current_step_billing?
-  validate :credit_card_is_valid, :if => :current_step_billing? 
+  validate  :credit_card_is_valid, :if => :current_step_billing? 
   
   before_validation :set_amount
   before_validation :set_billing_name
@@ -20,6 +20,15 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :user
   
   class << self
+    
+    def number_of_snacks(box_type)
+      case box_type
+      when "taster" then "8-10"
+      when "multi"  then "16-20"
+      else
+        ""
+      end
+    end
   
     def cost_in_pence(box_type,number_of_months)
       Order::COST_MATRIX[box_type.to_sym].try(:[], number_of_months).to_i
@@ -82,6 +91,28 @@ class Order < ActiveRecord::Base
     "GB"
   end  
   
+  def next_delivery_date
+    next_shipping_date + 5.days
+  end
+  
+  def next_shipping_date
+    if Date.today.day < shipping_day
+      # Hasn't been shipped yet this month
+      Date.today.change(:day => shipping_day)
+    else
+      # Will be shipped next month
+      (Date.today >> 1).change(:day => shipping_day)
+    end
+  end
+  
+  def product
+    "#{box_type.capitalize} Box for #{number_of_months} month#{'s' if number_of_months > 1}"
+  end
+  
+  def shipping_day
+    Date.today.day < 15 ? 25 : 11
+  end
+  
   def failed?
     [vps_transaction_id,security_key,transaction_auth_number].any?(:blank?)
   end
@@ -99,7 +130,7 @@ class Order < ActiveRecord::Base
       paypal_response = gateway.purchase(
       amount_in_pence,
       credit_card,
-      :order_id => id,
+      :order_id => (Rails.env.development? ? "dev#{id}" : id),
       :billing_address => {
         :name => billing_name,
         :address1 => billing_address1,

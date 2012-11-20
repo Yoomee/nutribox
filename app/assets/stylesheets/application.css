@@ -483,11 +483,6 @@ a.twitter-link {
   
   background: #fff;
   box-shadow:0 0px 5px rgba(0,0,0,0.2)
-  
-
-
-  
-
 }
 #top-nav a.nav-link {
   font-size: 22px;
@@ -502,11 +497,23 @@ a.twitter-link {
 	background: none;
 	color: #99b936;
 }
+#top-subnav{
+  float:right;
+  clear:right;
+  background:#fff;
+  background:rgba(255,255,255,0.9);
+  z-index:80;
+  margin:-10px 35px 0px 0px;
+  box-shadow:0 0px 5px rgba(0,0,0,0.2);
+  border-radius: 6px;
+  padding:10px 8px 0px;
+}
+#top-subnav li a{
+  padding:6px 12px;
+}
 #my-account {
   left: auto;
-
   z-index: 10;
-  
 }
 
 #my-account a.dropdown-toggle {
@@ -778,6 +785,10 @@ img.temp-illustration-inside {
 form.order .form-actions{
   padding-left:20px;
 }
+form.order abbr{
+  display:none;
+}
+
 ul.box-options {
   float:left;
   clear:both;
@@ -812,7 +823,10 @@ ul.box-options li {
 #box_step .thumbnails input {
   display:none;
 }
-
+#box_step .box-photo{
+  width:80%;
+  margin:0px 10%;
+}
 #register_step .accordion-group {
   border:none;
 }

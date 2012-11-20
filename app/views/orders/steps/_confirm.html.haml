@@ -1,7 +1,2 @@
 %h2 Check and confirm your order
-%h4 Product
-="#{@order.box_type.capitalize} Box for #{pluralize(@order.number_of_months,'month')}"
-%h4 Delivery address
-%address=simple_format(@order.delivery_address("\n"))
-%h4 Cost
-="£#{@order.amount}"
+=render(@order)

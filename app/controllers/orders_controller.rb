@@ -10,6 +10,10 @@ class OrdersController < ApplicationController
     handle_order
   end
   
+  def index
+    @orders = current_user.orders.order("created_at DESC")
+  end
+  
   def update
     @order.assign_attributes(params[:order])
     handle_order
@@ -22,7 +26,7 @@ class OrdersController < ApplicationController
       @order.previous_step! if @order.current_step_register?
       render :action => "new"
     else
-      if @order.login_email.present?
+      if @order.current_step_register? && @order.login_email.present?
         user = User.find_by_email(@order.login_email)
         if user && user.valid_password?(@order.login_password)
           @order.user = user
@@ -35,7 +39,7 @@ class OrdersController < ApplicationController
         if @order.last_step?
           @order.save
           if error = @order.take_payment!
-            redirect_to @order
+            render :action => 'thanks'
           else
             flash[:error] = "Your payment could not be processed"
             @order.current_step = "billing"

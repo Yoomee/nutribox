@@ -1,7 +1,4 @@
 %h1="Order ##{@order.id}"
-%h4 Date
-=@order.created_at.to_s(:date)
-%h4 Product
-="#{@order.box_type.capitalize} Box for #{pluralize(@order.number_of_months,'month')}"
-%h4 Delivery address
-%address=simple_format(@order.delivery_address("\n"))
+=render(@order)
+=options_panel do
+  =back_link

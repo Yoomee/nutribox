@@ -14,6 +14,7 @@ class Ability
       # admin ability
     elsif user
       # user ability
+      can :index, Order
       can [:update, :show], Order, :user_id => user.id
       can :manage, User, :id => user.id      
     end

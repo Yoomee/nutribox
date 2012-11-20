@@ -12,6 +12,7 @@ gem "country-select"
 gem "formtastic-bootstrap", :git => "git://github.com/cgunther/formtastic-bootstrap.git", :branch => "bootstrap-2"
 gem "whenever", :require => false
 gem 'activemerchant', :require => 'active_merchant'
+gem "stamp"
 
 gem "ym_core"           #, :path => "~/Rails/Gems/ym_core"
 gem "ym_cms"            #, :path => "~/Rails/Gems/ym_cms"
