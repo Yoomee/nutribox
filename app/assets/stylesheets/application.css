@@ -487,7 +487,7 @@ a.twitter-link {
 #top-nav a.nav-link {
   font-size: 22px;
   color: #999;
-  padding: 20px 18px;
+  padding: 20px 18px;]
   text-shadow: none;
 }
 #top-nav li a.nav-my-account {
@@ -506,7 +506,7 @@ a.twitter-link {
   margin:-10px 35px 0px 0px;
   box-shadow:0 0px 5px rgba(0,0,0,0.2);
   border-radius: 6px;
-  padding:10px 8px 0px;
+  padding:12px 8px 0px;
 }
 #top-subnav li a{
   padding:6px 12px;

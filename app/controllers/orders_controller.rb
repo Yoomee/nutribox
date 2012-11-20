@@ -10,6 +10,10 @@ class OrdersController < ApplicationController
     handle_order
   end
   
+  def list
+    @orders = Order.order("created_at DESC")
+  end
+  
   def index
     @orders = current_user.orders.order("created_at DESC")
   end
@@ -62,13 +66,17 @@ class OrdersController < ApplicationController
               @order.user = User.new
             end
           when "delivery"
-            if previous_order = @order.user.orders.where(:gift => false).first
-              @order.delivery_name = previous_order.delivery_name
-              @order.delivery_address1 = previous_order.delivery_address1
-              @order.delivery_address2 = previous_order.delivery_address2
-              @order.delivery_country = previous_order.delivery_country
-              @order.delivery_city = previous_order.delivery_city
-              @order.delivery_postcode = previous_order.delivery_postcode
+            if !@order.gift?
+              if previous_order = @order.user.orders.where(:gift => false).first
+                @order.delivery_name = previous_order.delivery_name
+                @order.delivery_address1 = previous_order.delivery_address1
+                @order.delivery_address2 = previous_order.delivery_address2
+                @order.delivery_country = previous_order.delivery_country
+                @order.delivery_city = previous_order.delivery_city
+                @order.delivery_postcode = previous_order.delivery_postcode
+              else
+                @order.delivery_name = @order.user.full_name
+              end
             end
           when "billing"
             @order.set_test_card_details

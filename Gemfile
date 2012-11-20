@@ -28,7 +28,7 @@ end
 
 group :development do
   gem 'growl'
-  gem 'mailcatcher'
+  gem 'letter_opener'
   gem 'ruby-debug19'
   gem 'ym_tools'
   gem 'passenger'

@@ -1,7 +1,11 @@
 Nutribox::Application.routes.draw do
   root :to => 'home#index'
   
-  resources :orders, :except => [:destroy]
+  resources :orders, :except => [:destroy] do
+    collection do
+      get 'list'
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
