@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery
 
-  before_filter :redirect_if_www
+  prepend_before_filter :force_https_and_remove_www
   before_filter :authenticate
   
   AUTH_USERS = { "nutribox" => "nutribox123" }
@@ -16,9 +16,15 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def redirect_if_www
-    if request.subdomain.present? && request.subdomain == "www"
-      redirect_to request.url.sub("www.",'')
+  def force_https_and_remove_www
+    if Rails.env.production? && (!request.ssl? || (request.subdomain.to_s == "www"))
+      redirect_options = {
+        :protocol => 'https://',
+        :host => request.host.sub('www.',''),
+        :status => :moved_permanently,
+        :params => request.query_parameters
+      }
+      redirect_to redirect_options
     end
   end
 
