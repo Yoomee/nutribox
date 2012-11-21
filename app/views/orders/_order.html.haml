@@ -5,7 +5,11 @@
         =image_tag("#{@order.box_type}-box.png")
   .span6
     %h4 Product
-    ="#{@order.box_type.capitalize} Box for #{pluralize(@order.number_of_months,'month')}"
+    %p="#{@order.box_type.capitalize} Box for #{pluralize(@order.number_of_months,'month')}"
+    %p
+      You will receive one a box per month for the next
+      =@order.number_of_months
+      months.
     %h4 Delivery address
     %address=simple_format(@order.delivery_address("\n"))
     %h4 Cost
