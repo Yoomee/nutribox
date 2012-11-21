@@ -12,7 +12,7 @@ module PagesHelper
     if page.summary.present?
       summary
     else
-      strip_tags(page.text).truncate(length)
+      strip_tags(page.text).truncate(length).html_safe
     end
   end
   
