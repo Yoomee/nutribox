@@ -483,12 +483,12 @@ a.twitter-link {
   border-radius:6px;
   
   background: #fff;
-  box-shadow:0 0px 5px rgba(0,0,0,0.2)
+  box-shadow:0 0px 5px rgba(0,0,0,0.2);
 }
 #top-nav a.nav-link {
   font-size: 22px;
   color: #999;
-  padding: 20px 18px;]
+  padding: 20px 18px;
   text-shadow: none;
 }
 #top-nav li a.nav-my-account {
@@ -867,8 +867,7 @@ ul.box-options li {
 .blog-roll-inner {
 	background: url(/assets/blog-roll-inner.png) top center;
   margin: 30px 11px;
-  
-  box-shadow:0 0 5px rgba(0,0,0,0.5);,
+  box-shadow:0 0 5px rgba(0,0,0,0.5);
   -webkit-box-shadow:0 0 5px rgba(0,0,0,0.5);
 }
 .blog-roll-inner .options_panel{
@@ -954,6 +953,6 @@ ul.post-info li, ul.post-info li a, ul.post-info li a:hover {
 	background: url(/assets/blog-roll-inner.png) top center;
   margin:40px 0px 0px -50px;
   padding: 20px 20px 20px 70px;
-  height:3000px;
+  height:250px;
   width:200px;
 }
