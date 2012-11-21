@@ -15,7 +15,7 @@ gem 'activemerchant', :require => 'active_merchant'
 gem "stamp"
 
 gem "ym_core"           #, :path => "~/Rails/Gems/ym_core"
-gem "ym_cms", "0.3.6"   #, :path => "~/Rails/Gems/ym_cms"
+gem "ym_cms", "0.3.7"   #, :path => "~/Rails/Gems/ym_cms"
 gem "ym_users"          #, :path => "~/Rails/Gems/ym_users"
 gem "ym_permalinks"     #, :path => "~/Rails/Gems/ym_permalinks"
 gem "ym_snippets"       #, :path => "~/Rails/Gems/ym_snippets"
