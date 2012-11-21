@@ -8,10 +8,10 @@
         =link_to("Home", root_path, :class=>"nav-link")
       =li_with_active slug_active?(:how_it_works) do
         =link_to_slug "How it works", :how_it_works, :class=>"nav-how-it-works nav-link"
-      =li_with_active slug_active?(:join) do
-        =link_to_slug "Join", :join, :class=>"nav-join nav-link"
-      =li_with_active slug_active?(:gift) do
-        =link_to_slug "Gift", :gift, :class=>"nav-gift nav-link"
+      =li_with_active false do
+        =link_to "Join", join_path, :class=>"nav-join nav-link"
+      =li_with_active false do
+        =link_to "Gift", gift_path, :class=>"nav-join nav-link"
       =li_with_active slug_active?(:blog) do
         =link_to_slug "Blog", :blog, :class=>"nav-blog nav-link"
       -if false  

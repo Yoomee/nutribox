@@ -7,6 +7,9 @@ Nutribox::Application.routes.draw do
     end
   end
 
+  get 'join' => "orders#new"
+  get 'gift' => "orders#new", :gift => 1  
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

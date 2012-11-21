@@ -8,4 +8,12 @@ module PagesHelper
     end
   end
   
+  def summary_or_truncated_text(page,length)
+    if page.summary.present?
+      summary
+    else
+      strip_tags(page.text).truncate(length)
+    end
+  end
+  
 end

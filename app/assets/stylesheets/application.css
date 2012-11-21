@@ -483,12 +483,12 @@ a.twitter-link {
   border-radius:6px;
   
   background: #fff;
-  box-shadow:0 0px 5px rgba(0,0,0,0.2)
+  box-shadow:0 0px 5px rgba(0,0,0,0.2);
 }
 #top-nav a.nav-link {
   font-size: 22px;
   color: #999;
-  padding: 20px 18px;]
+  padding: 20px 18px;
   text-shadow: none;
 }
 #top-nav li a.nav-my-account {
@@ -588,8 +588,6 @@ background: #866b53 url(/assets/home-strip-2.png) center;
   border-radius:5px;
 }
 #blog-summary {
-  min-height: 380px;
-  
   -webkit-box-shadow:0px 0px 10px rgba(0,0,0,0.3); 
   box-shadow:0px 0px 10px rgba(0,0,0,0.3);
 }
@@ -862,13 +860,14 @@ ul.box-options li {
 }
 .blog-roll {
   min-height: 600px;
+  position:relative;
+  z-index:20;
   background: url(/assets/blog-roll.png) no-repeat top center;
 }
 .blog-roll-inner {
 	background: url(/assets/blog-roll-inner.png) top center;
   margin: 30px 11px;
-  
-  box-shadow:0 0 5px rgba(0,0,0,0.5);,
+  box-shadow:0 0 5px rgba(0,0,0,0.5);
   -webkit-box-shadow:0 0 5px rgba(0,0,0,0.5);
 }
 .blog-roll-inner .options_panel{
@@ -947,3 +946,13 @@ ul.post-info li, ul.post-info li a, ul.post-info li a:hover {
 }
 
 
+#blog_post_info {
+  position:relative;
+  float: left;
+  clear: both;
+	background: url(/assets/blog-roll-inner.png) top center;
+  margin:40px 0px 0px -50px;
+  padding: 20px 20px 20px 70px;
+  height:250px;
+  width:200px;
+}

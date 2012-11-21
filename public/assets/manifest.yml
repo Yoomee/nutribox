@@ -19,6 +19,11 @@ museo700-regular-webfont.svg: museo700-regular-webfont-aca6c07855e42c4764a774697
 museo700-regular-webfont.ttf: museo700-regular-webfont-e896a7aef471532cf3a50873c883b787.ttf
 museo700-regular-webfont.woff: museo700-regular-webfont-ca1b8e742ab13e58db1821acf3cb6ac3.woff
 bg_card.jpg: bg_card-1f9555c96389d1d196c7953be8ee5469.jpg
+blog-roll-inner.png: blog-roll-inner-190d4feeb5a4e74d8017cd6ed12db101.png
+blog-roll.png: blog-roll-e0c9b55a3fb2300d406cc630c6691890.png
+blog-wrapper-top.jpg: blog-wrapper-top-14efb93143ee67bb5c32ac26cf6aded4.jpg
+blog-wrapper-top.png: blog-wrapper-top-a4b6dd7aa017fcdf339e0369bf0a349b.png
+blog-wrapper.png: blog-wrapper-2d7623339e7856e9fdd339ced45b6f19.png
 blog_message.png: blog_message-60940c5826a346432cf37869bc35a429.png
 blog_post_image-2.jpg: blog_post_image-2-d1158e76abca7a642f317026e0d90d09.jpg
 blog_post_image.jpg: blog_post_image-5676ef2e87154c3603acdfcf1895aad1.jpg
@@ -42,8 +47,10 @@ logo.png: logo-68d8cd31db35739c59c85466930e46db.png
 multi-box.png: multi-box-65f9043c82fdb24fd104f5f34af4c68c.png
 paper_texture.jpg: paper_texture-bad0c812312595d67ac6ca00c2190586.jpg
 paper_texture_body.jpg: paper_texture_body-2ca142cf6b0acfec8f42d0955e8532d5.jpg
+post-author.jpg: post-author-cc20ea52e59afc1a39aa6dd9411c3144.jpg
 sign_up_below.png: sign_up_below-56588c87a1b80dd79990b5645c93ff52.png
 snacks.png: snacks-534d447e2af7b22db820b00af0eaec72.png
+summary-img.jpg: summary-img-a0e11bc6e0be7abe34c08c3791053f45.jpg
 taster-box.png: taster-box-46662b9e0c22390d8ae178508aa779e0.png
 twitter-link.png: twitter-link-90b0fee95823937c07f3a59b22bc9211.png
 yoomee_logo.png: yoomee_logo-fa022040f9bce3877704c4fb6ff6d934.png
@@ -71,4 +78,4 @@ jquery-ui-1.8.18.css: jquery-ui-1.8.18-525b8fc57478eb4d921d21ea053f2634.css
 jquery-ui.min.js: jquery-ui.min-449c6576aff2d5aef9fea2c0b667083b.js
 jquery.min.js: jquery.min-c17ee58f451d313a5585c3a1b1571ff2.js
 application.js: application-a550d13947dcdf78df9f585a51b24769.js
-application.css: application-fc772e6b957b82c51e0dd9f049238802.css
+application.css: application-2f60c7db06b38bf3c190282b12988439.css
