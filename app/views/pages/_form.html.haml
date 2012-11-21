@@ -1,0 +1,10 @@
+=content_for(:head) do
+  :javascript
+    $(document).ready(function() {
+      YmCms.Page.Form.init();  
+    });
+%hr
+=semantic_form_for(@page, :multipart => true) do |form|
+  =render('pages/tabs/details', :form => form)
+  =form.buttons do
+    =form.commit_button "Save", :button_html => {:class => "pull-right"}

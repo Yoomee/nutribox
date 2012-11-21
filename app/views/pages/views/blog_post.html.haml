@@ -10,7 +10,7 @@
         .blog-roll-inner
           .blog-post
             %h1.mb-2=title(@page.title)
-            =image_for(@page, "558x", :class => 'mb-2')
+            =image_for(@page, "558x", :class => 'mb-2') if @page.image
             =raw @page.text
           .clearfix
           .disqus_thread=disqus_thread(@page, Settings.disqus_shortname)
@@ -23,6 +23,21 @@
                 
                 
       #blog_right_col.span4
+        #blog_post_info
+          %ul.unstyled.post-info  
+            %li.post-author
+              =image_for(@page.user, "20x20#")
+              =link_to '#', :class=>"post-author-img" do
+                %span=@page.user
+            %li.post-date
+              %i.icon-calendar
+              %span=@page.publication_date.try(:stamp,"Nov 31, 2012")
+            %li.post-comments
+              %i.icon-comments-alt
+              %span=link_to 'Comments', page_path(@page, :anchor => 'disqus_thread'), "data-disqus-identifier" => disqus_id(@page), :class => 'comment-count'
+          =link_to("Share on Twitter", "#", :class => "btn btn-primary btn-large mt-1")
+          =link_to("Share on Facebook", "#", :class => "btn btn-primary btn-large mt-1")
+          
         -#
           #blog_archive.blog_box
             %h3 Archive

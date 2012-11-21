@@ -11,8 +11,9 @@
           -@page.children.latest.each do |page|
             .blog-post.post-summary
               .post-summary-left
-                =link_to page, :class=>"post-summary-img" do
-                  =image_for(page, "200x160#")
+                -if page.image
+                  =link_to page, :class=>"post-summary-img" do
+                    =image_for(page, "200x160#")
                 %ul.unstyled.post-info  
                   %li.post-author
                     =image_for(page.user, "20x20#")
@@ -29,7 +30,7 @@
                   =link_to page do
                     =page.title
                 %p.summary-intro
-                  =strip_tags(page.text.truncate(350))
+                  =summary_or_truncated_text(page,350)
                 =link_to "Read more", "#", :class=>"summary-read-more"
             .clearfix
           -if can?(:edit, @page)

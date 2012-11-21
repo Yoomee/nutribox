@@ -30,11 +30,13 @@
       #blog-summary.home-strip-box.span6
         .well
           %h2.home-strip-title
-            =link_to "Latest from the blog", "#"            
-          .latest-blog-image.mb-2  
-            =link_to "/blog" do
-              =image_tag "latest_blog_image.jpg"
+            =link_to "Latest from the blog", @latest_blog_post
+          .latest-blog-image.mb-2
+            -if @latest_blog_post.image
+              =link_to @latest_blog_post do
+                =image_for @latest_blog_post, "415x190#"
+          %h4=link_to_self(@latest_blog_post)
           %p.blog-summary-intro.mb-1
-            Nothing could be worse then when you think that you are making a healthy food choice only to uncover that it really isn’t healthy.  In other words, your healthy food choice backfires.   The latest “good news” from a study conducted by the USDA Economic Research Service (ERS) about the decreased levels of trans fats in food products can feed into this potential backfiring.
-          =link_to "Read more", "/blog", :class=>"latest-blog-read-more"
+            =summary_or_truncated_text(@latest_blog_post,350)
+          =link_to "Read more", @latest_blog_post, :class=>"latest-blog-read-more"
 =render "layouts/stay_in_touch"
