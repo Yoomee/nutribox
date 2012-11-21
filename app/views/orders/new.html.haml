@@ -1,5 +1,5 @@
 .span10.offset1
-  =semantic_form_for @order, :html => {:class => 'form-horizontal loading-text-disabled'}  do |form|
+  =semantic_form_for @order, :url => (@order.gift? ? gift_path : join_path), :html => {:class => 'form-horizontal loading-text-disabled'}  do |form|
     =form.hidden_field :current_step
     #box_step{:class => @order.current_step_box? ? '' : 'hide'}
       =render("orders/steps/box", :form => form)

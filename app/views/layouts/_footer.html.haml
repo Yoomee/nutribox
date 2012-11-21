@@ -8,5 +8,6 @@
         %li=link_to "About us", "#"
         %li=link_to "FAQs"
         %li=link_to "Contact us", "#"
-        %li=link_to("Login", sign_in_path)
+        -unless current_user
+          %li=link_to("Login", sign_in_path)
       =link_to("Yoomee", "http://www.yoomee.com", :id => "siteby", :target=>"_blank")

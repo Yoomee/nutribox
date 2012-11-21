@@ -57,14 +57,15 @@ class OrdersController < ApplicationController
             @order.user_id = user.id
           end
           @order.next_step!
-          case @order.current_step
-          when "register"
+          if @order.current_step_register?
             if current_user
               @order.user = current_user
               @order.next_step!
             else
               @order.user = User.new
             end
+          end
+          case @order.current_step
           when "delivery"
             if !@order.gift?
               if previous_order = @order.user.orders.where(:gift => false).first

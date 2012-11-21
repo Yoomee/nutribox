@@ -1,14 +1,17 @@
 Nutribox::Application.routes.draw do
   root :to => 'home#index'
   
-  resources :orders, :except => [:destroy] do
+  resources :orders, :except => [:destroy], :path => "subscriptions" do
     collection do
       get 'list'
     end
   end
 
-  get 'join' => "orders#new"
-  get 'gift' => "orders#new", :gift => 1  
+  get  'join' => "orders#new"
+  get  'gift' => "orders#new", :gift => 1
+  post 'join' => "orders#create"
+  post 'gift' => "orders#create"
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

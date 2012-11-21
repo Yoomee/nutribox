@@ -1,7 +1,8 @@
 -content_for :head do
   :javascript
     $(document).ready(function() {
-      $('#box_step input[type="radio"]').change(function(){
+      $('#box_step input[type="radio"]:checked').parent().addClass('active')
+      $('#box_step input[type="radio"]').click(function(){
         $('#box_step label.active').removeClass('active');
         $(this).parent().addClass('active');
         $('form.order').submit();
@@ -35,7 +36,7 @@
                           \- save
                           %span.percentage="#{Order.saving_percentage(box_type,num)}%"
                 .pull-right
-                  %label{:class => ('active' if @order.box_type_and_number_of_months == "#{box_type}-#{num}")}
+                  %label
                     =form.radio_button('box_type_and_number_of_months',"#{box_type}-#{num}",)
                     .btn Subscribe
           .clearfix
