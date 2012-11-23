@@ -11,3 +11,4 @@ log/*.log
 log/*.pid
 tmp/
 chromedriver.log
+lib/xero/production
