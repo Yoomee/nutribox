@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
   include YmCore::Model
   include YmCore::Multistep
+  include Xero::Order
     
   belongs_to :user  
   amount_accessor
@@ -46,6 +47,16 @@ class Order < ActiveRecord::Base
       ((saving_in_pence(box_type,number_of_months).to_f / cost_in_pence(box_type,number_of_months)) * 100).to_i
     end
     
+  end
+  
+  def amount_ex_vat
+    unrounded = (amount.to_f / (100 + Order::VAT_PERCENTAGE)) * 100
+    # Round down for tax purposes
+    (unrounded * 100).floor / 100.0
+  end
+  
+  def vat
+    (amount - amount_ex_vat).round(2)
   end
   
   def set_billing_address_from_delivery_address
@@ -215,6 +226,8 @@ class Order < ActiveRecord::Base
   
   
 end
+
+Order::VAT_PERCENTAGE = 20.0
 
 Order::COST_MATRIX = {
   :taster => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },

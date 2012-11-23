@@ -1,1 +1,5 @@
 disqus_shortname: yoomeedev
+xero:
+  consumer_key: BG2KHEREGBPEXEJ1EUAWH0UU22STRW
+  consumer_secret: 14AZRATDHKI9JZNJO3UB7YDMCSUD5C
+  privatekey_path: lib/xero/development/privatekey.pem
