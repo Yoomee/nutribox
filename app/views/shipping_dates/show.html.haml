@@ -1,0 +1,26 @@
+%h1.pull-left.mb-2
+  Boxes for delivery
+  %small
+    =@shipping_date.date.stamp("Monday 11th January 2013")
+=link_to(shipping_date_path(@shipping_date, :format => 'xls'), :class => 'btn btn-primary pull-right mt-1') do
+  %i.icon-download-alt
+  Download
+-if @shipping_date.deliveries.empty?
+  %p.lead There are no deliveries for this date.
+%table.table.table-striped
+  %thead
+    %tr
+      %th ID
+      %th Customer
+      %th Box type
+      %th Delivery address
+      %th Delivery notes
+  %tbody
+    -@shipping_date.deliveries.each do |delivery|
+      %tr
+        %td.span1=delivery.id
+        %td=link_to_self(delivery.user)
+        %td=delivery.box_type.titleize
+        %td.span4=delivery.address
+        %td.span4=read_more_truncate(delivery.notes,:length => 40)
+    

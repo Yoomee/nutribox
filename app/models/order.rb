@@ -2,7 +2,8 @@ class Order < ActiveRecord::Base
   include YmCore::Model
   include YmCore::Multistep
     
-  belongs_to :user  
+  belongs_to :user
+  has_many :deliveries
   amount_accessor
   
   attr_accessor :login_email, :login_password
@@ -18,6 +19,9 @@ class Order < ActiveRecord::Base
   before_validation :set_billing_name
   
   accepts_nested_attributes_for :user
+  
+  scope :active, where(:status => 'active')
+  scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
   
   class << self
     
@@ -45,7 +49,7 @@ class Order < ActiveRecord::Base
     def saving_percentage(box_type,number_of_months)
       ((saving_in_pence(box_type,number_of_months).to_f / cost_in_pence(box_type,number_of_months)) * 100).to_i
     end
-    
+
   end
   
   def set_billing_address_from_delivery_address
