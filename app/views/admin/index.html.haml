@@ -1,0 +1,9 @@
+%h1=title('Admin')
+%h2 Shipping dates
+%ul.unstyled
+  -ShippingDate.order("created_at DESC").each do |shipping_date|
+    %li
+      =link_to(shipping_date) do
+        =shipping_date.date.stamp("Monday 11th January 2013")
+        -unless shipping_date.downloaded?
+          %i.icon-asterisk

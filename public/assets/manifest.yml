@@ -27,7 +27,7 @@ blog-wrapper.png: blog-wrapper-2d7623339e7856e9fdd339ced45b6f19.png
 blog_message.png: blog_message-60940c5826a346432cf37869bc35a429.png
 blog_post_image-2.jpg: blog_post_image-2-d1158e76abca7a642f317026e0d90d09.jpg
 blog_post_image.jpg: blog_post_image-5676ef2e87154c3603acdfcf1895aad1.jpg
-box.png: box-23b79c7217e9f84627a1eddb538f4bb8.png
+box.png: box-be665c2ed0999dee1f881aead0b37336.png
 coming-soon-title.png: coming-soon-title-38b1e90a3c0b41fd333b5ee9ca99fdc3.png
 coming_very_soon.png: coming_very_soon-15fe131e785c468dd3d6761c15dba82d.png
 facebook-link.png: facebook-link-f3c06eeb437902bb8c25d1a08717726a.png
@@ -39,6 +39,7 @@ header_bg.jpg: header_bg-64d8427561d2e0eea75eef376bb5b416.jpg
 header_bg.png: header_bg-cf79c40e0316d3739c0db0bfaf990855.png
 healthy-snacking-made-easier.png: healthy-snacking-made-easier-b1196be4f3ed3f287a70ff64ffe1be9e.png
 home-strip-2.png: home-strip-2-80d95e34031b344e25176dc76ec2692e.png
+how-it-works.jpg: how-it-works-d173725d06806fdd8e87733d29ea4eec.jpg
 illustration-choose.png: illustration-choose-861e50cb61a2ef182e4ee8827f4a7618.png
 illustration-receive.png: illustration-receive-63b7901d9b1966f1fd70d9812f134496.png
 illustration-surprise.png: illustration-surprise-58dc29cb46cb92bbe8ce6fac8f60b6e7.png
@@ -48,6 +49,8 @@ latest_blog_image.jpg: latest_blog_image-24e494137d7e4dd3a11dc1cf9048186e.jpg
 launching_in.png: launching_in-30469ae693e11778ae266236e8620409.png
 logo.png: logo-68d8cd31db35739c59c85466930e46db.png
 multi-box.png: multi-box-65f9043c82fdb24fd104f5f34af4c68c.png
+my-account-login.png: my-account-login-4a17f89e6dbc6f689979c96e3aa2ce91.png
+my-account.png: my-account-49cc967ae2e41f3a9d481f266bd5591f.png
 paper_texture.jpg: paper_texture-bad0c812312595d67ac6ca00c2190586.jpg
 paper_texture_body.jpg: paper_texture_body-2ca142cf6b0acfec8f42d0955e8532d5.jpg
 post-author.jpg: post-author-cc20ea52e59afc1a39aa6dd9411c3144.jpg
@@ -81,4 +84,4 @@ jquery-ui-1.8.18.css: jquery-ui-1.8.18-525b8fc57478eb4d921d21ea053f2634.css
 jquery-ui.min.js: jquery-ui.min-449c6576aff2d5aef9fea2c0b667083b.js
 jquery.min.js: jquery.min-c17ee58f451d313a5585c3a1b1571ff2.js
 application.js: application-a550d13947dcdf78df9f585a51b24769.js
-application.css: application-35c7db4629abebe85072dd3da2b59d68.css
+application.css: application-653dd4fa79c91fee12ba7bfa05689ddd.css

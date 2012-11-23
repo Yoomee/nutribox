@@ -10,12 +10,12 @@
     });
 =form.input :gift, :as => :hidden
 -if @order.gift?
-  %h2 Which box would you like to give?
+  %h2.mb-2 Which box would you like to give?
 -else
   %h2 Choose your box
-.thumbnails
+.thumbnails.choose-boxes
   -["taster","multi"].each do |box_type|
-    %li.span5
+    %li.span5.choose-box
       .thumbnail
         .caption
           %h4
