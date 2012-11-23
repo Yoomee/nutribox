@@ -1,19 +1,31 @@
-.span10.offset1
-  =semantic_form_for @order, :url => (@order.gift? ? gift_path : join_path), :html => {:class => 'form-horizontal loading-text-disabled'}  do |form|
-    =form.hidden_field :current_step
-    #box_step{:class => @order.current_step_box? ? '' : 'hide'}
-      =render("orders/steps/box", :form => form)
-    -unless @order.current_step_box?
-      #register_step{:class => @order.current_step_register? ? '' : 'hide'}
-        =render("orders/steps/register", :form => form)
-    #delivery_step{:class => @order.current_step_delivery? ? '' : 'hide'}
-      =render("orders/steps/delivery", :form => form)
-    #billing_step{:class => @order.current_step_billing? ? '' : 'hide'}
-      =render("orders/steps/billing", :form => form)
-    -if @order.current_step_confirm?
-      #confirm_step
-        =render("orders/steps/confirm", :form => form)
-    -unless @order.first_step?
-      .form-actions
-        =form.submit(@order.last_step? ? "Take my money!" : "Next", :class => "btn btn-primary pull-right")
-        =form.submit('Back', :name => 'back', :class => "btn pull-left")
+.container
+.cardboard-wrapper{:class => "order-step-#{@order.current_step}"}
+  .cardboard-wrapper-top
+  .container
+    .row
+      .order-box.span10.offset1
+        .secure-padlock
+          %i.icon-lock
+          %span
+            Secure
+            %br
+            Shopping
+        =semantic_form_for @order, :url => (@order.gift? ? gift_path : join_path), :html => {:class => 'form-horizontal loading-text-disabled'}  do |form|
+          .inner
+            =form.hidden_field :current_step
+            #box_step{:class => @order.current_step_box? ? '' : 'hide'}
+              =render("orders/steps/box", :form => form)
+            -unless @order.current_step_box?
+              #register_step{:class => @order.current_step_register? ? '' : 'hide'}
+                =render("orders/steps/register", :form => form)
+            #delivery_step{:class => @order.current_step_delivery? ? '' : 'hide'}
+              =render("orders/steps/delivery", :form => form)
+            #billing_step{:class => @order.current_step_billing? ? '' : 'hide'}
+              =render("orders/steps/billing", :form => form)
+            -if @order.current_step_confirm?
+              #confirm_step
+                =render("orders/steps/confirm", :form => form)
+          -unless @order.first_step?
+            .form-actions
+              =form.submit(@order.last_step? ? "Take my money!" : "Next", :class => "btn btn-primary pull-right order-btn")
+              =form.submit('Back', :name => 'back', :class => "btn pull-left back-btn order-btn")

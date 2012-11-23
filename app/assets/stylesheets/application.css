@@ -67,7 +67,10 @@ h2,
 h3,
 .nav-link,
 .btn-homepage-cta,
-.social-media-btn {
+.social-media-btn,
+.order-btn,
+.how_it_works_link
+ {
   font-family: 'Clarendon BT W01 Heavy', arial, sans-serif;
   font-weight: normal;
   color: #4a8270;
@@ -78,7 +81,11 @@ h2, h3 {
 	line-height: 1.1;
 	margin: 0 0 20px;
 }
-th, h4, h5, h6, strong, .header-alert a.close  {
+th, h4, h5, h6, strong, .header-alert a.close,
+p.email-signup-intro,
+p b,
+#my-account a.dropdown-toggle,
+#login a {
 	color: #333;
 	font-family: 'Museo Sans W01 700', arial, sans-serif;
 }
@@ -174,7 +181,7 @@ box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(135, 170, 32, 0.2
 }
 
 .header-alert {
-  background:#9abe1b;
+  background:#4a8270;
   color: #fff;
   float: left;
   width: 100%;
@@ -347,7 +354,6 @@ box-shadow: 0px 1px 20px rgba(0,0,0,0.2), 0px 1px 6px rgba(0,0,0,0.2);
 }
 
 p.email-signup-intro {
-	font-weight: bold;
 	color: #5e3f23;
 	text-align: center;
 	margin: 0 0 20px;
@@ -448,6 +454,7 @@ a.twitter-link {
   
   padding: 0px 0 50px;
   margin: 0;
+  margin-bottom
   
   -webkit-box-shadow:1px 1px 10px rgba(0,0,0,0.3);
   -moz-box-shadow:1px 1px 10px rgba(0,0,0,0.3);
@@ -480,7 +487,8 @@ a.twitter-link {
   position: relative;
   z-index: 90;
   float: right;
-  padding: 0 10px;
+
+  padding: 0 20px;
   
   border-radius:6px;
   
@@ -490,7 +498,7 @@ a.twitter-link {
 #top-nav a.nav-link {
   font-size: 22px;
   color: #999;
-  padding: 20px 18px;
+  padding: 20px 15px;
   text-shadow: none;
 }
 #top-nav li a.nav-my-account {
@@ -506,10 +514,13 @@ a.twitter-link {
   background:#fff;
   background:rgba(255,255,255,0.9);
   z-index:80;
-  margin:-10px 35px 0px 0px;
+  margin:-10px 0px 0px 0px;
   box-shadow:0 0px 5px rgba(0,0,0,0.2);
   border-radius: 6px;
   padding:12px 8px 0px;
+  position: absolute;
+  right: 300px;
+  left: auto;
 }
 #top-subnav li a{
   padding:6px 12px;
@@ -517,18 +528,44 @@ a.twitter-link {
 #my-account {
   left: auto;
   z-index: 10;
+  background: url(/assets/my-account.png) no-repeat 0 16px;
 }
 
 #my-account a.dropdown-toggle {
   text-shadow: none;
+  color: #fff;
+  width: 120px;
+  text-align: center;
   padding: 24px 10px 20px;
 }
-#my-account .open a.dropdown-toggle {
-  color: #99b936;
+#my-account.open a.dropdown-toggle {
+
   background: none;
 }
-#my-account a.dropdown-toggle b.caret {
-	margin-top: 5px;  
+#my-account.open {
+  background-position: 0 -150px;
+}
+#my-account a.dropdown-toggle i.caret {
+	margin-top: 7px;  
+	color: #fff;
+	border-top-color: #fff;
+	border-bottom-color: #fff;
+}
+.navbar li#my-account ul.dropdown-menu {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 4px;
+  
+  box-shadow:1px 3px 10px rgba(0,0,0,0.2), 0px 1px 1px rgba(0,0,0,0.2);
+  -webkit-box-shadow:1px 3px 10px rgba(0,0,0,0.2), 0px 1px 1px rgba(0,0,0,0.2);
+}
+#login a {
+  background: url(/assets/my-account-login.png) no-repeat 0 12px;
+  padding: 20px 26px;
+  margin-left: 10px;
+
+color: #fff;
+text-shadow: none;
 }
 #site-logo {
   margin: 10px 0 10px 30px;
@@ -553,6 +590,22 @@ a.twitter-link {
   z-index: 2;
   top: -250px;
   right: -60px;
+}
+
+
+a.how_it_works_link {
+  display: block;
+  position: absolute;
+  top: 130px;
+  left: 50px;
+  text-indent: -9000em;
+  width: 480px;
+  height: 440px;
+  color: #fff; 
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  z-index: 20;
+  font-size: 40px;
+
 }
 .home-tagline {
   font-size: 40px;
@@ -584,18 +637,54 @@ background: #866b53 url(/assets/home-strip-2.png) center;
 }
 
 .home-strip-box {
-  min-height: 230px;
-  background: #fff;
+
+
   
   border-radius:5px;
+  -webkit-border-radius:5px;
+}
+.how-it-works-summary {
+	float: left;
+  background: #efe3d5 url(/assets/how-it-works.jpg) no-repeat;
+  width: 100%;
+  height: 200px;
+  
+       -moz-border-radius-topleft:5px;
+    -moz-border-radius-topright:5px;
+    -webkit-border-top-right-radius:5px;
+    -webkit-border-top-left-radius:5px;
+    border-top-right-radius:5px;
+    border-top-left-radius:5px;
+
+}
+.about-video {
+  margin: 0 20px;
+}
+.how-it-works-summary h2 {
+  float: left;
+  margin: 50px 0 0 240px;
+}
+.how-it-works-summary:hover {
+  text-decoration: none;
+
 }
 #blog-summary {
+	
+	background: #fff;
+
   -webkit-box-shadow:0px 0px 10px rgba(0,0,0,0.3); 
   box-shadow:0px 0px 10px rgba(0,0,0,0.3);
 }
+#home-left-col {
+	background: #8d7559;
+  background: rgba(0,0,0,0.4);
+  
+  border-radius:5px;
+  -webkit-border-radius:5px;
+}
 #how-it-works-summary {
-    margin-bottom: 20px;
-    background: rgba(255,255,255,0.1);
+    margin-bottom: 0px;
+    
 }
 .home-strip-box .well {	
   	margin: 0;
@@ -629,7 +718,10 @@ img.temp-illustration {
   margin: 0 0 0 20px;
 }
 .home-strip-title {
-
+}
+h2.about-us-video-title {
+  color: #efe3d5;
+  margin: 10px 20px;
 }
 .home-strip-title a {
   color: #755436;
@@ -769,6 +861,15 @@ img.illustration-surprise {
 /*========== Sign up ==========*/
 form.order .form-actions{
   padding-left:20px;
+  margin: 30px 0 0;
+  
+       -moz-border-radius-bottomleft:5px;
+     -moz-border-radius-bottomright:5px;
+     -webkit-border-bottom-right-radius:5px;
+     -webkit-border-bottom-left-radius:5px;
+     border-bottom-right-radius:5px;
+     border-bottom-left-radius:5px;
+
 }
 form.order abbr{
   display:none;
@@ -839,8 +940,93 @@ ul.box-options li {
   margin-left:20px;
 }
 
+.order-box {
+  background: #fff;
+  margin-top: 20px;
+  margin-bottom: 80px;
+  padding: 0;
+  position: relative;
+  width: 820px;
+  
+  border-radius:4px;
+  -webkit-border-radius:4px;
+  
+  box-shadow:1px 1px 1px rgba(0,0,0,0.3), 0px 0px 10px rgba(0,0,0,0.2);
+
+}
+.order-box form {
+ margin: 0;
+}
+.order-box-row {
+  margin: 0 0 0 20px;
+}
+
+.order-btn {
+  font-size: 20px;
+  padding: 13px 20px;
+}
+.back-btn.order-btn {
+ background: #f5f5f5;  
+ color: #755436;
+}
+
+.order-step-box.cardboard-wrapper {
+background: none;
+}
+.order-step-box .cardboard-wrapper-top {
+  display: none;
+}
+.order-step-box .order-box {
+  box-shadow:none;
+  background: none;
+  
+}
+.order-step-box .order-box .inner {
+	padding: 0;
+}
+.order-box-title {
+  margin: 30px 30px 35px;
+}
+.secure-padlock {
+  position: absolute;
+  top: 25px;
+    font-size: 14px;
+	  line-height: 15px;
+
+  right: 25px;
+}
+.secure-padlock i.icon-lock {
+  font-size: 33px;
+  line-height: 1;
+  width: 20px;
+  color: #ccc;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.secure-padlock span {
+	color: #ccc;
+	margin: 0 30px 0 0;
+	float: right;
+	text-align: right;
+}
+.order-step-box .secure-padlock {
+  display: none;
+}
+
+
+.choose-box {
+  background: #fff;
+  
+  box-shadow:0 2px 10px rgba(0,0,0,0.07);
+  -webkit-box-shadow:0 2px 10px rgba(0,0,0,0.07);
+  margin-top: 15px;
+}
+#register_step #accordion {
+margin-left: 40px ;
+}
 /* ========== Blog ========== */
-.blog-wrapper {
+.cardboard-wrapper {
   background: #c69f7a url(/assets/blog-wrapper.png);
   position: relative;
   float: left;
@@ -849,7 +1035,7 @@ ul.box-options li {
   margin: -50px 0 0 0;
   padding: 40px 0 0 0;
 }
-.blog-wrapper-top {
+.cardboard-wrapper-top {
   background: url(/assets/blog-wrapper-top.png) repeat-x top center;
   width: 100%;
   height: 40px;
