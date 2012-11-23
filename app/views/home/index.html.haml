@@ -4,28 +4,34 @@
     =render ("layouts/header")
   .container
     .row
-      .site-intro.span5
+      .site-intro.span5.fade_in
         %h1.home-tagline Healthy Snacking Made Easier
         %p.site-intro-text Deliciously nutritious snacks delivered to your door, monthly. From under £11 per month
         .home-ctas
           =link_to "Get a box", join_path, :class=>"get-box-btn btn btn-primary btn-homepage-cta"
           =link_to "or give a box", gift_path, :class=>"give-box-btn btn btn-homepage-cta"
-      .big-box-image.span7
+      .big-box-image.span7.fade_in.fade_two
+        =link_to_slug "How it works", :how_it_works, :class=>"how_it_works_link"
 .home-strip-1
   .container
-    .row
-      .span6
+    .row.fade_in.fade_three
+      #home-left-col.span6
         .row
           #how-it-works-summary.home-strip-box.span6
-            .well
+            =link_to_slug :how_it_works, :class=>"how-it-works-summary" do
               %h2.home-strip-title
-                =link_to "How it works", "#"
-                =image_tag "illustration_here_home.png", :class=>"temp-illustration"
+                How
+                %br
+                Nutribox
+                %br
+                works
+          
           #featured-product.home-strip-box.span6
-            .well
-              %h2.home-strip-title
-                =link_to "Featured product", "#"
-              =image_tag "featured-product.jpg"
+            %h2.about-us-video-title.home-strip-title
+              About us
+            .about-video  
+              :plain
+                <p><iframe width="420" height="236" frameborder="0" src="http://player.vimeo.com/video/40372602?title=0&amp;byline=0&amp;portrait=0"></iframe></p>
                 
       #blog-summary.home-strip-box.span6
         .well

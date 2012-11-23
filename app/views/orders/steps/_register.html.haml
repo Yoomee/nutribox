@@ -9,7 +9,7 @@
 -if @order.user_id.present?
   =form.input :user_id
 -else
-  %h2 About you
+  %h2.order-box-title About you
   #accordion
     .accordion-group
       #user-register.collapse{:class => ('in' unless @order.errors[:login_email].present?)}
