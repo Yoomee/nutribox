@@ -28,10 +28,17 @@ class Order < ActiveRecord::Base
     
     def number_of_snacks(box_type)
       case box_type
-      when "taster" then "8-10"
-      when "multi"  then "16-20"
+      when "mini" then "8-10"
+      when "standard"  then "16-20"
       else
         ""
+      end
+    end
+    
+    def box_name(box_type)
+      case box_type
+      when "mini" then "The Nutribox-mini"
+      when "standard" then "The Nutribox"
       end
     end
   
@@ -65,6 +72,10 @@ class Order < ActiveRecord::Base
       self.billing_postcode = delivery_postcode
       self.billing_country = delivery_country
     end
+  end
+  
+  def box_name
+    self.class.box_name(box_type)
   end
   
   def box_type_and_number_of_months
@@ -136,6 +147,10 @@ class Order < ActiveRecord::Base
   
   def failed?
     [vps_transaction_id,security_key,transaction_auth_number].any?(:blank?)
+  end
+  
+  def recurring?
+    number_of_months == 1 && !gift?
   end
   
   def successful?
@@ -240,6 +255,6 @@ class Order < ActiveRecord::Base
 end
 
 Order::COST_MATRIX = {
-  :taster => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },
-  :multi  => { 1 =>  2500, 3 =>  6800, 6 =>  12800, 12 => 24500 }
+  :mini => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },
+  :standard  => { 1 =>  2500, 3 =>  6800, 6 =>  12800, 12 => 24500 }
 }

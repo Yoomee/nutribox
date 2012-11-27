@@ -1,5 +1,9 @@
 module OrdersHelper
   
+  def box_name(box_type)
+    Order.box_name(box_type)
+  end
+  
   def gift_or_join_path(order)
     if order.gift?
       order.new_record? ? gift_path : update_gift_path(order)

@@ -14,12 +14,12 @@
 -else
   %h2 Choose your box
 .thumbnails.choose-boxes
-  -["taster","multi"].each do |box_type|
+  -["mini","standard"].each do |box_type|
     %li.span5.choose-box
       .thumbnail
         .caption
           %h4
-            ="#{box_type.capitalize} Box"
+            =box_name(box_type)
             %small="#{Order.number_of_snacks(box_type)} snacks"
           =image_tag("#{box_type}-box.png", :class => "box-photo")
           %ul.unstyled.box-options

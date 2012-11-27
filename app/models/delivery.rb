@@ -25,4 +25,8 @@ class Delivery < ActiveRecord::Base
     [name,address1,address2,city,postcode].select(&:present?).join(separator)
   end
   
+  def box_name
+    Order.box_name(box_type)
+  end
+  
 end
