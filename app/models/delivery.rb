@@ -17,7 +17,6 @@ class Delivery < ActiveRecord::Base
       self.city ||= order.delivery_city
       self.postcode ||= order.delivery_postcode
       self.country ||= order.delivery_country
-      self.notes ||= order.delivery_notes
     end
     self
   end

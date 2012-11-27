@@ -16,7 +16,6 @@
       %th Subscription type
       %th Gift
       %th Delivery address
-      %th Delivery notes
   %tbody
     -@shipping_date.deliveries.each do |delivery|
       %tr
@@ -26,5 +25,4 @@
         %td=pluralize(delivery.number_of_months,"month")
         %td=delivery.gift? ? "Yes" : "No"
         %td.span4=delivery.address
-        %td.span4=read_more_truncate(delivery.notes,:length => 40)
     

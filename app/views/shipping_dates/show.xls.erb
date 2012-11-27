@@ -18,7 +18,6 @@
         <Cell><Data ss:Type="String">City</Data></Cell>
         <Cell><Data ss:Type="String">Postcode</Data></Cell>
         <Cell><Data ss:Type="String">Country</Data></Cell>
-        <Cell><Data ss:Type="String">Delivery notes</Data></Cell>
       </Row>
     <% @shipping_date.deliveries.each do |delivery| %>
       <Row>
@@ -33,7 +32,6 @@
         <Cell><Data ss:Type="String"><%= delivery.city%></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.postcode%></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.country%></Data></Cell>
-        <Cell><Data ss:Type="String"><%= delivery.notes%></Data></Cell>
       </Row>
     <% end %>
     </Table>
