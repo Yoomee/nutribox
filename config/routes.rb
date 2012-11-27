@@ -13,6 +13,8 @@ Nutribox::Application.routes.draw do
   get  'gift' => "orders#new", :gift => 1
   post 'join' => "orders#create"
   post 'gift' => "orders#create"
+  put 'join/:id' => "orders#update", :as => 'update_join'
+  put 'gift/:id' => "orders#update", :as => 'update_gift'
   
 
   # The priority is based upon order of creation:
