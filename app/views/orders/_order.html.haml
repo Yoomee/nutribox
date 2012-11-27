@@ -18,6 +18,21 @@
     %h4 Delivery address
     %address=simple_format(@order.delivery_address("\n"))
     %h4 Cost
-    ="£#{@order.amount}"
+    -if !@order.discount_in_pence.zero?
+      .row
+        .span3
+          %table.table.table-condensed
+            %tr
+              %td Full price
+              %td.right="£%.2f" % (@order.amount + @order.discount)
+            %tr
+              %td Discount
+              %td.right="-£%.2f" % @order.discount
+            %tr
+              %th Total
+              %th.right="£#{@order.amount}"
+    
+    -else
+      ="£#{@order.amount}"
     -if @order.recurring?
       per month

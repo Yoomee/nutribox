@@ -7,6 +7,6 @@ class CreateDiscountCodes < ActiveRecord::Migration
       t.boolean :expired, :default => false
       t.timestamps
     end
-    add_column :orders, :discount_code, :string, :after => :amount_in_pence
+    add_column :orders, :discount_code_code, :string, :after => :amount_in_pence
   end
 end

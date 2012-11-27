@@ -7,6 +7,7 @@
         $('form.order').submit();
       })
     });
+=form.input :discount_code_code
 =form.input :gift, :as => :hidden
 -if @order.gift?
   %h2.mb-2 Which box would you like to give?
@@ -32,7 +33,7 @@
                       =pluralize(num,'month')
                     %br
                     %small
-                      ="£#{Order.cost(box_type,num)}"
+                      ="£#{@order.cost(box_type,num)}"
                       -if num > 1
                         %span.saving
                           \- save

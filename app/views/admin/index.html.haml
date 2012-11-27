@@ -1,5 +1,15 @@
 %h1.page-header=title('Admin')
-.row.mb-2
+.row
+  .span6
+    %h2 Subscriptions
+    %ul.unstyled
+      %li=link_to("Manage subscriptions", list_orders_path)
+      
+    %h2.mt-3 Discount codes
+    %ul.unstyled
+      %li=link_to("Manage discount codes", discount_codes_path)
+      %li=link_to("New discount code", new_discount_code_path)
+  
   .span6
     %h2 Shipping dates
     %ul.unstyled
@@ -9,18 +19,6 @@
             =shipping_date.date.stamp("31/12/2012 - Monday 11th January")
           -unless shipping_date.downloaded?
             %i.icon-asterisk
-
-
     %i.icon-asterisk
     Not yet downloaded
-  .span6
-    %h2 Subscriptions
-    %ul.unstyled
-      %li=link_to("Manage subscriptions", list_orders_path)
-
-.row.mb-2
-  .span6
-    %h2 Discount codes
-    %ul.unstyled
-      %li=link_to("Manage discount codes", discount_codes_path)
     
