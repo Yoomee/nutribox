@@ -1,7 +1,6 @@
 -content_for :head do
   :javascript
     $(document).ready(function() {
-      $('#box_step input[type="radio"]:checked').parent().addClass('active')
       $('#box_step input[type="radio"]').click(function(){
         $('#box_step label.active').removeClass('active');
         $(this).parent().addClass('active');
@@ -27,7 +26,10 @@
               %li
                 .pull-left
                   %h4
-                    =pluralize(num,'month')
+                    -if num == 1 && !@order.gift?
+                      Monthly
+                    -else
+                      =pluralize(num,'month')
                     %br
                     %small
                       ="£#{Order.cost(box_type,num)}"
@@ -38,5 +40,9 @@
                 .pull-right
                   %label
                     =form.radio_button('box_type_and_number_of_months',"#{box_type}-#{num}",)
-                    .btn Subscribe
+                    .btn
+                      -if num == 1  && !@order.gift?
+                        Subscribe
+                      -else
+                        Buy
           .clearfix
