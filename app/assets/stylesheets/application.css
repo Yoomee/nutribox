@@ -898,6 +898,7 @@ ul.box-options li {
 #box_step .thumbnails .saving{
   font-weight:normal;
   font-style:italic;
+  color:#D60030;
 }
 #box_step .thumbnails .saving .percentage{
   font-size:13px;
