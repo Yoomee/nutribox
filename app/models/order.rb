@@ -168,10 +168,16 @@ class Order < ActiveRecord::Base
   def take_repeat_payment!
     repeat = self.class.create(attributes.symbolize_keys.slice(:amount_in_pence, :user_id, :box_type, :number_of_months))
     
+    related = attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
+    
+    if Rails.env.development?
+      related[:id] = "dev#{related[:id]}"
+    end
+    
     paypal_response = gateway.repeat(
     amount_in_pence,
-    :order_id => repeat.id,
-    :related_transaction => attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
+    :order_id => (Rails.env.development? ? "dev#{repeat.id}" : repeat.id),
+    :related_transaction => related
     )
     
     process_response(paypal_response,repeat)
