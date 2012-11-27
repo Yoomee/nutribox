@@ -59,7 +59,7 @@ class Order < ActiveRecord::Base
     end
     
     def statuses
-      ["active","paused", 'cancelled']
+      ["active","failed","paused","cancelled"]
     end
 
   end
@@ -140,8 +140,9 @@ class Order < ActiveRecord::Base
   def status_class(prefix = "")
     prefix + case status
     when "active" then "success"
+    when "cancelled" then "default"
+    when "failed" then "important"
     when "paused" then "warning"
-    when "cancelled" then "important"
     end
   end
   

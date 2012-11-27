@@ -1145,3 +1145,7 @@ ul.post-info li, ul.post-info li a, ul.post-info li a:hover {
   height:250px;
   width:200px;
 }
+th.center,
+td.center {
+  text-align:center;
+}

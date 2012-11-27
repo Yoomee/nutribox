@@ -1,5 +1,5 @@
 %h1.page-header=title('Admin')
-.row
+.row.mb-2
   .span6
     %h2 Shipping dates
     %ul.unstyled
@@ -17,3 +17,10 @@
     %h2 Subscriptions
     %ul.unstyled
       %li=link_to("Manage subscriptions", list_orders_path)
+
+.row.mb-2
+  .span6
+    %h2 Discount codes
+    %ul.unstyled
+      %li=link_to("Manage discount codes", discount_codes_path)
+    

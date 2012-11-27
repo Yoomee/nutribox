@@ -1,0 +1,9 @@
+=semantic_form_for @discount_code, :html => {:class => "form-horizontal"} do |form|
+  =form.inputs do
+    =form.input :code
+    =form.input :percentage
+    =form.input :number_available
+    -unless @discount_code.new_record?
+      =form.input :expired, :label => "This code has expired"
+  =form.buttons do
+    =form.commit_button "Save"

@@ -49,8 +49,10 @@ class OrdersController < ApplicationController
       end
       if @order.valid?
         if @order.last_step?
+          @order.status = "failed"
           @order.save
-          if error = @order.take_payment!
+          if success_or_error = @order.take_payment!
+            @order.update_attribute(:status,'active')
             render :action => 'thanks'
           else
             flash[:error] = "Your payment could not be processed"
