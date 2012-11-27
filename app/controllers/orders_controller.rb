@@ -11,7 +11,7 @@ class OrdersController < ApplicationController
   end
   
   def list
-    @orders = Order.order("created_at DESC")
+    @orders = Order.alphabetical_by_user
   end
   
   def index
@@ -20,7 +20,15 @@ class OrdersController < ApplicationController
   
   def update
     @order.assign_attributes(params[:order])
-    handle_order
+    if @order.editing_by_admin
+      if @order.save
+        redirect_to list_orders_path
+      else
+        render :action => 'edit'
+      end
+    else
+      handle_order
+    end
   end
   
   private

@@ -1,9 +1,19 @@
-%h1=title('Admin')
-%h2 Shipping dates
-%ul.unstyled
-  -ShippingDate.order("created_at DESC").each do |shipping_date|
-    %li
-      =link_to(shipping_date) do
-        =shipping_date.date.stamp("Monday 11th January 2013")
-        -unless shipping_date.downloaded?
-          %i.icon-asterisk
+%h1.page-header=title('Admin')
+.row
+  .span6
+    %h2 Shipping dates
+    %ul.unstyled
+      -ShippingDate.order("created_at DESC").each do |shipping_date|
+        %li
+          =link_to(shipping_date) do
+            =shipping_date.date.stamp("31/12/2012 - Monday 11th January")
+          -unless shipping_date.downloaded?
+            %i.icon-asterisk
+
+
+    %i.icon-asterisk
+    Not yet downloaded
+  .span6
+    %h2 Subscriptions
+    %ul.unstyled
+      %li=link_to("Manage subscriptions", list_orders_path)

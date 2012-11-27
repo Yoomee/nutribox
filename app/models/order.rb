@@ -7,6 +7,7 @@ class Order < ActiveRecord::Base
   amount_accessor
   
   attr_accessor :login_email, :login_password
+  boolean_accessor :editing_by_admin
 
   validates :box_type, :number_of_months, :presence => true, :if => :current_step_box?
   validates :user, :delivery_address1, :delivery_city, :delivery_postcode, :delivery_country,  :presence => true, :if => :current_step_delivery?
@@ -48,6 +49,10 @@ class Order < ActiveRecord::Base
     
     def saving_percentage(box_type,number_of_months)
       ((saving_in_pence(box_type,number_of_months).to_f / cost_in_pence(box_type,number_of_months)) * 100).to_i
+    end
+    
+    def statuses
+      ["active","paused", 'cancelled']
     end
 
   end
@@ -121,6 +126,14 @@ class Order < ActiveRecord::Base
     Date.today.day < 15 ? 25 : 11
   end
   
+  def status_class(prefix = "")
+    prefix + case status
+    when "active" then "success"
+    when "paused" then "warning"
+    when "cancelled" then "important"
+    end
+  end
+  
   def failed?
     [vps_transaction_id,security_key,transaction_auth_number].any?(:blank?)
   end
@@ -153,7 +166,7 @@ class Order < ActiveRecord::Base
   end
   
   def take_repeat_payment!
-    repeat = self.class.create(attributes.symbolize_keys.slice(:amount_in_pence, :user_id).merge({:original_transaction_id => id}))
+    repeat = self.class.create(attributes.symbolize_keys.slice(:amount_in_pence, :user_id, :box_type, :number_of_months))
     
     paypal_response = gateway.repeat(
     amount_in_pence,

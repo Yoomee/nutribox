@@ -913,6 +913,9 @@ ul.box-options li {
   width:80%;
   margin:0px 10%;
 }
+#delivery_step p.lead{
+  margin-left:30px;
+}
 #register_step .accordion-group {
   border:none;
 }

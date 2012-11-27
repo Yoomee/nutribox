@@ -9,6 +9,8 @@ class Delivery < ActiveRecord::Base
   def set_fields_from_order
     if order
       self.box_type ||= order.box_type
+      self.number_of_months ||= order.number_of_months
+      self.gift ||= order.gift
       self.name ||= order.delivery_name
       self.address1 ||= order.delivery_address1
       self.address2 ||= order.delivery_address2

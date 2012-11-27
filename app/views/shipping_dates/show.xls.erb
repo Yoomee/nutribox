@@ -10,6 +10,8 @@
         <Cell><Data ss:Type="String">ID</Data></Cell>
         <Cell><Data ss:Type="String">Customer name</Data></Cell>
         <Cell><Data ss:Type="String">Box type</Data></Cell>
+        <Cell><Data ss:Type="String">Subscription type</Data></Cell>
+        <Cell><Data ss:Type="String">Gift</Data></Cell>
         <Cell><Data ss:Type="String">Delivery name</Data></Cell>
         <Cell><Data ss:Type="String">Address Line 1</Data></Cell>
         <Cell><Data ss:Type="String">Address Line 2</Data></Cell>
@@ -23,6 +25,8 @@
         <Cell><Data ss:Type="Number"><%= delivery.id %></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.user.full_name%></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.box_type.titleize%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= pluralize(delivery.number_of_months,"month")%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= delivery.gift? ? "Yes" : "No"%></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.name%></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.address1%></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.address2%></Data></Cell>
