@@ -11,7 +11,7 @@ class DiscountCode < ActiveRecord::Base
   end
   
   def available_to?(user)
-    available? && (user.nil? || true)
+    available? && (user.nil? || orders.where(:user_id => user.id).empty?)
   end
   
   def claimed
