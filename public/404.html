@@ -1,26 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>The page you were looking for doesn't exist (404)</title>
+  <title>Page not found (404)</title>
   <style type="text/css">
-    body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
+  
+      html {
+         height:100%;
+      }
+    body {
+       background: #a9835f url(/assets/card.png) center;
+       font-family: arial, sans-serif;
+       margin: 0;
+       height: 100%;
+
+       
+       
+       }
+       
+       .wrapper {
+          float:left;
+          width:100%;
+       }
     div.dialog {
-      width: 25em;
-      padding: 0 4em;
-      margin: 4em auto 0 auto;
-      border: 1px solid #ccc;
-      border-right-color: #999;
-      border-bottom-color: #999;
+       width: 440px;
+       background: #fff url(/assets/404.jpg) no-repeat;
+       height: 520px;
+       margin: 80px auto 20px;
+       position: relative;
+       
+    }
+    p.message {
+       margin: 294px 82px 0;
+       font-size: 18px;
+       font-weight: bold;
+       color: #666;
+       line-height: 1.4;
+       float: left;
+    }
+    p.message a {
+       color: #666;
+       text-decoration:underline;
     }
     h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
+    a.home-link {
+       display: block;
+       width: 374px;
+       margin: 9px auto 0;
+       height: 81px;
+       float: left;
+       clear: both;
+       text-indent: -90000em;
+       position: absolute;
+       bottom: 54px;
+       left: 20px;
+       
+    }
+    .hide {
+       display:none;
+    }
   </style>
 </head>
 
 <body>
-  <!-- This file lives in public/404.html -->
+  <!-- This file lives in public/500.html -->
+  <div class="wrapper">
   <div class="dialog">
-    <h1>The page you were looking for doesn't exist.</h1>
-    <p>You may have mistyped the address or the page may have moved.</p>
+     <h2 class="hide">
+        Sorry, we couldn't find that page
+     </h2> 
+    <p class="message">How about going back to the <a href="/">homepage</a> and starting again?</p>
+    <a href="/" class="home-link">The Nutribox Team</a>
   </div>
+ </div> 
+  
 </body>
 </html>
