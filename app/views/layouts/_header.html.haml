@@ -21,10 +21,16 @@
               My account
               %i.caret
             %ul.dropdown-menu
-              %li
-                =link_to(orders_path) do
-                  %i.icon-shopping-cart
-                  My subscriptions
+              -if current_user && current_user.admin?
+                %li
+                  =link_to(admin_path) do
+                    %i.icon-briefcase
+                    Admin
+              -else
+                %li
+                  =link_to(orders_path) do
+                    %i.icon-shopping-cart
+                    My subscriptions
               %li
                 =link_to(sign_out_path, :method => :delete) do
                   %i.icon-signout

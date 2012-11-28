@@ -1,0 +1,24 @@
+%h1=title("Edit order")
+=semantic_form_for @order, :html => {:class => "form-horizontal"} do |form|
+  =form.inputs do
+    =form.input :editing_by_admin, :as => :hidden, :input_html => {:value => true}
+    %h4 Details
+    .control-group
+      %label.control-label Customer
+      .controls
+        %p=@order.user
+    .control-group
+      %label.control-label Product
+      .controls
+        %p=@order.product
+    %h4 Status
+    =form.input :status, :collection => Order.statuses.collect{|s| [s.titleize,s]}, :include_blank => false
+    %h4 Delivery address
+    =form.input :delivery_name, :label => "Name", :placeholder => "e.g. John Smith"
+    =form.input :delivery_address1, :label => "Address"
+    =form.input :delivery_address2, :label => false
+    =form.input :delivery_city, :label => "City"
+    =form.input :delivery_postcode, :label => "Postcode", :input_html => {:class => "input-small"}
+  =form.buttons do
+    =form.commit_button "Save"
+    

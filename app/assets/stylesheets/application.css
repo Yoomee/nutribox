@@ -896,6 +896,7 @@ ul.box-options li {
 #box_step .thumbnails .saving{
   font-weight:normal;
   font-style:italic;
+  color:#D60030;
 }
 #box_step .thumbnails .saving .percentage{
   font-size:13px;
@@ -910,6 +911,9 @@ ul.box-options li {
 #box_step .box-photo{
   width:80%;
   margin:0px 10%;
+}
+#delivery_step p.lead{
+  margin-left:30px;
 }
 #register_step .accordion-group {
   border:none;
@@ -1015,7 +1019,6 @@ background: none;
 
 .choose-box {
   background: #fff;
-  
   box-shadow:0 2px 10px rgba(0,0,0,0.07);
   -webkit-box-shadow:0 2px 10px rgba(0,0,0,0.07);
   margin-top: 15px;

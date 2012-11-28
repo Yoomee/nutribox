@@ -10,7 +10,7 @@
             Secure
             %br
             Shopping
-        =semantic_form_for @order, :url => (@order.gift? ? gift_path : join_path), :html => {:class => 'form-horizontal loading-text-disabled'}  do |form|
+        =semantic_form_for @order, :url => gift_or_join_path(@order), :html => {:class => 'form-horizontal loading-text-disabled'}  do |form|
           .inner
             =form.hidden_field :current_step
             #box_step{:class => @order.current_step_box? ? '' : 'hide'}
@@ -27,5 +27,5 @@
                 =render("orders/steps/confirm", :form => form)
           -unless @order.first_step?
             .form-actions
-              =form.submit(@order.last_step? ? "Take my money!" : "Next", :class => "btn btn-primary pull-right order-btn")
+              =form.submit(@order.last_step? ? "Place order" : "Next", :class => "btn btn-primary pull-right order-btn")
               =form.submit('Back', :name => 'back', :class => "btn pull-left back-btn order-btn")

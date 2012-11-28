@@ -2,10 +2,12 @@ class Order < ActiveRecord::Base
   include YmCore::Model
   include YmCore::Multistep
     
-  belongs_to :user  
+  belongs_to :user
+  has_many :deliveries
   amount_accessor
   
   attr_accessor :login_email, :login_password
+  boolean_accessor :editing_by_admin
 
   validates :box_type, :number_of_months, :presence => true, :if => :current_step_box?
   validates :user, :delivery_address1, :delivery_city, :delivery_postcode, :delivery_country,  :presence => true, :if => :current_step_delivery?
@@ -19,14 +21,24 @@ class Order < ActiveRecord::Base
   
   accepts_nested_attributes_for :user
   
+  scope :active, where(:status => 'active')
+  scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
+  
   class << self
     
     def number_of_snacks(box_type)
       case box_type
-      when "taster" then "8-10"
-      when "multi"  then "16-20"
+      when "mini" then "8-10"
+      when "standard"  then "16-20"
       else
         ""
+      end
+    end
+    
+    def box_name(box_type)
+      case box_type
+      when "mini" then "The Nutribox-mini"
+      when "standard" then "The Nutribox"
       end
     end
   
@@ -46,6 +58,10 @@ class Order < ActiveRecord::Base
       ((saving_in_pence(box_type,number_of_months).to_f / cost_in_pence(box_type,number_of_months)) * 100).to_i
     end
     
+    def statuses
+      ["active","paused", 'cancelled']
+    end
+
   end
   
   def set_billing_address_from_delivery_address
@@ -56,6 +72,10 @@ class Order < ActiveRecord::Base
       self.billing_postcode = delivery_postcode
       self.billing_country = delivery_country
     end
+  end
+  
+  def box_name
+    self.class.box_name(box_type)
   end
   
   def box_type_and_number_of_months
@@ -117,8 +137,20 @@ class Order < ActiveRecord::Base
     Date.today.day < 15 ? 25 : 11
   end
   
+  def status_class(prefix = "")
+    prefix + case status
+    when "active" then "success"
+    when "paused" then "warning"
+    when "cancelled" then "important"
+    end
+  end
+  
   def failed?
     [vps_transaction_id,security_key,transaction_auth_number].any?(:blank?)
+  end
+  
+  def recurring?
+    number_of_months == 1 && !gift?
   end
   
   def successful?
@@ -149,12 +181,18 @@ class Order < ActiveRecord::Base
   end
   
   def take_repeat_payment!
-    repeat = self.class.create(attributes.symbolize_keys.slice(:amount_in_pence, :user_id).merge({:original_transaction_id => id}))
+    repeat = self.class.create(attributes.symbolize_keys.slice(:amount_in_pence, :user_id, :box_type, :number_of_months))
+    
+    related = attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
+    
+    if Rails.env.development?
+      related[:id] = "dev#{related[:id]}"
+    end
     
     paypal_response = gateway.repeat(
     amount_in_pence,
-    :order_id => repeat.id,
-    :related_transaction => attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
+    :order_id => (Rails.env.development? ? "dev#{repeat.id}" : repeat.id),
+    :related_transaction => related
     )
     
     process_response(paypal_response,repeat)
@@ -217,6 +255,6 @@ class Order < ActiveRecord::Base
 end
 
 Order::COST_MATRIX = {
-  :taster => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },
-  :multi  => { 1 =>  2500, 3 =>  6800, 6 =>  12800, 12 => 24500 }
+  :mini => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },
+  :standard  => { 1 =>  2500, 3 =>  6800, 6 =>  12800, 12 => 24500 }
 }
