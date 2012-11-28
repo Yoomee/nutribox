@@ -18,6 +18,7 @@ class Order < ActiveRecord::Base
   
   before_validation :set_amount
   before_validation :set_billing_name
+  before_save :set_encrypted_credit_card_number
   belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
   
   accepts_nested_attributes_for :user
@@ -26,6 +27,11 @@ class Order < ActiveRecord::Base
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
   
   class << self
+    
+    def encrypt_credit_card_number(number)
+      return nil if number.blank?
+      BCrypt::Password.create("#{number}#{Order::PEPPER}")
+    end
     
     def number_of_snacks(box_type)
       case box_type
@@ -267,6 +273,12 @@ class Order < ActiveRecord::Base
     end
   end
   
+  def set_encrypted_credit_card_number
+    if credit_card && credit_card.valid?
+      self.encrypted_credit_card_number = self.class.encrypt_credit_card_number(credit_card.number)
+    end
+  end
+  
   def set_billing_name
     self.billing_name = credit_card.name
   end
@@ -277,6 +289,8 @@ class Order < ActiveRecord::Base
   
   
 end
+
+Order::PEPPER = "8bdbe171e2bdf63dbb4c90a3b27cf40801af68b796ce358ea02f775c7b641fb3da50ff4487cd3969fbc3ea4389e1642c57b62d36c577752e33ebb77d31a1a841"
 
 Order::COST_MATRIX = {
   :mini => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },

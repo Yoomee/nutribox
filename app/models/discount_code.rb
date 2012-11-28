@@ -26,4 +26,12 @@ class DiscountCode < ActiveRecord::Base
     number_available.present? ? (number_available - claimed) : nil
   end
   
+  def used_by_user?(user)
+    orders.exists?(:user_id => user.id)
+  end
+  
+  def used_by_credit_card_number?(credit_card_number)
+    orders.exists?(:encrypted_credit_card_number => Order.encrypt_credit_card_number(credit_card_number))
+  end
+  
 end
