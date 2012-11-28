@@ -10,6 +10,10 @@ class DiscountCode < ActiveRecord::Base
     !expired && (remaining.blank? || ( remaining > 0))
   end
   
+  def available_to?(user)
+    available? && (user.nil? || true)
+  end
+  
   def claimed
     orders.count
   end

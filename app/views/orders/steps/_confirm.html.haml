@@ -1,2 +1,23 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      $('#confirm-step-discount').on('show', function () {
+        $('#discount-toggle').hide();
+      });  
+    });
 %h2.order-box-title Check and confirm your subscription
 =render(@order)
+-if @order.current_step_confirm? && !@order.discounted?
+  .row.order-box-row
+    .span6.offset4
+      -if @order.discount_code_code.blank?
+        =link_to("Enter a discount code", 'javascript:void(0)', :data =>{:toggle => "collapse", :target => "#confirm-step-discount"}, :class => 'pull-right mr-2', :id => "discount-toggle")
+      #confirm-step-discount{:class => ('collapse' if @order.discount_code_code.blank?)}
+        %h4 Discount code
+        .row
+          .span4
+            .control-group{:class => discount_code_class(@order)}
+              %label=discount_code_label(@order)
+              =form.text_field :discount_code_code, :class => "span2"
+              =form.submit('Apply', :name => 'discount_code', :class => 'btn') 
+

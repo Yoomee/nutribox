@@ -912,6 +912,44 @@ ul.box-options li {
   width:80%;
   margin:0px 10%;
 }
+#box_step #discount-applied{
+  padding-right:14px;
+  text-align:center;
+  margin-bottom:5px;
+}
+#box_step #discount-bar .control-group{
+  margin:0px;
+}
+.discount-bar-left,
+.discount-bar-center,
+.discount-bar-right{
+  float:left;
+}
+.discount-bar-left{
+  width: 210px;
+  padding-top:2px;
+}
+.discount-bar-center{
+  width: 472px;
+}
+.discount-bar-center label{
+  float: left;
+  text-align: right;
+  width: 280px;
+  margin-top:10px;
+  margin-left: 10px;
+}
+.discount-bar-center input{
+  float:right;
+  margin-right:20px;
+}
+.discount-bar-right{
+  width: 70px;
+}
+
+#discount-toggle {
+  margin-top:-34px;
+}
 #delivery_step p.lead{
   margin-left:30px;
 }

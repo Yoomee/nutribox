@@ -34,8 +34,12 @@ class OrdersController < ApplicationController
   private
   def handle_order
     if params[:back]
+      @order.valid?
       @order.previous_step!
       @order.previous_step! if @order.current_step_register?
+      render :action => "new"
+    elsif params[:discount_code]
+      @order.valid?
       render :action => "new"
     else
       if @order.current_step_register? && @order.login_email.present?

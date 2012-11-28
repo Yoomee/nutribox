@@ -44,6 +44,7 @@ class Order < ActiveRecord::Base
     end
   
     def cost_in_pence(box_type,number_of_months)
+      return 0 unless box_type
       Order::COST_MATRIX[box_type.to_sym].try(:[], number_of_months).to_i
     end
   
@@ -113,12 +114,16 @@ class Order < ActiveRecord::Base
   end
   
   def discount
-    discount_in_pence.zero? ? nil : (discount_in_pence / 100)
+    discount_in_pence.zero? ? nil : (discount_in_pence / 100.to_f)
   end
   
   def discount_in_pence
-    return 0 unless box_type.present? && discount_code.try(:available?)
+    return 0 unless box_type.present? && discount_code.try(:available_to?,user)
     (discount_code.fraction * Order.cost_in_pence(box_type,1)).ceil
+  end
+  
+  def discounted?
+    discount_in_pence > 0
   end
   
   def billing_country
@@ -267,7 +272,7 @@ class Order < ActiveRecord::Base
   end
   
   def set_amount
-    self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence
+    self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
   end
   
   

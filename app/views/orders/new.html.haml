@@ -25,7 +25,6 @@
             -if @order.current_step_confirm?
               #confirm_step
                 =render("orders/steps/confirm", :form => form)
-          -unless @order.first_step?
-            .form-actions
-              =form.submit(@order.last_step? ? "Place order" : "Next", :class => "btn btn-primary pull-right order-btn")
-              =form.submit('Back', :name => 'back', :class => "btn pull-left back-btn order-btn")
+          .form-actions{:class => ('hide' if @order.first_step?)}
+            =form.submit(@order.last_step? ? "Place order" : "Next", :class => "btn btn-primary pull-right order-btn")
+            =form.submit('Back', :name => 'back', :class => "btn pull-left back-btn order-btn")
