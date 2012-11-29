@@ -15,7 +15,7 @@
 -if @order.discount_code && @order.discount_code.available_to?(current_user)
   .row
     .span10
-      .alert.success#discount-applied
+      .alert.alert-success#discount-applied
         Showing prices with a 
         ="#{@order.discount_code.percentage}%"
         discount on the first box
@@ -39,8 +39,10 @@
                       =pluralize(num,'month')
                     %br
                     %small
+                      -if @order.discount_code && @order.discount_code.available_to?(current_user)
+                        %span.line-through="£#{Order.cost(box_type,num)}&nbsp;".html_safe
                       ="£#{@order.cost(box_type,num)}"
-                      -if num > 1
+                      -if num > 1 && !(@order.discount_code && @order.discount_code.available_to?(current_user))
                         %span.saving
                           \- save
                           %span.percentage="#{Order.saving_percentage(box_type,num)}%"
@@ -61,9 +63,10 @@
         .discount-bar-left
           %h2.mb-0 Discount code?
         .discount-bar-center
-          .control-group{:class => discount_code_class(@order)}
+          .control-group
             %label=discount_code_label(@order)
-            =form.text_field :discount_code_code, :class => "span2"
+            .control-group{:class => discount_code_class(@order)}
+              =form.text_field :discount_code_code, :class => "span2"
         .discount-bar-right
           =form.submit('Apply', :name => 'discount_code', :class => "btn pull-right")
         .clearfix
