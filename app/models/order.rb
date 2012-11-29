@@ -140,13 +140,14 @@ class Order < ActiveRecord::Base
   end
   
   def next_shipping_date
-    if Date.today.day < shipping_day
+    date = if Date.today.day < shipping_day
       # Hasn't been shipped yet this month
       Date.today.change(:day => shipping_day)
     else
       # Will be shipped next month
       (Date.today >> 1).change(:day => shipping_day)
     end
+    date.year == 2012 ? (date >> 1) : date
   end
   
   def product
@@ -237,6 +238,8 @@ class Order < ActiveRecord::Base
     }  
   end  
   
+  class PaymentError < StandardError; end
+  
   private
   def credit_card_is_valid  
     if !credit_card.valid?  
@@ -269,6 +272,8 @@ class Order < ActiveRecord::Base
       :security_key => paypal_response.params["SecurityKey"],
       :transaction_auth_number => paypal_response.params["TxAuthNo"]
       )
+    else
+      raise PaymentError, paypal_response.message
     end
   end
   
@@ -288,6 +293,7 @@ class Order < ActiveRecord::Base
   
   
 end
+
 
 Order::COST_MATRIX = {
   :mini => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },

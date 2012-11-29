@@ -10,13 +10,18 @@
       %p You will receive one box per month until you cancel your subscription.
     -else
       %p="#{@order.box_name} for #{pluralize(@order.number_of_months,'month')}."
-      %p
-        =@order.gift? ? "Your friend" : "You"
-        will receive one box per month for the next
-        =@order.number_of_months
-        months.
+      -if @order.number_of_months > 1
+        %p
+          =@order.gift? ? "Your friend" : "You"
+          will receive one box per month for the next
+          =@order.number_of_months
+          months.
     %h4 Delivery address
     %address=simple_format(@order.delivery_address("\n"))
+    %p
+      =@order.gift? ? "The" : "Your"
+      first box will be shipped on
+      =@order.next_shipping_date.stamp("<u>January 11th 2013</u>.").html_safe
     %h4
       Cost
       -if @order.recurring? && @order.discounted?
@@ -35,7 +40,7 @@
               %th Total
               %th.right="£#{@order.amount}"
       -if @order.recurring?
-        ="Then £#{Order.cost(@order.box_type,1)} per month after that"
+        ="Then £#{Order.cost(@order.box_type,1)} per month after that."
     -else
       ="£#{@order.amount}"
       ="per month" if @order.recurring?
