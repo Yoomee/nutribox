@@ -664,6 +664,22 @@ background: #866b53 url(/assets/home-strip-2.png) center;
     border-top-left-radius:5px;
 
 }
+
+a.christmas-link {
+	background: url(/assets/christmas-link.png) no-repeat;
+	display: block;
+	text-indent: -9000em;
+	height: 310px;
+	
+	-moz-border-radius-bottomleft:5px;
+    -moz-border-radius-bottomright:5px;
+    -webkit-border-bottom-right-radius:5px;
+    -webkit-border-bottom-left-radius:5px;
+    border-bottom-right-radius:5px;
+    border-bottom-left-radius:5px;
+  
+}
+
 .about-video {
   margin: 0 20px;
 }
@@ -678,6 +694,8 @@ background: #866b53 url(/assets/home-strip-2.png) center;
 #blog-summary {
 	
 	background: #fff;
+	height: 510px;
+	margin-bottom: 0px;
 
   -webkit-box-shadow:0px 0px 10px rgba(0,0,0,0.3); 
   box-shadow:0px 0px 10px rgba(0,0,0,0.3);
@@ -688,6 +706,10 @@ background: #866b53 url(/assets/home-strip-2.png) center;
   
   border-radius:5px;
   -webkit-border-radius:5px;
+  
+  
+    -webkit-box-shadow:0px 0px 10px rgba(0,0,0,0.3); 
+  box-shadow:0px 0px 10px rgba(0,0,0,0.3);
 }
 #how-it-works-summary {
     margin-bottom: 0px;

@@ -26,13 +26,15 @@
                 The Nutribox
                 %br
                 works
+          =link_to "The Healthy Christmas Gift", gift_path, :class=>"christmas-link span6"
           
-          #featured-product.home-strip-box.span6
-            %h2.about-us-video-title.home-strip-title
-              About us
-            .about-video
-              %p
-                %iframe{:width => 420, :height => 236, :frameborder => 0, :src => "https://player.vimeo.com/video/40372602?title=0&byline=0&portrait=0"}
+          -if false
+            #featured-product.home-strip-box.span6
+              %h2.about-us-video-title.home-strip-title
+                About us
+              .about-video
+                %p
+                  %iframe{:width => 420, :height => 236, :frameborder => 0, :src => "https://player.vimeo.com/video/40372602?title=0&byline=0&portrait=0"}
                 
       #blog-summary.home-strip-box.span6
         .well
@@ -47,4 +49,4 @@
             %p.blog-summary-intro.mb-1
               =summary_or_truncated_text(@latest_blog_post,350)
             =link_to "Read more", @latest_blog_post, :class=>"latest-blog-read-more"
-  =render "layouts/stay_in_touch"
+=render "layouts/stay_in_touch"
