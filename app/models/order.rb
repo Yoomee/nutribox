@@ -18,6 +18,7 @@ class Order < ActiveRecord::Base
   
   before_validation :set_amount
   before_validation :set_billing_name
+  before_save :nullify_discount_code_code_if_invalid
   belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
   
   accepts_nested_attributes_for :user
@@ -149,7 +150,11 @@ class Order < ActiveRecord::Base
   end
   
   def product
-    "#{box_type.capitalize} Box for #{number_of_months} month#{'s' if number_of_months > 1}"
+    if number_of_months == 1 && !gift
+      "#{box_name} monthly"
+    else
+      "#{box_name} for #{number_of_months} month#{'s' if number_of_months > 1}"
+    end
   end
   
   def sage_pay_id
@@ -273,6 +278,12 @@ class Order < ActiveRecord::Base
   
   def set_amount
     self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
+  end
+  
+  def nullify_discount_code_code_if_invalid
+    if discount_code_code.present? && !discounted?
+      self.discount_code_code = nil
+    end
   end
   
   

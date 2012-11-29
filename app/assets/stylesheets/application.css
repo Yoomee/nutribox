@@ -90,6 +90,7 @@ p b,
 	font-family: 'Museo Sans W01 700', arial, sans-serif;
 }
 
+
 /* ========== General (bootstrap overrived etc) ========== */
 body {
   background: #fff;
@@ -1259,6 +1260,7 @@ th.right,
 td.right {
   text-align:right;
 }
+<<<<<<< HEAD
 /* ========== Login page ========== */
 
 #login-form {
@@ -1288,3 +1290,18 @@ td.right {
 input#user_email, input#user_password {
   width: 275px;
 }
+=======
+
+
+td.discount-code code {
+  padding:0px;
+  background:none;
+  border:none;
+  font-size:16px;
+  color:#333;
+}
+
+.control-group.error input[type="submit"]{
+  color:#fff;
+}
+>>>>>>> 6d3ee554c25e4b476fc2ba59520c29e65e09a673
