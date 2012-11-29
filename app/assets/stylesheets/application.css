@@ -1260,7 +1260,6 @@ th.right,
 td.right {
   text-align:right;
 }
-<<<<<<< HEAD
 /* ========== Login page ========== */
 
 #login-form {
@@ -1290,7 +1289,6 @@ td.right {
 input#user_email, input#user_password {
   width: 275px;
 }
-=======
 
 
 td.discount-code code {
@@ -1304,4 +1302,3 @@ td.discount-code code {
 .control-group.error input[type="submit"]{
   color:#fff;
 }
->>>>>>> 6d3ee554c25e4b476fc2ba59520c29e65e09a673
