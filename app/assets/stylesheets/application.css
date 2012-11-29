@@ -90,6 +90,7 @@ p b,
 	font-family: 'Museo Sans W01 700', arial, sans-serif;
 }
 
+
 /* ========== General (bootstrap overrived etc) ========== */
 body {
   background: #fff;
@@ -1189,4 +1190,13 @@ td.center {
 th.right,
 td.right {
   text-align:right;
+}
+
+
+td.discount-code code {
+  padding:0px;
+  background:none;
+  border:none;
+  font-size:16px;
+  color:#333;
 }

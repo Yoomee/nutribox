@@ -5,27 +5,28 @@
     =link_to(new_discount_code_path, :class => "btn btn-primary pull-right mt-1") do
       %i.icon-plus
       New discount code
-%table.table.table-striped
-  %thead
-    %tr
-      %th Code
-      %th.center Discount
-      %th.center Total available
-      %th.center Claimed
-      %th.center Remaining
-      %th Status
-      %th
-  %tbody
-    -@discount_codes.each do |discount_code|
+-if @discount_codes.empty?
+  %p There aren't any discount codes yet
+-else
+  %table.table.table-striped
+    %thead
       %tr
-        %td=discount_code.code
-        %td.center="#{discount_code.percentage}%"
-        %td.center=discount_code.number_available.presence || '-'
-        %td.center=discount_code.claimed
-        %td.center=discount_code.remaining || '-'
-        %td
-          -if discount_code.expired?
-            %span.badge.badge-danger Expired
-          -else
-            %span.badge.badge-success Active
-        %td=link_to("Edit", edit_discount_code_path(discount_code))
+        %th Code
+        %th.center Discount
+        %th.center Claimed
+        %th.center Status
+        %th
+    %tbody
+      -@discount_codes.each do |discount_code|
+        %tr
+          %td.discount-code
+            %code=discount_code.code
+          %td.center="#{discount_code.percentage}%"
+          %td.center
+            =[discount_code.claimed,discount_code.number_available.presence].compact.join(" / ")
+          %td.center
+            -if discount_code.expired?
+              %span.badge.badge-danger Expired
+            -else
+              %span.badge.badge-success Active
+          %td.span4=link_to("Edit", edit_discount_code_path(discount_code))
