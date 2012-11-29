@@ -1,0 +1,27 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      $("#referral_code").click(function() {
+         $(this).select();
+      });  
+    });
+.row
+  .span6
+    %h1=title "My referrals"
+    -if @referrals.blank?
+      %p.lead You haven't referred anyone yet
+    %table.table.table-striped
+      %tbody
+        -@referrals.each do |referral|
+          %tr
+            %td=referral.referree
+            %td
+              =time_ago_in_words(referral.created_at)
+              ago
+  .span4.offset2
+    .thumbnail
+      .caption
+        %h2 My referral link
+        =text_field_tag(:code, new_referral_url(:code => current_user.referral_code), :readonly => true, :id => "referral_code")
+        =twitter_share_link(new_referral_url(:code => current_user.referral_code), :share_text => "The Nutribox")
+        =facebook_share_link(new_referral_url(:code => current_user.referral_code), :share_name => "The Nutribox")

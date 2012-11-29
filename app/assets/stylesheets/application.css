@@ -1190,3 +1190,10 @@ th.right,
 td.right {
   text-align:right;
 }
+
+
+input#referral_code {
+  cursor:pointer;
+  cursor: pointer;
+  width: 250px;
+}

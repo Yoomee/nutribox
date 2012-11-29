@@ -55,7 +55,8 @@ class OrdersController < ApplicationController
         if @order.last_step?
           @order.status = "failed"
           @order.save
-          if success_or_error = @order.take_payment!
+          if @order.take_payment!
+            handle_referral_code
             @order.update_attribute(:status,'active')
             render :action => 'thanks'
           else
@@ -105,6 +106,12 @@ class OrdersController < ApplicationController
         render :action => 'new'
       end
     end
-    
+  end
+  
+  def handle_referral_code
+    referral_code = session.delete(:referral_code)
+    if referral_code.present? && (referrer = User.find_by_referral_code(referral_code)) && @order.user.orders.count == 1
+      referrer.referrals.create(:referree => @order.user)
+    end
   end
 end

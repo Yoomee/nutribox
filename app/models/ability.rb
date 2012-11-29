@@ -8,6 +8,7 @@ class Ability
     # open ability
     can :read, Page
     can :create, Order
+    can :new, Referral
     
     if user.try(:admin?)
       can :manage, :all      
@@ -15,6 +16,7 @@ class Ability
     elsif user
       # user ability
       can :index, Order
+      can :index, Referral
       can [:update, :show], Order, :user_id => user.id
       can :manage, User, :id => user.id      
     end
