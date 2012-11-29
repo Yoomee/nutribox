@@ -9,7 +9,7 @@
         %p.site-intro-text Deliciously nutritious snacks delivered to your door, monthly. From under £11 per month
         .home-ctas
           =link_to "Get a box", join_path, :class=>"get-box-btn btn btn-primary btn-homepage-cta"
-          =link_to "or give a box", gift_path, :class=>"give-box-btn btn btn-homepage-cta christmas-give-btn"
+          =link_to "Give a box", gift_path, :class=>"give-box-btn btn btn-homepage-cta christmas-give-btn"
       .big-box-image.span7.fade_in.fade_two
         =link_to_slug "How it works", :how_it_works, :class=>"how_it_works_link"
 .home-strip-1
@@ -22,7 +22,7 @@
               %h2.home-strip-title
                 How
                 %br
-                Nutribox
+                The Nutribox
                 %br
                 works
           
@@ -35,14 +35,15 @@
                 
       #blog-summary.home-strip-box.span6
         .well
-          %h2.home-strip-title
-            =link_to "Latest from the blog", @latest_blog_post
-          .latest-blog-image.mb-2
-            -if @latest_blog_post.image
-              =link_to @latest_blog_post do
-                =image_for @latest_blog_post, "415x190#"
-          %h4=link_to_self(@latest_blog_post)
-          %p.blog-summary-intro.mb-1
-            =summary_or_truncated_text(@latest_blog_post,350)
-          =link_to "Read more", @latest_blog_post, :class=>"latest-blog-read-more"
-=render "layouts/stay_in_touch"
+          -if @latest_blog_post
+            %h2.home-strip-title
+              =link_to "Latest from the blog", @latest_blog_post
+            .latest-blog-image.mb-2
+              -if @latest_blog_post.image
+                =link_to @latest_blog_post do
+                  =image_for @latest_blog_post, "415x190#"
+            %h4=link_to_self(@latest_blog_post)
+            %p.blog-summary-intro.mb-1
+              =summary_or_truncated_text(@latest_blog_post,350)
+            =link_to "Read more", @latest_blog_post, :class=>"latest-blog-read-more"
+  =render "layouts/stay_in_touch"

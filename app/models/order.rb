@@ -18,6 +18,7 @@ class Order < ActiveRecord::Base
   
   before_validation :set_amount
   before_validation :set_billing_name
+  belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
   
   accepts_nested_attributes_for :user
   
@@ -43,6 +44,7 @@ class Order < ActiveRecord::Base
     end
   
     def cost_in_pence(box_type,number_of_months)
+      return 0 unless box_type
       Order::COST_MATRIX[box_type.to_sym].try(:[], number_of_months).to_i
     end
   
@@ -59,7 +61,7 @@ class Order < ActiveRecord::Base
     end
     
     def statuses
-      ["active","paused", 'cancelled']
+      ["active","failed","paused","cancelled"]
     end
 
   end
@@ -86,6 +88,14 @@ class Order < ActiveRecord::Base
     self.box_type, self.number_of_months = value.split('-')
   end
   
+  def cost(box_type, number_of_months)
+    if discount_code.try(:available?)
+      YmCore::Model::AmountAccessor::Float.new(((Order.cost_in_pence(box_type,number_of_months) - (discount_code.fraction * Order.cost_in_pence(box_type,1).ceil)) / 100).round(2))
+    else
+      Order.cost(box_type,number_of_months)
+    end
+  end
+  
   def credit_card  
     @credit_card ||= ActiveMerchant::Billing::CreditCard.new  
   end    
@@ -101,6 +111,19 @@ class Order < ActiveRecord::Base
   
   def delivery_address(separator = ', ')
     [delivery_name,delivery_address1,delivery_address2,delivery_city,delivery_postcode].select(&:present?).join(separator)
+  end
+  
+  def discount
+    discount_in_pence.zero? ? nil : (discount_in_pence / 100.to_f)
+  end
+  
+  def discount_in_pence
+    return 0 unless box_type.present? && discount_code.try(:available_to?,user)
+    (discount_code.fraction * Order.cost_in_pence(box_type,1)).ceil
+  end
+  
+  def discounted?
+    discount_in_pence > 0
   end
   
   def billing_country
@@ -140,8 +163,9 @@ class Order < ActiveRecord::Base
   def status_class(prefix = "")
     prefix + case status
     when "active" then "success"
+    when "cancelled" then "default"
+    when "failed" then "important"
     when "paused" then "warning"
-    when "cancelled" then "important"
     end
   end
   
@@ -248,7 +272,7 @@ class Order < ActiveRecord::Base
   end
   
   def set_amount
-    self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months)
+    self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
   end
   
   

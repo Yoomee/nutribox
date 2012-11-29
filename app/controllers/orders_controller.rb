@@ -34,8 +34,12 @@ class OrdersController < ApplicationController
   private
   def handle_order
     if params[:back]
+      @order.valid?
       @order.previous_step!
       @order.previous_step! if @order.current_step_register?
+      render :action => "new"
+    elsif params[:discount_code]
+      @order.valid?
       render :action => "new"
     else
       if @order.current_step_register? && @order.login_email.present?
@@ -49,8 +53,10 @@ class OrdersController < ApplicationController
       end
       if @order.valid?
         if @order.last_step?
+          @order.status = "failed"
           @order.save
-          if error = @order.take_payment!
+          if success_or_error = @order.take_payment!
+            @order.update_attribute(:status,'active')
             render :action => 'thanks'
           else
             flash[:error] = "Your payment could not be processed"

@@ -8,6 +8,8 @@ Nutribox::Application.routes.draw do
   end
   
   resources :shipping_dates, :only => :show, :path => "shippings"
+  
+  resources :discount_codes
 
   get  'join' => "orders#new"
   get  'gift' => "orders#new", :gift => 1

@@ -12,12 +12,30 @@
       %p="#{@order.box_name} for #{pluralize(@order.number_of_months,'month')}."
       %p
         =@order.gift? ? "Your friend" : "You"
-        will receive one a box per month for the next
+        will receive one box per month for the next
         =@order.number_of_months
         months.
     %h4 Delivery address
     %address=simple_format(@order.delivery_address("\n"))
-    %h4 Cost
-    ="£#{@order.amount}"
-    -if @order.recurring?
-      per month
+    %h4
+      Cost
+      -if @order.recurring? && @order.discounted?
+        for the first month
+    -if !@order.discount_in_pence.zero?
+      .row
+        .span3
+          %table.table.table-condensed
+            %tr
+              %td Full price
+              %td.right="£%.2f" % (@order.amount + @order.discount)
+            %tr
+              %td Discount
+              %td.right="-£%.2f" % @order.discount
+            %tr
+              %th Total
+              %th.right="£#{@order.amount}"
+      -if @order.recurring?
+        ="Then £#{Order.cost(@order.box_type,1)} per month after that"
+    -else
+      ="£#{@order.amount}"
+      ="per month" if @order.recurring?

@@ -12,6 +12,13 @@
   %h2.gift-first-title.mb-2 Which box would you like to give?
 -else
   %h2 Choose your box
+-if @order.discount_code && @order.discount_code.available_to?(current_user)
+  .row
+    .span10
+      .alert.success#discount-applied
+        Showing prices with a 
+        ="#{@order.discount_code.percentage}%"
+        discount on the first box
 .thumbnails.choose-boxes
   -["mini","standard"].each do |box_type|
     %li.span5.choose-box
@@ -32,7 +39,7 @@
                       =pluralize(num,'month')
                     %br
                     %small
-                      ="£#{Order.cost(box_type,num)}"
+                      ="£#{@order.cost(box_type,num)}"
                       -if num > 1
                         %span.saving
                           \- save
@@ -46,3 +53,17 @@
                       -else
                         Buy
           .clearfix
+
+.row
+  .span10
+    .thumbnail#discount-bar
+      .caption
+        .discount-bar-left
+          %h2.mb-0 Discount code?
+        .discount-bar-center
+          .control-group{:class => discount_code_class(@order)}
+            %label=discount_code_label(@order)
+            =form.text_field :discount_code_code, :class => "span2"
+        .discount-bar-right
+          =form.submit('Apply', :name => 'discount_code', :class => "btn pull-right")
+        .clearfix
