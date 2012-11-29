@@ -35,9 +35,9 @@
             %li.post-comments
               %i.icon-comments-alt
               %span=link_to 'Comments', page_path(@page, :anchor => 'disqus_thread'), "data-disqus-identifier" => disqus_id(@page), :class => 'comment-count'
-          =link_to("Share on Twitter", "#", :class => "btn btn-primary btn-large mt-1")
-          =link_to("Share on Facebook", "#", :class => "btn btn-primary btn-large mt-1")
-          
+          %ul.unstyled
+            %li=twitter_share_button(@page, :via => "thenutribox", :related => "thenutribox")
+            %li.mt-1=facebook_like_button(@page)
         -#
           #blog_archive.blog_box
             %h3 Archive

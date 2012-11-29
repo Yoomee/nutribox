@@ -21,7 +21,7 @@
               My account
               %i.caret
             %ul.dropdown-menu
-              -if current_user && current_user.admin?
+              -if current_user.admin?
                 %li
                   =link_to(admin_path) do
                     %i.icon-briefcase
