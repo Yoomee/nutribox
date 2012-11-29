@@ -1,0 +1,22 @@
+.row
+  #login-form.span4.offset4
+    .inner
+      %h1.center
+        Login
+
+      .clearfix
+      .mt-1.mb-2
+        %p.center
+          %i.icon-lock
+          Please log in by entering your email address and password
+      =semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |form|
+        =form.inputs do
+          =form.input :email, :label => false, :placeholder => "Email", :class=>"login-form-inputs"
+          =form.input :password, :label => false, :placeholder => "Password", :class=>"login-form-inputs"
+          =form.input :remember_me, :as => :boolean if devise_mapping.rememberable?
+          =hidden_field_tag :next, params[:next] if params[:next]
+        =form.buttons do
+          =form.commit_button t(:login), :button_html => {:class => "btn-primary", :data => {:"loading-text" => "Logging in..."}}
+  .login-footer-links.span4.offset4.mt-1
+    =link_to("Forgot your password?", new_user_password_path, :class => "pull-left")
+    =#link_to("Sign up", sign_up_path, :class => "pull-right")

@@ -95,6 +95,7 @@ body {
   background: #fff;
   background: #fff url(/assets/paper_texture_body.jpg) repeat-x top center;
 }
+
 #home.logged_out {
    background: #c69f7a url(/assets/bg_card.jpg) fixed;
 }
@@ -210,6 +211,9 @@ box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(135, 170, 32, 0.2
 }
 .options_panel {
   margin-bottom: 20px;
+}
+.center {
+  text-align: center;
 }
 
 /* ========== Holding page stuff ========== */
@@ -701,8 +705,10 @@ img.temp-illustration {
 }
 
 .home-ctas {
-  margin-right: -30px;
+  margin: 20px -30px 0 0;
   float: left;
+  position: relative;
+
 }
 .btn-homepage-cta {
 	font-size: 26px;
@@ -715,6 +721,8 @@ img.temp-illustration {
   width: 172px;
   margin: 0 0 0 20px;
 }
+
+
 .home-strip-title {
 }
 h2.about-us-video-title {
@@ -1026,6 +1034,27 @@ background: none;
 #register_step #accordion {
 margin-left: 40px ;
 }
+
+
+/*  For christmas- comment out afterwards  */
+body#inside.controller_orders.action_new .gift-wrapper {
+  background: url(/assets/give-christmas-bg.png) no-repeat top center;
+}
+.gift-first-title {
+	visibility: hidden;
+}
+a.christmas-give-btn, a.christmas-give-btn:hover {
+  background: url(/assets/christmas-give-btn.png) no-repeat;
+  position: absolute;
+  margin: 0;
+  bottom: -20px;
+  left: 200px;
+  padding: 30px 0 40px;
+  width: 300px;
+}
+
+/*End of christmas stuff */
+
 /* ========== Blog ========== */
 .cardboard-wrapper {
   background: #c69f7a url(/assets/blog-wrapper.png);
@@ -1145,3 +1174,35 @@ ul.post-info li, ul.post-info li a, ul.post-info li a:hover {
   height:250px;
   width:200px;
 }
+
+
+/* ========== Login page ========== */
+
+#login-form {
+  margin-top: -50px;
+  margin-bottom: 20px;
+  background: #fff;
+  padding: 20px;
+  
+   	
+	 -webkit-box-shadow:inset 0 0 12px #f6f6f6, -2px 2px 0px #ccc, -3px 3px 0px #fff, -5px 5px 0px #ccc, 0px 0px 12px #888;
+     -moz-box-shadow:inset 0 0 12px #f6f6f6, -2px 2px 0px #ccc, -3px 3px 0px #fff, -5px 5px 0px #ccc, 0px 0px 12px #888;
+     box-shadow:inset 0 0 12px #f6f6f6, -2px 2px 0px #ccc, -3px 3px 0px #fff, -5px 5px 0px #ccc, 0px 0px 12px #888;
+  
+}
+
+#wide .blog{  
+  background-color:#FFF;
+
+  padding:20px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;  
+  
+  
+
+}
+input#user_email, input#user_password {
+  width: 275px;
+}
+
