@@ -1200,3 +1200,7 @@ td.discount-code code {
   font-size:16px;
   color:#333;
 }
+
+.control-group.error input[type="submit"]{
+  color:#fff;
+}
