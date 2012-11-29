@@ -220,6 +220,10 @@ box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(135, 170, 32, 0.2
 .center {
   text-align: center;
 }
+.line-through{
+  text-decoration:line-through;
+  color:#bbb;
+}
 
 /* ========== Holding page stuff ========== */
 .page-header {

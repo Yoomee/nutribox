@@ -1,5 +1,10 @@
 %h2.order-box-title Enter your payment details
-.row.order-box-row 
+.row.order-box-row
+  -if @error
+    .span10
+      .alert.alert-error.mr-3
+        ERROR
+        =@error
   .span5
     %h4 Card details
     =form.semantic_fields_for :credit_card do |fields|    
