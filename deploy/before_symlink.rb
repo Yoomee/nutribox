@@ -1,3 +1,5 @@
 FileUtils::mkdir_p "#{shared_path}/dragonfly"
 FileUtils::mkdir_p "#{release_path}/data"
 run "ln -s #{shared_path}/dragonfly #{release_path}/data/dragonfly"
+FileUtils::mkdir_p "#{release_path}/lib/xero"
+run "ln -s #{shared_path}/xero #{release_path}/lib/xero/production"
