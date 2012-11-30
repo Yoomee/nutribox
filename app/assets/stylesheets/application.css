@@ -417,7 +417,7 @@ input#email-signup-input {
   color: #fff;
   text-shadow: none;
   font-weight: bold;
-  padding: 15px 20px;
+  padding: 15px 17px;
   margin: 0 0 0 10px;
 }
 
@@ -477,6 +477,7 @@ a.twitter-link {
   background: none;
   z-index: 10;
 	padding: 0;
+	filter:none;
 }
 .header-navbar-fixed {
 	position: fixed;
@@ -1025,6 +1026,23 @@ ul.box-options li {
 #delivery_step p.lead{
   margin-left:30px;
 }
+
+p.delivery-notice-text {
+	color: #ffffff;
+	font-size: 13px;
+	text-align: center;
+	margin: 0;
+  
+}
+
+#delivery-notice {
+  background: url(/assets/delivery-notice-christmas.png) no-repeat 0 0;
+  padding: 14px 0;
+}
+
+
+
+
 #register_step .accordion-group {
   border:none;
 }
@@ -1139,7 +1157,7 @@ margin-left: 40px ;
 
 
 /*  For christmas- comment out afterwards  */
-body#inside.controller_orders.action_new .gift-wrapper {
+.gift-wrapper {
   background: url(/assets/give-christmas-bg.png) no-repeat top center;
 }
 .gift-first-title {

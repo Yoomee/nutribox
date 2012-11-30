@@ -1,7 +1,8 @@
 -content_for :head do
   :javascript
     $(document).ready(function() {
-      $('#box_step input[type="radio"]').click(function(){
+      $('#box_step .box-radio').click(function(){
+        $(this).children('input').attr('checked','checked');
         $('#box_step label.active').removeClass('active');
         $(this).parent().addClass('active');
         $('form.order').submit();
@@ -47,8 +48,8 @@
                           \- save
                           %span.percentage="#{Order.saving_percentage(box_type,num)}%"
                 .pull-right
-                  %label
-                    =form.radio_button('box_type_and_number_of_months',"#{box_type}-#{num}",)
+                  %label.box-radio
+                    =form.radio_button('box_type_and_number_of_months',"#{box_type}-#{num}")
                     .btn
                       -if num == 1  && !@order.gift?
                         Subscribe
@@ -57,6 +58,12 @@
           .clearfix
 
 .row
+  #delivery-notice.mb-1.span10
+    %p.delivery-notice-text
+      -if @order.gift?
+        Our box deliveries start on January 2013. We'll email you a gift certificate which you can print out for Christmas Day.
+      -else
+        Our box deliveries start on January 2013.
   .span10
     .thumbnail#discount-bar
       .caption
