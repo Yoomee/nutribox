@@ -68,7 +68,6 @@ class OrdersController < ApplicationController
             @order.update_attribute(:status,'failed')
             @error = e
             @order.current_step = "billing"
-            flash[:error] = "Your payment could not be processed"
             render :action => 'new'
           end
         else
