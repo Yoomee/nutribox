@@ -10,8 +10,8 @@
     =form.semantic_fields_for :credit_card do |fields|    
       =fields.input :name
       =fields.input :number
-      =fields.input :month, :placeholder => "MM", :input_html => {:class => 'input-mini'}, :label => "Expiry date"
-      =fields.input :year, :placeholder => "YYYY", :input_html => {:class => 'input-mini'}, :label => "/", :required => false
+      =fields.input :month, :as => :select, :collection => (1..12), :include_blank => false, :placeholder => "MM", :input_html => {:class => 'input-mini'}, :label => "Expiry date"
+      =fields.input :year, :placeholder => "YYYY", :as => :select, :collection => (Date.today.year..Date.today.year+10), :input_html => {:class => 'input-small'}, :label => "/", :required => false, :include_blank => false
       .clearfix
       =fields.input :verification_value, :label => "CVV",:input_html => {:class => 'input-mini'}
   .span5
