@@ -62,12 +62,12 @@ class OrdersController < ApplicationController
           begin
             @order.take_payment!
             @order.update_attribute(:status,'active')
+            OrderMailer.confirmation_email(@order).deliver
             render :action => 'thanks'
           rescue Order::PaymentError => e
             @order.update_attribute(:status,'failed')
             @error = e
             @order.current_step = "billing"
-            flash[:error] = "Your payment could not be processed"
             render :action => 'new'
           end
         else
@@ -102,7 +102,7 @@ class OrdersController < ApplicationController
             end
           when "billing"
             @order.set_test_card_details if Rails.env.development?
-            @order.set_billing_address_from_delivery_address
+            @order.set_billing_address_from_delivery_address unless @order.gift?
             @order.credit_card.name = current_user.full_name if @order.credit_card.blank?
           end
           render :action => 'new'
