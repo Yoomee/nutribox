@@ -1,0 +1,15 @@
+Thanks for your order
+
+Product: <%=@order.product%>
+
+<%if @order.gift?%>
+Download your gift certificate: https://thenutribox.com<%=download_order_path(@order)%>
+  
+<%end%>
+Delivery address:
+<%=@order.delivery_address("\n")%>
+
+Cost: <%="£#{@order.amount}"%>
+
+For more information, visit https://thenutribox.com
+    
