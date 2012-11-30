@@ -12,7 +12,7 @@
     =yield :head
     =google_analytics_js
   -body_tag do
-    .main-wrapper{:class => ('gift-wrapper' if @order && (@order.gift? && @order.current_step_box?))}
+    .main-wrapper{:class => ('gift-wrapper' if @order && !action_name.show? && (@order.gift? && @order.current_step_box?))}
       -if flash.present?
         .header-alert
           =yield_with_bootstrap(render_flash)    
