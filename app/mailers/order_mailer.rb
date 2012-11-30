@@ -2,7 +2,7 @@ class OrderMailer < ActionMailer::Base
 
   helper YmCore::UrlHelper
 
-  default :from => "\"James Thompson\" <james@inplaceofwar.net>",
+  default :from => "\"The Nutribox\" <emma@thenutribox.com>",
           :bcc => ["developers@yoomee.com", "andy@yoomee.com"]
   
   def confirmation_email(order)
