@@ -549,7 +549,8 @@ a.twitter-link {
   width: 120px;
   text-align: center;
   padding: 24px 10px 20px;
-}
+  
+ }
 #my-account.open a.dropdown-toggle {
 
   background: none;
@@ -1046,9 +1047,20 @@ p.delivery-notice-text {
 #register_step .accordion-group {
   border:none;
 }
+.form-horizontal #billing_step .control-group {
+  float: left;
+  margin-left: 0;
+  padding-left: 0;
 
+  
+  }
+  .form-horizontal #billing_step .control-group input {
+  float: left;
+}
 .form-horizontal #billing_step .control-label{
   width:80px;
+  float: left;
+
 }
 .form-horizontal #billing_step .controls{
   margin-left:100px;
