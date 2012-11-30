@@ -103,7 +103,7 @@ class OrdersController < ApplicationController
             end
           when "billing"
             @order.set_test_card_details if Rails.env.development?
-            @order.set_billing_address_from_delivery_address
+            @order.set_billing_address_from_delivery_address unless @order.gift?
             @order.credit_card.name = current_user.full_name if @order.credit_card.blank?
           end
           render :action => 'new'
