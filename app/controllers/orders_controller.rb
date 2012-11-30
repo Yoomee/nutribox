@@ -62,6 +62,7 @@ class OrdersController < ApplicationController
           begin
             @order.take_payment!
             @order.update_attribute(:status,'active')
+            OrderMailer.confirmation_email(@order).deliver
             render :action => 'thanks'
           rescue Order::PaymentError => e
             @order.update_attribute(:status,'failed')
