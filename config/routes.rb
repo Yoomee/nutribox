@@ -21,6 +21,8 @@ Nutribox::Application.routes.draw do
   put 'join/:id' => "orders#update", :as => 'update_join'
   put 'gift/:id' => "orders#update", :as => 'update_gift'
   
+  match "sign-up" => redirect("/login")
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
