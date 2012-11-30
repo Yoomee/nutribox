@@ -10,12 +10,17 @@ class OrdersController < ApplicationController
     handle_order
   end
   
+  def download
+    send_file File.join(Rails.root,"lib/downloads/gifts/#{@order.box_type}-#{@order.number_of_months}.pdf"), :type => 'application/pdf', :filename => "The Nutribox Gift Certificate"
+  end
+  
   def list
     @orders = Order.alphabetical_by_user
   end
   
   def index
-    @orders = current_user.orders.order("created_at DESC")
+    @orders = current_user.orders.not_failed.where(:gift => false).order("created_at DESC")
+    @gifts  = current_user.orders.not_failed.where(:gift => true).order("created_at DESC")
   end
   
   def update
@@ -53,16 +58,16 @@ class OrdersController < ApplicationController
       end
       if @order.valid?
         if @order.last_step?
-          @order.status = "failed"
           @order.save
           begin
             @order.take_payment!
             @order.update_attribute(:status,'active')
             render :action => 'thanks'
           rescue Order::PaymentError => e
+            @order.update_attribute(:status,'failed')
             @error = e
-            flash[:error] = "Your payment could not be processed"
             @order.current_step = "billing"
+            flash[:error] = "Your payment could not be processed"
             render :action => 'new'
           end
         else
@@ -96,7 +101,7 @@ class OrdersController < ApplicationController
               end
             end
           when "billing"
-            @order.set_test_card_details
+            @order.set_test_card_details if Rails.env.development?
             @order.set_billing_address_from_delivery_address
             @order.credit_card.name = current_user.full_name if @order.credit_card.blank?
           end

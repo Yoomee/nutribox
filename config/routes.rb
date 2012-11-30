@@ -5,6 +5,9 @@ Nutribox::Application.routes.draw do
     collection do
       get 'list'
     end
+    member do
+      get 'download'
+    end
   end
   
   resources :shipping_dates, :only => :show, :path => "shippings"

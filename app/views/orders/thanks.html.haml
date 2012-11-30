@@ -2,9 +2,25 @@
   %h2="Thanks for your order #{@order.user.first_name}!"
   .row
     .span8
-      %p.lead
-        Your first box will be shipped on
-        =@order.next_shipping_date.stamp("Monday 1st September")
-        and should be with you by
-        =@order.next_delivery_date.stamp("Monday 1st September.")
-      =link_to("Manage my orders", orders_path, :class => "btn btn-primary btn-large")
+      -if @order.gift?
+        %p.lead
+          Your friend's first box will be shipped on
+          =@order.next_shipping_date.stamp("Monday 1st September")
+          and should be with them by
+          =@order.next_delivery_date.stamp("Monday 1st September.")
+        %p.lead Here's the gift certificate for you to print out and give to them
+        .row
+          .span4.offset2
+            =link_to(download_order_path(@order), :class => 'btn mb-1 ml-1 btn-primary') do
+              %i.icon-download-alt.mr-1
+              Download gift certificate
+        
+      
+      -else      
+        %p.lead
+          Your first box will be shipped on
+          =@order.next_shipping_date.stamp("Monday 1st September")
+          and should be with you by
+          =@order.next_delivery_date.stamp("Monday 1st September.")
+
+        =link_to("Manage my orders", orders_path, :class => "btn btn-primary btn-large")

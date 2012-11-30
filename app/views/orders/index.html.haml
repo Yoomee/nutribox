@@ -1,13 +1,27 @@
 .row
   .span8
-    %h1=title("My subscriptions")
-    %table.table.table-striped
-      %tbody
-        -@orders.each do |order|
-          %tr
-            %td.span1
-              =image_tag("#{order.box_type}-box.png")
-            %td
-              %p.lead=order.product
-            %td.span2
-              =link_to("View",order, :class => 'btn pull-right')
+    -if @orders.present?
+      %h2=title("My subscriptions")
+      %table.table.table-striped
+        %tbody
+          -@orders.each do |order|
+            %tr
+              %td.span1
+                =image_tag("#{order.box_type}-box.png")
+              %td
+                %p.lead=order.product
+              %td.span2
+                =link_to("View",order, :class => 'btn pull-right')
+    -if @gifts.present?
+      %h2 Gifts to other people
+      %table.table.table-striped
+        %tbody
+          -@gifts.each do |order|
+            %tr
+              %td.span1
+                =image_tag("#{order.box_type}-box.png")
+              %td
+                %p.lead=order.product
+              %td.span2
+                =link_to("View",order, :class => 'btn pull-right')
+

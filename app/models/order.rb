@@ -4,7 +4,7 @@ class Order < ActiveRecord::Base
     
   belongs_to :user
   has_many :deliveries
-  amount_accessor
+  amount_accessor :amount, :full_price_amount
   
   attr_accessor :login_email, :login_password
   boolean_accessor :editing_by_admin
@@ -24,6 +24,7 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :user
   
   scope :active, where(:status => 'active')
+  scope :not_failed, where("status != 'failed'")
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
   
   class << self
@@ -87,11 +88,12 @@ class Order < ActiveRecord::Base
   
   def box_type_and_number_of_months=(value)
     self.box_type, self.number_of_months = value.split('-')
+    self.full_price_amount = Order.cost(box_type,number_of_months)
   end
   
   def cost(box_type, number_of_months)
     if discount_code.try(:available?)
-      YmCore::Model::AmountAccessor::Float.new(((Order.cost_in_pence(box_type,number_of_months) - (discount_code.fraction * Order.cost_in_pence(box_type,1).ceil)) / 100).round(2))
+      YmCore::Model::AmountAccessor::Float.new(((Order.cost_in_pence(box_type,number_of_months) - (discount_code.fraction * Order.cost_in_pence(box_type,1)).ceil) / 100.to_f).round(2))
     else
       Order.cost(box_type,number_of_months)
     end
@@ -124,7 +126,7 @@ class Order < ActiveRecord::Base
   end
   
   def discounted?
-    discount_in_pence > 0
+    amount < full_price_amount
   end
   
   def billing_country

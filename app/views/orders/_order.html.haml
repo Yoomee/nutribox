@@ -16,6 +16,10 @@
           will receive one box per month for the next
           =@order.number_of_months
           months.
+    -if @order.status == 'active' && @order.gift?
+      =link_to(download_order_path(@order), :class => 'btn mb-1') do
+        %i.icon-download-alt.mr-1
+        Download gift certificate
     %h4 Delivery address
     %address=simple_format(@order.delivery_address("\n"))
     %p
@@ -26,21 +30,22 @@
       Cost
       -if @order.recurring? && @order.discounted?
         for the first month
-    -if !@order.discount_in_pence.zero?
+    -if @order.discounted?
       .row
         .span3
           %table.table.table-condensed
             %tr
               %td Full price
-              %td.right="£%.2f" % (@order.amount + @order.discount)
+              %td.right="£#{@order.full_price_amount}"
             %tr
               %td Discount
-              %td.right="-£%.2f" % @order.discount
+              %td.right="-£%.2f" % (@order.full_price_amount - @order.amount)
             %tr
               %th Total
               %th.right="£#{@order.amount}"
       -if @order.recurring?
         ="Then £#{Order.cost(@order.box_type,1)} per month after that."
+    -elsif @order.recurring?
+      ="£#{Order.cost(@order.box_type,1)} per month."
     -else
       ="£#{@order.amount}"
-      ="per month" if @order.recurring?
