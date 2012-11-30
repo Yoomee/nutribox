@@ -198,7 +198,7 @@ class Order < ActiveRecord::Base
       paypal_response = gateway.purchase(
       amount_in_pence,
       credit_card,
-      :order_id => (Rails.env.development? ? "dev#{id}" : id),
+      :order_id => (Rails.env.development? ? "dev#{id}" : "NB#{id}"),
       :billing_address => {
         :name => billing_name,
         :address1 => billing_address1,
@@ -217,13 +217,11 @@ class Order < ActiveRecord::Base
     
     related = attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
     
-    if Rails.env.development?
-      related[:id] = "dev#{related[:id]}"
-    end
+    related[:id] = Rails.env.development? ? "dev#{id}" : "NB#{id}"
     
     paypal_response = gateway.repeat(
     amount_in_pence,
-    :order_id => (Rails.env.development? ? "dev#{repeat.id}" : repeat.id),
+    :order_id => (Rails.env.development? ? "dev#{repeat.id}" : "NB#{repeat.id}"),
     :related_transaction => related
     )
     
