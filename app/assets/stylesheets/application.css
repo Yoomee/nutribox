@@ -836,10 +836,6 @@ a.facebook-btn {
   margin: 0;
   right: 20px;
 }
-
-#home.logged_out .footer-wrapper {
-	display: none;
-}
 .footer-wrapper {
   background: #5F4B3B;
 }
