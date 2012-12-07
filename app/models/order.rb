@@ -142,14 +142,14 @@ class Order < ActiveRecord::Base
   end
   
   def next_shipping_date
-    date = if Date.today.day < shipping_day
+    return Date.new(2013, 1, 11) if created_at.year == 2012
+    if Date.today.day < shipping_day
       # Hasn't been shipped yet this month
       Date.today.change(:day => shipping_day)
     else
       # Will be shipped next month
       (Date.today >> 1).change(:day => shipping_day)
     end
-    date.year == 2012 ? (date >> 1) : date
   end
   
   def product
@@ -165,7 +165,7 @@ class Order < ActiveRecord::Base
   end
   
   def shipping_day
-    Date.today.day < 15 ? 25 : 11
+    created_at.day < 15 ? 25 : 11
   end
   
   def status_class(prefix = "")
