@@ -142,7 +142,7 @@ class Order < ActiveRecord::Base
   end
   
   def next_shipping_date
-    return Date.new(2013, 1, 11) if created_at.year == 2012
+    return Date.new(2013, 1, 11) if (created_at || Date.today).year == 2012
     if Date.today.day < shipping_day
       # Hasn't been shipped yet this month
       Date.today.change(:day => shipping_day)
