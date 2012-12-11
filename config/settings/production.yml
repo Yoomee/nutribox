@@ -4,3 +4,4 @@ facebook_app_id: '443658312367297'
 xero:
   consumer_key: QMHGWSP5Q6HIWWEDG8LIXA6VM1A6GV
   consumer_secret: FKZHSHJOGDO21RVDDVQ8BE9ELNQS21
+  privatekey_path: lib/xero/production/privatekey.pem
