@@ -67,7 +67,7 @@ class Xero
         self.xero_id = invoice.id
         payment = Xero.client.Payment.build(
           :invoice => invoice,
-          :account => Xero.client.Account.build(:code => (Rails.env.development? ? '091' : 601)),
+          :account => Xero.client.Account.build(:code => (Rails.env.development? ? '091' : 600)),
           :date => created_at.to_date,
           :amount => amount,
           :reference => "Debit/Credit card",
