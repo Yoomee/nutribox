@@ -305,7 +305,7 @@ class Order < ActiveRecord::Base
   
 end
 
-Order::VAT_PERCENTAGE = 20.0
+Order::VAT_PERCENTAGE = 10.98
 
 Order::COST_MATRIX = {
   :mini => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },

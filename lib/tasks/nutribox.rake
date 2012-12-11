@@ -7,4 +7,12 @@ namespace :nutribox do
     end
   end
   
+  
+  desc 'Sync orders with Xero'
+  task :xero => :environment do
+    Order.where("xero_status != 'success'").each do |order|
+      order.sync_with_xero
+    end
+  end
+  
 end

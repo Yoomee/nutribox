@@ -1,19 +1,27 @@
+class XeroLogFormatter < Logger::Formatter
+  def call(severity, time, progname, msg)
+    "[%s%6s] %s\n" % [time.strftime("%Y-%m-%d %H:%M:%S.") << time.usec.to_s[0..2].rjust(3), severity, msg2str(msg)]
+  end
+end
+
 class Xero
   
   def self.client
     @@client ||= Xeroizer::PrivateApplication.new(Settings.xero.consumer_key, Settings.xero.consumer_secret, Settings.xero.privatekey_path)
+  end
+  
+  def self.logger
+    @@logger ||= begin
+      logger = Logger.new(File.join(Rails.root,"log/xero.log"))
+      logger.formatter = XeroLogFormatter.new
+      logger
+    end
   end
 
 end
 
 class Xero
   module Order
-  
-    def self.included(base)
-      #base.after_create :sync_with_xero
-    end
-    
-    private
     def sync_user_with_xero
       return true if user.xero_id.present?
       contact = Xero.client.Contact.build(
@@ -34,7 +42,8 @@ class Xero
     end
     
     def sync_with_xero
-      begin        
+      begin
+        Xero.logger.info "Syncing order #{self.id}"   
         sync_user_with_xero
         contact = Xero.client.Contact.find(user.xero_id)
         invoice = Xero.client.Invoice.build(
@@ -44,29 +53,33 @@ class Xero
           :date => created_at.to_date,
           :due_date => created_at.to_date,
           :line_amount_types => "Exclusive",
-          :invoice_number => (Rails.env.development? ? "dev#{id}" : id)
+          :invoice_number => (Rails.env.development? ? "dev#{id}" : "NB#{id}")
         )
         invoice.add_line_item(
           :description => product,
           :quantity => 1,
           :unit_amount => amount_ex_vat,
           :tax_amount => vat,
-          :account_code => "200",
-          :tax_type => "OUTPUT2"
+          :account_code => gift? ? "210" : "200",
+          :tax_type => "NONE"
         )
         invoice.save
         self.xero_id = invoice.id
         payment = Xero.client.Payment.build(
           :invoice => invoice,
-          :account => Xero.client.Account.build(:code => (Rails.env.development? ? '091' : 600)),
+          :account => Xero.client.Account.build(:code => (Rails.env.development? ? '091' : 601)),
           :date => created_at.to_date,
           :amount => amount,
           :reference => "Debit/Credit card",
         )
         payment.save
+        self.xero_status = "success"
+        Xero.logger.info "Successfully synced #{self.id}"   
         save
       rescue Exception => e
-        puts e.message
+        Xero.logger.error "Failed to sync #{self.id}"   
+        Xero.logger.error e.message
+        update_attribute(:xero_status,"failed")
       end
     end
     
