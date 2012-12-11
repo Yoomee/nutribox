@@ -5,14 +5,23 @@ Nutribox::Application.routes.draw do
     collection do
       get 'list'
     end
+    member do
+      get 'download'
+    end
   end
   
   resources :shipping_dates, :only => :show, :path => "shippings"
+  
+  resources :discount_codes
 
   get  'join' => "orders#new"
   get  'gift' => "orders#new", :gift => 1
   post 'join' => "orders#create"
   post 'gift' => "orders#create"
+  put 'join/:id' => "orders#update", :as => 'update_join'
+  put 'gift/:id' => "orders#update", :as => 'update_gift'
+  
+  match "sign-up" => redirect("/login")
   
 
   # The priority is based upon order of creation:

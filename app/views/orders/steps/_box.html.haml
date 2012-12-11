@@ -1,8 +1,8 @@
 -content_for :head do
   :javascript
     $(document).ready(function() {
-      $('#box_step input[type="radio"]:checked').parent().addClass('active')
-      $('#box_step input[type="radio"]').click(function(){
+      $('#box_step .box-radio').click(function(){
+        $(this).children('input').attr('checked','checked');
         $('#box_step label.active').removeClass('active');
         $(this).parent().addClass('active');
         $('form.order').submit();
@@ -10,16 +10,23 @@
     });
 =form.input :gift, :as => :hidden
 -if @order.gift?
-  %h2.mb-2 Which box would you like to give?
+  %h2.gift-first-title.mb-2 Which box would you like to give?
 -else
   %h2 Choose your box
+-if @order.discount_code && @order.discount_code.available_to?(current_user)
+  .row
+    .span10
+      .alert.alert-success#discount-applied
+        Showing prices with a 
+        ="#{@order.discount_code.percentage}%"
+        discount on the first box
 .thumbnails.choose-boxes
-  -["taster","multi"].each do |box_type|
+  -["mini","standard"].each do |box_type|
     %li.span5.choose-box
       .thumbnail
         .caption
           %h4
-            ="#{box_type.capitalize} Box"
+            =box_name(box_type)
             %small="#{Order.number_of_snacks(box_type)} snacks"
           =image_tag("#{box_type}-box.png", :class => "box-photo")
           %ul.unstyled.box-options
@@ -27,16 +34,46 @@
               %li
                 .pull-left
                   %h4
-                    =pluralize(num,'month')
+                    -if num == 1 && !@order.gift?
+                      Monthly
+                    -else
+                      =pluralize(num,'month')
                     %br
                     %small
-                      ="£#{Order.cost(box_type,num)}"
-                      -if num > 1
+                      -if @order.discount_code && @order.discount_code.available_to?(current_user)
+                        %span.line-through="£#{Order.cost(box_type,num)}&nbsp;".html_safe
+                      ="£#{@order.cost(box_type,num)}"
+                      -if num > 1 && !(@order.discount_code && @order.discount_code.available_to?(current_user))
                         %span.saving
                           \- save
                           %span.percentage="#{Order.saving_percentage(box_type,num)}%"
                 .pull-right
-                  %label
-                    =form.radio_button('box_type_and_number_of_months',"#{box_type}-#{num}",)
-                    .btn Subscribe
+                  %label.box-radio
+                    =form.radio_button('box_type_and_number_of_months',"#{box_type}-#{num}")
+                    .btn
+                      -if num == 1  && !@order.gift?
+                        Subscribe
+                      -else
+                        Buy
           .clearfix
+
+.row
+  #delivery-notice.mb-1.span10
+    %p.delivery-notice-text
+      -if @order.gift?
+        Our box deliveries start in January 2013. We'll email you a gift certificate which you can print out for Christmas Day.
+      -else
+        Our box deliveries start in January 2013.
+  .span10
+    .thumbnail#discount-bar
+      .caption
+        .discount-bar-left
+          %h2.mb-0 Discount code?
+        .discount-bar-center
+          .control-group
+            %label=discount_code_label(@order)
+            .control-group{:class => discount_code_class(@order)}
+              =form.text_field :discount_code_code, :class => "span2"
+        .discount-bar-right
+          =form.submit('Apply', :name => 'discount_code', :class => "btn pull-right")
+        .clearfix

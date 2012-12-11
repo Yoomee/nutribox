@@ -12,3 +12,5 @@ log/*.pid
 tmp/
 chromedriver.log
 lib/xero/production
+app/assets/images/images/christmas-link_02.png
+app/assets/images/images/nutribox_03.png

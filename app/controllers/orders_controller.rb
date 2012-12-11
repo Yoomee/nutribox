@@ -10,24 +10,41 @@ class OrdersController < ApplicationController
     handle_order
   end
   
+  def download
+    send_file File.join(Rails.root,"lib/downloads/gifts/#{@order.box_type}-#{@order.number_of_months}.pdf"), :type => 'application/pdf', :filename => "The Nutribox Gift Certificate"
+  end
+  
   def list
-    @orders = Order.order("created_at DESC")
+    @orders = Order.alphabetical_by_user
   end
   
   def index
-    @orders = current_user.orders.order("created_at DESC")
+    @orders = current_user.orders.not_failed.where(:gift => false).order("created_at DESC")
+    @gifts  = current_user.orders.not_failed.where(:gift => true).order("created_at DESC")
   end
   
   def update
     @order.assign_attributes(params[:order])
-    handle_order
+    if @order.editing_by_admin
+      if @order.save
+        redirect_to list_orders_path
+      else
+        render :action => 'edit'
+      end
+    else
+      handle_order
+    end
   end
   
   private
   def handle_order
     if params[:back]
+      @order.valid?
       @order.previous_step!
       @order.previous_step! if @order.current_step_register?
+      render :action => "new"
+    elsif params[:discount_code]
+      @order.valid?
       render :action => "new"
     else
       if @order.current_step_register? && @order.login_email.present?
@@ -42,10 +59,14 @@ class OrdersController < ApplicationController
       if @order.valid?
         if @order.last_step?
           @order.save
-          if error = @order.take_payment!
+          begin
+            @order.take_payment!
+            @order.update_attribute(:status,'active')
+            OrderMailer.confirmation_email(@order).deliver
             render :action => 'thanks'
-          else
-            flash[:error] = "Your payment could not be processed"
+          rescue Order::PaymentError => e
+            @order.update_attribute(:status,'failed')
+            @error = e
             @order.current_step = "billing"
             render :action => 'new'
           end
@@ -80,8 +101,8 @@ class OrdersController < ApplicationController
               end
             end
           when "billing"
-            @order.set_test_card_details
-            @order.set_billing_address_from_delivery_address
+            @order.set_test_card_details if Rails.env.development?
+            @order.set_billing_address_from_delivery_address unless @order.gift?
             @order.credit_card.name = current_user.full_name if @order.credit_card.blank?
           end
           render :action => 'new'

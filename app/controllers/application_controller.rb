@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   prepend_before_filter :force_https_and_remove_www
-  before_filter :authenticate
+  #before_filter :authenticate
   
   AUTH_USERS = { "nutribox" => "nutribox123" }
 

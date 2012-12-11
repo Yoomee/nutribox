@@ -5,9 +5,10 @@ class Order < ActiveRecord::Base
     
   belongs_to :user
   has_many :deliveries
-  amount_accessor
+  amount_accessor :amount, :full_price_amount
   
   attr_accessor :login_email, :login_password
+  boolean_accessor :editing_by_admin
 
   validates :box_type, :number_of_months, :presence => true, :if => :current_step_box?
   validates :user, :delivery_address1, :delivery_city, :delivery_postcode, :delivery_country,  :presence => true, :if => :current_step_delivery?
@@ -18,24 +19,35 @@ class Order < ActiveRecord::Base
   
   before_validation :set_amount
   before_validation :set_billing_name
+  before_save :nullify_discount_code_code_if_invalid
+  belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
   
   accepts_nested_attributes_for :user
   
   scope :active, where(:status => 'active')
+  scope :not_failed, where("status != 'failed'")
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
   
   class << self
     
     def number_of_snacks(box_type)
       case box_type
-      when "taster" then "8-10"
-      when "multi"  then "16-20"
+      when "mini" then "8-10"
+      when "standard"  then "16-20"
       else
         ""
       end
     end
+    
+    def box_name(box_type)
+      case box_type
+      when "mini" then "The Nutribox-mini"
+      when "standard" then "The Nutribox"
+      end
+    end
   
     def cost_in_pence(box_type,number_of_months)
+      return 0 unless box_type
       Order::COST_MATRIX[box_type.to_sym].try(:[], number_of_months).to_i
     end
   
@@ -49,6 +61,10 @@ class Order < ActiveRecord::Base
     
     def saving_percentage(box_type,number_of_months)
       ((saving_in_pence(box_type,number_of_months).to_f / cost_in_pence(box_type,number_of_months)) * 100).to_i
+    end
+    
+    def statuses
+      ["active","failed","paused","cancelled"]
     end
 
   end
@@ -73,12 +89,25 @@ class Order < ActiveRecord::Base
     end
   end
   
+  def box_name
+    self.class.box_name(box_type)
+  end
+  
   def box_type_and_number_of_months
     [box_type,number_of_months].compact.join('-')
   end
   
   def box_type_and_number_of_months=(value)
     self.box_type, self.number_of_months = value.split('-')
+    self.full_price_amount = Order.cost(box_type,number_of_months)
+  end
+  
+  def cost(box_type, number_of_months)
+    if discount_code.try(:available?)
+      YmCore::Model::AmountAccessor::Float.new(((Order.cost_in_pence(box_type,number_of_months) - (discount_code.fraction * Order.cost_in_pence(box_type,1)).ceil) / 100.to_f).round(2))
+    else
+      Order.cost(box_type,number_of_months)
+    end
   end
   
   def credit_card  
@@ -98,6 +127,19 @@ class Order < ActiveRecord::Base
     [delivery_name,delivery_address1,delivery_address2,delivery_city,delivery_postcode].select(&:present?).join(separator)
   end
   
+  def discount
+    discount_in_pence.zero? ? nil : (discount_in_pence / 100.to_f)
+  end
+  
+  def discount_in_pence
+    return 0 unless box_type.present? && discount_code.try(:available_to?,user)
+    (discount_code.fraction * Order.cost_in_pence(box_type,1)).ceil
+  end
+  
+  def discounted?
+    amount < full_price_amount
+  end
+  
   def billing_country
     "GB"
   end  
@@ -111,6 +153,7 @@ class Order < ActiveRecord::Base
   end
   
   def next_shipping_date
+    return Date.new(2013, 1, 11) if (created_at || Date.today).year == 2012
     if Date.today.day < shipping_day
       # Hasn't been shipped yet this month
       Date.today.change(:day => shipping_day)
@@ -121,7 +164,11 @@ class Order < ActiveRecord::Base
   end
   
   def product
-    "#{box_type.capitalize} Box for #{number_of_months} month#{'s' if number_of_months > 1}"
+    if number_of_months == 1 && !gift
+      "#{box_name} monthly"
+    else
+      "#{box_name} for #{number_of_months} month#{'s' if number_of_months > 1}"
+    end
   end
   
   def sage_pay_id
@@ -129,11 +176,24 @@ class Order < ActiveRecord::Base
   end
   
   def shipping_day
-    Date.today.day < 15 ? 25 : 11
+    created_at.day < 15 ? 25 : 11
+  end
+  
+  def status_class(prefix = "")
+    prefix + case status
+    when "active" then "success"
+    when "cancelled" then "default"
+    when "failed" then "important"
+    when "paused" then "warning"
+    end
   end
   
   def failed?
     [vps_transaction_id,security_key,transaction_auth_number].any?(:blank?)
+  end
+  
+  def recurring?
+    number_of_months == 1 && !gift?
   end
   
   def successful?
@@ -149,7 +209,7 @@ class Order < ActiveRecord::Base
       paypal_response = gateway.purchase(
       amount_in_pence,
       credit_card,
-      :order_id => (Rails.env.development? ? "dev#{id}" : id),
+      :order_id => (Rails.env.development? ? "dev#{id}" : "NB#{id}"),
       :billing_address => {
         :name => billing_name,
         :address1 => billing_address1,
@@ -164,12 +224,16 @@ class Order < ActiveRecord::Base
   end
   
   def take_repeat_payment!
-    repeat = self.class.create(attributes.symbolize_keys.slice(:amount_in_pence, :user_id).merge({:original_transaction_id => id}))
+    repeat = self.class.create(attributes.symbolize_keys.slice(:amount_in_pence, :user_id, :box_type, :number_of_months))
+    
+    related = attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
+    
+    related[:id] = Rails.env.development? ? "dev#{id}" : "NB#{id}"
     
     paypal_response = gateway.repeat(
     amount_in_pence,
-    :order_id => repeat.id,
-    :related_transaction => attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
+    :order_id => (Rails.env.development? ? "dev#{repeat.id}" : "NB#{repeat.id}"),
+    :related_transaction => related
     )
     
     process_response(paypal_response,repeat)
@@ -184,6 +248,8 @@ class Order < ActiveRecord::Base
       :verification_value => "123"  
     }  
   end  
+  
+  class PaymentError < StandardError; end
   
   private
   def credit_card_is_valid  
@@ -217,6 +283,8 @@ class Order < ActiveRecord::Base
       :security_key => paypal_response.params["SecurityKey"],
       :transaction_auth_number => paypal_response.params["TxAuthNo"]
       )
+    else
+      raise PaymentError, paypal_response.message
     end
   end
   
@@ -225,7 +293,13 @@ class Order < ActiveRecord::Base
   end
   
   def set_amount
-    self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months)
+    self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
+  end
+  
+  def nullify_discount_code_code_if_invalid
+    if discount_code_code.present? && !discounted?
+      self.discount_code_code = nil
+    end
   end
   
   
@@ -234,6 +308,6 @@ end
 Order::VAT_PERCENTAGE = 20.0
 
 Order::COST_MATRIX = {
-  :taster => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },
-  :multi  => { 1 =>  2500, 3 =>  6800, 6 =>  12800, 12 => 24500 }
+  :mini => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },
+  :standard  => { 1 =>  2500, 3 =>  6800, 6 =>  12800, 12 => 24500 }
 }

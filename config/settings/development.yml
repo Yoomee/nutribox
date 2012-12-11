@@ -1,4 +1,6 @@
 disqus_shortname: yoomeedev
+site_url: http://localhost:3000
+facebook_app_id: '137557166307145'
 xero:
   consumer_key: BG2KHEREGBPEXEJ1EUAWH0UU22STRW
   consumer_secret: 14AZRATDHKI9JZNJO3UB7YDMCSUD5C
