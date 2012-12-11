@@ -99,7 +99,7 @@ class Order < ActiveRecord::Base
   
   def box_type_and_number_of_months=(value)
     self.box_type, self.number_of_months = value.split('-')
-    self.full_price_amount = Order.cost(box_type,number_of_months)
+    self.full_price_amount_in_pence = Order.cost_in_pence(box_type,number_of_months)
   end
   
   def cost(box_type, number_of_months)
