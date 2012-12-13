@@ -293,7 +293,10 @@ class Order < ActiveRecord::Base
   end
   
   def set_amount
-    self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
+    # Only change amount if it hasn't been charged
+    if vps_transaction_id.blank?
+      self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
+    end
   end
   
   def nullify_discount_code_code_if_invalid
