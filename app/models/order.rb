@@ -70,7 +70,7 @@ class Order < ActiveRecord::Base
   end
   
   def amount_ex_vat
-    unrounded = (amount.to_f / (100 + Order::VAT_PERCENTAGE)) * 100
+    unrounded = (amount.to_f / (100 + Order::VAT_PERCENTAGES[box_type.to_sym])) * 100
     # Round down for tax purposes
     (unrounded * 100).floor / 100.0
   end
@@ -305,8 +305,10 @@ class Order < ActiveRecord::Base
   
 end
 
-Order::VAT_PERCENTAGE = 10.98
-
+Order::VAT_PERCENTAGES = {
+  :mini => 11.28,
+  :standard => 8.29
+}
 Order::COST_MATRIX = {
   :mini => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },
   :standard  => { 1 =>  2500, 3 =>  6800, 6 =>  12800, 12 => 24500 }

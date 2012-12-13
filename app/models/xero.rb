@@ -30,7 +30,7 @@ class Xero
         :updated_date_utc => updated_at
       )
       contact.add_address(
-        :type => 'STREET',
+        :type => 'POBOX',
         :line1 => billing_address1,
         :line2 => billing_address2,
         :city => billing_city,
@@ -53,7 +53,7 @@ class Xero
           :date => created_at.to_date,
           :due_date => created_at.to_date,
           :line_amount_types => "Exclusive",
-          :invoice_number => (Rails.env.development? ? "dev#{id}" : "NB#{id}")
+          :invoice_number => (Rails.env.development? ? "dev#{id}" : "NB-#{id}")
         )
         invoice.add_line_item(
           :description => product,
@@ -61,13 +61,13 @@ class Xero
           :unit_amount => amount_ex_vat,
           :tax_amount => vat,
           :account_code => gift? ? "210" : "200",
-          :tax_type => "NONE"
+          :tax_type => "OUTPUT2"
         )
         invoice.save
         self.xero_id = invoice.id
         payment = Xero.client.Payment.build(
           :invoice => invoice,
-          :account => Xero.client.Account.build(:code => (Rails.env.development? ? '091' : 600)),
+          :account => Xero.client.Account.build(:code => (Rails.env.development? ? '091' : 605)),
           :date => created_at.to_date,
           :amount => amount,
           :reference => "Debit/Credit card",
