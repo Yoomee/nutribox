@@ -64,6 +64,10 @@ GEM
     archive-tar-minitar (0.5.2)
     arel (2.2.3)
     bcrypt-ruby (3.0.1)
+    better_errors (0.2.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.7.0)
+    binding_of_caller (0.6.8)
     bootstrap-will_paginate (0.0.9)
       will_paginate
     builder (3.0.4)
@@ -355,6 +359,8 @@ PLATFORMS
 
 DEPENDENCIES
   activemerchant
+  better_errors
+  binding_of_caller
   capybara
   coffee-rails (~> 3.1.0)
   country-select
