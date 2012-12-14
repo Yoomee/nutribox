@@ -70,7 +70,7 @@ class Order < ActiveRecord::Base
   end
   
   def amount_ex_vat
-    unrounded = (amount.to_f / (100 + Order::VAT_PERCENTAGES[box_type.to_sym])) * 100
+    unrounded = amount.to_f * ((100 - Order::VAT_PERCENTAGES[box_type.to_sym]) / 100.to_f)
     # Round down for tax purposes
     (unrounded * 100).floor / 100.0
   end
