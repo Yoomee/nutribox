@@ -12,9 +12,9 @@ class Order < ActiveRecord::Base
 
   validates :box_type, :number_of_months, :presence => true, :if => :current_step_box?
   validates :user, :delivery_address1, :delivery_city, :delivery_postcode, :delivery_country,  :presence => true, :if => :current_step_delivery?
-  validates :delivery_postcode, :postcode => true, :if => :current_step_delivery?, :allow_blank => true
+  #validates :delivery_postcode, :postcode => true, :if => :current_step_delivery?, :allow_blank => true
   validates :billing_address1, :billing_city, :billing_postcode, :billing_country,  :presence => true, :if => :current_step_billing?
-  validates :billing_postcode, :postcode => true, :if => :current_step_billing?, :allow_blank => true
+  #validates :billing_postcode, :postcode => true, :if => :current_step_billing?, :allow_blank => true
   validate  :credit_card_is_valid, :if => :current_step_billing? 
   
   before_validation :set_amount
