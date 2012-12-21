@@ -33,7 +33,6 @@ group :development do
   gem 'ruby-debug19'
   gem 'ym_tools'
   gem 'passenger'
-  gem "better_errors"
   gem "binding_of_caller"
 end
 
