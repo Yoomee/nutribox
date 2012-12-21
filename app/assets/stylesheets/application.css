@@ -1313,6 +1313,13 @@ th.right,
 td.right {
   text-align:right;
 }
+
+#cvv2-help a {
+	padding-left: 12px;
+	width: 200px;
+	font-size: 12px;
+}
+
 /* ========== Login page ========== */
 
 #login-form {
