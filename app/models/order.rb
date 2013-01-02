@@ -176,7 +176,7 @@ class Order < ActiveRecord::Base
   end
   
   def shipping_day
-    created_at.day < 15 ? 25 : 11
+    (created_at || Time.now).day < 15 ? 25 : 11
   end
   
   def status_class(prefix = "")
