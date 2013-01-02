@@ -19,10 +19,15 @@
       =fields.input :month, :as => :select, :collection => (1..12), :include_blank => false, :placeholder => "MM", :input_html => {:class => 'input-mini'}, :label => "Expiry date"
       =fields.input :year, :placeholder => "YYYY", :as => :select, :collection => (Date.today.year..Date.today.year+10), :input_html => {:class => 'input-small'}, :label => "/", :required => false, :include_blank => false
       .clearfix
-      =fields.input :verification_value, :label => "CVV",:input_html => {:class => 'input-mini'}
+      =fields.input :verification_value, :label => "CVV2",:input_html => {:class => 'input-mini'}, :help => "Enter your family name"
+      #cvv2-help
+        =link_to "#cvv-help", :'data-toggle' => "modal", :class => "cvv2-help" do
+          What's this?
+      
   .span5
     %h4 Billing address
     =form.input :billing_address1, :label => "Address"
     =form.input :billing_address2, :label => false
     =form.input :billing_city, :label => "City"
     =form.input :billing_postcode, :as => :string, :label => "Postcode", :input_html => {:class => "input-small"}
+    

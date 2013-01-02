@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
   end
   
   def list
-    @orders = Order.alphabetical_by_user
+    @orders = Order.order("created_at DESC")
   end
   
   def index
