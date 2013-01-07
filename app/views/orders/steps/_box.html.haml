@@ -58,12 +58,13 @@
           .clearfix
 
 .row
-  #delivery-notice.mb-1.span10
-    %p.delivery-notice-text
-      -if @order.gift?
-        Our box deliveries start in January 2013.
-      -else
-        Our box deliveries start in January 2013.
+  -if false
+    #delivery-notice.mb-1.span10
+      %p.delivery-notice-text
+        -if @order.gift?
+          Our box deliveries start in January 2013.
+        -else
+          Our box deliveries start in January 2013.
   .span10
     .thumbnail#discount-bar
       .caption
