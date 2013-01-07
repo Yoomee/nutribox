@@ -672,7 +672,7 @@ background: #866b53 url(/assets/home-strip-2.png) center;
 }
 
 a.christmas-link {
-	background: url(/assets/christmas-link.png) no-repeat;
+	background: url(/assets/christmas-link2.png) no-repeat;
 	display: block;
 	text-indent: -9000em;
 	height: 310px;
@@ -1167,12 +1167,11 @@ margin-left: 40px ;
 
 /*  For christmas- comment out afterwards  */
 .gift-wrapper {
-  background: url(/assets/give-christmas-bg.png) no-repeat top center;
+  background:  no-repeat top center;
 }
 .gift-first-title {
-	visibility: hidden;
 }
-a.christmas-give-btn, a.christmas-give-btn:hover {
+/*a.christmas-give-btn, a.christmas-give-btn:hover {
   background: url(/assets/christmas-give-btn.png) no-repeat;
   position: absolute;
   margin: 0 0 0 15px;
@@ -1182,7 +1181,7 @@ a.christmas-give-btn, a.christmas-give-btn:hover {
   width: 260px;
   text-align: left;
   text-indent: 70px;
-}
+}*/
 
 /*End of christmas stuff */
 
