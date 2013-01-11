@@ -8,3 +8,7 @@ end
 every 1.hour do
   rake "nutribox:xero"
 end
+
+every 1.day, :at => '4am' do
+  rake "nutribox:ship"
+end
