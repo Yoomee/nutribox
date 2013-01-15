@@ -176,7 +176,12 @@ class Order < ActiveRecord::Base
   end
   
   def shipping_day
-    (created_at || Time.now).day < 15 ? 25 : 11
+    order_date = (created_at || Time.now)
+    if order_date.year == 2012
+      11
+    else
+      order_date.day <= 15 ? 25 : 11
+    end
   end
   
   def status_class(prefix = "")

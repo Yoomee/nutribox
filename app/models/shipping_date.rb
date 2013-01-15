@@ -1,7 +1,7 @@
 class ShippingDate < ActiveRecord::Base
   include YmCore::Model
   
-  has_many :deliveries, :autosave => true
+  has_many :deliveries, :autosave => true, :dependent => :destroy
   validates :date, :presence => true, :uniqueness => true
   
   before_create :generate_deliveries!
@@ -17,7 +17,9 @@ class ShippingDate < ActiveRecord::Base
   private
   def generate_deliveries!
     Order.active.alphabetical_by_user.each do |order|
-      self.deliveries.build(:order => order).set_fields_from_order
+      if order.shipping_day == date.day
+        self.deliveries.build(:order => order).set_fields_from_order
+      end
     end
   end
   

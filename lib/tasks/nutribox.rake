@@ -2,8 +2,8 @@ namespace :nutribox do
   
   desc 'Create a shipping date and generate deliveries'
   task :ship => :environment do
-    if Date.today.day.in?([1,15])
-      ShippingDate.create(:date => 10.days.from_now)
+    if Date.today.day.in?([2,16])
+      ShippingDate.create(:date => 9.days.from_now)
     end
   end
   
