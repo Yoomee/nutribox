@@ -1,3 +1,12 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      $('a.popover-link').popover({html:true,placement:'left',trigger:'manual',animation:false});
+      $('a.popover-link').on('click', function (e) {
+        $('a.popover-link').popover('hide');
+        $(this).popover('show');
+      })
+    });
 %h1 Subscriptions
 %table.table.table-striped
   %thead
@@ -12,7 +21,9 @@
     -@orders.each do |order|
       %tr
         %td.span1=order.id
-        %td="#{order.user.last_name}, #{order.user.first_name}"
+        %td
+          %a.popover-link{:title => order.user.full_name, :'data-content' => "<p>#{mail_to(order.user.email)}</p><p>#{order.delivery_address('<br/>')}</p>".html_safe}
+            ="#{order.user.last_name}, #{order.user.first_name}"
         %td=order.product
         %td=order.created_at.to_s(:date)
         %td

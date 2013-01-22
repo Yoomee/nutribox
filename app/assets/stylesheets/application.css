@@ -1361,3 +1361,7 @@ td.discount-code code {
 .control-group.error input[type="submit"]{
   color:#fff;
 }
+
+a.popover-link{
+  cursor:pointer;
+}
