@@ -6,6 +6,7 @@
 
 #= require jquery
 #= require jquery_ujs
+#= require jquery-migrate
 #= require ym_core
 #= require ym_cms
 #= require redactor
