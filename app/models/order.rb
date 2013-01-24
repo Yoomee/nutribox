@@ -60,7 +60,9 @@ class Order < ActiveRecord::Base
     end
     
     def saving_percentage(box_type,number_of_months)
-      ((saving_in_pence(box_type,number_of_months).to_f / cost_in_pence(box_type,number_of_months)) * 100).to_i
+      saving = ((saving_in_pence(box_type,number_of_months).to_f / (cost_in_pence(box_type,1) * number_of_months)) * 100)
+      saving = saving + 0.1 # Hack so that 3 month Nutribox-mini discount is rounded from 9.91% to 10%
+      saving.to_i
     end
     
     def statuses
