@@ -13,6 +13,8 @@ Nutribox::Application.routes.draw do
   resources :shipping_dates, :only => :show, :path => "shippings"
   
   resources :discount_codes
+  
+  resources :products
 
   get  'join' => "orders#new"
   get  'gift' => "orders#new", :gift => 1
