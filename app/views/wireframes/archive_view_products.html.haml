@@ -1,0 +1,111 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      $('a[rel="popover"]').popover({
+        placement:'top',
+        html: true,
+        
+      });
+    });
+.container.archive
+  .row
+    .archive-nav-pills.span4.offset4
+      %ul.nav.nav-pills
+        %li.active
+          =link_to "The Nutribox", "#"
+        %li
+          =link_to "The Nutribox-Mini", "#"
+  
+    .span12
+      =link_to "#", :class=>"month-link previous-link pull-left" do
+        %i.icon-arrow-left
+        %span
+          Previous month
+      =link_to "#", :class=>"month-link next-link pull-right" do
+        %span
+          Next month
+        %i.icon-arrow-right          
+      %h1.archive-title.center
+        The Nutribox January 2013
+  .row.archive-items      
+    .archive-item.span4
+      .well
+        .archive-image-wrap
+          =image_tag "archive-image.jpg"
+        .archive-item-content  
+          %h2.archive-item-title
+            Raw Living Magic Mix
+          %p.archive-item-desciption
+            Like a trail mix with a magic blend of goji berries, mulberries, yacon root, coconut chips, and carob chips. Sprinkle on cereal or yoghurt as well as eating on its own.
+          =link_to "javascript:void(0)", :class=>"nutritional_info_link", :"data-content" => "Vivamus sagittis lacus vel augue laoreet rutrum faucibus.", :title => "Title",:rel => "popover" do
+            %i.icon-info-sign
+            %span
+              Nutritional Information      
+    .archive-item.span4
+      .well
+        .archive-image-wrap
+          =image_tag "archive-image.jpg"
+        .archive-item-content  
+          %h2.archive-item-title
+            Raw Living Magic Mix
+          %p.archive-item-desciption
+            Like a trail mix with a magic blend of goji berries, mulberries, yacon root, coconut chips, and carob chips. Sprinkle on cereal or yoghurt as well as eating on its own.
+          =link_to "javascript:void(0)", :class=>"nutritional_info_link", :"data-content" => "Vivamus sagittis lacus vel augue laoreet rutrum faucibus.", :title => "Title",:rel => "popover" do
+            %i.icon-info-sign
+            %span
+              Nutritional Information              
+    .archive-item.span4
+      .well
+        .archive-image-wrap
+          =image_tag "archive-image.jpg"
+        .archive-item-content  
+          %h2.archive-item-title
+            Raw Living Magic Mix
+          %p.archive-item-desciption
+            Like a trail mix with a magic blend of goji berries, mulberries, yacon root, coconut chips, and carob chips. Sprinkle on cereal or yoghurt as well as eating on its own.
+          =link_to "javascript:void(0)", :class=>"nutritional_info_link", :"data-content" => "Vivamus sagittis lacus vel augue laoreet rutrum faucibus.", :title => "Title",:rel => "popover" do
+            %i.icon-info-sign
+            %span
+              Nutritional Information    
+  .row.archive-items      
+    .archive-item.span4
+      .well
+        .archive-image-wrap
+          =image_tag "archive-image.jpg"
+        .archive-item-content  
+          %h2.archive-item-title
+            Raw Living Magic Mix
+          %p.archive-item-desciption
+            Like a trail mix with a magic blend of goji berries, mulberries, yacon root, coconut chips, and carob chips. Sprinkle on cereal or yoghurt as well as eating on its own.
+          =link_to "javascript:void(0)", :class=>"nutritional_info_link", :"data-content" => "Vivamus sagittis lacus vel augue laoreet rutrum faucibus.", :title => "Title",:rel => "popover" do
+            %i.icon-info-sign
+            %span
+              Nutritional Information      
+    .archive-item.span4
+      .well
+        .archive-image-wrap
+          =image_tag "archive-image.jpg"
+        .archive-item-content  
+          %h2.archive-item-title
+            Raw Living Magic Mix
+          %p.archive-item-desciption
+            Like a trail mix with a magic blend of goji berries, mulberries, yacon root, coconut chips, and carob chips. Sprinkle on cereal or yoghurt as well as eating on its own.
+          =link_to "javascript:void(0)", :class=>"nutritional_info_link", :"data-content" => "Vivamus sagittis lacus vel augue laoreet rutrum faucibus.", :title => "Title",:rel => "popover" do
+            %i.icon-info-sign
+            %span
+              Nutritional Information              
+    .archive-item.span4
+      .well
+        .archive-image-wrap
+          =image_tag "archive-image.jpg"
+        .archive-item-content  
+          %h2.archive-item-title
+            Raw Living Magic Mix
+          %p.archive-item-desciption
+            Like a trail mix with a magic blend of goji berries, mulberries, yacon root, coconut chips, and carob chips. Sprinkle on cereal or yoghurt as well as eating on its own.
+          =link_to "javascript:void(0)", :class=>"nutritional_info_link", :"data-content" => "Vivamus sagittis lacus vel augue laoreet rutrum faucibus.", :title => "Title",:rel => "popover" do
+            %i.icon-info-sign
+            %span
+              Nutritional Information                           
+                      
+
