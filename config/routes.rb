@@ -14,7 +14,10 @@ Nutribox::Application.routes.draw do
   
   resources :discount_codes
   
-  resources :products
+  match "products/month/:yearmonth" => 'products#month'
+  match "products/months" => 'products#months'
+  resources :products 
+  
 
   get  'join' => "orders#new"
   get  'gift' => "orders#new", :gift => 1

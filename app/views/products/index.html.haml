@@ -1,0 +1,25 @@
+.row
+  .span8
+    %h1 Products
+  .span4
+    =link_to(new_product_path, :class => "btn btn-primary pull-right mt-1") do
+      %i.icon-plus
+      New product for month
+-if @products.empty?
+  %p There aren't any productsyet
+-else
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Product
+        %th Month
+        %th Description
+        %th
+    %tbody
+      -@products.each do |product|
+        %tr
+          %td=product.name
+          %td
+            =Date::MONTHNAMES[product.month]
+            =product.year
+          %td.span4=link_to("Edit", edit_product_path(product))

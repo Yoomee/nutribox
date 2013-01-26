@@ -4,8 +4,19 @@ class Product < ActiveRecord::Base
   image_accessor :image    
   
   def self.months
-    @months = Array.new
-    (1..12).each {|m| @months << [Date::MONTHNAMES[m], m]}
+    months = []
+    (1..12).each {|m| months << [Date::MONTHNAMES[m], m]}
+    months
+  end
+  
+  def self.years
+    years = []
+    10.times {|count| years << Time.now.year+count}
+    years
+  end
+  
+  def self.box_types
+    ["Mini", "Standard", "Both"]
   end
   
 end

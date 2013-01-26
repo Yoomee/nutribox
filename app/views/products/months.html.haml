@@ -1,0 +1,27 @@
+.row
+  .span8
+    %h1 All months
+  .span4
+    =link_to(new_product_path, :class => "btn btn-primary pull-right mt-1") do
+      %i.icon-plus
+      Add product  
+
+-if @months.empty?
+  %p There aren't any months
+-else
+  %table.table.table-striped
+    %thead
+      %tr
+        %th
+    %tbody
+      -@months.each do |month|
+        %tr
+          %td
+            =Date::MONTHNAMES[month.month]
+            =month.year
+          %td
+            =pluralize(month.count, 'product', 'different products')
+            
+          %td
+            =link_to 'View product list', "/products/month/#{month.year}#{"%02d" % month.month}"
+
