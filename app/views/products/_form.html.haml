@@ -1,4 +1,4 @@
-=semantic_form_for @product, :html => {:class => "form-horizontal", :enctype => "multipart/form-data"} do |form|
+=semantic_form_for product, :html => {:class => "form-horizontal", :enctype => "multipart/form-data"} do |form|
   =form.inputs do
 
     =form.input :year, :as => :select, :collection => Product.years, :selected => params[:year] || Time.now.year

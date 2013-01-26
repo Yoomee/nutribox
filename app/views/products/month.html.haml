@@ -28,7 +28,10 @@
           %td=product.name
           %td
             =product.box_type
-          %td.span4=link_to("Edit", edit_product_path(product))
+          %td.span4
+            =link_to("Edit", edit_product_path(product))
+            =link_if_can("Delete", [:destroy, product], :confirm => "Are you sure?")
+            
           
 .row
   .span8
