@@ -18,8 +18,12 @@ class Product < ActiveRecord::Base
     years
   end
   
-  def self.box_types
-    ["Mini", "Standard", "Both"]
+  def self.get_month(yearmonth)
+    yearmonth.to_i % 100
+  end
+  
+  def self.get_year(yearmonth)
+    (yearmonth.to_i/100).to_i
   end
   
 end

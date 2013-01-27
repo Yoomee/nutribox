@@ -3,7 +3,7 @@
 
     =form.input :year, :as => :select, :collection => Product.years, :selected => params[:year] || Time.now.year
     =form.input :month, :as => :select, :collection => Product.months, :selected => params[:month] || Product.months[Time.now.month-1], :hint => "Which month is this product for?"
-    =form.input :box_type, :as => :select, :collection => Product.box_types, :selected => "Both", :hint => "Which box is this product going in"
+    =form.input :box_type, :as => :select, :collection => Box.types, :selected => "Both", :hint => "Which box is this product going in"
     =form.input :name, :label => "Name of product", :placeholder => "e.g. Nākd Berry Delight Bar"
     .span10.offset2=image_for(@product, "262x")
     =form.input :image, :as => :file, :label => "Upload a photo of the product (mandatory)"

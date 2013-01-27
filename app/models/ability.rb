@@ -8,6 +8,7 @@ class Ability
     # open ability
     can :read, Page
     can :create, Order
+    can :read, Box
     
     if user.try(:admin?)
       can :manage, :all      

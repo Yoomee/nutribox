@@ -23,5 +23,9 @@
             =pluralize(month.count, 'product', 'different products')
             
           %td
-            =link_to 'View product list', "/products/month/#{month.year}#{"%02d" % month.month}"
+            =link_to 'View product list', products_month_path(:year => month.year, :month => month.month)
+          %td    
+            =link_to 'Preview standard box', "/products/month/#{month.year}#{"%02d" % month.month}"           
+          %td    
+            =link_to 'Preview mini box', "/products/month/#{month.year}#{"%02d" % month.month}"    
 
