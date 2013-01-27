@@ -6,7 +6,7 @@ class BoxesController < ApplicationController
     if !Box.types.include?(@box.type) || @box.type == 'both'
       not_found
     else
-      @products = Product.where("month = ? AND year= ? AND (box_type = ? OR box_type ='both')", @box.month, @box.year, @box.type).order(:name)
+      @products = @box.products
     end
   end
   

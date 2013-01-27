@@ -9,6 +9,10 @@ class Box
     @type = type
   end
   
+  def products
+    Product.where("month = ? AND year= ? AND (box_type = ? OR box_type ='both')", @month, @year, @type).order(:name)
+  end
+  
   def previous_month
     ("1/#{@month}/#{@year}".to_datetime - 1.month).month
   end
