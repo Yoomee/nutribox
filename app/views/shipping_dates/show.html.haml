@@ -20,7 +20,10 @@
     -@shipping_date.deliveries.each do |delivery|
       %tr
         %td.span1=delivery.id
-        %td="#{delivery.user.last_name}, #{delivery.user.first_name}"
+        %td
+          "#{delivery.user.last_name}, #{delivery.user.first_name}"
+          %br
+          =link_to "Preview survey", create_survey_from_delivery_path(:id=>delivery.id)
         %td=delivery.box_name
         %td=pluralize(delivery.number_of_months,"month")
         %td=delivery.gift? ? "Yes" : "No"

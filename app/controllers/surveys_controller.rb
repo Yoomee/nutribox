@@ -6,8 +6,8 @@ class SurveysController < ApplicationController
   end
   
   
-  def new
-    @survey = Survey.create_new(current_user)
+  def create_from_delivery
+    @survey = Survey.create_new(params[:id])
     redirect_to survey_path(:id => @survey.hash)
   end
   
