@@ -8,7 +8,6 @@
       });
     });
         
-  
 .container.archive
   .row
     .archive-nav-pills.span4.offset4
@@ -43,6 +42,7 @@
           %i.icon-arrow-right
         -if current_user.admin? || !@box.in_the_future?          
           %h1.archive-title.center
+            The
             =box_type_name(@box.type)
             =month_name(@box.month)
             =@box.year   
@@ -51,6 +51,7 @@
           &nbsp;
         -if current_user.admin? || !@box.in_the_future?          
           %h1.archive-title.center
+            The
             =box_type_name(@box.type)
             =month_name(@box.month)
             =@box.year   

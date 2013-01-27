@@ -5,7 +5,7 @@ module BoxHelper
   end
   
   def box_type_name(box_type)
-    names = {'standard' => "The Nutribox", 'mini' => "The Nutribox-Mini"}
+    names = {'standard' => "Nutribox", 'mini' => "Nutribox-Mini"}
     names[box_type]
   end
 
