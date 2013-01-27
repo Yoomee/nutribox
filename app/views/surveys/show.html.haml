@@ -1,0 +1,62 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      $('a[rel="popover"]').popover({
+        placement:'top',
+        html: true,
+        
+      });
+    });
+.container.archive
+  .row
+    .span10.offset1.survey-titles.center
+      %h1.survey-title
+        The
+        =box_type_name(@survey.box_type)
+        Survey
+      %h2.survey-smaller-title
+        Please help us by rating your
+        =box_type_name(@survey.box_type)
+        for
+        =month_name(@survey.month)
+        =@survey.year
+    .span10.offset1    
+      .row.survey-items   
+         
+        -@box.products.each do |product| 
+          .survey-item.span10
+            .well
+              .survey-info
+                .survey-image-wrap
+                  =image_for(product, "262x262")
+                .clearfix  
+                .survey-item-content  
+                  %h2.survey-item-title
+                    =product.name
+                  %p.survey-item-desciption
+                    =product.description
+              .survey-right-col
+                .survey-ratings
+                  %h3.survey-rate-title
+                    Please rate this product
+                  %div
+                    %span.rating
+                      .yum-yuck
+                        .yum
+                          Yum
+                        .yuck
+                          Yuck
+                      %span.star
+                      %span.star
+                      %span.star
+                      %span.star
+                      %span.star
+                .clearfix      
+                .survey-comments.mt-2
+                  =link_to "#", :class=>"btn-primary btn add-comment-button" do
+                    %i.icon-comment
+                    %span
+                      Add a comment 
+              .clearfix    
+            
+       
