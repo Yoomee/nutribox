@@ -4,6 +4,7 @@ class CreateSurveys < ActiveRecord::Migration
       t.string :hash
       t.string :email
       t.integer :delivery_id
+      t.integer :user_id
       t.integer :month
       t.integer :year
       t.string :box_type
