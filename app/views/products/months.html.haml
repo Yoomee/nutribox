@@ -25,7 +25,7 @@
           %td
             =link_to 'View product list', products_month_path(:year => month.year, :month => month.month)
           %td    
-            =link_to 'Preview standard box', box_path(:year => month.year, :month => month.month, :type => 'standard')          
+            =link_to 'Preview standard box', box_path(:year => month.year, :month => month.month, :type => 'standard'), :target => '_new'      
           %td    
-            =link_to 'Preview mini box', box_path(:year => month.year, :month => month.month, :type => 'mini')          
+            =link_to 'Preview mini box', box_path(:year => month.year, :month => month.month, :type => 'mini'), :target => '_new'      
 
