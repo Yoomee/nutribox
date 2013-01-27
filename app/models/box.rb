@@ -44,6 +44,22 @@ class Box
     ["mini", "standard", "both"]
   end
   
+  def self.latest_month
+    if DateTime.now.day < SHIPPING_DAY
+      (DateTime.now - 1.month).month
+    else
+      DateTime.now.month
+    end
+  end
+  
+  def self.latest_year
+    if DateTime.now.day < SHIPPING_DAY
+      (DateTime.now - 1.month).year
+    else
+      DateTime.now.year
+    end
+  end
+  
 SHIPPING_DAY = 11
   
 end

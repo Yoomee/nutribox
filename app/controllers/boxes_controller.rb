@@ -8,7 +8,11 @@ class BoxesController < ApplicationController
     else
       @products = Product.where("month = ? AND year= ? AND (box_type = ? OR box_type ='both')", @box.month, @box.year, @box.type).order(:name)
     end
-    
+  end
+  
+  def latest
+    last = Product.where("month = ? AND year= ?", Box.latest_month, Box.latest_year).order(:year, :month).last
+    redirect_to box_path(:year => last.year, :month => last.month, :type => 'standard')
   end
   
   private

@@ -19,6 +19,7 @@ Nutribox::Application.routes.draw do
   resources :products
 
   match "box/:type/:year/:month" => 'boxes#show', :as => 'box'
+  match "boxes" => "boxes#latest", :as => 'latest_box'
   
 
   get  'join' => "orders#new"

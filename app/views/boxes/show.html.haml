@@ -31,6 +31,10 @@
           %i.icon-arrow-left
           %span
             Previous month
+      -else
+        .span.pull-right
+          &nbsp;
+
           
       -if !@box.last_box?
         =link_to box_path(:year => @box.next_year, :month => @box.next_month, :type => @box.type), :class=>"month-link next-link pull-right" do
@@ -41,8 +45,16 @@
           %h1.archive-title.center
             =box_type_name(@box.type)
             =month_name(@box.month)
-            =@box.year
-        
+            =@box.year   
+      -else
+        .span.pull-right
+          &nbsp;
+        -if current_user.admin? || !@box.in_the_future?          
+          %h1.archive-title.center
+            =box_type_name(@box.type)
+            =month_name(@box.month)
+            =@box.year   
+  
    
   -if current_user.admin? || !@box.in_the_future?          
     .row.archive-items  
