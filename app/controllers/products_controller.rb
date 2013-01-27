@@ -3,10 +3,7 @@ class ProductsController < ApplicationController
   expose(:product)
   
   def create
-    product.save ? redirect_to(products_month_path(product)) : render(:action => 'new')
-  end
-  
-  def edit
+    product.save ? redirect_to(products_month_path(:year =>product.year, :month=> product.month)) : render(:action => 'new')
   end
   
   def destroy
@@ -16,23 +13,18 @@ class ProductsController < ApplicationController
   end
   
   def update
-    product.update_attributes(params[:product]) ? redirect_to(products_path) : render(:action => 'edit')
+    product.update_attributes(params[:product]) ? redirect_to(products_month_path(:year =>product.year, :month=> product.month)) : render(:action => 'edit')
   end
   
   def months
     @months = Product.find(:all, :select => 'count(*) as count, year, month', :group=>'year, month', :order=>'year, month')        
-  end
+  end 
   
   def month
-    @month = params[:yearmonth].to_i % 100
-    @year = (params[:yearmonth].to_i/100).to_i
+    @month = params[:month].to_i
+    @year = params[:year].to_i
     @month_name=Date::MONTHNAMES[@month]
     @products = Product.where(:month => @month, :year => @year)   
   end
-  
-  private
-  def products_month_path(product)
-    "/products/month/#{product.year}#{'%02d' % product.month}"
-  end
-  
+
 end
