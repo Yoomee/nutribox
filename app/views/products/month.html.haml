@@ -36,3 +36,6 @@
 .row
   .span8
     =link_to 'View all months', products_months_path
+    &nbsp;
+    &nbsp;
+    =link_to 'Preview standard box', box_path(:year => @year, :month => @month, :type => 'standard'), :target => '_new'   

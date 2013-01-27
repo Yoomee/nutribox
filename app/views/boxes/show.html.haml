@@ -1,0 +1,61 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      $('a[rel="popover"]').popover({
+        placement:'top',
+        html: true,
+        
+      });
+    });
+        
+.container.archive
+  .row
+    .archive-nav-pills.span4.offset4
+      %ul.nav.nav-pills
+        -if @type == 'standard'
+          %li.active
+            =link_to "The Nutribox", '#' 
+          %li
+            =link_to "The Nutribox-Mini", box_path(:year => @year, :month => @month, :type => 'mini')     
+        -elsif @type == 'mini'
+          %li
+            =link_to "The Nutribox", box_path(:year => @year, :month => @month, :type => 'standard')     
+          %li.active
+            =link_to "The Nutribox-Mini", "#"
+        
+  
+    .span12
+      =link_to box_path(:year => @year, :month => @month-1, :type => @type), :class=>"month-link previous-link pull-left" do
+        %i.icon-arrow-left
+        %span
+          Previous month
+      =link_to box_path(:year => @year, :month => @month+1, :type => @type), :class=>"month-link next-link pull-right" do
+        %span
+          Next month
+        %i.icon-arrow-right          
+      %h1.archive-title.center
+        =box_type_name(@type)
+        =month_name(@month)
+        =@year
+        
+        
+  .row.archive-items    
+
+    -@products.each do |product|
+      .archive-item.span4
+        .well
+          .archive-image-wrap
+            =image_for(product, "262x262")
+          .archive-item-content  
+            %h2.archive-item-title
+              =product.name
+            %p.archive-item-desciption
+              =product.description
+            -if !product.nutritional_information.empty?  
+              =link_to "javascript:void(0)", :class=>"nutritional_info_link", :"data-content" => "#{product.nutritional_information}", :title => "Nutritional Information",:rel => "popover" do
+                %i.icon-info-sign
+                %span
+                  Nutritional Information
+  
+  
+  
