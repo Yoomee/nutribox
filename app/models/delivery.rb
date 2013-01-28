@@ -1,6 +1,7 @@
 class Delivery < ActiveRecord::Base
   belongs_to :order
   belongs_to :shipping_date
+  has_one :survey
   
   delegate :user, :to => :order
   
@@ -29,6 +30,12 @@ class Delivery < ActiveRecord::Base
   
   def box_name
     Order.box_name(box_type)
+  end
+  
+  def find_or_create_survey
+    survey = Survey.new(:delivery_id => id) if (survey=Survey.find_by_delivery_id(id)).nil?
+    survey.save 
+    survey    
   end
   
   private 

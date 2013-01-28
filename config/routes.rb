@@ -22,6 +22,10 @@ Nutribox::Application.routes.draw do
   
   match "surveys/new/:id" => 'surveys#create_from_delivery', :as => 'create_survey_from_delivery'
   resources :surveys
+  
+
+  match "rate/:product_id/:survey_id/:rating" => 'survey_answers#rate', :as => 'survey_answer_rate'
+  resources :survey_answers
 
   get  'join' => "orders#new"
   get  'gift' => "orders#new", :gift => 1

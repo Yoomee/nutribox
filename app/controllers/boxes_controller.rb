@@ -15,9 +15,4 @@ class BoxesController < ApplicationController
     redirect_to box_path(:year => last.year, :month => last.month, :type => 'standard')
   end
   
-  private
-  def not_found
-    raise ActionController::RoutingError.new('Not Found')
-  end
-  
 end  

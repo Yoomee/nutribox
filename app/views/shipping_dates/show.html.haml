@@ -23,7 +23,7 @@
         %td
           "#{delivery.user.last_name}, #{delivery.user.first_name}"
           %br
-          =link_to "Preview survey", create_survey_from_delivery_path(:id=>delivery.id)
+          =link_to "Preview survey", survey_path(:id=>delivery.survey_hash)
         %td=delivery.box_name
         %td=pluralize(delivery.number_of_months,"month")
         %td=delivery.gift? ? "Yes" : "No"

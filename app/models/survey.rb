@@ -1,14 +1,20 @@
 class Survey < ActiveRecord::Base
     
   include CanCan::Ability
-  belongs_to :user
-    
-  def self.create_new(delivery_id)
-    delivery = Delivery.find(delivery_id)
-    survey = Survey.new
-    survey.delivery_id=delivery.id
-    survey.save if Survey.find_by_delivery_id(delivery.id).nil?
-    survey
+  belongs_to :delivery
+  
+  has_many :answers, :class_name => "SurveyAnswer"
+  
+  def month
+    delivery.shipping_date.date.month
+  end
+  
+  def year
+    delivery.shipping_date.date.year
+  end
+  
+  def box_type
+    delivery.box_type
   end
   
 end

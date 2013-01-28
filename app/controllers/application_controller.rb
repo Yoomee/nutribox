@@ -27,5 +27,9 @@ class ApplicationController < ActionController::Base
       redirect_to redirect_options
     end
   end
+  
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
 
 end

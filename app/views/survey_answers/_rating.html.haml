@@ -1,0 +1,14 @@
+%h3.survey-rate-title
+  -if @rating
+    Thanks!
+  -else
+    Please rate this product
+%div
+  %span.rating{:class => "rated-#{(@rating.try(:rating) || answer.try(:rating)).to_i}"}
+    .yum-yuck
+      .yum
+        Yum
+      .yuck
+        Yuck
+    -(1..5).to_a.reverse.each do |num|
+      =link_to  "", survey_answer_rate_path(:product_id => product.id, :survey_id => survey.id, :rating => num), :remote => true, :class=>"star star-#{num}"

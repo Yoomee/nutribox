@@ -1485,21 +1485,43 @@ z-index: 10;
 .survey-ratings:hover .yum-yuck {
   opacity: 1;
 }
-span.star {
+a.star {
 font-family: FontAwesome;
 font-weight: normal;
 font-style: normal;
 display: inline-block;
 }
-span.star::before {
+a.star:hover {
+	text-decoration:none;
+}
+a.star::before {
 content: "\f006";
 padding-right: 5px;
 color: #999;
 }
-.rating span.star:hover {
+.rating a.star:hover {
 cursor: pointer;
 }
-.rating span.star:hover::before, .rating span.star:hover::before, .rating span.star:hover ~ span.star::before, .rating span.star:hover ~ span.star::before {
+.rating a.star:hover::before,
+.rating a.star:hover::before,
+.rating a.star:hover ~ a.star::before,
+.rating a.star:hover ~ a.star::before,
+.rating a.star-active::before,
+.rated-1 .star-1::before,
+.rated-2 .star-1::before,
+.rated-3 .star-1::before,
+.rated-4 .star-1::before,
+.rated-5 .star-1::before,
+.rated-2 .star-2::before,
+.rated-3 .star-2::before,
+.rated-4 .star-2::before,
+.rated-5 .star-2::before,
+.rated-3 .star-3::before,
+.rated-4 .star-3::before,
+.rated-5 .star-3::before,
+.rated-4 .star-4::before,
+.rated-5 .star-4::before,
+.rated-5 .star-5::before{
 content: "\f005";
 color: #99b936;
 }
