@@ -23,7 +23,7 @@
     .span10.offset1    
       .row.survey-items   
          
-        -@box.products.each do |product| 
+        -@survey.box.products.each do |product| 
           .survey-item.span10
             .well
               .survey-info
@@ -37,16 +37,24 @@
                     =product.description
               .survey-right-col
                 .survey-ratings{:id => "rating#{product.id}"}   
-                  =render("survey_answers/rating", :product => product, :survey => @survey, :answer => @survey.answers.where(:product_id => product.id).try(:first)) 
+                  =render("survey_answers/rating", :product => product, :survey => @survey, :answer => @survey.answer_for_product(product)) 
                     
                       
                 .clearfix   
                 .response{:id => "response#{product.id}"}   
                 .survey-comments.mt-2
-                  =link_to "#", :class=>"btn-primary btn add-comment-button" do
+                  =link_to "#comment#{product.id}", :class=>"btn-primary btn add-comment-button", :"data-toggle"=>"modal" do
                     %i.icon-comment
                     %span
                       Add a comment 
-              .clearfix    
+              .clearfix  
+              
+-@survey.box.products.each do |product|               
+  =render("survey_answers/comment", :product => product, :survey => @survey, :answer => @survey.answer_for_product(product))
+                
+
+
+
+               
             
        
