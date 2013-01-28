@@ -22,7 +22,11 @@ class Survey < ActiveRecord::Base
   end
   
   def answer_for_product(product)
-    answers.where(:product_id => product.id).try(:first)
+    if (answer = answers.where(:product_id => product.id).try(:first))
+      answer
+    else
+      SurveyAnswer.new(:product_id => product.id, :survey_id => id)
+    end
   end
   
 end

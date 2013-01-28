@@ -43,7 +43,7 @@
                 .clearfix   
                 .response{:id => "response#{product.id}"}   
                 .survey-comments.mt-2
-                  =link_to "#comment#{product.id}", :class=>"btn-primary btn add-comment-button", :"data-toggle"=>"modal" do
+                  =link_to "#comment-modal-#{product.id}", :class=>"btn-primary btn add-comment-button", :"data-toggle"=>"modal" do
                     %i.icon-comment
                     %span
                       Add a comment 
