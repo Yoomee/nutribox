@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
     product.update_attributes(params[:product]) ? redirect_to(products_month_path(:year =>product.year, :month=> product.month)) : render(:action => 'edit')
   end
   
-  def months
+  def index
     @months = Product.find(:all, :select => 'count(*) as count, year, month', :group=>'year, month', :order=>'year, month')        
   end 
   
