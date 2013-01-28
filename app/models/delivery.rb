@@ -6,6 +6,8 @@ class Delivery < ActiveRecord::Base
   
   validates :order_id, :uniqueness => { :scope => :shipping_date_id }
     
+  before_save :set_survey_hash
+  
   def set_fields_from_order
     if order
       self.box_type ||= order.box_type
@@ -27,6 +29,11 @@ class Delivery < ActiveRecord::Base
   
   def box_name
     Order.box_name(box_type)
+  end
+  
+  private 
+  def set_survey_hash
+    self.survey_hash = Digest::SHA1.hexdigest("#{id}/#{name}")
   end
   
 end
