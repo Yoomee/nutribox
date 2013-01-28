@@ -1,6 +1,5 @@
 class Box
   
-  include CanCan::Ability
   attr_accessor :month, :year, :type
 
   def initialize(year, month, type)
