@@ -14,8 +14,8 @@ Nutribox::Application.routes.draw do
   
   resources :discount_codes
   
-  match "products/:year/:month" => 'products#month', :as => 'products_month' 
   resources :products
+  match "products/:year/:month" => 'products#month', :as => 'products_month' 
 
   match "box/:type/:year/:month" => 'boxes#show', :as => 'box'
   match "boxes" => "boxes#latest", :as => 'latest_box'

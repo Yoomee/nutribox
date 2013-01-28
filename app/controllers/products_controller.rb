@@ -9,7 +9,7 @@ class ProductsController < ApplicationController
   def destroy
     product.destroy
     flash_notice(product)
-    redirect_to(performers_path)
+    redirect_to(products_month_path(:year =>product.year, :month=> product.month))
   end
   
   def update
