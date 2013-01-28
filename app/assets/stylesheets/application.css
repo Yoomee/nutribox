@@ -507,6 +507,7 @@ a.twitter-link {
   border-radius:6px;
   
   background: #fff;
+  filter:none;
   box-shadow:0 0px 5px rgba(0,0,0,0.2);
 }
 #top-nav a.nav-link {

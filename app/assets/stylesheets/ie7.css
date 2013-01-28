@@ -1,3 +1,8 @@
+/*
+*= require_tree ./ie7
+*= require_self
+*/
+
 .form-horizontal #billing_step .controls{
   margin-left:0px;
 }
