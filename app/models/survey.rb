@@ -17,4 +17,12 @@ class Survey < ActiveRecord::Base
     delivery.box_type
   end
   
+  def box
+    @box ||= Box.new(year, month, box_type)
+  end
+  
+  def answer_for_product(product)
+    answers.where(:product_id => product.id).try(:first)
+  end
+  
 end

@@ -6,7 +6,6 @@ class SurveysController < ApplicationController
       not_found
     else
       @survey = @delivery.find_or_create_survey
-      @box = Box.new(@survey.year, @survey.month, @survey.box_type)
     end
   end  
   
