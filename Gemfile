@@ -19,7 +19,7 @@ gem "ym_core", "~>0.1.48"           #, :path => "~/Rails/Gems/ym_core"
 gem "ym_cms", "0.3.7"   #, :path => "~/Rails/Gems/ym_cms"
 gem "ym_users"          #, :path => "~/Rails/Gems/ym_users"
 gem "ym_permalinks"     #, :path => "~/Rails/Gems/ym_permalinks"
-gem "ym_snippets"       #, :path => "~/Rails/Gems/ym_snippets"
+gem 'ym_snippets',     "~> 0.1.1"     #, :path => "~/Rails/Gems/ym_snippets"
 
 group :assets do
   gem 'sass-rails', "  ~> 3.1.0"
