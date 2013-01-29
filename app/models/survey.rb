@@ -2,19 +2,20 @@ class Survey < ActiveRecord::Base
     
   include CanCan::Ability
   belongs_to :delivery
+  attr_accessor :month, :year, :box_type
   
   has_many :answers, :class_name => "SurveyAnswer"
   
   def month
-    delivery.shipping_date.date.month
+    @month || delivery.shipping_date.date.month
   end
   
   def year
-    delivery.shipping_date.date.year
+    @year || delivery.shipping_date.date.year
   end
   
   def box_type
-    delivery.box_type
+    @box_type || delivery.box_type
   end
   
   def box

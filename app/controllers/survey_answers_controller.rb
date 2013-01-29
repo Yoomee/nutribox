@@ -1,8 +1,12 @@
 class SurveyAnswersController < ApplicationController
   
  def rate   
-   @rating = SurveyAnswer.find_or_initialize_by_survey_id_and_product_id(params[:survey_id],params[:product_id])
-   @rating.update_attribute(:rating, params[:rating])
+   if params[:survey_id].to_i.zero?
+     @rating = SurveyAnswer.new(:survey => Survey.new(), :product_id => params[:product_id], :rating => params[:rating])   
+   else
+     @rating = SurveyAnswer.find_or_initialize_by_survey_id_and_product_id(params[:survey_id],params[:product_id])
+     @rating.update_attribute(:rating, params[:rating])
+   end
  end
  
  def comment   

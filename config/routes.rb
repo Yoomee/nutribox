@@ -17,13 +17,13 @@ Nutribox::Application.routes.draw do
   resources :products
   match "products/:year/:month" => 'products#month', :as => 'products_month' 
 
-  match "box/:type/:year/:month" => 'boxes#show', :as => 'box'
+  match "box/:box_type/:year/:month" => 'boxes#show', :as => 'box'
   match "boxes" => "boxes#latest", :as => 'latest_box'
   
+  match "survey/preview/:box_type/:year/:month" => 'surveys#preview', :as => 'survey_preview'
   match "surveys/new/:id" => 'surveys#create_from_delivery', :as => 'create_survey_from_delivery'
   resources :surveys
   
-
   match "rate/:product_id/:survey_id/:rating" => 'survey_answers#rate', :as => 'survey_answer_rate'
   resources :survey_answers
 

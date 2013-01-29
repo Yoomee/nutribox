@@ -34,11 +34,14 @@
             
           
 .row
-  .span8
+  .span12
     =link_to 'View all months', products_path
     &nbsp;
     &nbsp;
-    =link_to 'Preview standard box', box_path(:year => @year, :month => @month, :type => 'standard'), :target => '_new'   
+    =link_to 'Preview  box', box_path(:year => @year, :month => @month, :box_type => 'standard'), :target => '_new'   
     &nbsp;
     &nbsp;
-    =link_to 'Preview mini box', box_path(:year => @year, :month => @month, :type => 'mini'), :target => '_new'    
+    =link_to 'Preview standard survey', survey_preview_path(:year => @year, :month => @month, :box_type => 'standard'), :target => '_new'   
+    &nbsp;
+    &nbsp;
+    =link_to 'Preview mini survey', survey_preview_path(:year => @year, :month => @month, :box_type => 'mini'), :target => '_new'

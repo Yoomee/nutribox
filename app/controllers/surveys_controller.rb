@@ -9,6 +9,15 @@ class SurveysController < ApplicationController
     end
   end  
   
+  def preview
+    @survey = Survey.new()
+    @survey.id = 0
+    @survey.month = params[:month]
+    @survey.year = params[:year]
+    @survey.box_type = params[:box_type]
+    render :show
+  end
+  
   def create_from_delivery
     @survey = Survey.create_new(params[:id])
     redirect_to survey_path(:id => @survey.hash)

@@ -16,10 +16,10 @@
           %li.active
             =link_to "The Nutribox", '#' 
           %li
-            =link_to "The Nutribox-Mini", box_path(:year => @box.year, :month => @box.month, :type => 'mini')     
+            =link_to "The Nutribox-Mini", box_path(:year => @box.year, :month => @box.month, :box_type => 'mini')     
         -elsif @box.type == 'mini'
           %li
-            =link_to "The Nutribox", box_path(:year => @box.year, :month => @box.month, :type => 'standard')     
+            =link_to "The Nutribox", box_path(:year => @box.year, :month => @box.month, :box_type => 'standard')     
           %li.active
             =link_to "The Nutribox-Mini", "#"
         

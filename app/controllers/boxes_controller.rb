@@ -2,7 +2,7 @@ class BoxesController < ApplicationController
   load_and_authorize_resource
 
   def show
-    @box = Box.new(params[:year], params[:month], params[:type])
+    @box = Box.new(params[:year], params[:month], params[:box_type])
     if !Box.types.include?(@box.type) || @box.type == 'both'
       not_found
     else

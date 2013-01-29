@@ -23,9 +23,11 @@
             =pluralize(month.count, 'product', 'different products')
             
           %td
-            =link_to 'View product list', products_month_path(:year => month.year, :month => month.month)
+            =link_to 'View products', products_month_path(:year => month.year, :month => month.month)
           %td    
-            =link_to 'Preview standard box', box_path(:year => month.year, :month => month.month, :type => 'standard'), :target => '_new'      
-          %td    
-            =link_to 'Preview mini box', box_path(:year => month.year, :month => month.month, :type => 'mini'), :target => '_new'      
+            =link_to 'Preview box', box_path(:year => month.year, :month => month.month, :box_type => 'standard'), :target => '_new'      
+          %td   
+            =link_to 'Preview standard survey', survey_preview_path(:year => month.year, :month => month.month, :box_type => 'standard'), :target => '_new'   
+          %td             
+            =link_to 'Preview mini survey', survey_preview_path(:year => month.year, :month => month.month, :box_type => 'mini'), :target => '_new'     
 
