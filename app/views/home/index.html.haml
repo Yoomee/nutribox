@@ -6,7 +6,7 @@
     .row
       .site-intro.span5.fade_in
         %h1.home-tagline Healthy Snacking Made Easier
-        %p.site-intro-text Deliciously nutritious snacks delivered to your door, monthly. From under £11 per month
+        %p.site-intro-text=snippet_text(:home_page_text, "The Nutribox is a box of deliciously nutritious, gluten-free, snacks delivered to your door monthly.  From £11 per month (we promise the normal retail value of the snacks in your box will always be more than the price you pay).")
         .home-ctas
           =link_to "Get a box", join_path, :class=>"get-box-btn btn btn-primary btn-homepage-cta"
           .or
