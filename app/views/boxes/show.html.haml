@@ -40,7 +40,7 @@
           %span
             Next month
           %i.icon-arrow-right
-        -if current_user.admin? || !@box.in_the_future?          
+        -if current_user.try(:admin?) || !@box.in_the_future?          
           %h1.archive-title.center
             The
             =box_type_name(@box.type)
@@ -49,7 +49,7 @@
       -else
         .span.pull-right
           &nbsp;
-        -if current_user.admin? || !@box.in_the_future?          
+        -if current_user.try(:admin?) || !@box.in_the_future?          
           %h1.archive-title.center
             The
             =box_type_name(@box.type)
@@ -60,7 +60,7 @@
         =simple_format(snippet_text(:about_boxes,"Each box comes with a variety of gluten-free snacks. You can expect to receive some energy-boosting dried-fruit and nut mixes , all-natural energy bars and balls (packed with super ingredients like sprouted almonds, hemp seeds, flax and maca) and other deliciously nutritious snacks like raw chocolate. The Nutribox (full size – not mini) may also include vegetable and fruit crisps. We promise the normal retail value of the snacks in your box will always be more than the price you pay."))     
 
    
-  -if current_user.admin? || !@box.in_the_future?          
+  -if current_user.try(:admin?) || !@box.in_the_future?          
     .row.archive-items  
     
       -if @products.empty?
@@ -87,7 +87,6 @@
   -else
     %h1.archive-title.center
       ="#{month_name(@box.month)}'s box coming soon"
-    .center
-      Please check back later.
+
   
   
