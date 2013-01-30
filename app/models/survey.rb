@@ -22,6 +22,20 @@ class Survey < ActiveRecord::Base
     @box ||= Box.new(year, month, box_type)
   end
   
+  def hash
+    delivery.survey_hash if delivery
+  end
+  
+  def self.hash_to_id(hash)
+    if hash == 'preview'
+      0
+    else
+      if survey=Delivery.find_by_survey_hash(hash)
+        survey.id
+      end
+    end
+  end
+  
   def answer_for_product(product)
     if (answer = answers.where(:product_id => product.id).try(:first))
       answer

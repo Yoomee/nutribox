@@ -11,4 +11,4 @@
       .yuck
         Yuck
     -(1..5).to_a.reverse.each do |num|
-      =link_to  "", survey_answer_rate_path(:product_id => product.id, :survey_id => survey.id.to_i, :rating => num), :remote => true, :class=>"star star-#{num}"
+      =link_to  "", survey_answer_rate_path(:product_id => product.id, :survey_hash => survey.hash ? survey.hash : "preview", :rating => num), :remote => true, :class=>"star star-#{num}"

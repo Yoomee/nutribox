@@ -23,7 +23,7 @@ Nutribox::Application.routes.draw do
   match "survey/preview/:box_type/:year/:month" => 'surveys#preview', :as => 'survey_preview'
   resources :surveys
   
-  match "rate/:product_id/:survey_id/:rating" => 'survey_answers#rate', :as => 'survey_answer_rate'
+  match "rate/:product_id/:survey_hash/:rating" => 'survey_answers#rate', :as => 'survey_answer_rate'
   resources :survey_answers
 
   get  'join' => "orders#new"
