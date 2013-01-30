@@ -12,7 +12,7 @@ class BoxesController < ApplicationController
   
   def latest
     last = Product.where("month = ? AND year= ?", Box.latest_month, Box.latest_year).order(:year, :month).last
-    redirect_to box_path(:year => last.year, :month => last.month, :type => 'standard')
+    redirect_to box_path(:year => last.year, :month => last.month, :box_type => 'standard')
   end
   
 end  
