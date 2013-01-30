@@ -18,9 +18,5 @@ class SurveysController < ApplicationController
     render :show
   end
   
-  def create_from_delivery
-    @survey = Survey.create_new(params[:id])
-    redirect_to survey_path(:id => @survey.hash)
-  end
   
 end
