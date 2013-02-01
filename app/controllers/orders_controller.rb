@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   load_and_authorize_resource
   
   def new
-    @order = Order.new(:gift => params[:gift].present?)
+    @order = Order.new(:gift => params[:gift].present?, :discount_code => DiscountCode.default)
   end
   
   def create
@@ -38,6 +38,9 @@ class OrdersController < ApplicationController
   
   private
   def handle_order
+    unless @order.discount_code && @order.discount_code.available_to?(current_user)
+      @order.discount_code = DiscountCode.default
+    end
     if params[:back]
       @order.valid?
       @order.previous_step!
