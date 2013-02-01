@@ -5,7 +5,10 @@
         =link_to(Settings.site_name, root_path)
     %ul#top-nav.nav
       %li{:class => "#{current_page?(root_path) ? 'active' : ''}"}
-        =link_to("Home", root_path, :class=>"nav-link")
+        =link_to(root_path, :class=>"nav-link nav-home") do
+          %i.icon-home
+          .hide
+            Home
       =li_with_active slug_active?(:how_it_works) do
         =link_to_slug "How it works", :how_it_works, :class=>"nav-how-it-works nav-link"
       =li_with_active current_page?(join_path) do
@@ -14,6 +17,8 @@
         =link_to "Gift", gift_path, :class=>"nav-join nav-link"
       =li_with_active slug_active?(:blog) do
         =link_to_slug "Blog", :blog, :class=>"nav-blog nav-link"
+      =li_with_active current_page?(latest_box_path) do
+        =link_to "Boxes", latest_box_path, :class=>"nav-boxes nav-link"                    
       %ul.nav.pull-right
         -if logged_in?
           %li#my-account.user-link.dropdown
@@ -41,6 +46,7 @@
         -else
           %li#login.user-link
             =link_to("Login", sign_in_path)
+
         
     -if false    
       %ul#top-subnav.nav

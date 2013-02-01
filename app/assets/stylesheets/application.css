@@ -516,6 +516,14 @@ a.twitter-link {
   padding: 20px 15px;
   text-shadow: none;
 }
+#top-nav a.nav-home {
+  padding-left: 0;
+  padding-right: 6px;
+}
+.nav-home i.icon-home {
+  line-height: 18px;
+  font-size: 28px;
+}
 #top-nav li a.nav-my-account {
   font-size: 17px;
 }
@@ -675,7 +683,7 @@ background: #866b53 url(/assets/home-strip-2.png) center;
 }
 
 a.christmas-link {
-	background: url(/assets/christmas-link2.png) no-repeat;
+	background: url(/assets/valentines.jpg) no-repeat;
 	display: block;
 	text-indent: -9000em;
 	height: 310px;
@@ -1402,6 +1410,9 @@ a.popover-link{
     font-size: 18px;
 	padding: 7px 0px 19px 14px;
 	font-weight: normal;
+}
+.archive-item {
+  height: 465px;
 }
 
 h2.archive-item-title {
