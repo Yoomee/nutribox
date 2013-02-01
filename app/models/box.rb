@@ -29,10 +29,7 @@ class Box
   end
   
   def in_the_future?
-    return false if @year < Time.now.year
-    return true if @month > Time.now.month
-    return false if Time.now.day > SHIPPING_DAY
-    true
+    !(Date.today >= Date.new(@year,@month,SHIPPING_DAY))
   end
     
   def last_box?
