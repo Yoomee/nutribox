@@ -17,9 +17,13 @@
   .row
     .span10
       .alert.alert-success#discount-applied
-        Showing prices with a 
-        ="#{@order.discount_code.percentage}%"
-        discount on the first box
+        -if @order.discount_code == DiscountCode.default
+          =snippet_text(:default_discount_message, "Save 25% off your first box!")
+          =edit_snippet_link(:default_discount_message)
+        -else
+          Showing prices with a 
+          ="#{@order.discount_code.percentage}%"
+          discount on the first box
 .thumbnails.choose-boxes
   -["mini","standard"].each do |box_type|
     %li.span5.choose-box
@@ -58,13 +62,6 @@
           .clearfix
 
 .row
-  -if false
-    #delivery-notice.mb-1.span10
-      %p.delivery-notice-text
-        -if @order.gift?
-          Our box deliveries start in January 2013.
-        -else
-          Our box deliveries start in January 2013.
   .span10
     .thumbnail#discount-bar
       .caption
@@ -74,7 +71,10 @@
           .control-group
             %label=discount_code_label(@order)
             .control-group{:class => discount_code_class(@order)}
-              =form.text_field :discount_code_code, :class => "span2"
+              -if @order.discount_code == DiscountCode.default
+                =form.text_field :discount_code_code, :class => "span2", :value => nil
+              -else
+                =form.text_field :discount_code_code, :class => "span2"
         .discount-bar-right
           =form.submit('Apply', :name => 'discount_code', :class => "btn pull-right")
         .clearfix

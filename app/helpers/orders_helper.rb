@@ -5,7 +5,7 @@ module OrdersHelper
   end
   
   def discount_code_class(order)
-    if order.discount_code_code.present?
+    if order.discount_code_code.present? && order.discount_code != DiscountCode.default
       if order.discount_code && order.discount_code.available_to?(current_user)
         "success"
       else
@@ -17,7 +17,7 @@ module OrdersHelper
   end
   
   def discount_code_label(order)
-    if order.discount_code_code.present?
+    if order.discount_code_code.present? && order.discount_code != DiscountCode.default
       if order.discount_code
         if order.discount_code.available_to?(current_user)
           "Your #{order.discount_code.percentage}% discount has been applied"
