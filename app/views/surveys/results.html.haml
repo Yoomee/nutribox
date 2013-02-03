@@ -3,5 +3,40 @@
   %h1
     Survey results for 
     =Date::MONTHNAMES[@month]
+    =@year
+    
+%h2.mt-3
+  Product ratings
 
-.row
+-if @products.empty?
+  %p.lead There are no products for this date.
+%table.table.table-striped
+  %thead
+    %tr
+      %th Product
+      %th Responses
+      %th Average rating
+  %tbody
+    -@products.each do |product|
+      %tr
+        %td.span6=product.name
+        %td.span2=product.answers.count
+        %td.span2
+          -if product.answers.count > 0 
+            =number_with_precision(product.average_rating, :precision => 1)
+            out of 5
+
+%h2
+  Comments
+
+-@products.each do |product|
+  -if !product.comments.empty?
+    %h4=product.name
+  -product.answers.each do |answer|
+    -if answer.comment?
+      .row
+        .span.alert.alert-info
+          =answer.comment
+          ="~"
+          =answer.survey.delivery.order.user.full_name
+          ="(#{answer.rating} out of 5)"

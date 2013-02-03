@@ -30,6 +30,8 @@ class SurveysController < ApplicationController
   
   def results
     @month = params[:month].to_i
+    @year = params[:year].to_i
+    @products = Product.where("month = ? AND year= ?", @month, @year).order(:name)
   end
   
 end

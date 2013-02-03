@@ -30,8 +30,8 @@ class Survey < ActiveRecord::Base
     if hash == 'preview'
       0
     else
-      if survey=Delivery.find_by_survey_hash(hash)
-        survey.id
+      if delivery=Delivery.find_by_survey_hash(hash)
+        Survey.find_by_delivery_id(delivery.id).id
       end
     end
   end

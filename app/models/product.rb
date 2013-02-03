@@ -5,6 +5,15 @@ class Product < ActiveRecord::Base
   
   validates :name, :description, :month, :year, :box_type, :image, :presence => true
   
+  has_many :answers, :class_name => "SurveyAnswer"
+
+  def average_rating
+    SurveyAnswer.select("product_id, AVG(rating) as avg").group("product_id").where("product_id=#{id}").first.try(:avg)
+  end
+  
+  def comments
+    answers.where('comment IS NOT NULL')
+  end
   
   def self.months
     months = []
