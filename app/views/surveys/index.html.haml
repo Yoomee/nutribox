@@ -1,0 +1,26 @@
+.row
+  .span8
+    %h1 Surveys
+
+.row
+
+  -if @months.nil?
+    %p.lead No products yet
+  -else    
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Month  
+        
+      -@months.each do |month|
+        %tr
+          %td.span5
+            =link_to '' do
+              =Date::MONTHNAMES[month.month]
+              =month.year 
+          %td
+            =link_to "View recipients", survey_recipients_path(:month => month.month, :year => month.year)
+            &nbsp;            
+            =link_to "Send emails", '#'
+            &nbsp;
+            =link_to "View results", survey_results_path(:month => month.month, :year => month.year)

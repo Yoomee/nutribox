@@ -15,11 +15,16 @@
 
 
     
-    %h2.mt-3.mb-1 Archive and survey
+    %h2.mt-3.mb-1 Archive
     %ul.unstyled
       %li=link_to("Manage product list", products_path)
     
   
+    %h2.mt-3.mb-1 Survey
+    %ul.unstyled
+      %li=link_to("Manage surveys", surveys_path)
+
+
   .span6
     %h2.mb-1 Shipping dates
     -if ShippingDate.count.zero?

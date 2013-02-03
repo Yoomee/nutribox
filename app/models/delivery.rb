@@ -8,7 +8,7 @@ class Delivery < ActiveRecord::Base
   validates :order_id, :uniqueness => { :scope => :shipping_date_id }
     
   before_save :set_survey_hash
-  
+    
   def set_fields_from_order
     if order
       self.box_type ||= order.box_type
@@ -36,6 +36,24 @@ class Delivery < ActiveRecord::Base
     survey = Survey.new(:delivery_id => id) if (survey=Survey.find_by_delivery_id(id)).nil?
     survey.save 
     survey    
+  end
+  
+  def self.by_month_and_year(month, year)
+    where("MONTH(shipping_dates.date) = ? AND YEAR(shipping_dates.date) = ?", month, year).joins(:shipping_date)
+  end
+  
+  def month
+    shipping_date.date.month
+  end
+  
+  def year
+    shipping_date.date.year
+  end
+  
+  def survey_percentage_complete
+    a = survey.answers.count
+    b = Box.new(year,month,box_type).products.count
+    (a.to_f / b.to_f * 100.0).to_i
   end
   
   private 

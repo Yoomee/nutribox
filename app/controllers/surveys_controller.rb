@@ -18,5 +18,18 @@ class SurveysController < ApplicationController
     render :show
   end
   
+  def index
+    @months = Product.find(:all, :select => 'count(*) as count, year, month', :group=>'year, month', :order=>'year, month')
+  end
+  
+  def recipients
+    @month = params[:month].to_i
+    @year = params[:year].to_i
+    @deliveries = Delivery.by_month_and_year(@month,@year)
+  end
+  
+  def results
+    @month = params[:month].to_i
+  end
   
 end

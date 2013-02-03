@@ -5,9 +5,13 @@ class ShippingDate < ActiveRecord::Base
   validates :date, :presence => true, :uniqueness => true
   
   before_create :generate_deliveries!
-  
+    
   def self.find_by_param(param)
     find_by_date(Date.parse(param))
+  end
+  
+  def self.by_month_and_year(month, year)
+    where("MONTH(date) = ? AND YEAR(date) = ?", month, year)
   end
   
   def to_param

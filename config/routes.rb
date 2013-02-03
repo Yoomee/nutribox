@@ -21,6 +21,10 @@ Nutribox::Application.routes.draw do
   match "boxes" => "boxes#latest", :as => 'latest_box'
   
   match "survey/preview/:box_type/:year/:month" => 'surveys#preview', :as => 'survey_preview'
+  match "survey/results/:year/:month" => 'surveys#results', :as => 'survey_results'
+  match "survey/recipients/:year/:month" => 'surveys#recipients', :as => 'survey_recipients'
+
+  
   resources :surveys
   
   match "rate/:product_id/:survey_hash/:rating" => 'survey_answers#rate', :as => 'survey_answer_rate'

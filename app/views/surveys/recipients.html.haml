@@ -1,0 +1,42 @@
+.row
+  .span8
+  %h1
+    Survey recipients for 
+    =Date::MONTHNAMES[@month]
+    =@year
+    
+-if @deliveries.empty?
+  %p.lead There are no deliveries for this date.
+%table.table.table-striped
+  %thead
+    %tr
+      %th ID
+      %th Customer
+      %th Box type
+      %th Subscription type
+      %th Gift
+      %th Delivery address
+  %tbody
+    -@deliveries.each do |delivery|
+      %tr
+        %td.span1=delivery.id
+        %td
+          "#{delivery.user.last_name}, #{delivery.user.first_name}"
+          %br
+          -if !delivery.survey.nil? && delivery.survey_percentage_complete==100
+            .label.label-success
+              Complete
+          -elsif !delivery.survey.nil?
+            .label.label-warning
+              ="#{delivery.survey_percentage_complete}% Done"           
+          -else
+            .label.label-important
+              Not clicked
+          
+        %td=delivery.box_name
+        %td=pluralize(delivery.number_of_months,"month")
+        %td=delivery.gift? ? "Yes" : "No"
+        %td.span4
+          =delivery.user.email
+          %br
+          =delivery.address
