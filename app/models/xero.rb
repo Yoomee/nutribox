@@ -53,7 +53,7 @@ class Xero
           :date => created_at.to_date,
           :due_date => created_at.to_date,
           :line_amount_types => "Exclusive",
-          :invoice_number => (Rails.env.development? ? "dev#{id}" : "NB-#{id}")
+          :invoice_number => xero_order_number
         )
         invoice.add_line_item(
           :description => product,

@@ -253,6 +253,10 @@ class Order < ActiveRecord::Base
     }  
   end  
   
+  def xero_order_number
+    Rails.env.development? ? "dev#{id}" : "NB-#{id}"
+  end
+  
   class PaymentError < StandardError; end
   
   private
