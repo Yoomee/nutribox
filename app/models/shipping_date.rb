@@ -20,10 +20,8 @@ class ShippingDate < ActiveRecord::Base
   
   private
   def generate_deliveries!
-    Order.active.alphabetical_by_user.each do |order|
-      if order.shipping_day == date.day
-        self.deliveries.build(:order => order).set_fields_from_order
-      end
+    Order.active.alphabetical_by_user.where(:shipping_day => date.day).each do |order|
+      self.deliveries.build(:order => order).set_fields_from_order
     end
   end
   

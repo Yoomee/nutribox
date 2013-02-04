@@ -5,6 +5,7 @@ class Order < ActiveRecord::Base
     
   belongs_to :user
   has_many :deliveries
+  has_many :repeat_payments
   amount_accessor :amount, :full_price_amount
   
   attr_accessor :login_email, :login_password
@@ -19,6 +20,7 @@ class Order < ActiveRecord::Base
   
   before_validation :set_amount
   before_validation :set_billing_name
+  before_create :set_shipping_day
   before_save :nullify_discount_code_code_if_invalid
   belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
   
@@ -27,6 +29,7 @@ class Order < ActiveRecord::Base
   scope :active, where(:status => 'active')
   scope :not_failed, where("status != 'failed'")
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
+  scope :repeatable, active.where(:gift => false, :number_of_months => 1)
   
   class << self
     
@@ -66,7 +69,7 @@ class Order < ActiveRecord::Base
     end
     
     def statuses
-      ["active","failed","paused","cancelled"]
+      ["active","failed","paused","cancelled", "ended"]
     end
 
   end
@@ -177,21 +180,13 @@ class Order < ActiveRecord::Base
     vps_transaction_id.to_s.gsub(/[{}]/,'').presence
   end
   
-  def shipping_day
-    order_date = (created_at || Time.now)
-    if order_date.year == 2012
-      11
-    else
-      order_date.day <= 15 ? 25 : 11
-    end
-  end
-  
   def status_class(prefix = "")
     prefix + case status
     when "active" then "success"
-    when "cancelled" then "default"
     when "failed" then "important"
     when "paused" then "warning"
+    else
+      "default"
     end
   end
   
@@ -231,19 +226,21 @@ class Order < ActiveRecord::Base
   end
   
   def take_repeat_payment!
-    repeat = self.class.create(attributes.symbolize_keys.slice(:amount_in_pence, :user_id, :box_type, :number_of_months))
+    repeat = self.repeat_payments.build(:amount_in_pence => full_price_amount_in_pence)
+    if repeat.save # ID is needed for PayPal
+      related = attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
     
-    related = attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
+      related[:id] = Rails.env.development? ? "dev#{id}" : "NB#{id}"
     
-    related[:id] = Rails.env.development? ? "dev#{id}" : "NB#{id}"
+      paypal_response = gateway.repeat(
+        full_price_amount_in_pence,
+        :order_id => (Rails.env.development? ? "devR#{repeat.id}" : "NBR#{repeat.id}"),
+        :related_transaction => related
+      )
     
-    paypal_response = gateway.repeat(
-    amount_in_pence,
-    :order_id => (Rails.env.development? ? "dev#{repeat.id}" : "NB#{repeat.id}"),
-    :related_transaction => related
-    )
-    
-    process_response(paypal_response,repeat)
+      process_response(paypal_response,repeat)
+    end
+    repeat
   end
   
   def set_test_card_details  
@@ -305,6 +302,16 @@ class Order < ActiveRecord::Base
       self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
     end
   end
+  
+  def set_shipping_day
+    order_date = (created_at || Time.now)
+    if order_date.year == 2012
+      self.shipping_day = 11
+    else
+      self.shipping_day = (order_date.day <= 15 ? 25 : 11)
+    end
+  end
+  
   
   def nullify_discount_code_code_if_invalid
     if discount_code_code.present? && !discounted?
