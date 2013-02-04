@@ -29,7 +29,7 @@ class Order < ActiveRecord::Base
   scope :active, where(:status => 'active')
   scope :not_failed, where("status != 'failed'")
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
-  scope :repeatable, active.where(:gift => false, :number_of_months => 1)
+  scope :repeatable_for_shipping_day, lambda {|day| active.where(:gift => false, :number_of_months => 1, :shipping_day => day).where("DATE(orders.created_at) < ?", Date.today.change(:day => day) - 1.month)}
   
   class << self
     

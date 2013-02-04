@@ -42,6 +42,20 @@ class Delivery < ActiveRecord::Base
     where("MONTH(shipping_dates.date) = ? AND YEAR(shipping_dates.date) = ?", month, year).joins(:shipping_date)
   end
   
+  def paid_for?
+    if gift? || (number_of_months > 1)
+      true
+    else
+      if (order.created_at > (shipping_date.date - 1.month)) || (shipping_date == ShippingDate.first)
+        true
+      elsif order.repeat_payments.exists?(["transaction_auth_number != ? AND YEAR(created_at) = ? AND MONTH(created_at) = ?",nil,created_at.year,created_at.month])
+        true
+      else
+        false
+      end
+    end
+  end
+  
   def month
     shipping_date.date.month
   end
