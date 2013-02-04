@@ -5,6 +5,7 @@ class Order < ActiveRecord::Base
     
   belongs_to :user
   has_many :deliveries
+  has_many :repeat_payments
   amount_accessor :amount, :full_price_amount
   
   attr_accessor :login_email, :login_password
@@ -27,6 +28,7 @@ class Order < ActiveRecord::Base
   scope :active, where(:status => 'active')
   scope :not_failed, where("status != 'failed'")
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
+  scope :repeatable, active.where(:gift => false, :number_of_months => 1)
   
   class << self
     
@@ -231,19 +233,21 @@ class Order < ActiveRecord::Base
   end
   
   def take_repeat_payment!
-    repeat = self.class.create(attributes.symbolize_keys.slice(:amount_in_pence, :user_id, :box_type, :number_of_months))
+    repeat = self.repeat_payments.build(:amount_in_pence => full_price_amount_in_pence)
+    if repeat.save # ID is needed for PayPal
+      related = attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
     
-    related = attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
+      related[:id] = Rails.env.development? ? "dev#{id}" : "NB#{id}"
     
-    related[:id] = Rails.env.development? ? "dev#{id}" : "NB#{id}"
+      paypal_response = gateway.repeat(
+        full_price_amount_in_pence,
+        :order_id => (Rails.env.development? ? "devR#{repeat.id}" : "NBR#{repeat.id}"),
+        :related_transaction => related
+      )
     
-    paypal_response = gateway.repeat(
-    amount_in_pence,
-    :order_id => (Rails.env.development? ? "dev#{repeat.id}" : "NB#{repeat.id}"),
-    :related_transaction => related
-    )
-    
-    process_response(paypal_response,repeat)
+      process_response(paypal_response,repeat)
+    end
+    repeat
   end
   
   def set_test_card_details  

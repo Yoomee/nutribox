@@ -15,4 +15,14 @@ namespace :nutribox do
     end
   end
   
+  desc 'Take repeat payments'
+  task :repeat => :environment do
+    #if Date.today.day == 1
+    Order.repeatable.each do |order|
+      order.take_repeat_payment!
+    end
+    #end
+  end
+  
+  
 end
