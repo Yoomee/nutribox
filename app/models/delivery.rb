@@ -48,7 +48,7 @@ class Delivery < ActiveRecord::Base
     else
       if (order.created_at > (shipping_date.date - 1.month)) || (shipping_date == ShippingDate.first)
         true
-      elsif order.repeat_payments.exists?(["transaction_auth_number != ? AND YEAR(created_at) = ? AND MONTH(created_at) = ?",nil,created_at.year,created_at.month])
+      elsif order.repeat_payments.exists?(["transaction_auth_number IS NOT NULL AND transaction_auth_number != '' AND YEAR(created_at) = ? AND MONTH(created_at) = ?",created_at.year,created_at.month])
         true
       else
         false

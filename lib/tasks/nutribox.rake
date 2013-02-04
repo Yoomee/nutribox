@@ -23,7 +23,7 @@ namespace :nutribox do
   desc 'Take repeat payments'
   task :repeat => :environment do
     if Date.today.day.in?([1,15])
-      Order.repeatable_for_shipping_day(Date.today.day).each do |order|
+      Order.repeatable_for_shipping_day(Date.today.day + 10).each do |order|
         order.take_repeat_payment!
       end
     end
