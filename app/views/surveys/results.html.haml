@@ -1,10 +1,14 @@
 .row
   .span8
-  %h1
-    Survey results for 
-    =Date::MONTHNAMES[@month]
-    =@year
-    
+    %h1
+      Survey for 
+      =Date::MONTHNAMES[@month]
+      =@year
+  .span4
+    =link_to(survey_download_path(:format => 'xls'), :class => "btn btn-primary pull-right mt-1") do
+      %i.icon-plus
+      Download spreadsheet
+
 %h2.mt-3
   Product ratings
 

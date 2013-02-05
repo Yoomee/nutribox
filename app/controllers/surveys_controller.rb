@@ -34,4 +34,15 @@ class SurveysController < ApplicationController
     @products = Product.where("month = ? AND year= ?", @month, @year).order(:name)
   end
   
+  def download 
+    @month = params[:month].to_i
+    @year = params[:year].to_i
+    @products = Product.where("month = ? AND year= ?", @month, @year).order(:name)
+     respond_to do |format|
+        format.xls
+      end
+    headers["Content-Type"] ||= 'text/xls'  
+    headers["Content-Disposition"] = "attachment; filename=\"#{Date::MONTHNAMES[@month]}_#{@year}.xls\""  
+  end
+  
 end
