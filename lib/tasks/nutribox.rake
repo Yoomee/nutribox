@@ -26,8 +26,7 @@ namespace :nutribox do
       Order.repeatable_for_shipping_day(Date.today.day + 10).each do |order|
         order.take_repeat_payment!
       end
-      RepeatPayment.reload
-      RepeatPayment.with_transaction_auth_number.where("xero_status IS NULL OR xero_status != 'success'").each do |repeat_payment|
+      RepeatPayment.with_transaction_auth_number.reload.where("xero_status IS NULL OR xero_status != 'success'").each do |repeat_payment|
         repeat_payment.sync_with_xero
       end      
     end
