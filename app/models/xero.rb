@@ -43,7 +43,8 @@ class Xero
     
     def sync_with_xero
       begin
-        Xero.logger.info "Syncing order #{self.id}"   
+        record_name = "#{self.class.to_s.tableize.humanize.singularize.downcase} #{self.id}"
+        Xero.logger.info "Syncing #{record_name}"   
         sync_user_with_xero
         contact = Xero.client.Contact.find(user.xero_id)
         invoice = Xero.client.Invoice.build(
@@ -74,10 +75,10 @@ class Xero
         )
         payment.save
         self.xero_status = "success"
-        Xero.logger.info "Successfully synced #{self.id}"   
+        Xero.logger.info "Successfully synced #{record_name}"   
         save
       rescue Exception => e
-        Xero.logger.error "Failed to sync #{self.id}"   
+        Xero.logger.error "Failed to sync #{record_name}"   
         Xero.logger.error e.message
         update_attribute(:xero_status,"failed")
       end
