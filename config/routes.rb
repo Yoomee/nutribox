@@ -24,6 +24,7 @@ Nutribox::Application.routes.draw do
   match "survey/results/:year/:month" => 'surveys#results', :as => 'survey_results'
   match "survey/download/:year/:month" => 'surveys#download', :as => 'survey_download'
   match "survey/recipients/:year/:month" => 'surveys#recipients', :as => 'survey_recipients'
+  match "survey/send/:delivery_id" => 'surveys#send_invite', :as => 'survey_send'
 
   
   resources :surveys

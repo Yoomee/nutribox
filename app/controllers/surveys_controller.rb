@@ -9,6 +9,12 @@ class SurveysController < ApplicationController
     end
   end  
   
+  def send_invite
+    delivery = Delivery.find(params[:delivery_id])
+    UserMailer.survey_invite(delivery)
+    render :text => "Email sent!"
+  end
+  
   def preview
     @survey = Survey.new()
     @survey.id = 0

@@ -1,0 +1,40 @@
+<%if @delivery.order.gift?%>
+
+Hello, 
+
+If your recent Nutribox purchase was a gift, please forward this email on to the recipient.
+
+We really hope you enjoyed your recent Nutribox gift as we want to build our business around the needs of our customers.
+
+Whilst every snack that appears in our boxes has been taste-tested by The Nutribox team, it's  important that we know what our customers think of our snacks as this will influence what we include in future.
+
+With this in mind we'd be really grateful if you'd click on this link and rate each snack you received in your Nutribox. We'll then enter everyone who completes the survey into a monthly draw for a free Nutribox-mini.
+
+http://thenutribox.com/surveys/<%=@delivery.survey_hash%>
+
+Nutritionally yours,
+
+Team Nutri
+
+<%else%>
+
+Hello Nutriboxer,
+
+Thank you so much for subscribing to our service. We really hope you like what you've experienced so far as we want to build our business around the needs of our customers.
+
+Whilst every snack that appears in our boxes has been taste tested by The Nutribox team, it's  important that we know what our customers think of our snacks as this will influence what we include in future.
+
+With this in mind we'd be really grateful if you'd click on this link and rate each snack you received in your most recent Nutribox. We'll enter everyone who completes the survey into a monthly draw for a free Nutribox-mini.
+
+http://thenutribox.com/surveys/<%=@delivery.survey_hash%>
+
+Thanks once again for your custom.
+
+Nutritionally yours,
+
+Team Nutri
+
+<%end%>
+
+
+
