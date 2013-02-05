@@ -20,7 +20,7 @@ class Order < ActiveRecord::Base
   
   before_validation :set_amount
   before_validation :set_billing_name
-  before_create :set_shipping_day
+  before_validation :set_shipping_day
   before_save :nullify_discount_code_code_if_invalid
   belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
   
@@ -308,6 +308,7 @@ class Order < ActiveRecord::Base
   end
   
   def set_shipping_day
+    return true if shipping_day.present?
     order_date = (created_at || Time.now)
     if order_date.year == 2012
       self.shipping_day = 11
