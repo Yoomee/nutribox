@@ -29,7 +29,7 @@ class Box
   end
   
   def in_the_future?
-    !(Date.today >= Date.new(@year,@month,SHIPPING_DAY))
+    Date.today < Date.new(@year,@month,SURVEY_DAY)
   end
     
   def last_box?
@@ -60,6 +60,6 @@ class Box
     end
   end
   
-SHIPPING_DAY = 11
+SURVEY_DAY = 28
   
 end
