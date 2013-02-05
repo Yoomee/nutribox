@@ -22,7 +22,7 @@
         %td.span6=product.name
         %td.span2=product.answers.count
         %td.span2
-          -if product.answers.count > 0 
+          -if !product.average_rating.nil?
             =number_with_precision(product.average_rating, :precision => 1)
             out of 5
 
