@@ -1,8 +1,8 @@
 =semantic_form_for product, :html => {:class => "form-horizontal", :enctype => "multipart/form-data"} do |form|
   =form.inputs do
 
-    =form.input :year, :as => :select, :collection => Product.years, :selected => params[:year] || Time.now.year
-    =form.input :month, :as => :select, :collection => Product.months, :selected => params[:month] || Product.months[Time.now.month-1], :hint => "Which month is this product for?"
+    =form.input :year, :as => :select, :collection => Product.years, :selected =>  @product.year || Time.now.year
+    =form.input :month, :as => :select, :collection => Product.months, :selected => @product.month || Product.months[Time.now.month-1], :hint => "Which month is this product for?"
     =form.input :box_type, :as => :select, :collection => Box.types, :hint => "Which box is this product going in"
     =form.input :name, :label => "Name of product", :placeholder => "e.g. Nākd Berry Delight Bar"
     .span10.offset2=image_for(@product, "262x")
