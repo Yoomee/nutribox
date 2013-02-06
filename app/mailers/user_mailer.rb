@@ -9,7 +9,6 @@ class UserMailer < ActionMailer::Base
     @user = delivery.order.user
     @delivery = delivery
     mail(:to => @user.email, :subject => "What did you think about #{Date::MONTHNAMES[delivery.month]}'s box?")
-    
   end
           
 end
