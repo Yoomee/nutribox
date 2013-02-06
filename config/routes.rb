@@ -20,12 +20,11 @@ Nutribox::Application.routes.draw do
   match "box/:box_type/:year/:month" => 'boxes#show', :as => 'box'
   match "boxes" => "boxes#latest", :as => 'latest_box'
   
-  match "survey/preview/:box_type/:year/:month" => 'surveys#preview', :as => 'survey_preview'
-  match "survey/results/:year/:month" => 'surveys#results', :as => 'survey_results'
-  match "survey/download/:year/:month" => 'surveys#download', :as => 'survey_download'
-  match "survey/recipients/:year/:month" => 'surveys#recipients', :as => 'survey_recipients'
-  match "survey/send/:delivery_id" => 'surveys#send_invite', :as => 'survey_send'
-
+  match "surveys/:year/:month/:box_type/preview" => 'surveys#preview', :as => 'survey_preview'
+  match "surveys/:year/:month/results" => 'surveys#results', :as => 'survey_results'
+  match "surveys/:year/:month/download" => 'surveys#download', :as => 'survey_download'
+  match "surveys/:year/:month/recipients" => 'surveys#recipients', :as => 'survey_recipients'
+  match "surveys/:year/:month/send_emails" => 'surveys#send_emails', :as => 'send_emails_survey'
   
   resources :surveys
   

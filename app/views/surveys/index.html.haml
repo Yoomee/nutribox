@@ -21,6 +21,6 @@
           %td
             =link_to "View recipients", survey_recipients_path(:month => month.month, :year => month.year)
             &nbsp;            
-            =link_to "Send emails", '#'
+            =link_to "Send emails", send_emails_survey_path(:month => month.month, :year => month.year), :confirm => "Are you sure you want to send emails to all customers in this month?"
             &nbsp;
             =link_to "View results", survey_results_path(:month => month.month, :year => month.year)

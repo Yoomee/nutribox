@@ -1,6 +1,7 @@
 class SurveysController < ApplicationController
   
-  load_and_authorize_resource
+  authorize_resource
+  skip_authorize_resource :only => :show
   
   def show
     @delivery = Delivery.find_by_survey_hash(params[:id])
@@ -10,12 +11,6 @@ class SurveysController < ApplicationController
       @survey = @delivery.find_or_create_survey
     end
   end  
-  
-  def send_invite
-    delivery = Delivery.find(params[:delivery_id])
-    UserMailer.survey_invite(delivery)
-    render :text => "Email sent!"
-  end
   
   def preview
     @survey = Survey.new()
@@ -34,6 +29,12 @@ class SurveysController < ApplicationController
     @month = params[:month].to_i
     @year = params[:year].to_i
     @deliveries = Delivery.by_month_and_year(@month,@year)
+  end
+  
+  def send_emails
+    Survey.send_emails_for_month_and_year(params[:month], params[:year])
+    flash[:notice] = "Sending emails. This will take a few minutes to complete."
+    redirect_to surveys_path
   end
   
   def results
