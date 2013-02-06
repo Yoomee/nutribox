@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
   def survey_invite(delivery)
     @user = delivery.order.user
     @delivery = delivery
-    mail(:to => @user.email, :subject => "The Nutribox - Tell us what you think to #{Date::MONTHNAMES[delivery.month]}'s box")
+    mail(:to => @user.email, :subject => "What did you think about #{Date::MONTHNAMES[delivery.month]}'s box?")
     
   end
           
