@@ -1,5 +1,7 @@
 class SurveysController < ApplicationController
   
+  load_and_authorize_resource
+  
   def show
     @delivery = Delivery.find_by_survey_hash(params[:id])
     if @delivery.nil? then
