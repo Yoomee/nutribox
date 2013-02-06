@@ -45,7 +45,7 @@ class Box
   end
   
   def self.latest_month
-    if DateTime.now.day < SHIPPING_DAY
+    if DateTime.now.day < SURVEY_DAY 
       (DateTime.now - 1.month).month
     else
       DateTime.now.month
@@ -53,7 +53,7 @@ class Box
   end
   
   def self.latest_year
-    if DateTime.now.day < SHIPPING_DAY
+    if DateTime.now.day < SURVEY_DAY 
       (DateTime.now - 1.month).year
     else
       DateTime.now.year
