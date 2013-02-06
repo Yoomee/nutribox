@@ -36,6 +36,7 @@ group :development do
   gem 'ym_tools'
   gem 'passenger'
   gem "binding_of_caller"
+  gem "engineyard-recipes"
 end
 
 group :development, :test do
