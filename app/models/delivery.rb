@@ -16,6 +16,7 @@ class Delivery < ActiveRecord::Base
   def send_email
     UserMailer.survey_invite(self).deliver
   end
+  handle_asynchronously :send_email
     
   def set_fields_from_order
     if order

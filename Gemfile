@@ -14,6 +14,8 @@ gem "whenever", :require => false
 gem 'activemerchant', :require => 'active_merchant'
 gem "stamp"
 gem "xeroizer"
+gem "delayed_job_active_record"
+gem "daemons"
 
 gem "ym_core", "~>0.1.48"           #, :path => "~/Rails/Gems/ym_core"
 gem "ym_cms", "0.3.7"   #, :path => "~/Rails/Gems/ym_cms"
