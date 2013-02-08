@@ -21,7 +21,7 @@
       %tr
         %td.span1=delivery.id
         %td
-          "#{delivery.user.last_name}, #{delivery.user.first_name}"
+          ="#{delivery.user.last_name}, #{delivery.user.first_name}"
           %br
           -if !delivery.survey.nil? && delivery.survey_percentage_complete==100
             .label.label-success

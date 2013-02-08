@@ -8,6 +8,15 @@ class Delivery < ActiveRecord::Base
   validates :order_id, :uniqueness => { :scope => :shipping_date_id }
     
   before_save :set_survey_hash
+  
+  def self.by_month_and_year(month, year)
+    where("MONTH(shipping_dates.date) = ? AND YEAR(shipping_dates.date) = ?", month, year).joins(:shipping_date)
+  end
+  
+  def send_email
+    UserMailer.survey_invite(self).deliver
+  end
+  handle_asynchronously :send_email
     
   def set_fields_from_order
     if order
@@ -38,17 +47,13 @@ class Delivery < ActiveRecord::Base
     survey    
   end
   
-  def self.by_month_and_year(month, year)
-    where("MONTH(shipping_dates.date) = ? AND YEAR(shipping_dates.date) = ?", month, year).joins(:shipping_date)
-  end
-  
   def paid_for?
     if gift? || (number_of_months > 1)
       true
     else
       if (order.created_at > (shipping_date.date - 1.month)) || (shipping_date == ShippingDate.first)
         true
-      elsif order.repeat_payments.exists?(["transaction_auth_number IS NOT NULL AND transaction_auth_number != '' AND YEAR(created_at) = ? AND MONTH(created_at) = ?",created_at.year,created_at.month])
+      elsif order.repeat_payments.with_transaction_auth_number.exists?(["YEAR(created_at) = ? AND MONTH(created_at) = ?",created_at.year,created_at.month])
         true
       else
         false
