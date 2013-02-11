@@ -22,7 +22,7 @@
           =edit_snippet_link(:default_discount_message)
         -else
           Showing prices with a 
-          ="#{@order.discount_code.percentage}%"
+          ="#{@order.discount_code.percentage_with_default}%"
           discount on the first box
 .thumbnails.choose-boxes
   -["mini","standard"].each do |box_type|
