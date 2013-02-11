@@ -8,6 +8,15 @@ class Delivery < ActiveRecord::Base
   validates :order_id, :uniqueness => { :scope => :shipping_date_id }
     
   before_save :set_survey_hash
+  
+  def self.by_month_and_year(month, year)
+    where("MONTH(shipping_dates.date) = ? AND YEAR(shipping_dates.date) = ?", month, year).joins(:shipping_date)
+  end
+  
+  def send_email
+    UserMailer.survey_invite(self).deliver
+  end
+  handle_asynchronously :send_email
     
   def set_fields_from_order
     if order
@@ -36,10 +45,6 @@ class Delivery < ActiveRecord::Base
     survey = Survey.new(:delivery_id => id) if (survey=Survey.find_by_delivery_id(id)).nil?
     survey.save 
     survey    
-  end
-  
-  def self.by_month_and_year(month, year)
-    where("MONTH(shipping_dates.date) = ? AND YEAR(shipping_dates.date) = ?", month, year).joins(:shipping_date)
   end
   
   def paid_for?

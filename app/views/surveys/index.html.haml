@@ -14,13 +14,15 @@
         
       -@months.each do |month|
         %tr
-          %td.span5
+          %td.span3
             =link_to '' do
               =Date::MONTHNAMES[month.month]
               =month.year 
           %td
+            =link_to 'Preview survey', survey_preview_path(:year => month.year, :month => month.month, :box_type => 'standard'), :target => '_new'  
+            &nbsp;             
             =link_to "View recipients", survey_recipients_path(:month => month.month, :year => month.year)
             &nbsp;            
-            =link_to "Send emails", '#'
+            =link_to "Send emails", send_emails_survey_path(:month => month.month, :year => month.year), :confirm => "Are you sure you want to send emails to all customers in this month?"
             &nbsp;
             =link_to "View results", survey_results_path(:month => month.month, :year => month.year)

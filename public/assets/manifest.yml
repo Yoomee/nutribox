@@ -7,6 +7,10 @@ fontawesome-webfont.eot: fontawesome-webfont-5926e899beded40d33c8e1af41d8f4f9.eo
 fontawesome-webfont.svg: fontawesome-webfont-c3af6f4d0046f2b0092fcccf151a4e04.svg
 fontawesome-webfont.ttf: fontawesome-webfont-e16de10a39cc66dea926dcae324a55a3.ttf
 fontawesome-webfont.woff: fontawesome-webfont-bcf4260c95b02c643201c901bad48546.woff
+kgsmalltownsoutherngirl-webfont.eot: kgsmalltownsoutherngirl-webfont-3c3a18448af2cb2b542fc9f32e1bb0b4.eot
+kgsmalltownsoutherngirl-webfont.svg: kgsmalltownsoutherngirl-webfont-0f7538475837fcfca0fd92de17a99ebe.svg
+kgsmalltownsoutherngirl-webfont.ttf: kgsmalltownsoutherngirl-webfont-fe73c582962aa5372cc38450e8931e3e.ttf
+kgsmalltownsoutherngirl-webfont.woff: kgsmalltownsoutherngirl-webfont-b05c4239bf44eb206042af8315c89755.woff
 museo300-regular-webfont.eot: museo300-regular-webfont-0ba32ae8365e8431a43adbf4c5f9a5c1.eot
 museo300-regular-webfont.svg: museo300-regular-webfont-afa25e8c7f3852e2b94115d6ac5702f6.svg
 museo300-regular-webfont.ttf: museo300-regular-webfont-75cfa51ae015afde99b40a5e45fb0ba4.ttf
@@ -57,6 +61,8 @@ illustration-receive.png: illustration-receive-63b7901d9b1966f1fd70d9812f134496.
 illustration-surprise.png: illustration-surprise-58dc29cb46cb92bbe8ce6fac8f60b6e7.png
 illustration_here.png: illustration_here-fabdae2a540670b1866ac92e924a5ee5.png
 illustration_here_home.png: illustration_here_home-fce91f0a21b1c78d6cb36dc016177223.png
+images/christmas-link_02.png: images/christmas-link_02-62b9ef17dc3e0690228eeea7603b26a4.png
+images/nutribox_03.png: images/nutribox_03-c695606fdb292bebcb4dedfa0def3bac.png
 latest_blog_image.jpg: latest_blog_image-24e494137d7e4dd3a11dc1cf9048186e.jpg
 launching_in.png: launching_in-30469ae693e11778ae266236e8620409.png
 logo.png: logo-f302f4044acb70c771e507167d5bfb91.png
@@ -69,7 +75,10 @@ or.png: or-6b5721fe90e9198bbdc35200e33d0043.png
 paper_texture.jpg: paper_texture-bad0c812312595d67ac6ca00c2190586.jpg
 paper_texture_body.jpg: paper_texture_body-2ca142cf6b0acfec8f42d0955e8532d5.jpg
 post-author.jpg: post-author-cc20ea52e59afc1a39aa6dd9411c3144.jpg
+price-message.png: price-message-ffdf06880008548151898d6ea54e468c.png
 sign_up_below.png: sign_up_below-56588c87a1b80dd79990b5645c93ff52.png
+sketch-notice-left.png: sketch-notice-left-6ffd41b0ab541ab231156e4555092d1b.png
+sketch-notice-right.png: sketch-notice-right-37ae90abe8a458cba5614ec96d827a8a.png
 snacks.png: snacks-534d447e2af7b22db820b00af0eaec72.png
 standard-box.png: standard-box-65f9043c82fdb24fd104f5f34af4c68c.png
 summary-img.jpg: summary-img-a0e11bc6e0be7abe34c08c3791053f45.jpg
@@ -102,5 +111,5 @@ jquery-ui.min.js: jquery-ui.min-261bf7a9e55e851952f6f5ede08a5413.js
 jquery.min.js: jquery.min-26e44749446e5f2102a116e446877038.js
 jquery.min.map: jquery.min-4dd6a891215c2bd74b32b727b828c2ed.map
 application.js: application-a04513dd13f75a8c8524465ba41819e1.js
-application.css: application-f150cbe2d2369fbd8fdcf26520b774ef.css
+application.css: application-98c935ef73387089fbe57345ef8e057f.css
 ie7.css: ie7-5c07855604e48094a4ed86ff0b96b7a6.css

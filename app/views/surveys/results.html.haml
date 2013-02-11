@@ -1,10 +1,14 @@
 .row
   .span8
-  %h1
-    Survey results for 
-    =Date::MONTHNAMES[@month]
-    =@year
-    
+    %h1
+      Survey for 
+      =Date::MONTHNAMES[@month]
+      =@year
+  .span4
+    =link_to(survey_download_path(:format => 'xls'), :class => "btn btn-primary pull-right mt-1") do
+      %i.icon-plus
+      Download spreadsheet
+
 %h2.mt-3
   Product ratings
 
@@ -22,7 +26,7 @@
         %td.span6=product.name
         %td.span2=product.answers.count
         %td.span2
-          -if product.answers.count > 0 
+          -if !product.average_rating.nil?
             =number_with_precision(product.average_rating, :precision => 1)
             out of 5
 
