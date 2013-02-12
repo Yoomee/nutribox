@@ -325,10 +325,18 @@ class Order < ActiveRecord::Base
     if order_date.year == 2012
       self.shipping_day = 11
     else
-      self.shipping_day = (order_date.day <= 15 ? 25 : 11)
+      self.shipping_day = (order_date.day.between?(2,15) ? 25 : 11)
     end
   end
   
+  def figu
+    order_date = (created_at || Time.now)
+    if order_date.year == 2012
+      11
+    else
+      (order_date.day.between?(2,15) ? 25 : 11)
+    end
+  end
   
   def nullify_discount_code_code_if_invalid
     if discount_code_code.present? && !discounted?
