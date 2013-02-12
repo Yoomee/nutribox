@@ -7,6 +7,7 @@ Nutribox::Application.routes.draw do
     end
     member do
       get 'download'
+      get 'thanks'
     end
   end
   

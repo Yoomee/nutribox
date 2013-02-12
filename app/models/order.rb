@@ -168,6 +168,10 @@ class Order < ActiveRecord::Base
     end
   end
   
+  def order_number
+    Rails.env.development? ? "dev#{id}" : "NB#{id}"
+  end
+  
   def product
     if number_of_months == 1 && !gift
       "#{box_name} monthly"
@@ -187,6 +191,14 @@ class Order < ActiveRecord::Base
     when "paused" then "warning"
     else
       "default"
+    end
+  end
+  
+  def sku
+    "NB".tap do |str|
+      str << box_type[0].upcase
+      str << number_of_months.to_s
+      str << "G" if gift?
     end
   end
   
@@ -211,7 +223,7 @@ class Order < ActiveRecord::Base
       paypal_response = gateway.purchase(
       amount_in_pence,
       credit_card,
-      :order_id => (Rails.env.development? ? "dev#{id}" : "NB#{id}"),
+      :order_id => order_number,
       :billing_address => {
         :name => billing_name,
         :address1 => billing_address1,
@@ -230,7 +242,7 @@ class Order < ActiveRecord::Base
     if repeat.save # ID is needed for PayPal
       related = attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
     
-      related[:id] = Rails.env.development? ? "dev#{id}" : "NB#{id}"
+      related[:id] = order_number
     
       paypal_response = gateway.repeat(
         full_price_amount_in_pence,

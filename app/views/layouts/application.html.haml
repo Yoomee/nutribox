@@ -14,7 +14,7 @@
     =csrf_meta_tags
     =favicon_link_tag('/assets/favicon2.ico')
     =yield :head
-    =google_analytics_js
+    =google_analytics_js_with_ecommerce
   -body_tag do
     .main-wrapper{:class => ('gift-wrapper' if @order && !action_name.show? && (@order.gift? && @order.current_step_box?))}
       -if flash.present?

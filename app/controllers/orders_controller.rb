@@ -23,6 +23,9 @@ class OrdersController < ApplicationController
     @gifts  = current_user.orders.not_failed.where(:gift => true).order("created_at DESC")
   end
   
+  def thanks
+  end
+  
   def update
     @order.assign_attributes(params[:order])
     if @order.editing_by_admin
@@ -66,7 +69,7 @@ class OrdersController < ApplicationController
             @order.take_payment!
             @order.update_attribute(:status,'active')
             OrderMailer.confirmation_email(@order).deliver
-            render :action => 'thanks'
+            redirect_to thanks_order_path(@order)
           rescue Order::PaymentError => e
             @order.update_attribute(:status,'failed')
             @error = e
