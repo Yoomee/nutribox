@@ -15,8 +15,7 @@ module ApplicationHelper
   end
   
   def google_analytics_js_with_ecommerce
-    tracker_code = "asdasdad"#Settings.google_analytics
-    if true #!(Rails.env =~ /development|test/) && (tracker_code = Settings.google_analytics).present?
+    if !(Rails.env =~ /development|test/) && (tracker_code = Settings.google_analytics).present?
       analytics_js = <<-JS
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', '#{tracker_code}']);
