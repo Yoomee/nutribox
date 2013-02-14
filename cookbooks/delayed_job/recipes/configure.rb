@@ -25,7 +25,7 @@ if node[:instance_role] == "solo" || node[:instance_role] == "eylocal" ||
         variables({
           :app_name => app_name,
           :user => node[:owner_name],
-          :worker_name => "delayed_job#{count+1}",
+          :worker_name => "delayed_job_#{app_name}#{count+1}",
           :framework_env => node[:environment][:framework_env]
         })
       end
