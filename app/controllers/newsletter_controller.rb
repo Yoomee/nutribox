@@ -1,11 +1,6 @@
 class NewsletterController < ApplicationController
 	def subscribe
     if request.method.to_s == "POST"
-      redirect_options = {
-        :protocol => 'http://',
-        :host => request.host.sub('www.',''),
-        :params => {:email => params[:email]}
-      }
       redirect_to subscribe_newsletter_path(:email => params[:email]), :protocol => "http://"
     else
       uri = URI.parse("http://thenutribox.us6.list-manage1.com/subscribe/post")
