@@ -1,4 +1,6 @@
 class NewsletterController < ApplicationController
+  skip_before_filter :force_https_and_remove_www
+  
 	def subscribe
     if request.method.to_s == "POST"
       redirect_to subscribe_newsletter_path(:email => params[:email]), :protocol => "http://"
@@ -8,4 +10,5 @@ class NewsletterController < ApplicationController
       render :text => response.body
     end
   end
+  
 end
