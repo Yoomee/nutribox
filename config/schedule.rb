@@ -11,4 +11,5 @@ end
 
 every 1.day, :at => '4am' do
   rake "nutribox:ship"
+  rake "nutribox:repeat"
 end
