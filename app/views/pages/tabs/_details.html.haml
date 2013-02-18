@@ -4,8 +4,11 @@
       =form.input :parent_id, :as => :hidden
     -else
       =parent_page_select(form)
-    =form.input :title
-    =form.input :short_title
+    =form.input :title, :label => 'Page title'
+    =form.input :short_title, :label => 'Optional short title'
+    =form.input :title_tag, :label => 'Title tag contents', :input_html => {:rows => 1, :class => "span6"} 
+    =form.input :description_tag, :label => 'Description tag contents', :input_html => {:rows => 4, :class => "span6"} 
+    
     -if @page.parent.try(:slug) == "blog" 
       =form.input :user, :label => "Author", :include_blank => false, :collection => User.where(:role => "admin").where("email NOT IN (?)",YmUsers::YOOMEE_EMAILS)
     -if @page.parent.try(:slug) == "blog"

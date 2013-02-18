@@ -1,6 +1,9 @@
 %h3.survey-rate-title
   -if @rating
     Thanks!
+    -if !@rating.survey.delivery.survey.nil? && @rating.survey.delivery.survey_percentage_complete==100
+      :javascript
+        $("#thank-you-modal").modal('show');
   -else
     Please rate this product
 %div

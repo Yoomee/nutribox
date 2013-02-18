@@ -51,7 +51,21 @@
               
 -@survey.box.products.each do |product|               
   =render("survey_answers/comment", :product => product, :survey => @survey, :answer => @survey.answer_for_product(product))
-                
+
+.modal.hide{:id => "thank-you-modal"}
+  .modal-header
+    %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
+      ×
+    %h3
+      Thank you!
+    .modal-body
+      %p.popup-intro
+        Thank you for completing our survey.
+    =link_to "Close", root_path, :class => "btn btn-primary"
+        
+
+
+              
 
 
 
