@@ -2,6 +2,6 @@ disqus_shortname: thenutribox
 site_url: https://thenutribox.com
 facebook_app_id: '443658312367297'
 xero:
-  consumer_key: QMHGWSP5Q6HIWWEDG8LIXA6VM1A6GV
-  consumer_secret: FKZHSHJOGDO21RVDDVQ8BE9ELNQS21
+  consumer_key: PZCLDI8SHUWKXEVHMOXR7WUVAI3ESG
+  consumer_secret: KHQXL1UOGNDSDCUF8DEVYEGZC481EA
   privatekey_path: lib/xero/production/privatekey.pem
