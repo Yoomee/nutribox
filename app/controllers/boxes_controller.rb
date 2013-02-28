@@ -7,12 +7,15 @@ class BoxesController < ApplicationController
       not_found
     else
       @products = @box.products
+      month = Date::MONTHNAMES[params[:month].to_i]
+      box_type = params[:box_type].capitalize
+      @custom_page_title = "#{month} #{box_type} Box Archive | The Nutribox"
+      @custom_page_description = "The Nutribox #{box_type} #{month} - each month your box comes with a variety of snacks. Want to know what deliciously nutritious snacks were in this month's box?"
     end
   end
-  
+
   def latest
-    last = Product.where("month = ? AND year= ?", Box.latest_month, Box.latest_year).order(:year, :month).last
-    redirect_to box_path(:year => last.year, :month => last.month, :box_type => 'standard')
+    redirect_to box_path(:year => Box.latest_year, :month => Box.latest_month, :box_type => 'standard')
   end
-  
-end  
+
+end
