@@ -1,31 +1,41 @@
 class OrdersController < ApplicationController
   load_and_authorize_resource
-  
+
   def new
-    @order = Order.new(:gift => params[:gift].present?, :discount_code => DiscountCode.default)
+    gift = params[:gift].present?
+    @order = Order.new(:gift => gift, :discount_code => DiscountCode.default)
+    if gift
+      @custom_page_title = YmSnippets::Snippet.find_by_slug('gift_page_title').text
+      @custom_page_description = YmSnippets::Snippet.find_by_slug('gift_page_description')
+    else
+      @custom_page_title = YmSnippets::Snippet.find_by_slug('join_page_title')
+      @custom_page_description = YmSnippets::Snippet.find_by_slug('join_page_description')
+    end
   end
-  
+
   def create
     @order = Order.new(params[:order])
     handle_order
   end
-  
+
   def download
     send_file File.join(Rails.root,"lib/downloads/gifts/#{@order.box_type}-#{@order.number_of_months}.pdf"), :type => 'application/pdf', :filename => "The Nutribox Gift Certificate"
   end
-  
+
   def list
     @orders = Order.order("created_at DESC")
   end
-  
+
   def index
     @orders = current_user.orders.not_failed.where(:gift => false).order("created_at DESC")
     @gifts  = current_user.orders.not_failed.where(:gift => true).order("created_at DESC")
+    @custom_page_title = YmSnippets::Snippet.find_by_slug('my_subscriptions_page_title')
+    @custom_page_description = YmSnippets::Snippet.find_by_slug('my_subscriptions_page_description')
   end
-  
+
   def thanks
   end
-  
+
   def update
     @order.assign_attributes(params[:order])
     if @order.editing_by_admin
@@ -38,7 +48,7 @@ class OrdersController < ApplicationController
       handle_order
     end
   end
-  
+
   private
   def handle_order
     unless @order.discount_code && @order.discount_code.available_to?(current_user)
@@ -118,6 +128,6 @@ class OrdersController < ApplicationController
         render :action => 'new'
       end
     end
-    
+
   end
 end
