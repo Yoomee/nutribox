@@ -10,7 +10,7 @@
 -if @order.current_step_confirm? && !@order.discounted?
   .row.order-box-row
     .span6.offset4
-      -if @order.discount_code_code.blank?
+      -if !@order.gift? && @order.discount_code_code.blank?
         =link_to("Enter a discount code", 'javascript:void(0)', :data =>{:toggle => "collapse", :target => "#confirm-step-discount"}, :class => 'pull-right mr-2', :id => "discount-toggle")
       #confirm-step-discount{:class => ('collapse' if @order.discount_code_code.blank?)}
         %h4 Discount code

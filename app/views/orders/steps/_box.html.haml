@@ -34,7 +34,7 @@
             %small="#{Order.number_of_snacks(box_type)} snacks"
           =image_tag("#{box_type}-box.png", :class => "box-photo")
           %ul.unstyled.box-options
-            -order_months_array(@order.gift?).each do |num|
+            -Order::COST_MATRIX[:mini].keys.each do |num|
               %li
                 .pull-left
                   %h4
@@ -61,20 +61,21 @@
                         Buy
           .clearfix
 
-.row
-  .span10
-    .thumbnail#discount-bar
-      .caption
-        .discount-bar-left
-          %h2.mb-0 Discount code?
-        .discount-bar-center
-          .control-group
-            %label=discount_code_label(@order)
-            .control-group{:class => discount_code_class(@order)}
-              -if @order.discount_code == DiscountCode.default
-                =form.text_field :discount_code_code, :class => "span2", :value => nil
-              -else
-                =form.text_field :discount_code_code, :class => "span2"
-        .discount-bar-right
-          =form.submit('Apply', :name => 'discount_code', :class => "btn pull-right")
-        .clearfix
+-unless @order.gift?
+  .row
+    .span10
+      .thumbnail#discount-bar
+        .caption
+          .discount-bar-left
+            %h2.mb-0 Discount code?
+          .discount-bar-center
+            .control-group
+              %label=discount_code_label(@order)
+              .control-group{:class => discount_code_class(@order)}
+                -if @order.discount_code == DiscountCode.default
+                  =form.text_field :discount_code_code, :class => "span2", :value => nil
+                -else
+                  =form.text_field :discount_code_code, :class => "span2"
+          .discount-bar-right
+            =form.submit('Apply', :name => 'discount_code', :class => "btn pull-right")
+          .clearfix

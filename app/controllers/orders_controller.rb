@@ -3,11 +3,12 @@ class OrdersController < ApplicationController
 
   def new
     gift = params[:gift].present?
-    @order = Order.new(:gift => gift, :discount_code => DiscountCode.default)
+    @order = Order.new(:gift => gift)
     if gift
       @custom_page_title = YmSnippets::Snippet.find_by_slug('gift_page_title').text
       @custom_page_description = YmSnippets::Snippet.find_by_slug('gift_page_description')
     else
+      @order.discount_code = DiscountCode.default
       @custom_page_title = YmSnippets::Snippet.find_by_slug('join_page_title')
       @custom_page_description = YmSnippets::Snippet.find_by_slug('join_page_description')
     end
@@ -51,7 +52,7 @@ class OrdersController < ApplicationController
 
   private
   def handle_order
-    unless @order.discount_code && @order.discount_code.available_to?(current_user)
+    unless @order.gift? || (@order.discount_code && @order.discount_code.available_to?(current_user))
       @order.discount_code = DiscountCode.default
     end
     if params[:back]
