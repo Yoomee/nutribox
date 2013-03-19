@@ -304,7 +304,7 @@ class Order < ActiveRecord::Base
       :transaction_auth_number => paypal_response.params["TxAuthNo"]
       )
     else
-      raise PaymentError, paypal_response.message
+      raise Order::PaymentError, paypal_response.message
     end
   end
   
