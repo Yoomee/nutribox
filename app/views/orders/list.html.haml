@@ -28,5 +28,5 @@
         %td=order.created_at.to_s(:date)
         %td
           %span.badge{:class => order.status_class("badge-")}
-            =order.status.titleize
+            =order.status.to_s.titleize
         %td=link_to("Edit", edit_order_path(order))
