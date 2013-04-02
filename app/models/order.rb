@@ -220,7 +220,7 @@ class Order < ActiveRecord::Base
   
   def take_payment!
     if credit_card.valid?
-      paypal_response = gateway.purchase(
+      sage_pay_response = gateway.purchase(
       amount_in_pence,
       credit_card,
       :order_id => order_number,
@@ -233,24 +233,25 @@ class Order < ActiveRecord::Base
         :country => billing_country
       }
       )
-      process_response(paypal_response,self)
+      process_response(sage_pay_response,self)
     end
   end
   
   def take_repeat_payment!
     repeat = self.repeat_payments.build(:amount_in_pence => full_price_amount_in_pence)
-    if repeat.save # ID is needed for PayPal
+    if repeat.save # ID is needed for SagePay
       related = attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
-    
       related[:id] = order_number
-    
-      paypal_response = gateway.repeat(
+      sage_pay_response = gateway.repeat(
         full_price_amount_in_pence,
         :order_id => (Rails.env.development? ? "devR#{repeat.id}" : "NBR#{repeat.id}"),
         :related_transaction => related
       )
-    
-      process_response(paypal_response,repeat)
+      begin
+        process_response(sage_pay_response,repeat)
+      rescue Order::PaymentError => e
+        logger.info e
+      end
     end
     repeat
   end
@@ -295,16 +296,16 @@ class Order < ActiveRecord::Base
     end
   end
   
-  def process_response(paypal_response,transaction)
-    logger.info paypal_response.inspect
-    if paypal_response.success?
+  def process_response(sage_pay_response,transaction)
+    logger.info sage_pay_response.inspect
+    if sage_pay_response.success?
       transaction.update_attributes(
-      :vps_transaction_id => paypal_response.params["VPSTxId"],
-      :security_key => paypal_response.params["SecurityKey"],
-      :transaction_auth_number => paypal_response.params["TxAuthNo"]
+      :vps_transaction_id => sage_pay_response.params["VPSTxId"],
+      :security_key => sage_pay_response.params["SecurityKey"],
+      :transaction_auth_number => sage_pay_response.params["TxAuthNo"]
       )
     else
-      raise Order::PaymentError, paypal_response.message
+      raise Order::PaymentError, sage_pay_response.message
     end
   end
   
