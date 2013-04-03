@@ -7,6 +7,7 @@ class AdminController < ApplicationController
   end
   
   def home_page_image
+    authorize! :admin, :home_page_image
     if params[:snippet]
       @snippet.update_attributes(params[:snippet])
       flash[:notice] = "Updated home page image."
