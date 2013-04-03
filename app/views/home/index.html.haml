@@ -33,7 +33,7 @@
           -if @home_page_image.try(:image)
             #front-page-image.span6
               =link_to @home_page_image.text do
-                =image_tag @home_page_image.image.thumb('460x310%').url
+                =image_tag @home_page_image.image.thumb('460x313').url
           -else      
             =link_to "Give a gift", gift_path, :class=>"christmas-link span6"
           
