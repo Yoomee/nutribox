@@ -6,6 +6,7 @@ class HomeController < ApplicationController
     @latest_blog_post = Page.find_by_slug("blog").children.latest.first
     @custom_page_title = YmSnippets::Snippet.find_by_slug('home_page_title')
     @custom_page_description = YmSnippets::Snippet.find_by_slug('home_page_description')
+    @home_page_image = YmSnippets::Snippet.find_by_slug(:home_page_image)
     #render :action => "logged_out_index" unless current_user || Rails.env.development?
   end
 
