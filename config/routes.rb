@@ -43,6 +43,9 @@ Nutribox::Application.routes.draw do
   
   match "sign-up" => redirect("/login")
   
+  match "admin/home-page" => 'admin#home_page_image', :as => 'home_page_admin' 
+  
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
