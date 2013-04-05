@@ -55,12 +55,17 @@ header_bg.jpg: header_bg-64d8427561d2e0eea75eef376bb5b416.jpg
 header_bg.png: header_bg-cf79c40e0316d3739c0db0bfaf990855.png
 healthy-snacking-made-easier.png: healthy-snacking-made-easier-b1196be4f3ed3f287a70ff64ffe1be9e.png
 home-strip-2.png: home-strip-2-80d95e34031b344e25176dc76ec2692e.png
+homepage-messages-1.png: homepage-messages-1-6ab4731c60d335385d79d5799ffc40dc.png
+homepage-messages-2.png: homepage-messages-2-65a6df885dba96d8150fa9d60ae05cc4.png
+homepage-messages-3.png: homepage-messages-3-04d8d910b901da69d02420e60505a658.png
 how-it-works.jpg: how-it-works-d173725d06806fdd8e87733d29ea4eec.jpg
 illustration-choose.png: illustration-choose-813d936396993272288dba72571ce195.png
 illustration-receive.png: illustration-receive-63b7901d9b1966f1fd70d9812f134496.png
 illustration-surprise.png: illustration-surprise-58dc29cb46cb92bbe8ce6fac8f60b6e7.png
 illustration_here.png: illustration_here-fabdae2a540670b1866ac92e924a5ee5.png
 illustration_here_home.png: illustration_here_home-fce91f0a21b1c78d6cb36dc016177223.png
+images/christmas-link_02.png: images/christmas-link_02-62b9ef17dc3e0690228eeea7603b26a4.png
+images/nutribox_03.png: images/nutribox_03-c695606fdb292bebcb4dedfa0def3bac.png
 latest_blog_image.jpg: latest_blog_image-24e494137d7e4dd3a11dc1cf9048186e.jpg
 launching_in.png: launching_in-30469ae693e11778ae266236e8620409.png
 logo.png: logo-f302f4044acb70c771e507167d5bfb91.png
@@ -83,6 +88,7 @@ summary-img.jpg: summary-img-a0e11bc6e0be7abe34c08c3791053f45.jpg
 twitter-link.png: twitter-link-90b0fee95823937c07f3a59b22bc9211.png
 valentines.jpg: valentines-cffc2059c2d5e95134c2993ca50190bb.jpg
 yoomee_logo.png: yoomee_logo-fa022040f9bce3877704c4fb6ff6d934.png
+jquery.cycle.js: jquery.cycle-bd41764f24ea1d4ee655f65bd22cdc20.js
 jquery.smooth-scroll.js: jquery.smooth-scroll-98c10713388705d70e5ae096a5b2b95b.js
 ie7/font-awesome-ie7.min.css: ie7/font-awesome-ie7.min-cbfb51b90ebdbaee686c34584cbe0152.css
 jquery-ui/ui-bg_diagonals-thick_18_b81900_40x40.png: jquery-ui/ui-bg_diagonals-thick_18_b81900_40x40-c3e0e1955420032feb67368f05648ded.png
@@ -108,6 +114,6 @@ jquery-ui-1.8.18.css: jquery-ui-1.8.18-525b8fc57478eb4d921d21ea053f2634.css
 jquery-ui.min.js: jquery-ui.min-261bf7a9e55e851952f6f5ede08a5413.js
 jquery.min.js: jquery.min-26e44749446e5f2102a116e446877038.js
 jquery.min.map: jquery.min-4dd6a891215c2bd74b32b727b828c2ed.map
-application.js: application-a04513dd13f75a8c8524465ba41819e1.js
-application.css: application-724f62574c431c556d991120981b5641.css
+application.js: application-b666e43d12843be4ea016a596291cf80.js
+application.css: application-6f63feb1b5f5302c1882a94c0d8388d1.css
 ie7.css: ie7-5c07855604e48094a4ed86ff0b96b7a6.css
