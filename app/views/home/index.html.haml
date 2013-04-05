@@ -15,8 +15,15 @@
           .or
           =link_to "Give a box", gift_path, :class=>"give-box-btn btn btn-homepage-cta christmas-give-btn"
       .big-box-image.span7.fade_in.fade_two
-        =link_to "From only £10.42 per month", join_path, :class=>"from-only fade_in fade_three"
+        =#link_to "From only £10.42 per month", join_path, :class=>"from-only fade_in fade_three"
         =link_to_slug "How it works", :how_it_works, :class=>"how_it_works_link"
+        .homepage-messages-wrap
+          .homepage-messages.cycle        
+            .speech-bubble.speech-bubble-3    
+            .speech-bubble.speech-bubble-2            
+            .speech-bubble.speech-bubble-1
+          / .cycle_nav
+          /   =link_to 'Next', '#', :class => 'cycle_next'  
 .home-strip-1
   .container
     .row.fade_in.fade_three
