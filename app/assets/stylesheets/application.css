@@ -546,7 +546,7 @@ a.twitter-link {
   z-index: 90;
   float: right;
 
-  padding: 0 20px;
+  padding: 0 12px;
   
   border-radius:6px;
   
@@ -555,14 +555,18 @@ a.twitter-link {
   box-shadow:0 0px 5px rgba(0,0,0,0.2);
 }
 #top-nav a.nav-link {
-  font-size: 22px;
+  font-size: 20px;
   color: #999;
-  padding: 20px 15px;
+  padding: 20px 13px;
   text-shadow: none;
 }
+#top-nav a.nav-how-it-works {
+	padding-left: 14px;
+}
+
 #top-nav a.nav-home {
   padding-left: 0;
-  padding-right: 6px;
+  padding-right: 0px;
 }
 .nav-home i.icon-home {
   line-height: 18px;
@@ -631,6 +635,7 @@ a.twitter-link {
   background: url(/assets/my-account-login.png) no-repeat 0 12px;
   padding: 20px 26px;
   margin-left: 10px;
+  font-size: 14px;
 
 color: #fff;
 text-shadow: none;

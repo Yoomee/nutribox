@@ -19,7 +19,7 @@ $(document).ready ->
   $('.homepage-messages').cycle
     fx: 'fade',
     speed: 'slow',
-    timeout: 8000,
+    timeout: 4000,
     easing: 'easeOutQuint',
     # pager: '.cycle_nav',
     # next: '.cycle_next',

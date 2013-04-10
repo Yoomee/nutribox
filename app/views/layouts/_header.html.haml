@@ -15,6 +15,8 @@
         =link_to "Join", join_path, :class=>"nav-join nav-link"
       =li_with_active current_page?(gift_path) do
         =link_to "Gift", gift_path, :class=>"nav-join nav-link"
+      =li_with_active slug_active?(:about) do
+        =link_to_slug "About", :about, :class=>"nav-about nav-link"        
       =li_with_active slug_active?(:blog) do
         =link_to_slug "Blog", :blog, :class=>"nav-blog nav-link"
       =li_with_active current_page?(latest_box_path) do
