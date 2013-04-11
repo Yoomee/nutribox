@@ -44,7 +44,7 @@ class Order < ActiveRecord::Base
     end
     
     def box_name(box_type)
-      case box_type
+      case box_type.to_s
       when "mini" then "The Nutribox Mini"
       when "standard" then "The Nutribox"
       end
