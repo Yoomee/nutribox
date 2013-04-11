@@ -44,7 +44,7 @@ class Order < ActiveRecord::Base
     
     def box_name(box_type)
       case box_type
-      when "mini" then "The Nutribox-mini"
+      when "mini" then "The Nutribox Mini"
       when "standard" then "The Nutribox"
       end
     end
@@ -344,6 +344,6 @@ Order::VAT_PERCENTAGES = {
   :standard => 8.29
 }
 Order::COST_MATRIX = {
-  :mini => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },
-  :standard  => { 1 =>  2500, 3 =>  6800, 6 =>  12800, 12 => 24500 }
+  :mini => { 1 =>  1295, 3 =>  3500, 6 =>   6500 },
+  :standard  => { 1 =>  2500, 3 =>  6800, 6 =>  12800 }
 }
