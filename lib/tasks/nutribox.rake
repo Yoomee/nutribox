@@ -28,7 +28,7 @@ namespace :nutribox do
   desc 'Take repeat payments'
   task :repeat => :environment do
     if Date.today.day.in?([1,15])
-      Order.repeatable_for_shipping_day(Date.today.day + 10).each do |order|
+      Order.repeatable_for_shipping_day_with_3_or_6_months(Date.today.day + 10).each do |order|
         order.take_repeat_payment!
       end
       RepeatPayment.with_transaction_auth_number.reload.where("xero_status IS NULL OR xero_status != 'success'").each do |repeat_payment|

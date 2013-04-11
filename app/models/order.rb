@@ -30,7 +30,7 @@ class Order < ActiveRecord::Base
   scope :not_failed, where("status != 'failed'")
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
   scope :repeatable_for_shipping_day, lambda {|day| active.where(:gift => false, :number_of_months => 1, :shipping_day => day).where("DATE(orders.created_at) < ?", Date.today.change(:day => day) - 1.month)}
-  scope :repeatable_for_shipping_day_with_3_or_6_months, lambda {|day| active.where(:gift => false, :shipping_day => day).where('number_of_months = 1 OR (number_of_months IN (3, 6) AND orders.created_at > ?)', Time.parse('12/04/2013')).where("DATE(orders.created_at) < ?", Date.today.change(:day => day) - 1.month)}
+  scope :repeatable_for_shipping_day_with_3_or_6_months, lambda {|day| active.where(:gift => false, :shipping_day => day).where('number_of_months = 1 OR (number_of_months IN (3, 6) AND orders.created_at > ?)', Time.parse('11/04/2013')).where("DATE(orders.created_at) < ?", Date.today.change(:day => day) - 1.month)}
   
   class << self
     
@@ -270,7 +270,12 @@ class Order < ActiveRecord::Base
       :verification_value => "123"  
     }  
   end  
-  
+
+  def warn_if_changing_status?
+    return false if gift? && number_of_months == 1
+    (shipping_day - 10 <= Date.today.day) && (Date.today.day <= shipping_day)
+  end
+
   def xero_order_number
     Rails.env.development? ? "dev#{id}" : "NB-#{id}"
   end
