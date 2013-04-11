@@ -153,19 +153,23 @@ class Order < ActiveRecord::Base
   def delivery_country
     "GB"
   end  
-  
+
+  def first_shipping_date
+    next_shipping_date(created_at.to_date)
+  end
+
   def next_delivery_date
     next_shipping_date + 5.days
   end
   
-  def next_shipping_date
-    return Date.new(2013, 1, 11) if (created_at || Date.today).year == 2012
-    if Date.today.day < shipping_day
+  def next_shipping_date(date = Date.today)
+    return Date.new(2013, 1, 11) if (created_at || date).year == 2012
+    if date.day < shipping_day
       # Hasn't been shipped yet this month
-      Date.today.change(:day => shipping_day)
+      date.change(:day => shipping_day)
     else
       # Will be shipped next month
-      (Date.today >> 1).change(:day => shipping_day)
+      (date >> 1).change(:day => shipping_day)
     end
   end
   
