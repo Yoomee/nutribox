@@ -64,7 +64,15 @@ class Delivery < ActiveRecord::Base
   def month
     shipping_date.date.month
   end
-  
+
+  def tx_code
+    if repeat_payment = order.repeat_payments.with_transaction_auth_number.where(["YEAR(created_at) = ? AND MONTH(created_at) = ?", self.created_at.year, self.created_at.month]).first
+      "NBR#{repeat_payment.id}"
+    else
+      "NB#{order.id}"
+    end
+  end
+
   def year
     shipping_date.date.year
   end

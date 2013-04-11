@@ -17,6 +17,7 @@
       %th Gift
       %th Delivery address
       %th Paid
+      %th Tx&nbsp;Code
   %tbody
     -@shipping_date.deliveries.each do |delivery|
       %tr
@@ -33,4 +34,5 @@
             .label.label-success YES
           -else
             .label.label-important NO
+        %td=delivery.tx_code
     
