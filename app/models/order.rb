@@ -30,6 +30,7 @@ class Order < ActiveRecord::Base
   scope :not_failed, where("status != 'failed'")
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
   scope :repeatable_for_shipping_day, lambda {|day| active.where(:gift => false, :number_of_months => 1, :shipping_day => day).where("DATE(orders.created_at) < ?", Date.today.change(:day => day) - 1.month)}
+  scope :repeatable_for_shipping_day_with_3_or_6_months, lambda {|day| active.where(:gift => false, :shipping_day => day).where('number_of_months = 1 OR (number_of_months IN (3, 6) AND orders.created_at > ?)', Time.parse('12/04/2013')).where("DATE(orders.created_at) < ?", Date.today.change(:day => day) - 1.month)}
   
   class << self
     
@@ -44,7 +45,7 @@ class Order < ActiveRecord::Base
     
     def box_name(box_type)
       case box_type.to_s
-      when "mini" then "The Nutribox-mini"
+      when "mini" then "The Nutribox Mini"
       when "standard" then "The Nutribox"
       end
     end
@@ -152,19 +153,23 @@ class Order < ActiveRecord::Base
   def delivery_country
     "GB"
   end  
-  
+
+  def first_shipping_date
+    next_shipping_date(created_at.to_date)
+  end
+
   def next_delivery_date
     next_shipping_date + 5.days
   end
   
-  def next_shipping_date
-    return Date.new(2013, 1, 11) if (created_at || Date.today).year == 2012
-    if Date.today.day < shipping_day
+  def next_shipping_date(date = Date.today)
+    return Date.new(2013, 1, 11) if (created_at || date).year == 2012
+    if date.day < shipping_day
       # Hasn't been shipped yet this month
-      Date.today.change(:day => shipping_day)
+      date.change(:day => shipping_day)
     else
       # Will be shipped next month
-      (Date.today >> 1).change(:day => shipping_day)
+      (date >> 1).change(:day => shipping_day)
     end
   end
   
@@ -344,6 +349,6 @@ Order::VAT_PERCENTAGES = {
   :standard => 8.29
 }
 Order::COST_MATRIX = {
-  :mini => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },
-  :standard  => { 1 =>  2500, 3 =>  6800, 6 =>  12800, 12 => 24500 }
+  :mini => { 1 =>  1295, 3 =>  3500, 6 =>   6500 },
+  :standard  => { 1 =>  2500, 3 =>  6800, 6 =>  12800 }
 }

@@ -1055,7 +1055,10 @@ ul.box-options li {
 #box_step .thumbnails .active .btn{
   background-color: #99b936;
 }
-
+h3.box-title {
+  margin-top: 40px;
+}
+#box_step .thumbnail .box-radio input,
 #box_step .thumbnails input {
   display:none;
 }
@@ -1267,10 +1270,9 @@ background: none;
   box-shadow:0 2px 10px rgba(0,0,0,0.07);
   -webkit-box-shadow:0 2px 10px rgba(0,0,0,0.07);
   margin-top: 15px;
-
 }
 .choose-box-small {
-  width: 31%;  
+  width: 30%;  
   text-align: center;
   margin-bottom: 20px;
 }
