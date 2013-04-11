@@ -1128,6 +1128,11 @@ ul.box-options li {
   margin-left:30px;
 }
 
+#order_delivery_address1_input .help-inline{
+  color:#666;
+  font-style:italic;
+}
+
 p.delivery-notice-text {
 	color: #ffffff;
 	font-size: 13px;
