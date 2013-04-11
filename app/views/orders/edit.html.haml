@@ -19,6 +19,7 @@
       %label.control-label Product
       .controls
         %p=@order.product
+    =form.input :comment, :input_html => { :class => 'input-xxlarge'}
     %h4 Status
     =form.input :status, :collection => Order.statuses.collect{|s| [s.titleize,s]}, :include_blank => false
     -if @order.warn_if_changing_status?

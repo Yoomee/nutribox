@@ -19,6 +19,7 @@
         %th Customer
         %th Subscription type
         %th Gift
+        %th Comment
         %th Delivery address
         %th Paid
         %th Tx&nbsp;Code
@@ -31,6 +32,7 @@
           %td=pluralize(delivery.number_of_months,"month")
           %td
             =delivery.gift? ? "Yes" : "No"
+          %td=delivery.order.comment
           %td.span4=delivery.address
           %td
             -if delivery.paid_for?
