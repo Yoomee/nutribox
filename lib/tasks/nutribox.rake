@@ -15,7 +15,7 @@ namespace :nutribox do
   
   desc 'Sync orders and repeat payments with Xero'
   task :xero => :environment do
-    Order.where("status = 'active' AND (xero_status IS NULL OR xero_status != 'success'")).each do |order|
+    Order.where("status = 'active' AND (xero_status IS NULL OR xero_status != 'success')").each do |order|
       order.sync_with_xero
       sleep(2)
     end
