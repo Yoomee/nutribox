@@ -13,10 +13,15 @@ namespace :nutribox do
     end
   end  
   
-  desc 'Sync orders with Xero'
+  desc 'Sync orders and repeat payments with Xero'
   task :xero => :environment do
-    Order.where("status = 'active' AND xero_status != 'success'").each do |order|
+    Order.where("status = 'active' AND (xero_status IS NULL OR xero_status != 'success'")).each do |order|
       order.sync_with_xero
+      sleep(2)
+    end
+    RepeatPayment.with_transaction_auth_number.where("xero_status IS NULL OR xero_status != 'success'").each do |repeat_payment|
+      repeat_payment.sync_with_xero
+      sleep(2)
     end
   end
   
@@ -28,7 +33,8 @@ namespace :nutribox do
       end
       RepeatPayment.with_transaction_auth_number.reload.where("xero_status IS NULL OR xero_status != 'success'").each do |repeat_payment|
         repeat_payment.sync_with_xero
-      end      
+        sleep(2)
+      end
     end
   end
   
