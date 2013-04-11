@@ -2,37 +2,43 @@
   Boxes for delivery
   %small
     =@shipping_date.date.stamp("Monday 11th January 2013")
-=link_to(shipping_date_path(@shipping_date, :format => 'xls'), :class => 'btn btn-primary pull-right mt-1') do
-  %i.icon-download-alt
-  Download
 -if @shipping_date.deliveries.empty?
   %p.lead There are no deliveries for this date.
-%table.table.table-striped
-  %thead
-    %tr
-      %th ID
-      %th Customer
-      %th Box type
-      %th Subscription type
-      %th Gift
-      %th Delivery address
-      %th Paid
-      %th Tx&nbsp;Code
-  %tbody
-    -@shipping_date.deliveries.each do |delivery|
+
+.clearfix
+-@deliveries.each do |box_type, deliveries|
+  %h2.pull-left
+    =Order.box_name(box_type)
+  =link_to(shipping_date_path(@shipping_date, :format => 'xls', :box => box_type), :class => 'btn btn-primary pull-right') do
+    %i.icon-download-alt
+    Download
+  %table.table.table-striped
+    %thead
       %tr
-        %td.span1
-          =delivery.id
-        %td="#{delivery.user.last_name}, #{delivery.user.first_name}"
-        %td=delivery.box_name
-        %td=pluralize(delivery.number_of_months,"month")
-        %td
-          =delivery.gift? ? "Yes" : "No"
-        %td.span4=delivery.address
-        %td
-          -if delivery.paid_for?
-            .label.label-success YES
-          -else
-            .label.label-important NO
-        %td=delivery.tx_code
+        %th ID
+        %th Customer
+        %th Subscription type
+        %th Gift
+        %th Delivery address
+        %th Paid
+        %th Tx&nbsp;Code
+    %tbody
+      -deliveries.each do |delivery|
+        %tr
+          %td.span1
+            =delivery.id
+          %td="#{delivery.user.last_name}, #{delivery.user.first_name}"
+          %td=pluralize(delivery.number_of_months,"month")
+          %td
+            =delivery.gift? ? "Yes" : "No"
+          %td.span4=delivery.address
+          %td
+            -if delivery.paid_for?
+              .label.label-success YES
+            -else
+              .label.label-important NO
+          %td=delivery.tx_code
+  %br
+  %hr
+  %br
     

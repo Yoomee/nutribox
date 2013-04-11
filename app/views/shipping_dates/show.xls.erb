@@ -21,7 +21,7 @@
         <Cell><Data ss:Type="String">Country</Data></Cell>
         <Cell><Data ss:Type="String">Tx Code</Data></Cell>
       </Row>
-    <% @shipping_date.deliveries.each do |delivery| %>
+    <% @deliveries.each do |delivery| %>
       <Row>
         <Cell><Data ss:Type="Number"><%= delivery.id %></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.user.full_name%></Data></Cell>
