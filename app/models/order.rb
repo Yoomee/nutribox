@@ -30,6 +30,7 @@ class Order < ActiveRecord::Base
   scope :not_failed, where("status != 'failed'")
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
   scope :repeatable_for_shipping_day, lambda {|day| active.where(:gift => false, :number_of_months => 1, :shipping_day => day).where("DATE(orders.created_at) < ?", Date.today.change(:day => day) - 1.month)}
+  scope :repeatable_for_shipping_day_with_3_or_6_months, lambda {|day| active.where(:gift => false, :shipping_day => day).where('number_of_months = 1 OR (number_of_months IN (3, 6) AND orders.created_at > ?)', Time.parse('12/04/2013')).where("DATE(orders.created_at) < ?", Date.today.change(:day => day) - 1.month)}
   
   class << self
     
@@ -44,7 +45,7 @@ class Order < ActiveRecord::Base
     
     def box_name(box_type)
       case box_type
-      when "mini" then "The Nutribox-mini"
+      when "mini" then "The Nutribox Mini"
       when "standard" then "The Nutribox"
       end
     end
@@ -344,6 +345,6 @@ Order::VAT_PERCENTAGES = {
   :standard => 8.29
 }
 Order::COST_MATRIX = {
-  :mini => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },
-  :standard  => { 1 =>  2500, 3 =>  6800, 6 =>  12800, 12 => 24500 }
+  :mini => { 1 =>  1295, 3 =>  3500, 6 =>   6500 },
+  :standard  => { 1 =>  2500, 3 =>  6800, 6 =>  12800 }
 }

@@ -35,6 +35,12 @@ blog-wrapper.png: blog-wrapper-2d7623339e7856e9fdd339ced45b6f19.png
 blog_message.png: blog_message-60940c5826a346432cf37869bc35a429.png
 blog_post_image-2.jpg: blog_post_image-2-d1158e76abca7a642f317026e0d90d09.jpg
 blog_post_image.jpg: blog_post_image-5676ef2e87154c3603acdfcf1895aad1.jpg
+box-mini-1.png: box-mini-1-8f4115f4ac95960587cd858d3717880e.png
+box-mini-3.png: box-mini-3-b88ce7c2f8cce20c88a725e4fa0d00ac.png
+box-mini-6.png: box-mini-6-c431e76bdbf1ccc11b967ee2be15b0be.png
+box-standard-1.png: box-standard-1-8bb667ab0418fbea13942585e36286fd.png
+box-standard-3.png: box-standard-3-74796b5a966697fb8a121537c964fbde.png
+box-standard-6.png: box-standard-6-7ac1d5eed227e0a563fde6c500b2c23e.png
 box.png: box-be665c2ed0999dee1f881aead0b37336.png
 card.png: card-99a77f1eda699aeefd1ce1507921ec24.png
 christmas-give-btn.png: christmas-give-btn-09565c8e97884c22ca88493707b166c9.png
@@ -64,8 +70,6 @@ illustration-receive.png: illustration-receive-63b7901d9b1966f1fd70d9812f134496.
 illustration-surprise.png: illustration-surprise-58dc29cb46cb92bbe8ce6fac8f60b6e7.png
 illustration_here.png: illustration_here-fabdae2a540670b1866ac92e924a5ee5.png
 illustration_here_home.png: illustration_here_home-fce91f0a21b1c78d6cb36dc016177223.png
-images/christmas-link_02.png: images/christmas-link_02-62b9ef17dc3e0690228eeea7603b26a4.png
-images/nutribox_03.png: images/nutribox_03-c695606fdb292bebcb4dedfa0def3bac.png
 latest_blog_image.jpg: latest_blog_image-24e494137d7e4dd3a11dc1cf9048186e.jpg
 launching_in.png: launching_in-30469ae693e11778ae266236e8620409.png
 logo.png: logo-f302f4044acb70c771e507167d5bfb91.png
@@ -115,5 +119,5 @@ jquery-ui.min.js: jquery-ui.min-261bf7a9e55e851952f6f5ede08a5413.js
 jquery.min.js: jquery.min-26e44749446e5f2102a116e446877038.js
 jquery.min.map: jquery.min-4dd6a891215c2bd74b32b727b828c2ed.map
 application.js: application-c92ee1fa695484c8bd836b2930bc89c9.js
-application.css: application-b72130370848cc0ff15a2312c2dfb051.css
+application.css: application-62a386498c7c0e6316df86380e1af9d2.css
 ie7.css: ie7-5c07855604e48094a4ed86ff0b96b7a6.css
