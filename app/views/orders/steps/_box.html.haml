@@ -11,14 +11,11 @@
 =form.input :gift, :as => :hidden
 .row
   .span10
-    %p.mb-2
-      Signing up for your Nutribox is easy! Just decide whether you want a Mini-box - great as a gift or if you want to try out our snacks - or a full size Nutribox.  You can sign up on a monthly plan or pay upfront for a 3 or 6 month subscription, and save up to 16%.  With any of these options you can cancel simply by emailing us if you feel The Nutribox isn’t the healthy snacking option for you.
-    -if false
-      -if @order.gift?
-        %h2.gift-first-title.mb-2 Which box would you like to give?
-      -else
-        %h2 Choose your box
-
+    %p
+      Signing up for your Nutribox is easy! Just decide whether you want a Mini-box - great as a gift or if you want to try out our snacks - or a full size Nutribox.
+    -unless @order.gift?
+      %p.mt-2
+        You can sign up on a monthly plan or pay upfront for a 3 or 6 month subscription, and save up to 16%.  With any of these options you can cancel simply by emailing us if you feel The Nutribox isn’t the healthy snacking option for you.
     -if @order.discount_code && @order.discount_code.available_to?(current_user)
       .row
         .span10
