@@ -58,7 +58,11 @@ class Order < ActiveRecord::Base
     def cost(box_type,number_of_months)
       YmCore::Model::AmountAccessor::Float.new((self.cost_in_pence(box_type,number_of_months).to_f / 100).round(2))
     end
-    
+
+    def cost_per_month(box_type,number_of_months)
+      YmCore::Model::AmountAccessor::Float.new(((self.cost_in_pence(box_type,number_of_months).to_f / 100) / number_of_months).round(2))
+    end
+
     def saving_in_pence(box_type,number_of_months)
       (cost_in_pence(box_type,1) * number_of_months) - cost_in_pence(box_type,number_of_months)
     end
@@ -115,7 +119,15 @@ class Order < ActiveRecord::Base
       Order.cost(box_type,number_of_months)
     end
   end
-  
+
+  def cost_per_month(box_type, number_of_months)
+    if discount_code.try(:available?)
+      YmCore::Model::AmountAccessor::Float.new((((Order.cost_in_pence(box_type,number_of_months) - (discount_code.fraction * Order.cost_in_pence(box_type,1)).ceil) / 100.to_f) / number_of_months).round(2))
+    else
+      Order.cost_per_month(box_type,number_of_months)
+    end
+  end
+
   def credit_card  
     @credit_card ||= ActiveMerchant::Billing::CreditCard.new  
   end    
