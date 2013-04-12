@@ -56,12 +56,8 @@
                 .btn.choose-btn Select
               %h5.choose-price
                 -if @order.discount_code && @order.discount_code.available_to?(current_user)
-                  %span.line-through="£#{Order.cost(box_type, months)}&nbsp;".html_safe
-                ="£#{@order.cost(box_type, months)}"
-                -if months > 1 && !(@order.discount_code && @order.discount_code.available_to?(current_user))
-                  %span.saving
-                    \- save
-                    %span.percentage="#{Order.saving_percentage(box_type, months)}%"
+                  .line-through="£#{Order.cost_per_month(box_type, months)}&nbsp;/&nbsp;month".html_safe
+                ="£#{@order.cost_per_month(box_type, months)} / month"
               %p.free-delivery Free delivery
               -unless @order.gift?
                 .choose-smallprint

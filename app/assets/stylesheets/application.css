@@ -1287,6 +1287,9 @@ background: none;
 .choose-price {
   font-size: 20px;
 }
+.choose-price .line-through {
+  margin-bottom: 10px
+}
 .free-delivery {
   color: #99b936;
 }
@@ -1298,7 +1301,6 @@ background: none;
 #register_step #accordion {
 margin-left: 40px ;
 }
-
 
 /*  For christmas- comment out afterwards  */
 .gift-wrapper {
