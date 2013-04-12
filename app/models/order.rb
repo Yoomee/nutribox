@@ -167,7 +167,7 @@ class Order < ActiveRecord::Base
   end  
 
   def first_shipping_date
-    next_shipping_date(created_at.to_date)
+    next_shipping_date((created_at.presence || Time.now).to_date)
   end
 
   def next_delivery_date
