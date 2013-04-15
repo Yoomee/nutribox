@@ -7,7 +7,7 @@ class Delivery < ActiveRecord::Base
   
   validates :order_id, :uniqueness => { :scope => :shipping_date_id }
     
-  before_save :set_survey_hash
+  after_create :set_survey_hash
   
   def self.by_month_and_year(month, year)
     where("MONTH(shipping_dates.date) = ? AND YEAR(shipping_dates.date) = ?", month, year).joins(:shipping_date)
@@ -85,7 +85,7 @@ class Delivery < ActiveRecord::Base
   
   private 
   def set_survey_hash
-    self.survey_hash = Digest::SHA1.hexdigest("#{id}/#{name}")
+    self.update_attribute(:survey_hash,Digest::SHA1.hexdigest("#{id}/#{name}"))
   end
   
 end
