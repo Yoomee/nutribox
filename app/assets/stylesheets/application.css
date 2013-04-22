@@ -1562,6 +1562,11 @@ a.nutritional_info_link:hover {
   margin: -50px 0 0 0;
 }
 
+/* ====================== Shipment page ====================== */
+a#repeat-repeat-payment {
+  color: #B94A48;
+}
+
 /* ====================== Survey page ====================== */
 .survey-titles {
   border-bottom: 1px solid #ccc;
