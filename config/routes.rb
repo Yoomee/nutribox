@@ -11,7 +11,9 @@ Nutribox::Application.routes.draw do
     end
   end
   
-  resources :shipping_dates, :only => :show, :path => "shippings"
+  resources :shipping_dates, :only => :show, :path => "shippings" do
+    resources :deliveries, :only => :update
+  end
   
   resources :discount_codes
   

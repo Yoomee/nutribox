@@ -46,7 +46,11 @@ class Delivery < ActiveRecord::Base
     survey.save 
     survey    
   end
-  
+
+  def in_current_month?
+    created_at.year == Date.today.year && created_at.month == Date.today.month
+  end
+
   def paid_for?
     if gift? || (number_of_months > 1)
       true
@@ -63,6 +67,14 @@ class Delivery < ActiveRecord::Base
   
   def month
     shipping_date.date.month
+  end
+
+  def repeat_repeat_payment!
+    if in_current_month? && failed = order.repeat_payments.without_transaction_auth_number.where(["YEAR(created_at) = ? AND MONTH(created_at) = ?", created_at.year, created_at.month]).first
+      failed.destroy
+      repeat = order.take_repeat_payment!
+      repeat.transaction_auth_number.present?
+    end
   end
 
   def tx_code

@@ -39,6 +39,9 @@
               .label.label-success YES
             -else
               .label.label-important NO
+              -if delivery.in_current_month?
+                %br
+                =link_to 'Try&nbsp;again'.html_safe, shipping_date_delivery_path(@shipping_date, delivery), :method => :put
           %td=delivery.tx_code
   %br
   %hr
