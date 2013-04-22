@@ -8,7 +8,9 @@ class Delivery < ActiveRecord::Base
   validates :order_id, :uniqueness => { :scope => :shipping_date_id }
     
   after_create :set_survey_hash
-  
+
+  attr_accessor :repeat_payment_error_message
+
   def self.by_month_and_year(month, year)
     where("MONTH(shipping_dates.date) = ? AND YEAR(shipping_dates.date) = ?", month, year).joins(:shipping_date)
   end
@@ -73,6 +75,7 @@ class Delivery < ActiveRecord::Base
     if in_current_month? && failed = order.repeat_payments.without_transaction_auth_number.where(["YEAR(created_at) = ? AND MONTH(created_at) = ?", created_at.year, created_at.month]).first
       failed.destroy
       repeat = order.take_repeat_payment!
+      self.repeat_payment_error_message = repeat.errors[:vps_transaction_id]
       repeat.transaction_auth_number.present?
     end
   end

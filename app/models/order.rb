@@ -268,6 +268,7 @@ class Order < ActiveRecord::Base
         process_response(sage_pay_response,repeat)
       rescue Order::PaymentError => e
         logger.info e
+        repeat.errors.add(:vps_transaction_id, e.message)
       end
     end
     repeat

@@ -5,7 +5,7 @@ class DeliveriesController < ApplicationController
     if @delivery.repeat_repeat_payment!
       flash[:notice] = "Payment for #{@delivery.user} taken successfully."
     else
-      flash[:error] = "Payment for #{@delivery.user} unsuccessful again."
+      flash[:error] = "Payment for #{@delivery.user} unsuccessful again.<br>#{@delivery.repeat_payment_error_message}"
     end
     redirect_to @delivery.shipping_date
   end
