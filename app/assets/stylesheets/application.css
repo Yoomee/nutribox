@@ -1343,6 +1343,17 @@ margin-left: 40px ;
 .blog-main-title {
   color: #fff;
 }
+.btn-rss {
+  padding: 7px 9px;
+  margin-top: 15px;
+  background-color:#ff6600;
+}
+.btn-rss:hover {
+  background-color:#ff6600;
+}
+.btn-rss:hover span{
+  text-decoration:underline;
+}
 .blog-roll {
   min-height: 600px;
   position:relative;

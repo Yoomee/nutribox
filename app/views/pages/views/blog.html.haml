@@ -3,8 +3,12 @@
   .cardboard-wrapper-top
   .container
     .row
-      .span8.mb-2
+      .span5.mb-2
         %h1.blog-main-title=@page.title
+      .span3
+        =link_to(feed_path, :title => "Subscribe via RSS", :class => 'btn btn-rss pull-right') do
+          %i.icon-rss
+          %span Subscribe
     .row
       .blog-roll.span8
         .blog-roll-inner
