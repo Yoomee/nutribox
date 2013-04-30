@@ -15,6 +15,7 @@
     =javascript_include_tag("application")
     =csrf_meta_tags
     =favicon_link_tag('/assets/favicon2.ico')
+    =auto_discovery_link_tag(:rss, "#{Settings.site_url}/feed.rss")
     =yield :head
     =google_analytics_js_with_ecommerce
   -body_tag do
