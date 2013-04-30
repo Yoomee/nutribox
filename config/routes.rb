@@ -17,6 +17,8 @@ Nutribox::Application.routes.draw do
   
   resources :discount_codes
   
+  match '/feed' => 'pages#feed', :as => :feed, :defaults => { :format => 'rss' }
+          
   resources :products
   match "products/:year/:month" => 'products#month', :as => 'products_month' 
 
