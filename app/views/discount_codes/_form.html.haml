@@ -1,11 +1,11 @@
 =semantic_form_for @discount_code, :html => {:class => "form-horizontal"} do |form|
   =form.inputs do
-    -if @discount_code.claimed.zero?
+    -if @discount_code.new_record? || @discount_code.claimed.zero?
       =form.input :code
     -else
       =form.input :code, :input_html => {:disabled => true}, :hint => "<em>You can't change a code once it has been claimed</em>".html_safe
-    =form.input :percentage
-    =form.input :number_available
+    =form.input :percentage, :hint => "The percentage discount on the first box"
+    =form.input :number_available, :hint => "Leave blank for no limit"
     -unless @discount_code.new_record?
       =form.input :expired, :label => "This code has expired"
   =form.buttons do

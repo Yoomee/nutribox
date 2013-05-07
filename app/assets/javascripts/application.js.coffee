@@ -6,8 +6,21 @@
 
 #= require jquery
 #= require jquery_ujs
+#= require jquery-migrate
 #= require ym_core
 #= require ym_cms
 #= require redactor
 #= require bootstrap
+#= require jquery.cycle
 #= require jquery.smooth-scroll
+
+
+$(document).ready ->
+  $('.homepage-messages').cycle
+    fx: 'fade',
+    speed: 'slow',
+    timeout: 4000,
+    easing: 'easeOutQuint',
+    # pager: '.cycle_nav',
+    # next: '.cycle_next',
+    # prev: '.cycle_prev'

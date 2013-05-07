@@ -10,32 +10,47 @@
       %p You will receive one box per month until you cancel your subscription.
     -else
       %p="#{@order.box_name} for #{pluralize(@order.number_of_months,'month')}."
-      %p
-        =@order.gift? ? "Your friend" : "You"
-        will receive one box per month for the next
-        =@order.number_of_months
-        months.
+      -if @order.number_of_months > 1
+        %p
+          =@order.gift? ? "Your friend" : "You"
+          will receive one box per month for
+          =@order.number_of_months
+          months.
+    -if @order.status == 'active' && @order.gift?
+      =link_to(download_order_path(@order), :class => 'btn mb-1') do
+        %i.icon-download-alt.mr-1
+        Download gift certificate
     %h4 Delivery address
     %address=simple_format(@order.delivery_address("\n"))
+    %p
+      =@order.gift? ? "The" : "Your"
+      first box
+      -if @order.first_shipping_date.future?
+        will be
+      -else
+        was
+      shipped on
+      =@order.first_shipping_date.stamp("<u>January 11th 2013</u>.").html_safe
     %h4
       Cost
       -if @order.recurring? && @order.discounted?
         for the first month
-    -if !@order.discount_in_pence.zero?
+    -if @order.discounted?
       .row
         .span3
           %table.table.table-condensed
             %tr
               %td Full price
-              %td.right="£%.2f" % (@order.amount + @order.discount)
+              %td.right="£#{@order.full_price_amount}"
             %tr
               %td Discount
-              %td.right="-£%.2f" % @order.discount
+              %td.right="-£%.2f" % (@order.full_price_amount - @order.amount)
             %tr
               %th Total
               %th.right="£#{@order.amount}"
       -if @order.recurring?
-        ="Then £#{Order.cost(@order.box_type,1)} per month after that"
+        ="Then £#{Order.cost(@order.box_type,1)} per month after that."
+    -elsif @order.recurring?
+      ="£#{Order.cost(@order.box_type,1)} per month."
     -else
       ="£#{@order.amount}"
-      ="per month" if @order.recurring?

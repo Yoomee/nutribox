@@ -13,12 +13,15 @@ gem "formtastic-bootstrap", :git => "git://github.com/cgunther/formtastic-bootst
 gem "whenever", :require => false
 gem 'activemerchant', :require => 'active_merchant'
 gem "stamp"
+gem "xeroizer"
+gem "delayed_job_active_record"
+gem "daemons"
 
-gem "ym_core"           #, :path => "~/Rails/Gems/ym_core"
+gem "ym_core", "~>0.1.48"           #, :path => "~/Rails/Gems/ym_core"
 gem "ym_cms", "0.3.7"   #, :path => "~/Rails/Gems/ym_cms"
 gem "ym_users"          #, :path => "~/Rails/Gems/ym_users"
 gem "ym_permalinks"     #, :path => "~/Rails/Gems/ym_permalinks"
-gem "ym_snippets"       #, :path => "~/Rails/Gems/ym_snippets"
+gem 'ym_snippets',     "~> 0.1.1"     #, :path => "~/Rails/Gems/ym_snippets"
 
 group :assets do
   gem 'sass-rails', "  ~> 3.1.0"
@@ -32,6 +35,8 @@ group :development do
   gem 'ruby-debug19'
   gem 'ym_tools'
   gem 'passenger'
+  gem "binding_of_caller"
+  gem "engineyard-recipes"
 end
 
 group :development, :test do

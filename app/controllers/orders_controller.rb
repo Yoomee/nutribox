@@ -1,23 +1,42 @@
 class OrdersController < ApplicationController
   load_and_authorize_resource
-  
+
   def new
-    @order = Order.new(:gift => params[:gift].present?)
+    gift = params[:gift].present?
+    @order = Order.new(:gift => gift)
+    if gift
+      @custom_page_title = YmSnippets::Snippet.find_by_slug('gift_page_title').text
+      @custom_page_description = YmSnippets::Snippet.find_by_slug('gift_page_description')
+    else
+      @order.discount_code = DiscountCode.default
+      @custom_page_title = YmSnippets::Snippet.find_by_slug('join_page_title')
+      @custom_page_description = YmSnippets::Snippet.find_by_slug('join_page_description')
+    end
   end
-  
+
   def create
     @order = Order.new(params[:order])
     handle_order
   end
-  
+
+  def download
+    send_file File.join(Rails.root,"lib/downloads/gifts/#{@order.box_type}-#{@order.number_of_months}.pdf"), :type => 'application/pdf', :filename => "The Nutribox Gift Certificate"
+  end
+
   def list
-    @orders = Order.alphabetical_by_user
+    @orders = Order.order("created_at DESC")
   end
-  
+
   def index
-    @orders = current_user.orders.order("created_at DESC")
+    @orders = current_user.orders.not_failed.where(:gift => false).order("created_at DESC")
+    @gifts  = current_user.orders.not_failed.where(:gift => true).order("created_at DESC")
+    @custom_page_title = YmSnippets::Snippet.find_by_slug('my_subscriptions_page_title')
+    @custom_page_description = YmSnippets::Snippet.find_by_slug('my_subscriptions_page_description')
   end
-  
+
+  def thanks
+  end
+
   def update
     @order.assign_attributes(params[:order])
     if @order.editing_by_admin
@@ -30,9 +49,12 @@ class OrdersController < ApplicationController
       handle_order
     end
   end
-  
+
   private
   def handle_order
+    unless @order.gift? || (@order.discount_code && @order.discount_code.available_to?(current_user))
+      @order.discount_code = DiscountCode.default
+    end
     if params[:back]
       @order.valid?
       @order.previous_step!
@@ -53,14 +75,16 @@ class OrdersController < ApplicationController
       end
       if @order.valid?
         if @order.last_step?
-          @order.status = "failed"
           @order.save
-          if @order.take_payment!
-            handle_referral_code
+          begin
+            @order.take_payment!
             @order.update_attribute(:status,'active')
-            render :action => 'thanks'
-          else
-            flash[:error] = "Your payment could not be processed"
+            handle_referral_code
+            OrderMailer.confirmation_email(@order).deliver
+            redirect_to thanks_order_path(@order)
+          rescue Order::PaymentError => e
+            @order.update_attribute(:status,'failed')
+            @error = e
             @order.current_step = "billing"
             render :action => 'new'
           end
@@ -95,8 +119,8 @@ class OrdersController < ApplicationController
               end
             end
           when "billing"
-            @order.set_test_card_details
-            @order.set_billing_address_from_delivery_address
+            @order.set_test_card_details if Rails.env.development?
+            @order.set_billing_address_from_delivery_address unless @order.gift?
             @order.credit_card.name = current_user.full_name if @order.credit_card.blank?
           end
           render :action => 'new'
@@ -114,4 +138,5 @@ class OrdersController < ApplicationController
       referrer.referrals.create(:referree => @order.user)
     end
   end
+  
 end

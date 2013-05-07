@@ -36,7 +36,7 @@ module ShareHelper
     "".tap do |out|
       out << link_to(options[:link_text], "http://twitter.com/share", :class=>"twitter-share-button", :data => options.slice(:count, :url, :text, :via, :related))
       unless @included_twitter_widgets_js
-        out << javascript_include_tag('http://platform.twitter.com/widgets.js')
+        out << javascript_include_tag('https://platform.twitter.com/widgets.js')
         @included_twitter_widgets_js = true
       end
     end.html_safe

@@ -1,0 +1,20 @@
+%h1.page-header=title('Home page image')
+=semantic_form_for(@snippet, :as => :snippet, :multipart => true, :url => home_page_admin_path) do |form|
+  =form.inputs do
+    .row
+      .span8
+        %h4
+          Upload a new image
+        Must be 460 pixels wide and 310 pixels high:
+        =form.input :image, :as => :image, :label => "."
+    .row
+      .span6
+        %h4
+          Change the link
+        Enter the link for the image (eg. /gift)
+        =form.input :text, :label => false, :input_html => {:rows => 1, :class => "span6", :placeholder => "Add a link"}
+
+  =form.buttons do
+    =form.commit_button "Save"    
+
+

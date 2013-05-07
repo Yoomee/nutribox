@@ -6,9 +6,10 @@ class Ability
   def initialize(user)
     
     # open ability
-    can :read, Page
+    can [:read, :feed], Page
     can :create, Order
     can :new, Referral
+    can [:read, :latest], Box
     
     if user.try(:admin?)
       can :manage, :all      
@@ -17,7 +18,7 @@ class Ability
       # user ability
       can :index, Order
       can :index, Referral
-      can [:update, :show], Order, :user_id => user.id
+      can [:update, :show, :download, :thanks], Order, :user_id => user.id
       can :manage, User, :id => user.id      
     end
     

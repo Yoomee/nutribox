@@ -1,0 +1,15 @@
+=semantic_form_for(answer, :remote => true, :html => {:id => "comment-form-#{product.id}"}) do |form|
+  .modal.hide{:id => "comment-modal-#{product.id}"}
+    .modal-header
+      %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
+        ×
+      %h3
+        Your comments
+      .modal-body
+        %p.popup-intro
+          ="Please tell us what you think about the #{product.name}."
+          =form.input :product_id, :as => :hidden
+          =form.input :survey_hash, :as => :hidden, :value => survey.try(:hash)
+          =form.input :comment, :label => false, :input_html => {:rows => 4, :placeholder => "Type your feedback here...", :style => "width:480px;"}, :value => answer.comment
+          
+          =form.commit_button "Send", :button_html => {:data => {}, :class => "btn btn-primary"}

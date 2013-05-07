@@ -1,0 +1,17 @@
+%h3.survey-rate-title
+  -if @rating
+    Thanks!
+    -if !@rating.survey.delivery.survey.nil? && @rating.survey.delivery.survey_percentage_complete==100
+      :javascript
+        $("#thank-you-modal").modal('show');
+  -else
+    Please rate this product
+%div
+  %span.rating{:class => "rated-#{(@rating.try(:rating) || answer.try(:rating)).to_i}"}
+    .yum-yuck
+      .yum
+        Yum
+      .yuck
+        Yuck
+    -(1..5).to_a.reverse.each do |num|
+      =link_to  "", survey_answer_rate_path(:product_id => product.id, :survey_hash => survey.hash ? survey.hash : "preview", :rating => num), :remote => true, :class=>"star star-#{num}"

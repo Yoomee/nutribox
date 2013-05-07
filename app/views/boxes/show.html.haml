@@ -1,0 +1,92 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      $('a[rel="popover"]').popover({
+        placement:'top',
+        html: true,
+        
+      });
+    });
+        
+.container.archive
+  .row
+    .archive-nav-pills.span4.offset4
+      %ul.nav.nav-pills
+        -if @box.type == 'standard'
+          %li.active
+            =link_to "The Nutribox", '#' 
+          %li
+            =link_to "The Nutribox-Mini", box_path(:year => @box.year, :month => @box.month, :box_type => 'mini')     
+        -elsif @box.type == 'mini'
+          %li
+            =link_to "The Nutribox", box_path(:year => @box.year, :month => @box.month, :box_type => 'standard')     
+          %li.active
+            =link_to "The Nutribox-Mini", "#"
+        
+          
+    .span12
+      -if !@box.first_box?
+        =link_to box_path(:year => @box.previous_year, :month => @box.previous_month, :type => @box.type), :class=>"month-link previous-link pull-left" do
+          %i.icon-arrow-left
+          %span
+            Previous month
+      -else
+        .span.pull-right
+          &nbsp;
+
+          
+      -if !@box.last_box?
+        =link_to box_path(:year => @box.next_year, :month => @box.next_month, :type => @box.type), :class=>"month-link next-link pull-right" do
+          %span
+            Next month
+          %i.icon-arrow-right
+        -if current_user.try(:admin?) || !@box.in_the_future?          
+          %h1.archive-title.center
+            The
+            =box_type_name(@box.type)
+            =month_name(@box.month)
+            =@box.year   
+      -else
+        .span.pull-right
+          &nbsp;
+        -if current_user.try(:admin?) || !@box.in_the_future?          
+          %h1.archive-title.center
+            The
+            =box_type_name(@box.type)
+            =month_name(@box.month)
+            =@box.year  
+    .span12
+      .archive-intro-text
+        =simple_format(snippet_text(:about_boxes,"Each box comes with a variety of gluten-free snacks. You can expect to receive some energy-boosting dried-fruit and nut mixes , all-natural energy bars and balls (packed with super ingredients like sprouted almonds, hemp seeds, flax and maca) and other deliciously nutritious snacks like raw chocolate. The Nutribox (full size – not mini) may also include vegetable and fruit crisps. We promise the normal retail value of the snacks in your box will always be more than the price you pay."))     
+
+   
+  -if current_user.try(:admin?) || !@box.in_the_future?          
+    .row.archive-items  
+    
+      -if @products.empty?
+        .center
+          There is no box for
+          =month_name(@box.month)
+
+      -@products.each do |product|
+        .archive-item.span4
+          .well
+            .archive-image-wrap
+              =image_for(product, "262x262")
+            .archive-item-content  
+              %h2.archive-item-title
+                =product.name
+              %p.archive-item-desciption
+                =product.description
+              -if !product.nutritional_information.empty?  
+                =link_to "javascript:void(0)", :class=>"nutritional_info_link", :"data-content" => "#{product.nutritional_information}", :title => "Nutritional Information",:rel => "popover" do
+                  %i.icon-info-sign
+                  %span
+                    Nutritional Information
+                    
+  -else
+    %h1.archive-title.center
+      ="#{month_name(@box.month)}'s box coming soon"
+
+  
+  

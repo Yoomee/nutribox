@@ -1,0 +1,3 @@
+$('#comment-modal-<%=@rating.product.id=%>').modal('hide');
+$('#comment-form-<%=@rating.product.id=%>').replaceWith('<%=escape_javascript(render('survey_answers/comment', :product => @rating.product, :survey => @rating.survey, :answer => @rating.survey.answer_for_product(@rating.product)))%>').removeClass('loading');
+$('#response<%=@rating.product.id=%>').html('Thanks for sending feedback!');

@@ -1,0 +1,15 @@
+=semantic_form_for product, :html => {:class => "form-horizontal", :enctype => "multipart/form-data"} do |form|
+  =form.inputs do
+
+    =form.input :year, :as => :select, :collection => Product.years, :selected =>  @product.year || Time.now.year
+    =form.input :month, :as => :select, :collection => Product.months, :selected => @product.month || Product.months[Time.now.month-1], :hint => "Which month is this product for?"
+    =form.input :box_type, :as => :select, :collection => Box.types, :hint => "Which box is this product going in"
+    =form.input :name, :label => "Name of product", :placeholder => "e.g. Nākd Berry Delight Bar"
+    .span10.offset2=image_for(@product, "262x")
+    =form.input :image, :as => :file, :label => "Upload a photo of the product (mandatory)"
+    =form.input :description, :input_html => {:class => 'span7', :rows => 6}, :label => "Desscription <br> (mandatory)".html_safe
+    =form.input :nutritional_information, :input_html => {:class => 'span7', :rows => 6}, :label => "Nutritional information<br>(optional)".html_safe
+
+    
+    =form.buttons do
+      =form.commit_button "Save"

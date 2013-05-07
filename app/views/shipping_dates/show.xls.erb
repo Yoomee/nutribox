@@ -9,29 +9,35 @@
       <Row>
         <Cell><Data ss:Type="String">ID</Data></Cell>
         <Cell><Data ss:Type="String">Customer name</Data></Cell>
+        <Cell><Data ss:Type="String">Email address</Data></Cell>
         <Cell><Data ss:Type="String">Box type</Data></Cell>
         <Cell><Data ss:Type="String">Subscription type</Data></Cell>
         <Cell><Data ss:Type="String">Gift</Data></Cell>
+        <Cell><Data ss:Type="String">Comment</Data></Cell>
         <Cell><Data ss:Type="String">Delivery name</Data></Cell>
         <Cell><Data ss:Type="String">Address Line 1</Data></Cell>
         <Cell><Data ss:Type="String">Address Line 2</Data></Cell>
         <Cell><Data ss:Type="String">City</Data></Cell>
         <Cell><Data ss:Type="String">Postcode</Data></Cell>
         <Cell><Data ss:Type="String">Country</Data></Cell>
+        <Cell><Data ss:Type="String">Tx Code</Data></Cell>
       </Row>
-    <% @shipping_date.deliveries.each do |delivery| %>
+    <% @deliveries.each do |delivery| %>
       <Row>
         <Cell><Data ss:Type="Number"><%= delivery.id %></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.user.full_name%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= delivery.user.email%></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.box_name%></Data></Cell>
         <Cell><Data ss:Type="String"><%= pluralize(delivery.number_of_months,"month")%></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.gift? ? "Yes" : "No"%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= delivery.order.comment%></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.name%></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.address1%></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.address2%></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.city%></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.postcode%></Data></Cell>
         <Cell><Data ss:Type="String"><%= delivery.country%></Data></Cell>
+        <Cell><Data ss:Type="String"><%= delivery.tx_code%></Data></Cell>
       </Row>
     <% end %>
     </Table>

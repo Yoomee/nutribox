@@ -6,6 +6,14 @@ class DiscountCode < ActiveRecord::Base
   
   has_many :orders, :primary_key => :code, :foreign_key => :discount_code_code, :conditions => "orders.status != 'failed'"
   
+  def self.default
+    if code = find_by_code("DEFAULT")
+      return code
+    else
+      DiscountCode.create(:code => "DEFAULT", :percentage => 25)
+    end
+  end
+  
   def available?
     !expired && (remaining.blank? || ( remaining > 0))
   end
@@ -18,8 +26,16 @@ class DiscountCode < ActiveRecord::Base
     orders.count
   end
   
+  def percentage_with_default
+    if code == "DEFAULT"
+      percentage
+    else
+      percentage + DiscountCode.default.percentage
+    end
+  end
+  
   def fraction
-    percentage / 100.to_f
+    percentage_with_default / 100.to_f
   end
   
   def remaining

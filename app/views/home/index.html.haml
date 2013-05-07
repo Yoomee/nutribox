@@ -6,12 +6,24 @@
     .row
       .site-intro.span5.fade_in
         %h1.home-tagline Healthy Snacking Made Easier
-        %p.site-intro-text Deliciously nutritious snacks delivered to your door, monthly. From under £11 per month
+        %p.site-intro-text=snippet_text(:home_page_text, "The Nutribox is a box of deliciously nutritious, gluten-free, snacks delivered to your door monthly.  From £11 per month (we promise the normal retail value of the snacks in your box will always be more than the price you pay).")
+        .sketch-notice.clearfix
+          %p.sketch-notice-text Get 25% OFF your first box
+          %span.sketch-notice-left
         .home-ctas
           =link_to "Get a box", join_path, :class=>"get-box-btn btn btn-primary btn-homepage-cta"
-          =link_to "or give a box", gift_path, :class=>"give-box-btn btn btn-homepage-cta"
+          .or
+          =link_to "Give a box", gift_path, :class=>"give-box-btn btn btn-homepage-cta christmas-give-btn"
       .big-box-image.span7.fade_in.fade_two
+        =#link_to "From only £10.42 per month", join_path, :class=>"from-only fade_in fade_three"
         =link_to_slug "How it works", :how_it_works, :class=>"how_it_works_link"
+        .homepage-messages-wrap
+          .homepage-messages.cycle        
+            .speech-bubble.speech-bubble-3    
+            .speech-bubble.speech-bubble-2            
+            .speech-bubble.speech-bubble-1
+          / .cycle_nav
+          /   =link_to 'Next', '#', :class => 'cycle_next'  
 .home-strip-1
   .container
     .row.fade_in.fade_three
@@ -22,16 +34,23 @@
               %h2.home-strip-title
                 How
                 %br
-                Nutribox
+                The Nutribox
                 %br
                 works
+          -if @home_page_image.try(:image)
+            #front-page-image.span6
+              =link_to @home_page_image.text do
+                =image_tag @home_page_image.image.thumb('460x313').url
+          -else      
+            =link_to "Give a gift", gift_path, :class=>"christmas-link span6"
           
-          #featured-product.home-strip-box.span6
-            %h2.about-us-video-title.home-strip-title
-              About us
-            .about-video
-              %p
-                %iframe{:width => 420, :height => 236, :frameborder => 0, :src => "https://player.vimeo.com/video/40372602?title=0&byline=0&portrait=0"}
+          -if false
+            #featured-product.home-strip-box.span6
+              %h2.about-us-video-title.home-strip-title
+                About us
+              .about-video
+                %p
+                  %iframe{:width => 420, :height => 236, :frameborder => 0, :src => "https://player.vimeo.com/video/40372602?title=0&byline=0&portrait=0"}
                 
       #blog-summary.home-strip-box.span6
         .well
@@ -46,4 +65,4 @@
             %p.blog-summary-intro.mb-1
               =summary_or_truncated_text(@latest_blog_post,350)
             =link_to "Read more", @latest_blog_post, :class=>"latest-blog-read-more"
-  =render "layouts/stay_in_touch"
+=render "layouts/stay_in_touch"

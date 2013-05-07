@@ -1,4 +1,27 @@
 !!!
 %html
-  %body
-    =render(@order)
+  %body{:style => "color:#666;font-family:Arial,sans-serif"}
+    %h2{:style => "color:#99b936"}
+      Thanks for your order
+    -if @order.gift?
+      %h4{:style => "color:#000"}
+        Gift certificate
+      %p
+        =link_to("Download your gift certificate", "https://thenutribox.com#{download_order_path(@order)}")
+    %h4{:style => "color:#000"}
+      Product
+    %p=@order.product
+    %h4{:style => "color:#000"}
+      Delivery address
+    %p=simple_format(@order.delivery_address("\n"))
+    %h4{:style => "color:#000"}
+      Cost
+    %p="£#{@order.amount}"
+    %hr
+    %p
+      The Nutribox Ltd, Unit 401, Showroom Workstation, 15 Paternoster Row, Sheffield, S1 2BX
+    %p
+      For more information, visit
+      =link_to("www.thenutribox.com", "https://thenutribox.com")
+    
+    

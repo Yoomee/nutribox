@@ -1,29 +1,36 @@
 class Order < ActiveRecord::Base
   include YmCore::Model
   include YmCore::Multistep
+  include Xero::Order
     
   belongs_to :user
   has_many :deliveries
-  amount_accessor
+  has_many :repeat_payments
+  amount_accessor :amount, :full_price_amount
   
   attr_accessor :login_email, :login_password
   boolean_accessor :editing_by_admin
 
   validates :box_type, :number_of_months, :presence => true, :if => :current_step_box?
   validates :user, :delivery_address1, :delivery_city, :delivery_postcode, :delivery_country,  :presence => true, :if => :current_step_delivery?
-  validates :delivery_postcode, :postcode => true, :if => :current_step_delivery?, :allow_blank => true
+  #validates :delivery_postcode, :postcode => true, :if => :current_step_delivery?, :allow_blank => true
   validates :billing_address1, :billing_city, :billing_postcode, :billing_country,  :presence => true, :if => :current_step_billing?
-  validates :billing_postcode, :postcode => true, :if => :current_step_billing?, :allow_blank => true
+  #validates :billing_postcode, :postcode => true, :if => :current_step_billing?, :allow_blank => true
   validate  :credit_card_is_valid, :if => :current_step_billing? 
   
   before_validation :set_amount
   before_validation :set_billing_name
+  before_validation :set_shipping_day
+  before_save :nullify_discount_code_code_if_invalid
   belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
   
   accepts_nested_attributes_for :user
   
   scope :active, where(:status => 'active')
+  scope :not_failed, where("status != 'failed'")
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
+  scope :repeatable_for_shipping_day, lambda {|day| active.where(:gift => false, :number_of_months => 1, :shipping_day => day).where("DATE(orders.created_at) < ?", Date.today.change(:day => day) - 1.month)}
+  scope :repeatable_for_shipping_day_with_3_or_6_months, lambda {|day| active.where(:gift => false, :shipping_day => day).where('number_of_months = 1 OR (number_of_months IN (3, 6) AND orders.created_at > ?)', Time.parse('11/04/2013')).where("DATE(orders.created_at) < ?", Date.today.change(:day => day) - 1.month)}
   
   class << self
     
@@ -37,8 +44,8 @@ class Order < ActiveRecord::Base
     end
     
     def box_name(box_type)
-      case box_type
-      when "mini" then "The Nutribox-mini"
+      case box_type.to_s
+      when "mini" then "The Nutribox Mini"
       when "standard" then "The Nutribox"
       end
     end
@@ -51,19 +58,35 @@ class Order < ActiveRecord::Base
     def cost(box_type,number_of_months)
       YmCore::Model::AmountAccessor::Float.new((self.cost_in_pence(box_type,number_of_months).to_f / 100).round(2))
     end
-    
+
+    def cost_per_month(box_type,number_of_months)
+      YmCore::Model::AmountAccessor::Float.new(((self.cost_in_pence(box_type,number_of_months).to_f / 100) / number_of_months).round(2))
+    end
+
     def saving_in_pence(box_type,number_of_months)
       (cost_in_pence(box_type,1) * number_of_months) - cost_in_pence(box_type,number_of_months)
     end
     
     def saving_percentage(box_type,number_of_months)
-      ((saving_in_pence(box_type,number_of_months).to_f / cost_in_pence(box_type,number_of_months)) * 100).to_i
+      saving = ((saving_in_pence(box_type,number_of_months).to_f / (cost_in_pence(box_type,1) * number_of_months)) * 100)
+      saving = saving + 0.1 # Hack so that 3 month Nutribox-mini discount is rounded from 9.91% to 10%
+      saving.to_i
     end
     
     def statuses
-      ["active","failed","paused","cancelled"]
+      ["active","failed","paused","cancelled", "ended"]
     end
 
+  end
+  
+  def amount_ex_vat
+    unrounded = amount.to_f * ((100 - Order::VAT_PERCENTAGES[box_type.to_sym]) / 100.to_f)
+    # Round down for tax purposes
+    (unrounded * 100).floor / 100.0
+  end
+  
+  def vat
+    (amount - amount_ex_vat).round(2)
   end
   
   def set_billing_address_from_delivery_address
@@ -86,16 +109,25 @@ class Order < ActiveRecord::Base
   
   def box_type_and_number_of_months=(value)
     self.box_type, self.number_of_months = value.split('-')
+    self.full_price_amount_in_pence = Order.cost_in_pence(box_type,number_of_months)
   end
   
   def cost(box_type, number_of_months)
     if discount_code.try(:available?)
-      YmCore::Model::AmountAccessor::Float.new(((Order.cost_in_pence(box_type,number_of_months) - (discount_code.fraction * Order.cost_in_pence(box_type,1).ceil)) / 100).round(2))
+      YmCore::Model::AmountAccessor::Float.new(((Order.cost_in_pence(box_type,number_of_months) - (discount_code.fraction * Order.cost_in_pence(box_type,1)).ceil) / 100.to_f).round(2))
     else
       Order.cost(box_type,number_of_months)
     end
   end
-  
+
+  def cost_per_month(box_type, number_of_months)
+    if discount_code.try(:available?)
+      YmCore::Model::AmountAccessor::Float.new((((Order.cost_in_pence(box_type,number_of_months) - (discount_code.fraction * Order.cost_in_pence(box_type,1)).ceil) / 100.to_f) / number_of_months).round(2))
+    else
+      Order.cost_per_month(box_type,number_of_months)
+    end
+  end
+
   def credit_card  
     @credit_card ||= ActiveMerchant::Billing::CreditCard.new  
   end    
@@ -123,7 +155,7 @@ class Order < ActiveRecord::Base
   end
   
   def discounted?
-    discount_in_pence > 0
+    amount < full_price_amount
   end
   
   def billing_country
@@ -133,39 +165,57 @@ class Order < ActiveRecord::Base
   def delivery_country
     "GB"
   end  
-  
+
+  def first_shipping_date
+    next_shipping_date((created_at.presence || Time.now).to_date)
+  end
+
   def next_delivery_date
     next_shipping_date + 5.days
   end
   
-  def next_shipping_date
-    if Date.today.day < shipping_day
+  def next_shipping_date(date = Date.today)
+    return Date.new(2013, 1, 11) if (created_at || date).year == 2012
+    if date.day < shipping_day
       # Hasn't been shipped yet this month
-      Date.today.change(:day => shipping_day)
+      date.change(:day => shipping_day)
     else
       # Will be shipped next month
-      (Date.today >> 1).change(:day => shipping_day)
+      (date >> 1).change(:day => shipping_day)
     end
   end
   
+  def order_number
+    Rails.env.development? ? "dev#{id}" : "NB#{id}"
+  end
+  
   def product
-    "#{box_type.capitalize} Box for #{number_of_months} month#{'s' if number_of_months > 1}"
+    if number_of_months == 1 && !gift
+      "#{box_name} monthly"
+    else
+      "#{box_name} for #{number_of_months} month#{'s' if number_of_months > 1}"
+    end
   end
   
   def sage_pay_id
     vps_transaction_id.to_s.gsub(/[{}]/,'').presence
   end
   
-  def shipping_day
-    Date.today.day < 15 ? 25 : 11
-  end
-  
   def status_class(prefix = "")
     prefix + case status
     when "active" then "success"
-    when "cancelled" then "default"
     when "failed" then "important"
     when "paused" then "warning"
+    else
+      "default"
+    end
+  end
+  
+  def sku
+    "NB".tap do |str|
+      str << box_type[0].upcase
+      str << number_of_months.to_s
+      str << "G" if gift?
     end
   end
   
@@ -187,10 +237,10 @@ class Order < ActiveRecord::Base
   
   def take_payment!
     if credit_card.valid?
-      paypal_response = gateway.purchase(
+      sage_pay_response = gateway.purchase(
       amount_in_pence,
       credit_card,
-      :order_id => (Rails.env.development? ? "dev#{id}" : id),
+      :order_id => order_number,
       :billing_address => {
         :name => billing_name,
         :address1 => billing_address1,
@@ -200,26 +250,28 @@ class Order < ActiveRecord::Base
         :country => billing_country
       }
       )
-      process_response(paypal_response,self)
+      process_response(sage_pay_response,self)
     end
   end
   
   def take_repeat_payment!
-    repeat = self.class.create(attributes.symbolize_keys.slice(:amount_in_pence, :user_id, :box_type, :number_of_months))
-    
-    related = attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
-    
-    if Rails.env.development?
-      related[:id] = "dev#{related[:id]}"
+    repeat = self.repeat_payments.build(:amount_in_pence => full_price_amount_in_pence)
+    if repeat.save # ID is needed for SagePay
+      related = attributes.symbolize_keys.slice(:id,:vps_transaction_id,:security_key,:transaction_auth_number)
+      related[:id] = order_number
+      sage_pay_response = gateway.repeat(
+        full_price_amount_in_pence,
+        :order_id => (Rails.env.development? ? "devR#{repeat.id}" : "NBR#{repeat.id}"),
+        :related_transaction => related
+      )
+      begin
+        process_response(sage_pay_response,repeat)
+      rescue Order::PaymentError => e
+        logger.info e
+        repeat.errors.add(:vps_transaction_id, e.message)
+      end
     end
-    
-    paypal_response = gateway.repeat(
-    amount_in_pence,
-    :order_id => (Rails.env.development? ? "dev#{repeat.id}" : repeat.id),
-    :related_transaction => related
-    )
-    
-    process_response(paypal_response,repeat)
+    repeat
   end
   
   def set_test_card_details  
@@ -231,6 +283,17 @@ class Order < ActiveRecord::Base
       :verification_value => "123"  
     }  
   end  
+
+  def warn_if_changing_status?
+    return false if gift? && number_of_months == 1
+    (shipping_day - 10 <= Date.today.day) && (Date.today.day <= shipping_day)
+  end
+
+  def xero_order_number
+    Rails.env.development? ? "dev#{id}" : "NB-#{id}"
+  end
+  
+  class PaymentError < StandardError; end
   
   private
   def credit_card_is_valid  
@@ -256,14 +319,16 @@ class Order < ActiveRecord::Base
     end
   end
   
-  def process_response(paypal_response,transaction)
-    logger.info paypal_response.inspect
-    if paypal_response.success?
+  def process_response(sage_pay_response,transaction)
+    logger.info sage_pay_response.inspect
+    if sage_pay_response.success?
       transaction.update_attributes(
-      :vps_transaction_id => paypal_response.params["VPSTxId"],
-      :security_key => paypal_response.params["SecurityKey"],
-      :transaction_auth_number => paypal_response.params["TxAuthNo"]
+      :vps_transaction_id => sage_pay_response.params["VPSTxId"],
+      :security_key => sage_pay_response.params["SecurityKey"],
+      :transaction_auth_number => sage_pay_response.params["TxAuthNo"]
       )
+    else
+      raise Order::PaymentError, sage_pay_response.message
     end
   end
   
@@ -272,13 +337,36 @@ class Order < ActiveRecord::Base
   end
   
   def set_amount
-    self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
+    # Only change amount if it hasn't been charged
+    if vps_transaction_id.blank?
+      self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
+    end
+  end
+  
+  def set_shipping_day
+    return true if shipping_day.present?
+    order_date = (created_at || Time.now)
+    if order_date.year == 2012
+      self.shipping_day = 11
+    else
+      self.shipping_day = (order_date.day.between?(2,15) ? 25 : 11)
+    end
+  end
+  
+  def nullify_discount_code_code_if_invalid
+    if discount_code_code.present? && !discounted?
+      self.discount_code_code = nil
+    end
   end
   
   
 end
 
+Order::VAT_PERCENTAGES = {
+  :mini => 11.28,
+  :standard => 8.29
+}
 Order::COST_MATRIX = {
-  :mini => { 1 =>  1295, 3 =>  3500, 6 =>   6500, 12 => 12500 },
-  :standard  => { 1 =>  2500, 3 =>  6800, 6 =>  12800, 12 => 24500 }
+  :mini => { 1 => 1295, 3 => 3585, 6 => 6570 },
+  :standard  => { 1 => 2500, 3 => 6900, 6 => 12600 }
 }

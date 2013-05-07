@@ -1,3 +1,11 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      $('#order_status').change(function() {
+        $('.status-warning').show();
+      });
+    });
+
 %h1=title("Edit order")
 =semantic_form_for @order, :html => {:class => "form-horizontal"} do |form|
   =form.inputs do
@@ -11,8 +19,13 @@
       %label.control-label Product
       .controls
         %p=@order.product
+    =form.input :comment, :input_html => { :class => 'input-xxlarge'}
     %h4 Status
     =form.input :status, :collection => Order.statuses.collect{|s| [s.titleize,s]}, :include_blank => false
+    -if @order.warn_if_changing_status?
+      .status-warning.alert.alert-block.alert-info.hide
+        Payment has already been taken for this month and the delivery has not yet been shipped.  If you cancel or pause now there will be issues with the shipping list.
+        
     %h4 Delivery address
     =form.input :delivery_name, :label => "Name", :placeholder => "e.g. John Smith"
     =form.input :delivery_address1, :label => "Address"

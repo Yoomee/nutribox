@@ -7,14 +7,14 @@
         .lower-box.email-signup
           .inner-padding
             %p.email-signup-intro Sign up to our email newsletter for our latest news
-            =form_tag('http://thenutribox.us6.list-manage1.com/subscribe/post?u=44bdbc0e5b3036d3b03028268&amp;id=f573663757') do
-              %input#email-signup-input{:name => "EMAIL", :type=>"text", :placeholder=>"your email address"}
+            =form_tag('/newsletter/subscribe') do #'http://thenutribox.us6.list-manage1.com/subscribe/post?u=44bdbc0e5b3036d3b03028268&amp;id=f573663757') do
+              %input#email-signup-input{:name => "email", :type=>"text", :placeholder=>"your email address"}
               =submit_tag("Submit", :class=>'btn email-signup-button')
         =link_to "http://twitter.com/thenutribox", :target=>"_blank", :class=>"twitter-btn social-media-btn" do
           %i.icon-twitter
           %span
             Twitter
-        =link_to "#", :target=>"_blank", :class=>"pinterest-btn social-media-btn" do
+        =link_to "http://pinterest.com/thenutribox", :target=>"_blank", :class=>"pinterest-btn social-media-btn" do
           %i.icon-pinterest
           %span
             Pinterest

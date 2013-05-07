@@ -1,0 +1,74 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      $('a[rel="popover"]').popover({
+        placement:'top',
+        html: true,
+        
+      });
+    });
+.container.archive
+  .row
+    .span10.offset1.survey-titles.center
+      %h1.survey-title
+        The
+        =box_type_name(@survey.box_type)
+        Survey
+      %h2.survey-smaller-title
+        Please help us by rating your
+        =box_type_name(@survey.box_type)
+        for
+        =month_name(@survey.month)
+        =@survey.year
+    .span10.offset1    
+      .row.survey-items   
+         
+        -@survey.box.products.each do |product| 
+          .survey-item.span10
+            .well
+              .survey-info
+                .survey-image-wrap
+                  =image_for(product, "262x262")
+                .clearfix  
+                .survey-item-content  
+                  %h2.survey-item-title
+                    =product.name
+                  %p.survey-item-desciption
+                    =product.description
+              .survey-right-col
+                .survey-ratings{:id => "rating#{product.id}"}   
+                  =render("survey_answers/rating", :product => product, :survey => @survey, :answer => @survey.answer_for_product(product)) 
+                    
+                      
+                .clearfix   
+                .response{:id => "response#{product.id}"}   
+                .survey-comments.mt-2
+                  =link_to "#comment-modal-#{product.id}", :class=>"btn-primary btn add-comment-button", :"data-toggle"=>"modal" do
+                    %i.icon-comment
+                    %span
+                      Add a comment 
+              .clearfix  
+              
+-@survey.box.products.each do |product|               
+  =render("survey_answers/comment", :product => product, :survey => @survey, :answer => @survey.answer_for_product(product))
+
+.modal.hide{:id => "thank-you-modal"}
+  .modal-header
+    %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
+      ×
+    %h3
+      Thank you!
+    .modal-body
+      %p.popup-intro
+        Thank you for completing our survey.
+    =link_to "Close", root_path, :class => "btn btn-primary"
+        
+
+
+              
+
+
+
+               
+            
+       

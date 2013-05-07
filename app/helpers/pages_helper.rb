@@ -10,7 +10,7 @@ module PagesHelper
   
   def summary_or_truncated_text(page,length)
     if page.summary.present?
-      summary
+      page.summary
     else
       strip_tags(page.text).truncate(length).html_safe
     end

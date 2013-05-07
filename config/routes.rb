@@ -5,13 +5,41 @@ Nutribox::Application.routes.draw do
     collection do
       get 'list'
     end
+    member do
+      get 'download'
+      get 'thanks'
+    end
   end
-  
-  resources :shipping_dates, :only => :show, :path => "shippings"
-  resources :discount_codes
   
   resources :referrals, :only => :index
   get 'referrals/:code', :to => "referrals#new", :as => 'new_referral'
+
+  resources :shipping_dates, :only => :show, :path => "shippings" do
+    resources :deliveries, :only => :update
+  end
+  
+  resources :discount_codes
+  
+  match '/feed' => 'pages#feed', :as => :feed, :defaults => { :format => 'rss' }
+          
+  resources :products
+  match "products/:year/:month" => 'products#month', :as => 'products_month' 
+
+  match "box/:box_type/:year/:month" => 'boxes#show', :as => 'box'
+  match "boxes" => "boxes#latest", :as => 'latest_box'
+  
+  match "surveys/:year/:month/:box_type/preview" => 'surveys#preview', :as => 'survey_preview'
+  match "surveys/:year/:month/results" => 'surveys#results', :as => 'survey_results'
+  match "surveys/:year/:month/download" => 'surveys#download', :as => 'survey_download'
+  match "surveys/:year/:month/recipients" => 'surveys#recipients', :as => 'survey_recipients'
+  match "surveys/:year/:month/send_emails" => 'surveys#send_emails', :as => 'send_emails_survey'
+  
+  match 'newsletter/subscribe' => "newsletter#subscribe", :as => "subscribe_newsletter"
+  
+  resources :surveys
+  
+  match "rate/:product_id/:survey_hash/:rating" => 'survey_answers#rate', :as => 'survey_answer_rate'
+  resources :survey_answers
 
   get  'join' => "orders#new"
   get  'gift' => "orders#new", :gift => 1
@@ -19,6 +47,11 @@ Nutribox::Application.routes.draw do
   post 'gift' => "orders#create"
   put 'join/:id' => "orders#update", :as => 'update_join'
   put 'gift/:id' => "orders#update", :as => 'update_gift'
+  
+  match "sign-up" => redirect("/login")
+  
+  match "admin/home-page" => 'admin#home_page_image', :as => 'home_page_admin' 
+  
   
 
   # The priority is based upon order of creation:

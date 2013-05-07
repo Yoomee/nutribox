@@ -1,10 +1,61 @@
+-if Rails.env.production?
+  -content_for :head do
+    :plain
+      <script type="text/javascript">
+      var fb_param = {};
+      fb_param.pixel_id = '6008290658588';
+      fb_param.value = '0.00';
+      (function(){
+        var fpw = document.createElement('script');
+        fpw.async = true;
+        fpw.src = '//connect.facebook.net/en_US/fp.js';
+        var ref = document.getElementsByTagName('script')[0];
+        ref.parentNode.insertBefore(fpw, ref);
+      })();
+      </script>
+      <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/offsite_event.php?id=6008290658588&amp;value=0" /></noscript>
+  :plain
+    <!-- Google Code for Sale Conversion Page -->
+    <script type="text/javascript">
+    /* <![CDATA[ */
+    var google_conversion_id = 990766335;
+    var google_conversion_language = "en";
+    var google_conversion_format = "3";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "VD8ECKGIrwUQ_8m32AM";
+    var google_conversion_value = 0;
+    /* ]]> */
+    </script>
+    <script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js">
+    </script>
+    <noscript>
+    <div style="display:inline;">
+    <img height="1" width="1" style="border-style:none;" alt="" src="https://www.googleadservices.com/pagead/conversion/990766335/?value=0&amp;label=VD8ECKGIrwUQ_8m32AM&amp;guid=ON&amp;script=0"/>
+    </div>
+    </noscript>
 .span8.offset2
   %h2="Thanks for your order #{@order.user.first_name}!"
   .row
     .span8
-      %p.lead
-        Your first box will be shipped on
-        =@order.next_shipping_date.stamp("Monday 1st September")
-        and should be with you by
-        =@order.next_delivery_date.stamp("Monday 1st September.")
-      =link_to("Manage my orders", orders_path, :class => "btn btn-primary btn-large")
+      -if @order.gift?
+        %p.lead
+          Your friend's first box will be shipped on
+          =@order.next_shipping_date.stamp("Monday 1st September")
+          and should be with them by
+          =@order.next_delivery_date.stamp("Monday 1st September.")
+        %p.lead Here's the gift certificate for you to print out and give to them
+        .row
+          .span4.offset2
+            =link_to(download_order_path(@order), :class => 'btn mb-1 ml-1 btn-primary') do
+              %i.icon-download-alt.mr-1
+              Download gift certificate
+        
+      
+      -else      
+        %p.lead
+          Your first box will be shipped on
+          =@order.next_shipping_date.stamp("Monday 1st September")
+          and should be with you by
+          =@order.next_delivery_date.stamp("Monday 1st September.")
+
+        =link_to("Manage my orders", orders_path, :class => "btn btn-primary btn-large")

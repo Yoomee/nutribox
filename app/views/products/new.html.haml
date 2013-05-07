@@ -1,0 +1,9 @@
+%h1.page-header Add product
+-if !product.errors.empty?
+  .row
+    .span12
+      .alert.alert-error
+        %i.icon.icon-warning-sign
+        %b
+          There's a problem with the information you've entered. Please check the fields below and make corrections.
+=render('form')

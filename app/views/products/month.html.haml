@@ -1,0 +1,47 @@
+.row
+  .span8
+    %h1
+      =@month_name
+      =@year
+  .span4
+    =link_to(new_product_path(:month => @month, :year => @year), :class => "btn btn-primary pull-right mt-1") do
+      %i.icon-plus
+      Add product
+-if @products.empty?
+  %p
+    There aren't any products for
+    =@month_name
+    =@year
+    yet.
+    
+-else
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Product name
+        %th In which box?
+        %th Action
+        %th
+    %tbody
+      -@products.each do |product|
+        %tr
+          %td=product.name
+          %td
+            =product.box_type
+          %td.span4
+            =link_to("Edit", edit_product_path(product))
+            =link_if_can("Delete", [:destroy, product], :confirm => "Are you sure?")
+            
+          
+.row
+  .span12
+    =link_to 'View all months', products_path
+    &nbsp;
+    &nbsp;
+    =link_to 'Preview  box', box_path(:year => @year, :month => @month, :box_type => 'standard'), :target => '_new'   
+    &nbsp;
+    &nbsp;
+    =link_to 'Preview standard survey', survey_preview_path(:year => @year, :month => @month, :box_type => 'standard'), :target => '_new'   
+    &nbsp;
+    &nbsp;
+    =link_to 'Preview mini survey', survey_preview_path(:year => @year, :month => @month, :box_type => 'mini'), :target => '_new'

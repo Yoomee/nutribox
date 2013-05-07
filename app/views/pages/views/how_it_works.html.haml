@@ -13,24 +13,24 @@
         =image_tag "illustration-choose.png", :class=>"how-it-works-illustration "
         %h2.how-it-works-title
           Choose
-        %p.how-it-works-desc
-          Select the plan that works for you. Plans start as low as £10.42 per month.
+        %div.how-it-works-desc
+          =simple_format(snippet_text(:choose_intro, "We offer two different box sizes –a selection of 8-10 or 16-20 gluten-free snacks that vary month to month (the variation in snack quantity reflects the portion size and cost of different snacks)."))
         =link_to "See plans", "/join", :class=>"how-it-works-cta btn btn-primary"
     .span4.how-it-works-item
       .well.how-it-works-well
         =image_tag "illustration-receive.png", :class=>"how-it-works-illustration "
         %h2.how-it-works-title
           Receive
-        %p.how-it-works-desc
-          So you don't have to wait too long before receiving your first Box, we have created not one but two, order and distribution windows each month.
+        %div.how-it-works-desc
+          =simple_format(snippet_text(:receive_intro, "So you don't have to wait too long before receiving your first box, we have created two order and distribution windows each month."))
         =link_to_slug "Find out more", :receive, :class=>"how-it-works-cta btn btn-primary"  
     .span4.how-it-works-item
       .well.how-it-works-well
         =image_tag "illustration-surprise.png", :class=>"how-it-works-illustration illustration-surprise "
         %h2.how-it-works-title
           Surprise
-        %p.how-it-works-desc
-          Enjoy the surprise of finding out what's in your box each month and reap the benefits of healthier snacking.
+        %div.how-it-works-desc
+          =simple_format(snippet_text(:surprise_intro, "Each box contains a mix of fruit and nut mixes, snack bars, savoury snacks and treats.  Enjoy the surprise of finding out what’s in your gluten-free box each month and reap the benefits of healthier snacking."))
         =link_to "Subscribe", "/join", :class=>"how-it-works-cta btn btn-primary"
       
       

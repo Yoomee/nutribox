@@ -1,0 +1,3 @@
+$('#rating<%=@rating.product.id%>').html('<%=escape_javascript(render("survey_answers/rating", :product => @rating.product, :survey => @rating.survey))%>');
+
+

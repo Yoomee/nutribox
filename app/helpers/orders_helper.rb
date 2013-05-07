@@ -5,7 +5,7 @@ module OrdersHelper
   end
   
   def discount_code_class(order)
-    if order.discount_code_code.present?
+    if order.discount_code_code.present? && order.discount_code != DiscountCode.default
       if order.discount_code && order.discount_code.available_to?(current_user)
         "success"
       else
@@ -17,7 +17,7 @@ module OrdersHelper
   end
   
   def discount_code_label(order)
-    if order.discount_code_code.present?
+    if order.discount_code_code.present? && order.discount_code != DiscountCode.default
       if order.discount_code
         if order.discount_code.available_to?(current_user)
           "Your #{order.discount_code.percentage}% discount has been applied"
@@ -39,14 +39,6 @@ module OrdersHelper
     else
       order.new_record? ? join_path : update_join_path(order)
     end
-  end
-  
-  def order_box_options
-    Order::COST_MATRIX.keys.map{|b| ["#{b.capitalize} Box", b]}
-  end
-  
-  def order_month_options
-    [1,3,6,12].map{|n| [pluralize(n,'month'),n]}
   end
   
 end
