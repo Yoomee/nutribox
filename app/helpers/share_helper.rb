@@ -1,6 +1,6 @@
 module ShareHelper
   def facebook_share_link(url, options = {})
-    options[:text] ||= "Share on Facebook"
+    options[:text] ||= "&nbsp;Share on Facebook"
     share_params = {
       :app_id => "443658312367297",
       :link => url,
@@ -9,19 +9,19 @@ module ShareHelper
       :description => options[:share_description],
       :picture => options[:share_picture]
     }
-    link_to("<icon class='icon-facebook'></icon> #{options[:text]}".html_safe, "https://www.facebook.com/dialog/feed?#{share_params.to_query}", :target => "_blank", :class => 'btn share-link facebook-share-link')
+    link_to("<icon class='icon-facebook'></icon> #{options[:text]}".html_safe, "https://www.facebook.com/dialog/feed?#{share_params.to_query}", :target => "_blank", :class => 'btn share-link facebook-share-link mb-1')
   end
   
   
   def twitter_share_link(url, options)
-    options[:text] ||= "Share on Twitter"
+    options[:text] ||= "&nbsp;Share on Twitter"
     share_params = {
       :url => url,
       :text => options[:share_text],
       :via => "thenutribox",
       :related => "thenutribox"
     }
-    link_to("<icon class='icon-twitter'></icon> #{options[:text]}".html_safe, "https://twitter.com/intent/tweet?#{share_params.to_query}", :target => "_blank",  :class => 'btn share-link twitter-share-link')
+    link_to("<icon class='icon-twitter'></icon> #{options[:text]}".html_safe, "https://twitter.com/intent/tweet?#{share_params.to_query}", :target => "_blank",  :class => 'btn share-link twitter-share-link mb-1')
   end
   
   

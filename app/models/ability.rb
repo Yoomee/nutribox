@@ -17,7 +17,7 @@ class Ability
     elsif user
       # user ability
       can :index, Order
-      can :index, Referral
+      can :index, Referral, :referrer_id => user.id
       can [:update, :show, :download, :thanks], Order, :user_id => user.id
       can :manage, User, :id => user.id      
     end

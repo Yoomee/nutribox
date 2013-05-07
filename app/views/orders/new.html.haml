@@ -29,4 +29,4 @@
             =form.submit(@order.last_step? ? "Place order" : "Next", :class => "btn btn-primary pull-right order-btn")
             =form.submit('Back', :name => 'back', :class => "btn pull-left back-btn order-btn")
 
-=render "cvv_help_modal"
+=render "orders/cvv_help_modal"
