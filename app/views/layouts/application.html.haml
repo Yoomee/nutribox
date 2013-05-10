@@ -6,8 +6,10 @@
       %meta{ :name => "description", :content => @page.description_tag }
     -if @page.try(:keywords_tag).present?
       %meta{ :name => "keywords", :content => @page.keywords_tag }
-    -if @custom_page_description
+    -if @custom_page_description.present?
       %meta{ :name => "description", :content => @custom_page_description }
+    -if @custom_page_keywords
+      %meta{ :name => "keywords", :content => @custom_page_keywords }
     =stylesheet_link_tag 'https://fast.fonts.com/cssapi/bb868a11-c5d5-4bea-a682-2dcd52ad1e63.css'
     =stylesheet_link_tag("application")
     :plain

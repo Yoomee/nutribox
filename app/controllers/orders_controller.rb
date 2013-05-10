@@ -5,12 +5,14 @@ class OrdersController < ApplicationController
     gift = params[:gift].present?
     @order = Order.new(:gift => gift)
     if gift
-      @custom_page_title = YmSnippets::Snippet.find_by_slug('gift_page_title').text
-      @custom_page_description = YmSnippets::Snippet.find_by_slug('gift_page_description')
+      @custom_page_title = YmSnippets::Snippet.find_by_slug('meta_gift_page_title').text
+      @custom_page_description = YmSnippets::Snippet.find_by_slug('meta_gift_page_description')
+      @custom_page_keywords = YmSnippets::Snippet.find_by_slug('meta_gift_page_keywords')
     else
       @order.discount_code = DiscountCode.default
-      @custom_page_title = YmSnippets::Snippet.find_by_slug('join_page_title')
-      @custom_page_description = YmSnippets::Snippet.find_by_slug('join_page_description')
+      @custom_page_title = YmSnippets::Snippet.find_by_slug('meta_join_page_title')
+      @custom_page_description = YmSnippets::Snippet.find_by_slug('meta_join_page_description')
+      @custom_page_keywords = YmSnippets::Snippet.find_by_slug('meta_join_page_keywords')
     end
   end
 
@@ -30,8 +32,9 @@ class OrdersController < ApplicationController
   def index
     @orders = current_user.orders.not_failed.where(:gift => false).order("created_at DESC")
     @gifts  = current_user.orders.not_failed.where(:gift => true).order("created_at DESC")
-    @custom_page_title = YmSnippets::Snippet.find_by_slug('my_subscriptions_page_title')
-    @custom_page_description = YmSnippets::Snippet.find_by_slug('my_subscriptions_page_description')
+    @custom_page_title = YmSnippets::Snippet.find_by_slug('meta_my_subscriptions_page_title')
+    @custom_page_description = YmSnippets::Snippet.find_by_slug('meta_my_subscriptions_page_description')
+    @custom_page_keywords = YmSnippets::Snippet.find_by_slug('meta_my_subscriptions_page_keywords')
   end
 
   def thanks

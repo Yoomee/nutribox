@@ -11,6 +11,7 @@ class BoxesController < ApplicationController
       box_type = params[:box_type].capitalize
       @custom_page_title = "#{month} #{box_type} Box Archive | The Nutribox"
       @custom_page_description = "The Nutribox #{box_type} #{month} - each month your box comes with a variety of snacks. Want to know what deliciously nutritious snacks were in this month's box?"
+      @custom_page_keywords = YmSnippets::Snippet.find_by_slug(:meta_box_page_keywords)
     end
   end
 
