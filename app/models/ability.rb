@@ -6,6 +6,7 @@ class Ability
   def initialize(user)
     
     # open ability
+    can :create, Enquiry
     can [:read, :feed], Page
     can :create, Order
     can [:read, :latest], Box
