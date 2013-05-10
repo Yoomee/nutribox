@@ -16,6 +16,10 @@
     -unless @order.gift?
       %p.mt-2
         You can sign up on a monthly plan or pay upfront for a 3 or 6 month subscription, and save up to 16%.  With any of these options you can cancel simply by emailing us if you feel The Nutribox isn’t the healthy snacking option for you.
+      %p.mt-2
+        If you're from a business or organisation with an interest in supplying healthy snacks to a group of staff,
+        =link_to 'click here', corporate_box_enquiry_path
+        for more information.
     -if @order.discount_code && @order.discount_code.available_to?(current_user)
       .row
         .span10
@@ -112,6 +116,20 @@
             .clearfix
 
 -unless @order.gift?
+  .row
+    .span10
+      %h3.box-title The Nutribox Corporate
+      .span10.choose-box.choose-box-corporate
+        .thumbnail
+          .caption
+            %p
+              Healthy snacking can make a real difference to your performance at work, positively impacting energy levels, concentration and mood swings (see our
+              =link_to_slug 'blog article', :blood_sugar_balance
+              ).
+            %p.mt-2
+              If you're from a business or organisation with an interest in supplying healthy snacks to a group of staff,
+              =link_to 'click here', corporate_box_enquiry_path
+              for more information.
   .row
     .span10
       .thumbnail#discount-bar

@@ -1276,6 +1276,9 @@ background: none;
   text-align: center;
   margin-bottom: 20px;
 }
+.choose-box-corporate {
+  width: 95%%;
+}
 .box-illustration {
   height: 160px;
 }

@@ -1,6 +1,8 @@
 Nutribox::Application.routes.draw do
   root :to => 'home#index'
-  
+
+  match 'corporate-box-enquiry' => 'enquiries#new', :id => 'corporate_box_enquiry', :as => 'corporate_box_enquiry'
+
   resources :orders, :except => [:destroy], :path => "subscriptions" do
     collection do
       get 'list'
