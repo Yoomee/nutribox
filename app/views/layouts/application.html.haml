@@ -4,6 +4,8 @@
     %title=@custom_page_title ? "#{@custom_page_title}" : "#{Settings.site_name} #{@page_title}"
     -if @page.try(:description_tag).present?
       %meta{ :name => "description", :content => @page.description_tag }
+    -if @page.try(:keywords_tag).present?
+      %meta{ :name => "keywords", :content => @page.keywords_tag }
     -if @custom_page_description
       %meta{ :name => "description", :content => @custom_page_description }
     =stylesheet_link_tag 'https://fast.fonts.com/cssapi/bb868a11-c5d5-4bea-a682-2dcd52ad1e63.css'
