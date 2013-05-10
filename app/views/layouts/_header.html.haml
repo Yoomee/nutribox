@@ -48,19 +48,3 @@
         -else
           %li#login.user-link
             =link_to("Login", sign_in_path)
-
-        
-    -if false    
-      %ul#top-subnav.nav
-        %li
-          =link_to(orders_path) do
-            %i.icon-shopping-cart
-            My subscriptions
-        -if logged_in?
-          %li
-            =link_to(sign_out_path, :method => :delete) do
-              %i.icon-signout
-              =t(:logout)
-          -else
-            %li
-              =link_to("Login", sign_in_path)
