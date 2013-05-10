@@ -2,7 +2,7 @@
 %html
   %head
     %title=@custom_page_title ? "#{@custom_page_title}" : "#{Settings.site_name} #{@page_title}"
-    -if @page.try(:description_tag)
+    -if @page.try(:description_tag).present?
       %meta{ :name => "description", :content => @page.description_tag }
     -if @custom_page_description
       %meta{ :name => "description", :content => @custom_page_description }
