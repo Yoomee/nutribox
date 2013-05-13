@@ -27,7 +27,7 @@ class Order < ActiveRecord::Base
   belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
   
   accepts_nested_attributes_for :user
-  accepts_nested_attributes_for :order_options, :reject_if => :all_blank
+  accepts_nested_attributes_for :options, :reject_if => :all_blank
   
   scope :active, where(:status => 'active')
   scope :not_failed, where("status != 'failed'")

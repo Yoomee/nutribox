@@ -12,7 +12,7 @@
         var chooseBox = $(this).parents('.choose-box')
         chooseBox.find('.box-radio input').attr('checked', 'checked');
         chooseBox.find('.caption').addClass('active');
-        $('#order_order_option_ids option:contains("vegan")').attr('selected', 'selected');
+        $('#order_option_ids option:contains("vegan")').attr('selected', 'selected');
         $('form.order').submit();
       });
     });

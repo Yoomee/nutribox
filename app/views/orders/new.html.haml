@@ -13,7 +13,7 @@
         =semantic_form_for @order, :url => gift_or_join_path(@order), :html => {:class => 'form-horizontal loading-text-disabled'}  do |form|
           .inner
             .hide
-              =form.input :order_options, :collection => AvailableOrderOption.all
+              =form.input :options, :collection => AvailableOrderOption.all
             =form.hidden_field :current_step
             #box_step{:class => @order.current_step_box? ? '' : 'hide'}
               =render("orders/steps/box", :form => form)
