@@ -18,6 +18,7 @@
         %th ID
         %th Customer
         %th Subscription type
+        %th Options
         %th Gift
         %th Comment
         %th Delivery address
@@ -30,6 +31,7 @@
             =delivery.id
           %td="#{delivery.user.last_name}, #{delivery.user.first_name}"
           %td=pluralize(delivery.number_of_months,"month")
+          %td=delivery.order.options.join(', ')
           %td
             =delivery.gift? ? "Yes" : "No"
           %td=delivery.order.comment
