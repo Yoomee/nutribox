@@ -105,7 +105,15 @@ class Order < ActiveRecord::Base
   def box_name
     self.class.box_name(box_type)
   end
-  
+
+def box_name_with_options
+  if options.present?
+    box_name + " (#{options.join(', ')})"
+  else
+    box_name
+  end
+end
+
   def box_type_and_number_of_months
     [box_type,number_of_months].compact.join('-')
   end
@@ -194,9 +202,9 @@ class Order < ActiveRecord::Base
   
   def product
     if number_of_months == 1 && !gift
-      "#{box_name} monthly"
+      "#{box_name_with_options} monthly"
     else
-      "#{box_name} for #{number_of_months} month#{'s' if number_of_months > 1}"
+      "#{box_name_with_options} for #{number_of_months} month#{'s' if number_of_months > 1}"
     end
   end
 
