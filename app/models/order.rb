@@ -196,7 +196,11 @@ class Order < ActiveRecord::Base
       "#{box_name} for #{number_of_months} month#{'s' if number_of_months > 1}"
     end
   end
-  
+
+  def repeatable?
+    !gift? && (number_of_months == 1 || ([3 ,6].include?(number_of_months) && (new_record? || created_at > Time.parse('11/04/2013'))))
+  end
+
   def sage_pay_id
     vps_transaction_id.to_s.gsub(/[{}]/,'').presence
   end
