@@ -1714,10 +1714,14 @@ color: #99b936;
   font-size: 20px;
   line-height: 12px;
 }
-.share-btn-twitter {
+.share-btn-twitter,
+.share-btn-twitter:focus,
+.share-btn-twitter:hover {
   background: #52c2f6;
 }
-.share-btn-facebook {
+.share-btn-facebook,
+.share-btn-facebook:focus,
+.share-btn-facebook:hover {
   background: #3b5998;
 }
 
