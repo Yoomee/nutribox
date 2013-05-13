@@ -5,6 +5,8 @@ class Order < ActiveRecord::Base
     
   belongs_to :user
   has_many :deliveries
+  has_many :order_options
+  has_many :options, :through => :order_options, :class_name => 'AvailableOrderOption', :source => :available_order_option
   has_many :repeat_payments
   amount_accessor :amount, :full_price_amount
   
@@ -25,6 +27,7 @@ class Order < ActiveRecord::Base
   belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
   
   accepts_nested_attributes_for :user
+  accepts_nested_attributes_for :order_options, :reject_if => :all_blank
   
   scope :active, where(:status => 'active')
   scope :not_failed, where("status != 'failed'")
