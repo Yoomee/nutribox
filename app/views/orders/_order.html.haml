@@ -5,8 +5,10 @@
         =image_tag("#{@order.box_type}-box.png")
   .span6
     %h4 Product
-    -if @order.number_of_months == 1 && !@order.gift?
-      %p="#{@order.box_name} subscription."
+    -if @order.repeatable?
+      %p
+        =@order.box_name
+        =@order.order_options.present? ? "(#{@order.order_options.join(', ')}) subscription." : 'subscription.'
       %p You will receive one box per month until you cancel your subscription.
     -else
       %p="#{@order.box_name} for #{pluralize(@order.number_of_months,'month')}."
