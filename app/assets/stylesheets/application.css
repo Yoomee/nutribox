@@ -1301,7 +1301,9 @@ background: none;
   font-size: 12px;
   line-height: 1.3;
 }
-
+a.vegan-version {
+  text-decoration: underline;
+}
 #register_step #accordion {
 margin-left: 40px ;
 }
