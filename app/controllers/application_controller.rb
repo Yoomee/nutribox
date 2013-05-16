@@ -4,13 +4,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   prepend_before_filter :force_https_and_remove_www
-  #before_filter :authenticate
+  before_filter :authenticate
   
   AUTH_USERS = { "nutribox" => "nutribox123" }
 
   private
   def authenticate
-    return true unless Rails.env.production?
+    return true unless Rails.env.production? && ENV['ON_HEROKU']
     authenticate_or_request_with_http_basic do |username|
       AUTH_USERS[username]
     end
