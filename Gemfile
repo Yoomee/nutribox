@@ -3,6 +3,9 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.1.0'
 gem 'mysql2'
+group :production do
+  gem 'pg'
+end
 
 
 gem 'jquery-rails'
@@ -38,6 +41,7 @@ group :development do
   gem 'passenger'
   gem "binding_of_caller"
   gem "engineyard-recipes"
+  gem 'heroku'
 end
 
 group :development, :test do

@@ -123,6 +123,7 @@ GEM
     erubis (2.7.0)
     escape (0.0.4)
     eventmachine (1.0.0)
+    excon (0.21.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (4.1.0)
@@ -151,6 +152,14 @@ GEM
     haml (4.0.2)
       tilt
     hashie (1.2.0)
+    heroku (2.39.2)
+      heroku-api (~> 0.3.7)
+      launchy (>= 0.3.2)
+      netrc (~> 0.7.7)
+      rest-client (~> 1.6.1)
+      rubyzip
+    heroku-api (0.3.10)
+      excon (~> 0.21.0)
     highline (1.6.15)
     hike (1.2.1)
     hpricot (0.8.6)
@@ -188,6 +197,7 @@ GEM
     multipart-post (1.1.5)
     mysql2 (0.3.11)
     net-ssh (2.2.1)
+    netrc (0.7.7)
     nokogiri (1.5.6)
     oauth (0.4.5)
     orm_adapter (0.4.0)
@@ -196,6 +206,7 @@ GEM
       fastthread (>= 1.0.1)
       rack
       rake (>= 0.8.1)
+    pg (0.15.1)
     polyglot (0.3.3)
     pry (0.9.10)
       coderay (~> 1.0.5)
@@ -392,10 +403,12 @@ DEPENDENCIES
   formtastic-bootstrap!
   growl
   guard-rspec
+  heroku
   jquery-rails
   letter_opener
   mysql2
   passenger
+  pg
   rails (= 3.1.0)
   rake (= 0.8.7)
   rspec-rails
