@@ -19,7 +19,7 @@
       %label.control-label Product
       .controls
         %p=@order.product
-    =form.input :order_options, :collection => AvailableOrderOption.all, :as => :check_boxes
+    =form.input :options, :collection => AvailableOrderOption.all, :as => :check_boxes
     =form.input :comment, :input_html => { :class => 'input-xxlarge'}
     %h4 Status
     =form.input :status, :collection => Order.statuses.collect{|s| [s.titleize,s]}, :include_blank => false
