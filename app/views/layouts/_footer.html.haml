@@ -13,12 +13,10 @@
           =link_to_slug "Contact us", :contact, :class=>"footer-link"
       =#link_to("Yoomee", "http://www.yoomee.com", :id => "siteby", :target=>"_blank")
     
-.container
-  .row.footer  
-    .span10
-    .span2
-      -if root_slug_is?(:blog)
+-if root_slug_is?(:blog)
+  .container
+    .row.footer  
+      .span10
+      .span2
         :plain
-          <a target="_blank" href="http://www.foodies100.co.uk" title="Foodies100 Index of UK Food Blogs" rel="nofollow"><img style="width:165px;height:110px;border:0px;margin:0px;padding:0px;" title="Foodies100 Index of UK Food Blogs" alt="Foodies100 Index of UK Food Blogs" src="/assets/badge-1804.gif" /></a><br />
-      :plain
-        <a target="_blank" href="http://www.morphyrichards.co.uk/" title="Morphy Richards" rel="nofollow"><img style="width:165px;height:56px;border:0px;margin:0px;padding:0px;" title="Morphy Richards" alt="Morphy Richards" src="/assets/morphyrichards.gif" /></a>
+          <a target="_blank" href="http://www.foodies100.co.uk" title="Foodies100 Index of UK Food Blogs" rel="nofollow"><img style="width:165px;height:110px;border:0px;margin:0px;padding:0px;" title="Foodies100 Index of UK Food Blogs" alt="Foodies100 Index of UK Food Blogs" src="/assets/badge-1804.gif" /></a><br /><a target="_blank" href="http://www.morphyrichards.co.uk/" title="Morphy Richards" rel="nofollow"><img style="width:165px;height:56px;border:0px;margin:0px;padding:0px;" title="Morphy Richards" alt="Morphy Richards" src="/assets/morphyrichards.gif" /></a>
