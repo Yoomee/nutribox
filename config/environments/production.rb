@@ -61,12 +61,13 @@ Nutribox::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   config.action_mailer.smtp_settings = {
-
-    :address        => 'mail.studentbabble.com',
-    :domain         => 'mail.studentbabble.com',
-    :authentication => :login,
-    :user_name      => 'info@studentbabble.com',
-    :password       => 'm:HE4,4JF2KL_{mG*;IG;(xGGjOA.;r',
-    :enable_starttls_auto => false
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => "sommcourses.org",
+    :user_name            => "admin@sommcourses.org",
+    :password             => "somm1234",
+    :authentication       => "plain",
+    :enable_starttls_auto => true
   }
+
 end
