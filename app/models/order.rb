@@ -197,6 +197,8 @@ end
   end
   
   def order_number
+    # hack to fix repeat payments for order 214, as it uses transaction details copied from order 3
+    return "NB3" if Rails.env.production? && id == 214
     Rails.env.development? ? "dev#{id}" : "NB#{id}"
   end
   
