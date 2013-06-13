@@ -65,7 +65,10 @@ Nutribox::Application.configure do
     :domain         => 'mail.yoomeedigital.com',
     :authentication => :login,
     :user_name      => 'info@yoomeedigital.com',
-    :password       => 'm:HE4,4JF2KL_{mG*;IG;(xGGjOA.;r'
+    :password       => 'm:HE4,4JF2KL_{mG*;IG;(xGGjOA.;r',
+    :enable_starttls_auto => false
   }
+  
+  
 
 end
