@@ -5,8 +5,12 @@
   .container
     .row
       .site-intro.span5.fade_in
-        %h1.home-tagline Healthy Snacking Made Easier
-        %p.site-intro-text=snippet_text(:home_page_text, "The Nutribox is a box of deliciously nutritious, gluten-free, snacks delivered to your door monthly.  From £11 per month (we promise the normal retail value of the snacks in your box will always be more than the price you pay).")
+        %h1.home-tagline Healthy Snack Boxes Delivered
+        %p.site-intro-text
+          =snippet_text(:home_page_text, "The Nutribox is a box of deliciously nutritious, gluten-free, snacks delivered to your door monthly.  From £11 per month (we promise the normal retail value of the snacks in your box will always be more than the price you pay).")
+          %small=link_to 'read more', '#', :data => { :toggle => 'collapse', :target => '#site-more-intro-text' }
+        #site-more-intro-text.site-more-intro-text.collapse
+          =snippet_text(:home_page_more_text, "Here at The Nutribox we search high and low to find deliciously nutritious snacks made by artisan producers to include in our healthy snack boxes. Our in-house nutritionists Ann and Emma analyse the nutritional content of all our snacks before sending the ones they approve through to the rest of the team for taste testing.").html_safe
         .sketch-notice.clearfix
           %p.sketch-notice-text Get 25% OFF your first box
           %span.sketch-notice-left
