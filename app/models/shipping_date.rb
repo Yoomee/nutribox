@@ -4,6 +4,8 @@ class ShippingDate < ActiveRecord::Base
   has_many :deliveries, :autosave => true, :dependent => :destroy
   validates :date, :presence => true, :uniqueness => true
   
+
+  before_validation :set_week
   before_create :generate_deliveries!
   
   class << self
@@ -35,9 +37,18 @@ class ShippingDate < ActiveRecord::Base
   
   private
   def generate_deliveries!
-    Order.active.alphabetical_by_user.where(:shipping_day => date.day).each do |order|
+    if week == 4 and (date + 7.days).month == date.month
+      [4, 5]
+    else
+      week
+    end
+    Order.active.alphabetical_by_user.where(:shipping_week => week).each do |order|
       self.deliveries.build(:order => order).set_fields_from_order
     end
+  end
+
+  def set_week
+    self.week = date / 7 + 1
   end
   
 end
