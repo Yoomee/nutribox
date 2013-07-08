@@ -23,6 +23,7 @@ class Order < ActiveRecord::Base
   before_validation :set_amount
   before_validation :set_billing_name
   before_validation :set_shipping_day
+  before_validation :set_shipping_week
   before_save :nullify_discount_code_code_if_invalid
   belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
   
@@ -34,9 +35,20 @@ class Order < ActiveRecord::Base
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
   scope :repeatable_for_shipping_day, lambda {|day| active.where(:gift => false, :number_of_months => 1, :shipping_day => day).where("DATE(orders.created_at) < ?", Date.today.change(:day => day) - 1.month)}
   scope :repeatable_for_shipping_day_with_3_or_6_months, lambda {|day| active.where(:gift => false, :shipping_day => day).where('number_of_months = 1 OR (number_of_months IN (3, 6) AND orders.created_at > ?)', Time.parse('11/04/2013')).where("(number_of_months = 1 AND DATE(orders.created_at) < ?) OR (number_of_months = 3 AND DATE(orders.created_at) < ?) OR  (number_of_months = 6 AND DATE(orders.created_at) < ?)", Date.today.change(:day => day) - 1.month, Date.today.change(:day => day) - 3.month, Date.today.change(:day => day) - 6.month)}
-  
+  scope :repeatable, active.where(:gift => false).where('number_of_months <> 12')
+
   class << self
     
+    def repeatable_for_shipping_week(week)
+      # repeatable
+      # where number of deliveries < number_of_deliveries_for
+      if week == 4
+        
+      else
+        
+      end
+    end
+
     def number_of_snacks(box_type)
       case box_type
       when "mini" then "8-10"
@@ -369,7 +381,14 @@ end
       self.shipping_day = (order_date.day.between?(2,15) ? 25 : 11)
     end
   end
-  
+
+  def set_shipping_week
+    return true if shipping_week.present?
+    order_date = (created_at || Time.now)
+    next_thursday = order_date + ((4 - order_date.wday) % 7)
+    self.shipping_week = (next_thursday.day / 7 + 1)
+  end
+
   def nullify_discount_code_code_if_invalid
     if discount_code_code.present? && !discounted?
       self.discount_code_code = nil
