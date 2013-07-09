@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
   def new
     gift = params[:gift].present?
     @order = Order.new(:gift => gift)
+    @available_order_options = AvailableOrderOption.order("created_at DESC")
     if gift
       @custom_page_title = YmSnippets::Snippet.find_by_slug('meta_gift_page_title').text
       @custom_page_description = YmSnippets::Snippet.find_by_slug('meta_gift_page_description')
@@ -34,7 +35,7 @@ class OrdersController < ApplicationController
     @gifts  = current_user.orders.not_failed.where(:gift => true).order("created_at DESC")
     @custom_page_title = YmSnippets::Snippet.find_by_slug('meta_my_subscriptions_page_title')
     @custom_page_description = YmSnippets::Snippet.find_by_slug('meta_my_subscriptions_page_description')
-    @custom_page_keywords = YmSnippets::Snippet.find_by_slug('meta_my_subscriptions_page_keywords')
+    @custom_page_keywords = YmSnippets::Snippet.find_by_slug('meta_my_subscriptions_page_keywords')    
   end
 
   def thanks

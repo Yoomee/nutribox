@@ -7,12 +7,13 @@
         $(this).parent().addClass('active');
         $('form.order').submit();
       });
-      $('.vegan-version').click(function(event){
-        event.preventDefault();
-        var chooseBox = $(this).parents('.choose-box')
+      $('.order-option').click(function(event){
+        event.preventDefault();        
+        var chooseBox = $(this).parents('.choose-box');
         chooseBox.find('.box-radio input').attr('checked', 'checked');
         chooseBox.find('.caption').addClass('active');
-        $('#order_option_ids option:contains("vegan")').attr('selected', 'selected');
+        $('#order_option_ids').val($(this).data('option-id'));
+
         $('form.order').submit();
       });
     });
@@ -84,7 +85,8 @@
                       Renews automatically.
                       %br
                       Cancel anytime.
-              %p=link_to 'Choose vegan option', '#', :class => 'vegan-version'
+              -@available_order_options.try(:each) do |option|
+                %p=link_to 'Choose ' + option.to_s + ' option', '#', :class => 'order-option', :data => {:option_id => option.id}
 
 -unless @order.gift?
   .row

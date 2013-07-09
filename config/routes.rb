@@ -12,6 +12,8 @@ Nutribox::Application.routes.draw do
       get 'thanks'
     end
   end
+
+  resources :available_order_options
   
   resources :shipping_dates, :only => :show, :path => "shippings" do
     resources :deliveries, :only => :update
