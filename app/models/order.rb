@@ -23,6 +23,7 @@ class Order < ActiveRecord::Base
   before_create :set_hash_id
   before_validation :set_amount
   before_validation :set_billing_name
+  before_validation :set_number_of_deliveries_paid_for
   before_validation :set_shipping_week
   before_save :nullify_discount_code_code_if_invalid
   belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
@@ -380,6 +381,10 @@ end
     if vps_transaction_id.blank?
       self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
     end
+  end
+
+  def set_number_of_deliveries_paid_for
+    self.number_of_deliveries_paid_for = number_of_months
   end
 
   def set_shipping_week
