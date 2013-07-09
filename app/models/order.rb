@@ -35,7 +35,7 @@ class Order < ActiveRecord::Base
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
   scope :repeatable_for_shipping_day, lambda {|day| active.where(:gift => false, :number_of_months => 1, :shipping_day => day).where("DATE(orders.created_at) < ?", Date.today.change(:day => day) - 1.month)}
   scope :repeatable_for_shipping_day_with_3_or_6_months, lambda {|day| active.where(:gift => false, :shipping_day => day).where('number_of_months = 1 OR (number_of_months IN (3, 6) AND orders.created_at > ?)', Time.parse('11/04/2013')).where("(number_of_months = 1 AND DATE(orders.created_at) < ?) OR (number_of_months = 3 AND DATE(orders.created_at) < ?) OR  (number_of_months = 6 AND DATE(orders.created_at) < ?)", Date.today.change(:day => day) - 1.month, Date.today.change(:day => day) - 3.month, Date.today.change(:day => day) - 6.month)}
-  scope :repeatable, active.where(:gift => false).where('number_of_months <> 12')
+  scope :repeatable, active.where(:gift => false).where('number_of_months <> 12').where('deliveries_count >= number_of_deliveries_paid_for')
 
   class << self
     
