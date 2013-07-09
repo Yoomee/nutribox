@@ -23,7 +23,6 @@ class Order < ActiveRecord::Base
   before_create :set_hash_id
   before_validation :set_amount
   before_validation :set_billing_name
-  before_validation :set_shipping_day
   before_validation :set_shipping_week
   before_save :nullify_discount_code_code_if_invalid
   belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
@@ -381,16 +380,6 @@ end
     # Only change amount if it hasn't been charged
     if vps_transaction_id.blank?
       self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
-    end
-  end
-  
-  def set_shipping_day
-    return true if shipping_day.present?
-    order_date = (created_at || Time.now)
-    if order_date.year == 2012
-      self.shipping_day = 11
-    else
-      self.shipping_day = (order_date.day.between?(2,15) ? 25 : 11)
     end
   end
 
