@@ -37,12 +37,12 @@ class ShippingDate < ActiveRecord::Base
   
   private
   def generate_deliveries!
-    if week == 4 and (date + 7.days).month == date.month
-      [4, 5]
+    if date.shipping_week == 4 && !date.five_fridays_in_month?
+      weeks = [4, 5]
     else
-      week
+      weeks = date.shipping_week
     end
-    Order.active.alphabetical_by_user.where(:shipping_week => week).each do |order|
+    Order.active.alphabetical_by_user.where(:shipping_week => weeks).each do |order|
       self.deliveries.build(:order => order).set_fields_from_order
     end
   end
