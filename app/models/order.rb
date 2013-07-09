@@ -374,8 +374,7 @@ end
   def set_shipping_week
     return true if shipping_week.present?
     order_date = (created_at || Time.now)
-    next_thursday = order_date + ((4 - order_date.wday) % 7)
-    self.shipping_week = (next_thursday.day / 7 + 1)
+    self.shipping_week = order_date.shipping_week
   end
 
   def nullify_discount_code_code_if_invalid
