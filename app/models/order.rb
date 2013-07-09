@@ -385,7 +385,7 @@ class Order < ActiveRecord::Base
   def set_shipping_week
     return true if shipping_week.present?
     order_date = (created_at || Time.now)
-    self.shipping_week = order_date.shipping_week
+    self.shipping_week = order_date.to_date.shipping_week
   end
 
   def nullify_discount_code_code_if_invalid
