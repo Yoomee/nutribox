@@ -116,13 +116,13 @@ class Order < ActiveRecord::Base
     self.class.box_name(box_type)
   end
 
-def box_name_with_options
-  if options.present?
-    box_name + " (#{options.join(', ')})"
-  else
-    box_name
+  def box_name_with_options
+    if options.present?
+      box_name + " (#{options.join(', ')})"
+    else
+      box_name
+    end
   end
-end
 
   def box_type_and_number_of_months
     [box_type,number_of_months].compact.join('-')
