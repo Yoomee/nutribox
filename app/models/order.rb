@@ -2,11 +2,11 @@ class Order < ActiveRecord::Base
   include YmCore::Model
   include YmCore::Multistep
   include Xero::Order
-    
+
   belongs_to :user
-  has_many :deliveries
+  has_many :deliveries, :dependent => :destroy
   has_many :order_options
-  has_many :options, :through => :order_options, :class_name => 'AvailableOrderOption', :source => :available_order_option
+  has_many :options, :through => :order_options, :class_name => 'AvailableOrderOption', :source => :available_order_option, :dependent => :destroy
   has_many :repeat_payments
   amount_accessor :amount, :full_price_amount
   
