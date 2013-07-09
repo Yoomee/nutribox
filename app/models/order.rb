@@ -38,13 +38,11 @@ class Order < ActiveRecord::Base
 
   class << self
     
-    def repeatable_for_shipping_week(week)
-      # repeatable
-      # where number of deliveries < number_of_deliveries_for
-      if week == 4
-        
+    def repeatable_by_week(date)
+      if date.shipping_week == 4 && !date.five_fridays_in_month?
+        repeatable.where(:shipping_week => [4, 5])
       else
-        
+        repeatable.where(:shipping_week => date.shipping_week)
       end
     end
 
@@ -292,6 +290,7 @@ end
         :order_id => (Rails.env.development? ? "devR#{repeat.id}" : "NBR#{repeat.id}"),
         :related_transaction => related
       )
+      self.update_attributes(:number_of_deliveries_paid_for => (self.number_of_deliveries_paid_for + self.number_of_months))
       begin
         process_response(sage_pay_response,repeat)
       rescue Order::PaymentError => e
