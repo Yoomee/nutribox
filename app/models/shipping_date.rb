@@ -48,7 +48,7 @@ class ShippingDate < ActiveRecord::Base
   end
 
   def set_week
-    self.week = date.shipping_week
+    self.week = (date - 1.day).shipping_week
   end
   
 end
