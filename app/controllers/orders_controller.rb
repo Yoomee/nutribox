@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :find_by => "hash_id"
 
   def new
     gift = params[:gift].present?

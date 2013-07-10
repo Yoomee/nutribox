@@ -316,7 +316,11 @@ end
       uniq_hash = Digest::MD5.hexdigest("#{rand(999999)}-#{Time.now}")[0..6]
     end while Order.exists?(:hash_id => uniq_hash)
     self.hash_id = uniq_hash  
-  end 
+  end
+
+  def to_param
+    hash_id
+  end
   
   class PaymentError < StandardError; end
   
