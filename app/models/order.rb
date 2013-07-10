@@ -20,6 +20,7 @@ class Order < ActiveRecord::Base
   #validates :billing_postcode, :postcode => true, :if => :current_step_billing?, :allow_blank => true
   validate  :credit_card_is_valid, :if => :current_step_billing? 
   
+  before_create :set_hash_id
   before_validation :set_amount
   before_validation :set_billing_name
   before_validation :set_shipping_day
@@ -309,6 +310,13 @@ end
   def xero_order_number
     Rails.env.development? ? "dev#{id}" : "NB-#{id}"
   end
+
+  def set_hash_id
+    begin
+      uniq_hash = Digest::MD5.hexdigest("#{rand(999999)}-#{Time.now}")[0..6]
+    end while Order.exists?(:hash_id => uniq_hash)
+    self.hash_id = uniq_hash  
+  end 
   
   class PaymentError < StandardError; end
   
@@ -374,9 +382,7 @@ end
     if discount_code_code.present? && !discounted?
       self.discount_code_code = nil
     end
-  end
-  
-  
+  end  
 end
 
 Order::VAT_PERCENTAGES = {
