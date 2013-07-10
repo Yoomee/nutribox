@@ -18,6 +18,7 @@ class OrdersController < ApplicationController
   end
 
   def create
+    @available_order_options = AvailableOrderOption.order("created_at DESC")
     @order = Order.new(params[:order])
     handle_order
   end
