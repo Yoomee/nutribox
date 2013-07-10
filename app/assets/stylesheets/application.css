@@ -1364,6 +1364,9 @@ margin-left: 40px ;
   margin-top: 15px;
   background-color:#ff6600;
 }
+.btn-rss.blog-post-rss{
+  margin-top: 5px;
+}
 .btn-rss:hover {
   background-color:#ff6600;
 }
