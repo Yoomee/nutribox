@@ -32,11 +32,15 @@
                 %li
                   =link_to(admin_path) do
                     %i.icon-briefcase
-                    Admin
+                    Admin                
                 %li
                   =link_to(pages_path) do
                     %i.icon-sitemap
-                    Sitemap                    
+                    Sitemap
+              %li
+                =link_to(edit_user_path(current_user)) do
+                  %i.icon-pencil
+                  Edit account details                          
               %li
                 =link_to(orders_path) do
                   %i.icon-shopping-cart
