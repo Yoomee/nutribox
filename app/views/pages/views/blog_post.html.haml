@@ -1,11 +1,18 @@
+-content_for :head do    
+  =javascript_include_tag "http://assets.pinterest.com/js/pinit.js"
+
 .container
 .cardboard-wrapper
   .cardboard-wrapper-top
   .container
     .row
-      .span8
+      .span5
         =link_to_slug "&larr; Back to the blog".html_safe, :blog, :class => 'btn mb-1'
         .clearfix
+      .span3
+        =link_to(feed_path, :title => "Subscribe via RSS", :class => 'btn btn-rss pull-right mb-3 blog-post-rss') do
+          %i.icon-rss
+          %span Subscribe  
       .blog-roll.span8
         .blog-roll-inner
           .blog-post
@@ -17,10 +24,8 @@
           =options_panel do
             =link_if_can("Edit post", [:edit, @page])
             =link_if_can("Delete post", [:destroy, @page], :confirm => "Are you sure?") unless @page.slug.present?
-            =link_if_can("New post", [:new, Page])
-          .clearfix
-
-                
+            =link_if_can("New post", [:new, Page.new])
+          .clearfix                
                 
       #blog_right_col.span4
         #blog_post_info
@@ -38,6 +43,10 @@
           %ul.unstyled
             %li=twitter_share_button(@page, :via => "thenutribox", :related => "thenutribox")
             %li.mt-1=facebook_like_button(@page)
+            %li.mt-1
+              %g:plusone{:size => "medium"}
+            %li.mt-1
+              =pinterest_pin_button(@page)
         -#
           #blog_archive.blog_box
             %h3 Archive

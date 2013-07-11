@@ -1,3 +1,13 @@
+-content_for :head do
+  :javascript
+    function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
 .home-strip-2
   .container
     .row
@@ -10,10 +20,10 @@
             =form_tag('/newsletter/subscribe') do #'http://thenutribox.us6.list-manage1.com/subscribe/post?u=44bdbc0e5b3036d3b03028268&amp;id=f573663757') do
               %input#email-signup-input{:name => "email", :type=>"text", :placeholder=>"your email address"}
               =submit_tag("Submit", :class=>'btn email-signup-button')
-        =link_to "http://twitter.com/thenutribox", :target=>"_blank", :class=>"twitter-btn social-media-btn" do
+        =link_to "https://twitter.com/intent/follow?screen_name=thenutribox", :class=>"twitter-btn social-media-btn follow-twitter" do
           %i.icon-twitter
           %span
-            Twitter
+            Twitter          
         =link_to "https://plus.google.com/u/1/108471056834850272863/posts", :target=>"_blank", :class=>"google-plus-btn social-media-btn" do
           %i.icon-google-plus
           %span

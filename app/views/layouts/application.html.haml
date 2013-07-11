@@ -17,12 +17,13 @@
         <link href="/assets/ie7.css" media="screen" rel="stylesheet" type="text/css" />
       <![endif]-->
     =javascript_include_tag("application")
+    =javascript_include_tag "https://apis.google.com/js/plusone.js"    
     =csrf_meta_tags
     =favicon_link_tag('/assets/favicon2.ico')
     =auto_discovery_link_tag(:rss, "#{Settings.site_url}/feed.rss")
     =yield :head
     =google_analytics_js_with_ecommerce
-  -body_tag do
+  -body_tag do          
     .main-wrapper{:class => ('gift-wrapper' if @order && !action_name.show? && (@order.gift? && @order.current_step_box?))}
       -if flash.present?
         .header-alert

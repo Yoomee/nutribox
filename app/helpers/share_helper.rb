@@ -56,3 +56,15 @@ module ShareHelper
     content_tag(:iframe, '', :src => "//www.facebook.com/plugins/like.php?href=#{Settings.site_url + url_for(resource)}&#{url_options.to_query}", :scrolling => "no", :frameborder => "0", :allowTransparency => true, :style => "border:none; overflow:hidden; width:90px; height:20px;")
   end
 end
+
+def pinterest_pin_button(resource)
+    url_options = {
+      :url => Settings.site_url + url_for(resource),
+      :media => resource.image ? Settings.site_url + resource.image.url : nil,     
+      :description => resource.to_s
+    }
+
+    link_to "//pinterest.com/pin/create/button/?#{url_options.to_query}", :"data-pin-do" => "buttonPin", :"data-pin-config" => "above"  do
+      image_tag("//assets.pinterest.com/images/pidgets/pin_it_button.png")
+    end
+end
