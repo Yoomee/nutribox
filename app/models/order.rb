@@ -23,7 +23,6 @@ class Order < ActiveRecord::Base
   before_create :set_hash_id
   before_validation :set_amount
   before_validation :set_billing_name
-  before_validation :set_number_of_deliveries_paid_for
   before_validation :set_shipping_week
   before_save :nullify_discount_code_code_if_invalid
   belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
@@ -285,10 +284,9 @@ class Order < ActiveRecord::Base
       related[:id] = order_number
       sage_pay_response = gateway.repeat(
         full_price_amount_in_pence,
-        :order_id => (Rails.env.development? ? "devR#{repeat.id}" : "NBR#{repeat.id}"),
+        :order_id => repeat.order_number,
         :related_transaction => related
       )
-      self.update_attributes(:number_of_deliveries_paid_for => (self.number_of_deliveries_paid_for + self.number_of_months))
       begin
         process_response(sage_pay_response,repeat)
       rescue Order::PaymentError => e
@@ -358,11 +356,19 @@ class Order < ActiveRecord::Base
   def process_response(sage_pay_response,transaction)
     logger.info sage_pay_response.inspect
     if sage_pay_response.success?
-      transaction.update_attributes(
+      transaction_attributes = {
       :vps_transaction_id => sage_pay_response.params["VPSTxId"],
       :security_key => sage_pay_response.params["SecurityKey"],
       :transaction_auth_number => sage_pay_response.params["TxAuthNo"]
-      )
+      }
+      order = transaction.is_a?(Order) ? transaction : transaction.order
+      new_number_of_deliveries_paid_for = (order.number_of_deliveries_paid_for.to_i + order.number_of_months)
+      if transaction.is_a?(Order)
+        transaction_attributes[:number_of_deliveries_paid_for] = new_number_of_deliveries_paid_for
+      else
+        order.update_attributes(:number_of_deliveries_paid_for => new_number_of_deliveries_paid_for)
+      end
+      transaction.update_attributes(transaction_attributes)
     else
       raise Order::PaymentError, sage_pay_response.message
     end
@@ -377,10 +383,6 @@ class Order < ActiveRecord::Base
     if vps_transaction_id.blank?
       self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
     end
-  end
-
-  def set_number_of_deliveries_paid_for
-    self.number_of_deliveries_paid_for = number_of_months
   end
 
   def set_shipping_week

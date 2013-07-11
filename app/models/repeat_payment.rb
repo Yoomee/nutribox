@@ -18,6 +18,10 @@ class RepeatPayment < ActiveRecord::Base
     (unrounded * 100).floor / 100.0
   end
   
+  def order_number
+    Rails.env.development? ? "devR#{id}" : "NBR#{id}"
+  end
+  
   def product
     "#{order.product} - Repeat Payment"
   end
