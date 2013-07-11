@@ -9,10 +9,15 @@ development:
   password: 
   socket: /tmp/mysql.sock
   timeout: 5000
-test: 
-  adapter: sqlite3
-  database: db/test.sqlite3
+test:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: nutribox_test
   pool: 5
+  username: root
+  password: 
+  socket: /tmp/mysql.sock
   timeout: 5000
 production: 
   adapter: sqlite3
