@@ -659,8 +659,7 @@ text-shadow: none;
   display: block;
   text-indent: -9000em;
 }
-.big-box-image {
-  background: url(/assets/box.png) 0 0 no-repeat;
+.big-box-image {  
   height: 600px;
   width: 600px;
   position: absolute;
