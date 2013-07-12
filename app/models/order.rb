@@ -313,7 +313,7 @@ end
 
   def set_hash_id
     begin
-      uniq_hash = Digest::MD5.hexdigest("#{rand(999999)}-#{Time.now}")[0..6]
+      uniq_hash = "NB#{(100..999).to_a.sample.to_s}#{id}"
     end while Order.exists?(:hash_id => uniq_hash)
     self.hash_id = uniq_hash  
   end
