@@ -16,7 +16,7 @@ gem "xeroizer"
 gem "delayed_job_active_record"
 gem "daemons"
 
-gem "ym_core", "~>0.1.59"           #, :path => "~/Rails/Gems/ym_core"
+gem "ym_core", "~>0.1.69"           #, :path => "~/Rails/Gems/ym_core"
 gem "ym_cms", "0.3.7"   #, :path => "~/Rails/Gems/ym_cms"
 gem "ym_users", "0.1.25"          #, :path => "~/Rails/Gems/ym_users"
 gem "ym_permalinks"     #, :path => "~/Rails/Gems/ym_permalinks"
