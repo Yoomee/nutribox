@@ -1,5 +1,15 @@
+-content_for :head do
+  :coffeescript
+    $ ->
+      Redactor.init()
+
 =semantic_form_for @available_order_option, :html => {:class => "form-horizontal"} do |form|
   =form.inputs do    
-    =form.input :option   
+    =form.input :name
+    =form.input :image, :as => :image
+    .clearfix
+    =form.input :description, :as => :redactor
+    =form.input :mini_price, :prepend => '£', :placeholder => '10.00', :label => 'Price of a mini box'
+    =form.input :standard_price, :prepend => '£', :placeholder => '10.00', :label => 'Price of a standard box'
   =form.buttons do
     =form.commit_button "Save"
