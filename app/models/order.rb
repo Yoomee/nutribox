@@ -398,6 +398,8 @@ class Order < ActiveRecord::Base
   end  
 end
 
+Order::FREQUENCIES = %w{ weekly, fortnightly, monthly, bi-monthly } 
+
 Order::VAT_PERCENTAGES = {
   :mini => 11.28,
   :standard => 8.29
