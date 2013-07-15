@@ -1479,6 +1479,18 @@ ul.post-info li, ul.post-info li a, ul.post-info li a:hover {
   width:200px;
 }
 
+.facebook-share a.btn.share-link.facebook-share-link{
+  background-color:#ECEEF5;
+  color:#345F9D;
+  display:inline;
+  padding:5px;
+  font-size:11px;
+}
+
+.facebook-share a.btn.share-link.facebook-share-link .icon-facebook{  
+  display:inline;
+} 
+
 th.center,
 td.center {
   text-align:center;

@@ -43,6 +43,8 @@
           %ul.unstyled
             %li=twitter_share_button(@page, :via => "thenutribox", :related => "thenutribox")
             %li.mt-1=facebook_like_button(@page)
+            %li.mt-1.facebook-share
+              =facebook_share_link(url_for(@page), {:share_name => @page.title, :share_description => @page.title, :share_image => @page.image, :text => "Share"})             
             %li.mt-1
               %g:plusone{:size => "medium"}
             %li.mt-1
