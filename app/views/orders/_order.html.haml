@@ -7,11 +7,11 @@
     %h4 Product
     -if @order.repeatable?
       %p
-        =@order.box_name_with_options
+        =@order.box_name
         subscription.
       %p You will receive one box per month until you cancel your subscription.
     -else
-      %p="#{@order.box_name_with_options} for #{pluralize(@order.number_of_months,'month')}."
+      %p="#{@order.box_name} for #{pluralize(@order.number_of_months,'month')}."
       -if @order.number_of_months > 1
         %p
           =@order.gift? ? "Your friend" : "You"

@@ -1,0 +1,10 @@
+%h2.order-box-title Deliveries
+%p.ml-3.mr-3
+  You have chosen
+  =@order.box_name
+%p.ml-3.mr-3
+  %strong How often would you like it delivered?
+  =form.input :frequency, :as => :radio, :collection => Order::FREQUENCIES, :label => false
+%p.ml-3.mr-3
+  %strong How many deliveries will you pay for at a time?
+  =form.input :number_of_months, :label => false

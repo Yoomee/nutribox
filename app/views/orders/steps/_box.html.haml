@@ -1,23 +1,15 @@
 -content_for :head do
   :javascript
     $(document).ready(function() {
-      $('#box_step .box-radio').click(function(){
-        $(this).children('input').attr('checked','checked');
-        $('#box_step label.active').removeClass('active');
-        $(this).parent().addClass('active');
-        $('form.order').submit();
-      });
-      $('.order-option').click(function(event){
-        event.preventDefault();        
-        var chooseBox = $(this).parents('.choose-box');
-        chooseBox.find('.box-radio input').attr('checked', 'checked');
-        chooseBox.find('.caption').addClass('active');
-        $('#order_option_ids').val($(this).data('option-id'));
+      $('a.choose-btn').click(function(event){
+        event.preventDefault();
+        $('#order_theme_id').val($(this).data('theme-id'));
+        $('#order_box_type').val($(this).data('box-type'));
 
         $('form.order').submit();
       });
     });
-=form.input :gift, :as => :hidden
+=form.hidden_field :gift
 .row
   .span10
     %p
@@ -41,52 +33,37 @@
               ="#{@order.discount_code.percentage_with_default}%"
               OFF your first box!
 
--["standard", "mini"].each do |box_type|
+-@themes.each do |theme|
   .row
-    .span10
-      %h3.box-title
-        =box_name(box_type)
-        %small="#{Order.number_of_snacks(box_type)} snacks"
-      -Order::COST_MATRIX[box_type.to_sym].each do |months, cost|
-        .span4.choose-box.choose-box-small
+    .span10.choose-box.choose-box-corporate
+      .row
+        .span4.center
+          %h3.mt-1=theme.name
+          =image_for(theme, '100x100#')
+          %p=raw(theme.description)
+          %p.free-delivery Free delivery
+          -unless @order.gift?
+            .choose-smallprint
+              %ul.unstyled
+                %p
+                  Billed monthly.
+                  %br
+                  Cancel anytime
+        .span3.mt-2.mb-2.center
           .thumbnail
             .caption
-              .box-illustration
-                =image_tag("box-#{box_type}-#{months}.png", :class => "box-photo")
-              %h4
-                -if months == 1 && !@order.gift?
-                  Monthly
-                -else
-                  =months
-                  month
-                -unless @order.gift?
-                  subscription
-              %label.box-radio
-                =form.radio_button('box_type_and_number_of_months',"#{box_type}-#{months}")
-                .btn.choose-btn Select
-              %h5.choose-price
-                ="£#{Order.cost_per_month(box_type, months)}&nbsp;/&nbsp;month".html_safe
+              %small 8 - 10 snacks
+              =image_tag('box-mini-1.png', :class => 'box-photo')
+              ="£#{theme.mini_price} / delivery"
+              =link_to 'Select', '#', :class => 'btn choose-btn', :data => { :box_type=> 'mini', :theme_id => theme.id }
 
-              %p.free-delivery Free delivery
-              -unless @order.gift?
-                .choose-smallprint
-                  %ul.unstyled
-                  -if months == 1
-                    %p
-                      Billed monthly.
-                      %br
-                      Cancel anytime.
-                      %br
-                      &nbsp;
-                  -else
-                    %p
-                      Pay upfront.
-                      %br
-                      Renews automatically.
-                      %br
-                      Cancel anytime.
-              -@available_order_options.try(:each) do |option|
-                %p=link_to 'Choose ' + option.to_s + ' option', '#', :class => 'order-option', :data => {:option_id => option.id}
+        .span3.mt-2.mb-2.center
+          .thumbnail
+            .caption
+              %small 16 - 20 snacks
+              =image_tag('box-standard-1.png', :class => 'box-photo')
+              ="£#{theme.standard_price} / delivery"
+              =link_to 'Select', '#', :class => 'btn choose-btn', :data => { :box_type => 'standard', :theme_id => theme.id }
 
 -unless @order.gift?
   .row

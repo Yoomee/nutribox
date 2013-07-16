@@ -12,12 +12,14 @@
             Shopping
         =semantic_form_for @order, :url => gift_or_join_path(@order), :html => {:class => 'form-horizontal loading-text-disabled'}  do |form|
           .inner
-            .hide
-              =form.input :options, :collection => AvailableOrderOption.all
+            =form.hidden_field :theme_id
+            =form.hidden_field :box_type
             =form.hidden_field :current_step
             #box_step{:class => @order.current_step_box? ? '' : 'hide'}
               =render("orders/steps/box", :form => form)
-            -unless @order.current_step_box?
+            #frequency_step{:class => @order.current_step_frequency? ? '' : 'hide'}
+              =render("orders/steps/frequency", :form => form)
+            -unless @order.current_step_box? || @order.current_step_frequency?
               #register_step{:class => @order.current_step_register? ? '' : 'hide'}
                 =render("orders/steps/register", :form => form)
             #delivery_step{:class => @order.current_step_delivery? ? '' : 'hide'}

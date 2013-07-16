@@ -1,4 +1,5 @@
 class Order < ActiveRecord::Base
+Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly } 
   include YmCore::Model
   include YmCore::Multistep
   include Xero::Order
@@ -12,7 +13,9 @@ class Order < ActiveRecord::Base
   attr_accessor :login_email, :login_password
   boolean_accessor :editing_by_admin
 
-  validates :box_type, :number_of_months, :presence => true, :if => :current_step_box?
+  validates :box_type, :theme_id, :presence => true, :if => :current_step_box?
+  validates :frequency, :presence => true, :inclusion=> { :in => Order::FREQUENCIES }, :if => :current_step_frequency?
+  validates :number_of_months, :presence => true, :if => :current_step_frequency?
   validates :user, :delivery_address1, :delivery_city, :delivery_postcode, :delivery_country,  :presence => true, :if => :current_step_delivery?
   #validates :delivery_postcode, :postcode => true, :if => :current_step_delivery?, :allow_blank => true
   validates :billing_address1, :billing_city, :billing_postcode, :billing_country,  :presence => true, :if => :current_step_billing?
@@ -112,7 +115,7 @@ class Order < ActiveRecord::Base
   end
   
   def box_name
-    self.class.box_name(box_type)
+    "theme #{ box_type == 'mini' ? 'Mini' : '' }"
   end
 
   def box_name_with_options
@@ -171,7 +174,7 @@ class Order < ActiveRecord::Base
   
   def discount_in_pence
     return 0 unless box_type.present? && discount_code.try(:available_to?,user)
-    (discount_code.fraction * Order.cost_in_pence(box_type,1)).ceil
+    (discount_code.fraction * theme.cost_in_pence(box_type)).ceil
   end
   
   def discounted?
@@ -245,7 +248,7 @@ class Order < ActiveRecord::Base
   end
   
   def recurring?
-    number_of_months == 1 && !gift?
+    number_of_months != 12 && !gift?
   end
   
   def successful?
@@ -253,7 +256,7 @@ class Order < ActiveRecord::Base
   end
   
   def steps
-    %w{box register delivery billing confirm}
+    %w{box frequency register delivery billing confirm}
   end
   
   def take_payment!
@@ -379,7 +382,7 @@ class Order < ActiveRecord::Base
   def set_amount
     # Only change amount if it hasn't been charged
     if vps_transaction_id.blank?
-      self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
+      self.amount_in_pence = theme.cost_in_pence(box_type) - discount_in_pence.to_i
     end
   end
 
@@ -396,7 +399,6 @@ class Order < ActiveRecord::Base
   end  
 end
 
-Order::FREQUENCIES = %w{ weekly, fortnightly, monthly, bi-monthly } 
 
 Order::VAT_PERCENTAGES = {
   :mini => 11.28,
