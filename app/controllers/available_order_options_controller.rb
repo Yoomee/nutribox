@@ -14,7 +14,7 @@ class AvailableOrderOptionsController < ApplicationController
   end
 
   def index
-    @available_order_options = AvailableOrderOption.order("created_at DESC")
+    @available_order_options = AvailableOrderOption.order(:position)
 
   end
 

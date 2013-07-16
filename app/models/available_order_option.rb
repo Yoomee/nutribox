@@ -10,7 +10,12 @@ class AvailableOrderOption < ActiveRecord::Base
 
   validates :description, :image, :mini_price, :name, :standard_price, :presence => true
 
+  def cost_in_pence(box_type)
+    box_type == 'mini' ? mini_price_in_pence : standard_price_in_pence
+  end
+
   def to_s
     name
   end
+
 end
