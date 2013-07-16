@@ -7,8 +7,10 @@ development:
   pool: 5
   username: root
   password: 
-  socket: /tmp/mysql.sock
+  host: localhost
+  # socket: /tmp/mysql.sock
   timeout: 5000
+<<<<<<< Updated upstream
 test:
   adapter: mysql2
   encoding: utf8
@@ -17,7 +19,7 @@ test:
   pool: 5
   username: root
   password: 
-  socket: /tmp/mysql.sock
+  # socket: /tmp/mysql.sock
   timeout: 5000
 production: 
   adapter: sqlite3
