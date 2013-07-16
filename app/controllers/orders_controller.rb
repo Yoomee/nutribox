@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   def new
     gift = params[:gift].present?
     @order = Order.new(:gift => gift)
-    @available_order_options = AvailableOrderOption.order("created_at DESC")
+    @themes = AvailableOrderOption.order(:position)
     if gift
       @custom_page_title = YmSnippets::Snippet.find_by_slug('meta_gift_page_title').text
       @custom_page_description = YmSnippets::Snippet.find_by_slug('meta_gift_page_description')
@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @available_order_options = AvailableOrderOption.order("created_at DESC")
+    @themes = AvailableOrderOption.order(:position)
     @order = Order.new(params[:order])
     handle_order
   end
