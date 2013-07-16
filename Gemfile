@@ -16,7 +16,7 @@ gem "xeroizer"
 gem "delayed_job_active_record"
 gem "daemons"
 
-gem "ym_core", "~>0.1.69"           #, :path => "~/Rails/Gems/ym_core"
+gem "ym_core", "~>0.1.70"           #, :path => "~/Rails/Gems/ym_core"
 gem "ym_cms", "0.3.7"   #, :path => "~/Rails/Gems/ym_cms"
 gem "ym_users", "0.1.25"          #, :path => "~/Rails/Gems/ym_users"
 gem "ym_permalinks"     #, :path => "~/Rails/Gems/ym_permalinks"
@@ -52,4 +52,5 @@ group :test do
   gem 'rb-fsevent', '~> 0.9.1'
   gem 'sqlite3'
   gem 'timecop'
+  gem 'rb-inotify', '~> 0.8.8'
 end
