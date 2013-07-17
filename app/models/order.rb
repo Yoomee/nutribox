@@ -1,5 +1,7 @@
 class Order < ActiveRecord::Base
-Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly } 
+
+Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
+
   include YmCore::Model
   include YmCore::Multistep
   include Xero::Order
@@ -33,8 +35,12 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   
   scope :active, where(:status => 'active')
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
+  scope :bi_monthly, where(:frequency => 'bi-monthly')
+  scope :fortnightly, where(:frequency => 'fortnightly')
+  scope :monthly, where(:frequency => 'monthly')
   scope :not_failed, where("status != 'failed'")
   scope :repeatable, active.where(:gift => false).where('number_of_deliveries_paid_for_each_billing <> 12').where('deliveries_count >= number_of_deliveries_paid_for')
+  scope :weekly, where(:frequency => 'weekly')
 
   class << self
     
