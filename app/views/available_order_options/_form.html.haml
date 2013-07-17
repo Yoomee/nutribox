@@ -10,7 +10,11 @@
     =form.input :image, :as => :image
     .clearfix
     =form.input :description, :as => :redactor
-    =form.input :mini_price, :prepend => '£', :placeholder => '10.00', :label => 'Price of a mini box'
-    =form.input :standard_price, :prepend => '£', :placeholder => '10.00', :label => 'Price of a standard box'
+    =form.input :mini_price_for_one_delivery, :prepend => '£', :placeholder => '10.00', :label => 'Price per mini box when paying for one delivery'
+    =form.input :standard_price_for_one_delivery, :prepend => '£', :placeholder => '10.00', :label => 'Price per standard box when paying for one delivery'
+    =form.input :mini_price_for_three_deliveries, :prepend => '£', :placeholder => '10.00', :label => 'Price per mini box when paying for three deliveries'
+    =form.input :standard_price_for_three_deliveries, :prepend => '£', :placeholder => '10.00', :label => 'Price per standard box when paying for three deliveries'
+    =form.input :mini_price_for_six_deliveries, :prepend => '£', :placeholder => '10.00', :label => 'Price per mini box when paying for six deliveries'
+    =form.input :standard_price_for_six_deliveries, :prepend => '£', :placeholder => '10.00', :label => 'Price per standard box when paying for six deliveries'
   =form.buttons do
     =form.commit_button "Save"
