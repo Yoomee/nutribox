@@ -45,12 +45,41 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   class << self
     
     def repeatable_by_week(date)
+      # # weekly
+      # weekly_repeatable = repeatable.where("frequency = 'weekly'")
+
+      # # fortnightly - where there are no deliveries or there wasn't a delivery last week
+      # orders_with_deliveries_in_last_ten_days_ids = fortnightly.joins(:deliveries).where('deliveries.created_at > ?', Date.today - 10.days).collect(&:id)
+      # fortnightly_repeatable = repeatable.fortnightly.where('orders.id NOT IN (?)', orders_with_deliveries_in_last_ten_days_ids)
+
+      # # monthly
+      # date_for_correct_week = date - 1.day
+      # if date_for_correct_week.shipping_week == 4 && !date_for_correct_week.five_fridays_in_month?
+      #   monthly_repeatable = repeatable.monthly.where(:shipping_week => [4, 5])
+      # else
+      #   monthly_repeatable = repeatable.monthly.where(:shipping_week => date_for_correct_week.shipping_week)
+      # end
+
+      # # bi-monthly - where there are no deliveries or there wasn't a delivery last month
+      # orders_with_deliveries_in_last_thirty_five_days_ids = bi_monthly.joins(:deliveries).where('deliveries.created_at > ?', Date.today - 35.days).collect(&:id)
+      # bi_monthly_repeatable = repeatable.bi_monthly.where('orders.id NOT IN (?)', orders_with_deliveries_in_last_thirty_five_days_ids)
+
+      # weekly_repeatable + fortnightly_repeatable + monthly_repeatable + bi_monthly_repeatable
+
       date_for_correct_week = date - 1.day
       if date_for_correct_week.shipping_week == 4 && !date_for_correct_week.five_fridays_in_month?
-        repeatable.where(:shipping_week => [4, 5])
+        shipping_weeks = [4, 5]
       else
-        repeatable.where(:shipping_week => date_for_correct_week.shipping_week)
+        shipping_weeks = date_for_correct_week.shipping_week
       end
+      fortnightly_orders_with_deliveries_in_last_ten_days = fortnightly.joins(:deliveries).where('deliveries.created_at > ?', Date.today - 10.days)
+      bi_monthly_orders_with_deliveries_in_last_thirty_five_days = bi_monthly.joins(:deliveries).where('deliveries.created_at > ?', Date.today - 35.days)
+
+      repeatable.where{ (frequency == 'weekly') |
+                        ((frequency == 'fortnightly') & (id.not_in(fortnightly_orders_with_deliveries_in_last_ten_days.select{id}))) |
+                        ((frequency == 'monthly') & (shipping_week.in(shipping_weeks))) |
+                        ((frequency == 'bi-monthly') & (id.not_in(bi_monthly_orders_with_deliveries_in_last_thirty_five_days.select{id})))
+                      }
     end
 
     def number_of_snacks(box_type)
