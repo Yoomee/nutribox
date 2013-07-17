@@ -3,7 +3,7 @@ class Delivery < ActiveRecord::Base
   belongs_to :shipping_date
   has_one :survey
   
-  delegate :box_name, :user, :to => :order
+  delegate :box_name, :theme, :user, :to => :order
   
   validates :order_id, :uniqueness => { :scope => :shipping_date_id }
     
@@ -23,7 +23,7 @@ class Delivery < ActiveRecord::Base
   def set_fields_from_order
     if order
       self.box_type ||= order.box_type
-      self.number_of_months ||= order.number_of_months
+      self.number_of_months ||= order.number_of_deliveries_paid_for_each_billing
       self.gift ||= order.gift
       self.name ||= order.delivery_name
       self.address1 ||= order.delivery_address1
