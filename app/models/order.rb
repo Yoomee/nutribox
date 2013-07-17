@@ -43,7 +43,20 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   scope :weekly, where(:frequency => 'weekly')
 
   class << self
-    
+    def for_shipping_date_by_weeks(weeks)
+      for_delivery_or_payment_by_weeks(weeks)
+    end
+
+    def for_delivery_or_payment_by_weeks(weeks)
+      fortnightly_orders_with_deliveries_in_last_ten_days = fortnightly.joins(:deliveries).where('deliveries.created_at > ?', Date.today - 10.days)
+      bi_monthly_orders_with_deliveries_in_last_thirty_five_days = bi_monthly.joins(:deliveries).where('deliveries.created_at > ?', Date.today - 35.days)
+
+      repeatable.where{ (frequency == 'weekly') |
+                        ((frequency == 'fortnightly') & (id.not_in(fortnightly_orders_with_deliveries_in_last_ten_days.select{id}))) |
+                        ((frequency == 'monthly') & (shipping_week.in(weeks))) |
+                        ((frequency == 'bi-monthly') & (id.not_in(bi_monthly_orders_with_deliveries_in_last_thirty_five_days.select{id})))
+                      }
+    end
     def repeatable_by_week(date)
       # # weekly
       # weekly_repeatable = repeatable.where("frequency = 'weekly'")
@@ -72,14 +85,8 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
       else
         shipping_weeks = date_for_correct_week.shipping_week
       end
-      fortnightly_orders_with_deliveries_in_last_ten_days = fortnightly.joins(:deliveries).where('deliveries.created_at > ?', Date.today - 10.days)
-      bi_monthly_orders_with_deliveries_in_last_thirty_five_days = bi_monthly.joins(:deliveries).where('deliveries.created_at > ?', Date.today - 35.days)
 
-      repeatable.where{ (frequency == 'weekly') |
-                        ((frequency == 'fortnightly') & (id.not_in(fortnightly_orders_with_deliveries_in_last_ten_days.select{id}))) |
-                        ((frequency == 'monthly') & (shipping_week.in(shipping_weeks))) |
-                        ((frequency == 'bi-monthly') & (id.not_in(bi_monthly_orders_with_deliveries_in_last_thirty_five_days.select{id})))
-                      }
+      for_delivery_or_payment_by_weeks(shipping_weeks)
     end
 
     def number_of_snacks(box_type)
