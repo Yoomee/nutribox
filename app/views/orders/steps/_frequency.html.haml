@@ -6,5 +6,12 @@
   %strong How often would you like it delivered?
   =form.input :frequency, :as => :radio, :collection => Order::FREQUENCIES, :label => false
 %p.ml-3.mr-3
-  %strong How many deliveries will you pay for at a time?
-  =form.input :number_of_months, :label => false
+  %strong How many boxes will you pay for at a time?
+  .radio.control-group.required
+    -[1, 3, 6].each do |number_of_deliveries|
+      .choices.controls
+        %label.choice.radio
+          =form.radio_button(:number_of_deliveries_paid_for_each_billing, number_of_deliveries)
+          =pluralize(number_of_deliveries, 'box')
+          ="- £#{@order.cost_by_number_of_deliveries(number_of_deliveries)}"
+          per box

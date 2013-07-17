@@ -3,7 +3,7 @@ class Delivery < ActiveRecord::Base
   belongs_to :shipping_date
   has_one :survey
   
-  delegate :user, :to => :order
+  delegate :box_name, :user, :to => :order
   
   validates :order_id, :uniqueness => { :scope => :shipping_date_id }
     
@@ -38,11 +38,7 @@ class Delivery < ActiveRecord::Base
   def address(separator = ', ')
     [name,address1,address2,city,postcode].select(&:present?).join(separator)
   end
-  
-  def box_name
-    Order.box_name(box_type)
-  end
-  
+
   def find_or_create_survey
     survey = Survey.new(:delivery_id => id) if (survey=Survey.find_by_delivery_id(id)).nil?
     survey.save 

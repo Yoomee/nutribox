@@ -9,15 +9,19 @@
       %p
         =@order.box_name
         subscription.
-      %p You will receive one box per month until you cancel your subscription.
+      %p
+        You will receive one box
+        =@order.frequency
+        until you cancel your subscription.
     -else
-      %p="#{@order.box_name} for #{pluralize(@order.number_of_months,'month')}."
-      -if @order.number_of_months > 1
+      %p=@order.box_name
+      -if @order.number_of_deliveries_paid_for_each_billing > 1
         %p
           =@order.gift? ? "Your friend" : "You"
-          will receive one box per month for
-          =@order.number_of_months
-          months.
+          will receive one box
+          ="#{@order.frequency}."
+          =@order.number_of_deliveries_paid_for_each_billing
+          boxes will be delivered.
     -if @order.status == 'active' && @order.gift?
       =link_to(download_order_path(@order), :class => 'btn mb-1') do
         %i.icon-download-alt.mr-1
@@ -36,7 +40,7 @@
     %h4
       Cost
       -if @order.recurring? && @order.discounted?
-        for the first month
+        of the first payment
     -if @order.discounted?
       .row
         .span3
@@ -51,8 +55,8 @@
               %th Total
               %th.right="£#{@order.amount}"
       -if @order.recurring?
-        ="Then £#{Order.cost(@order.box_type,1)} per month after that."
+        ="Then £#{@order.cost} for each #{pluralize(@order.number_of_deliveries_paid_for_each_billing, 'box').gsub('1', '')} after that."
     -elsif @order.recurring?
-      ="£#{Order.cost(@order.box_type,1)} per month."
+      ="£#{@order.cost} per month."
     -else
       ="£#{@order.amount}"

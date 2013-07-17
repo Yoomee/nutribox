@@ -54,7 +54,7 @@
             .caption
               %small 8 - 10 snacks
               =image_tag('box-mini-1.png', :class => 'box-photo')
-              ="£#{theme.mini_price} / delivery"
+              ="from £#{theme.mini_price_for_six_deliveries} per box"
               =link_to 'Select', '#', :class => 'btn choose-btn', :data => { :box_type=> 'mini', :theme_id => theme.id }
 
         .span3.mt-2.mb-2.center
@@ -62,7 +62,7 @@
             .caption
               %small 16 - 20 snacks
               =image_tag('box-standard-1.png', :class => 'box-photo')
-              ="£#{theme.standard_price} / delivery"
+              ="from £#{theme.standard_price_for_six_deliveries} per box"
               =link_to 'Select', '#', :class => 'btn choose-btn', :data => { :box_type => 'standard', :theme_id => theme.id }
 
 -unless @order.gift?
