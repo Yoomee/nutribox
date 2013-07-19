@@ -18,7 +18,6 @@
         %th ID
         %th Customer
         %th Number of boxes paid for each billing
-        %th Repeatable?
         %th Delivery frequency
         %th Gift
         %th Comment
@@ -32,7 +31,6 @@
             =delivery.id
           %td="#{delivery.user.last_name}, #{delivery.user.first_name}"
           %td=delivery.number_of_months
-          %td=delivery.order.repeatable? ? 'Yes' : 'No'
           %td=delivery.order.frequency
           %td
             =delivery.gift? ? "Yes" : "No"

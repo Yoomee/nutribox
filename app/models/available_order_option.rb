@@ -28,6 +28,10 @@ class AvailableOrderOption < ActiveRecord::Base
     end
   end
 
+  def filename
+    name.gsub(' ', '-').downcase
+  end
+
   def to_s
     name
   end
