@@ -53,5 +53,5 @@ group :test do
   gem 'rb-fsevent', '~> 0.9.1'
   gem 'sqlite3'
   gem 'timecop'
-  gem 'rb-inotify', '~> 0.8.8'
+  gem 'rb-inotify', '~> 0.8.8', :require => false if RUBY_PLATFORM =~ /darwin/i
 end
