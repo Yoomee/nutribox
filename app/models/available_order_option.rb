@@ -2,8 +2,7 @@ class AvailableOrderOption < ActiveRecord::Base
 
   include YmCore::Model
 
-  has_many :order_options
-  has_many :orders, :through => :order_options
+  has_many :orders, :foreign_key => 'theme_id'
 
   amount_accessor :mini_price_for_one_delivery, :standard_price_for_one_delivery, :mini_price_for_three_deliveries
   amount_accessor :standard_price_for_three_deliveries, :mini_price_for_six_deliveries, :standard_price_for_six_deliveries
@@ -25,6 +24,10 @@ class AvailableOrderOption < ActiveRecord::Base
       box_type == 'mini' ? (mini_price_for_three_deliveries_in_pence * 3) : (standard_price_for_three_deliveries_in_pence * 3)
     when 6
       box_type == 'mini' ? (mini_price_for_six_deliveries_in_pence * 6) : (standard_price_for_six_deliveries_in_pence * 6)
+    when 12
+      box_type == 'mini' ? (mini_price_for_twelve_deliveries_in_pence * 12) : (standard_price_for_twelve_deliveries_in_pence * 12)
+    when 24
+      box_type == 'mini' ? (mini_price_for_twenty_four_deliveries_in_pence * 24) : (standard_price_for_twenty_four_deliveries_in_pence * 24)
     end
   end
 
