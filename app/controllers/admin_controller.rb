@@ -17,7 +17,7 @@ class AdminController < ApplicationController
   
   private
   def get_snippet
-    @snippet = YmSnippets::Snippet.find_by_slug(:home_page_image)
+    @snippet = YmSnippets::Snippet.find_by_slug('home_page_image')
   end
   
 end

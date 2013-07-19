@@ -21,7 +21,7 @@ gem "ym_core", "~>0.1.70"           #, :path => "~/Rails/Gems/ym_core"
 gem "ym_cms", "0.3.7"   #, :path => "~/Rails/Gems/ym_cms"
 gem "ym_users", "0.1.25"          #, :path => "~/Rails/Gems/ym_users"
 gem "ym_permalinks"     #, :path => "~/Rails/Gems/ym_permalinks"
-gem 'ym_snippets',     "~> 0.1.1"     #, :path => "~/Rails/Gems/ym_snippets"
+gem 'ym_snippets',     "~> 0.1.3"     #, :path => "~/Rails/Gems/ym_snippets"
 gem 'ym_enquiries',    "~> 0.1.3"     #, :path => "~/Rails/Gems/ym_enquiries"
 
 group :assets do
