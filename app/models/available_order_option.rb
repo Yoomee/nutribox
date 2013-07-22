@@ -4,13 +4,20 @@ class AvailableOrderOption < ActiveRecord::Base
 
   has_many :orders, :foreign_key => 'theme_id'
 
-  amount_accessor :mini_price_for_one_delivery, :standard_price_for_one_delivery, :mini_price_for_three_deliveries
-  amount_accessor :standard_price_for_three_deliveries, :mini_price_for_six_deliveries, :standard_price_for_six_deliveries
+  amount_accessor :mini_price_for_one_delivery, :standard_price_for_one_delivery
+  amount_accessor :mini_price_for_three_deliveries, :standard_price_for_three_deliveries
+  amount_accessor :mini_price_for_six_deliveries, :standard_price_for_six_deliveries
+  amount_accessor :mini_price_for_twelve_deliveries, :standard_price_for_twelve_deliveries
+  amount_accessor :mini_price_for_twelve_deliveries, :standard_price_for_twelve_deliveries
+  amount_accessor :mini_price_for_twenty_four_deliveries, :standard_price_for_twenty_four_deliveries
   image_accessor :image
 
-  validates :description, :image, :name, :presence => true
-  validates :mini_price_for_one_delivery, :standard_price_for_one_delivery, :mini_price_for_three_deliveries, :presence => true
-  validates :standard_price_for_three_deliveries, :mini_price_for_six_deliveries, :standard_price_for_six_deliveries, :presence => true
+  validates :name, :presence => true
+  validates :mini_price_for_one_delivery, :standard_price_for_one_delivery, :presence => true
+  validates :mini_price_for_three_deliveries, :standard_price_for_three_deliveries, :presence => true
+  validates :mini_price_for_six_deliveries, :standard_price_for_six_deliveries, :presence => true
+  validates :mini_price_for_twelve_deliveries, :standard_price_for_twelve_deliveries, :presence => true
+  validates :mini_price_for_twenty_four_deliveries, :standard_price_for_twenty_four_deliveries, :presence => true
 
   def cost(box_type, number_of_deliveries_paid_for_each_billing)
     YmCore::Model::AmountAccessor::Float.new((self.cost_in_pence(box_type, number_of_deliveries_paid_for_each_billing).to_f / 100).round(2))
@@ -40,3 +47,5 @@ class AvailableOrderOption < ActiveRecord::Base
   end
 
 end
+AvailableOrderOption::DURATIONS = [[1, 'one_delivery'], [3, 'three_deliveries'], [6, 'six_deliveries'], [12, 'twelve_deliveries'], [24, 'twenty_four_deliveries']]
+AvailableOrderOption::SIZES = %w{standard mini}
