@@ -15,9 +15,9 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   attr_accessor :login_email, :login_password
   boolean_accessor :editing_by_admin
 
-  validates :box_type, :theme_id, :presence => true, :if => :current_step_box?
+  validates :theme_id, :presence => true, :if => :current_step_box?
   validates :frequency, :presence => true, :inclusion=> { :in => Order::FREQUENCIES }, :if => :current_step_frequency?
-  validates :number_of_deliveries_paid_for_each_billing, :presence => true, :if => :current_step_frequency?
+  validates :box_type, :number_of_deliveries_paid_for_each_billing, :presence => true, :if => :current_step_frequency?
   validates :user, :delivery_address1, :delivery_city, :delivery_postcode, :delivery_country,  :presence => true, :if => :current_step_delivery?
   #validates :delivery_postcode, :postcode => true, :if => :current_step_delivery?, :allow_blank => true
   validates :billing_address1, :billing_city, :billing_postcode, :billing_country,  :presence => true, :if => :current_step_billing?
@@ -25,7 +25,7 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   validate  :credit_card_is_valid, :if => :current_step_billing? 
   
   before_create :set_hash_id
-  before_validation :set_full_price_amount_and_amount
+  before_validation :set_amount
   before_validation :set_billing_name
   before_validation :set_shipping_week
   before_save :nullify_discount_code_code_if_invalid
@@ -139,6 +139,10 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
     "#{theme} #{ box_type == 'mini' ? 'Mini' : '' }"
   end
 
+  def box_name_from_size(size)
+    "#{theme} #{ size == 'mini' ? 'Mini' : '' }"
+  end
+
   # def box_name_with_options
   #   if options.present?
   #     box_name + " (#{options.join(', ')})"
@@ -147,14 +151,14 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   #   end
   # end
 
-  # def box_type_and_number_of_deliveries_paid_for_each_billing
-  #   [box_type,number_of_deliveries_paid_for_each_billing].compact.join('-')
-  # end
+  def box_type_and_number_of_deliveries_paid_for_each_billing
+    [box_type,number_of_deliveries_paid_for_each_billing].compact.join('-')
+  end
   
-  # def box_type_and_number_of_deliveries_paid_for_each_billing=(value)
-  #   self.box_type, self.number_of_deliveries_paid_for_each_billing = value.split('-')
-  #   self.full_price_amount_in_pence = Order.cost_in_pence(box_type,number_of_deliveries_paid_for_each_billing)
-  # end
+  def box_type_and_number_of_deliveries_paid_for_each_billing=(value)
+    self.box_type, self.number_of_deliveries_paid_for_each_billing = value.split('-')
+    self.full_price_amount_in_pence = theme.cost_in_pence(box_type, number_of_deliveries_paid_for_each_billing)
+  end
   
   # def cost(box_type, number_of_deliveries_paid_for_each_billing)
   #   if discount_code.try(:available?)
@@ -204,7 +208,7 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   end
   
   def discount_in_pence
-    return 0 unless box_type.present? && discount_code.try(:available_to?,user)
+    return 0 unless box_type.present? && theme.present? && discount_code.try(:available_to?,user)
     (discount_code.fraction * theme.cost_in_pence(box_type, 1)).ceil
   end
   
@@ -251,7 +255,7 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   def sage_pay_id
     vps_transaction_id.to_s.gsub(/[{}]/,'').presence
   end
-  
+
   def status_class(prefix = "")
     prefix + case status
     when "active" then "success"
@@ -406,10 +410,9 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
     self.billing_name = credit_card.name
   end
   
-  def set_full_price_amount_and_amount
+  def set_amount
     # Only change amount if it hasn't been charged
-    if vps_transaction_id.blank? && number_of_deliveries_paid_for_each_billing.present?
-      self.full_price_amount_in_pence = theme.cost_in_pence(box_type, number_of_deliveries_paid_for_each_billing)
+    if vps_transaction_id.blank? && full_price_amount_in_pence.present?
       self.amount_in_pence = full_price_amount_in_pence - discount_in_pence.to_i
     end
   end

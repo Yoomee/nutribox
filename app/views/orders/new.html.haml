@@ -15,6 +15,7 @@
             =form.hidden_field :theme_id
             =form.hidden_field :box_type
             =form.hidden_field :current_step
+            =form.hidden_field :gift
             #box_step{:class => @order.current_step_box? ? '' : 'hide'}
               =render("orders/steps/box", :form => form)
             #frequency_step{:class => @order.current_step_frequency? ? '' : 'hide'}

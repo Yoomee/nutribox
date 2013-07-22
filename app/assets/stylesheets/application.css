@@ -1093,26 +1093,38 @@ h3.box-title {
   margin:0px;
 }
 
-#discount-bar {
+#discount-bar,
+#delivery-bar {
   background: url(/assets/discount-bar.png) top center;
   border: none;
   margin-top: 10px;
   
    
 }
-
+#delivery-bar {
+  margin-left: 40px;
+  margin-top: 30px;
+}
 .discount-bar-left,
 .discount-bar-center,
-.discount-bar-right{
+.discount-bar-right,
+.delivery-bar-left,
+.delivery-bar-right {
   float:left;
 }
-.discount-bar-left{
+.discount-bar-left,
+.delivery-bar-left {
   width: 200px;
   padding-top:2px;
   margin: 0 0 0 10px;
 }
-.discount-bar-left h2 {
+.discount-bar-left h2,
+.delivery-bar-left h2 {
   font-size: 25px;
+  color: #fff;
+}
+#delivery-bar label {
+  font-size: 16px;
   color: #fff;
 }
 .discount-bar-center{
@@ -1278,7 +1290,8 @@ background: none;
 	float: right;
 	text-align: right;
 }
-.order-step-box .secure-padlock {
+.order-step-box .secure-padlock,
+.order-step-frequency .secure-padlock {
   display: none;
 }
 
@@ -1294,17 +1307,23 @@ background: none;
   text-align: center;
   margin-bottom: 20px;
 }
-.choose-box-corporate {
+.choose-box-corporate,
+.choose-box-theme {
   width: 95%%;
   margin-bottom: 60px;
 }
 .box-illustration {
   height: 160px;
 }
-.choose-btn {
+.choose-btn,
+input[type="submit"].choose-btn {
   width: 100%;
   padding: 10px 0;
   margin: 0 0 10px;
+}
+input[type="submit"].size-btn,
+.theme-btn {
+  width: 40%;
 }
 .choose-price {
   font-size: 20px;

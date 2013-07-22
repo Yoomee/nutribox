@@ -1,15 +1,13 @@
 -content_for :head do
   :javascript
     $(document).ready(function() {
-      $('a.choose-btn').click(function(event){
+      $('a.theme-btn').click(function(event){
         event.preventDefault();
         $('#order_theme_id').val($(this).data('theme-id'));
-        $('#order_box_type').val($(this).data('box-type'));
-
         $('form.order').submit();
       });
     });
-=form.hidden_field :gift
+
 .row
   .span10
     %p
@@ -35,35 +33,18 @@
 
 -@themes.each do |theme|
   .row
-    .span10.choose-box.choose-box-corporate
+    .span10.choose-box.choose-box-theme
       .row
         .span4.center
+          =image_tag('box-standard-1.png', :class => 'box-photo')
+          =image_for(theme, '120x', :class => 'box mb-2')
+        .span6.mb-2
           %h3.mt-1=theme.name
-          =image_for(theme, '100x100#')
           %p=raw(theme.description)
-          %p.free-delivery Free delivery
-          -unless @order.gift?
-            .choose-smallprint
-              %ul.unstyled
-                %p
-                  Billed monthly.
-                  %br
-                  Cancel anytime
-        .span3.mt-2.mb-2.center
-          .thumbnail
-            .caption
-              %small 8 - 10 snacks
-              =image_tag('box-mini-1.png', :class => 'box-photo')
-              ="from £#{theme.mini_price_for_six_deliveries} per box"
-              =link_to 'Select', '#', :class => 'btn choose-btn', :data => { :box_type=> 'mini', :theme_id => theme.id }
-
-        .span3.mt-2.mb-2.center
-          .thumbnail
-            .caption
-              %small 16 - 20 snacks
-              =image_tag('box-standard-1.png', :class => 'box-photo')
-              ="from £#{theme.standard_price_for_six_deliveries} per box"
-              =link_to 'Select', '#', :class => 'btn choose-btn', :data => { :box_type => 'standard', :theme_id => theme.id }
+          %p
+            .free-delivery Free delivery
+            ="from £#{theme.mini_price_for_six_deliveries} per box"
+          =link_to 'Select', '#', :class => 'btn choose-btn theme-btn', :data => { :theme_id => theme.id }
 
 -unless @order.gift?
   .row
