@@ -1779,5 +1779,8 @@ color: #99b936;
   background: #3b5998;
 }
 
+/* ====================== Available order options form ====================== */
 
-
+form.available_order_option table .controls {
+  margin-left: 50px;
+}

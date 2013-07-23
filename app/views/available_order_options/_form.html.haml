@@ -10,15 +10,28 @@
     =form.input :image, :as => :image
     .clearfix
     =form.input :description, :as => :redactor
-    =form.input :mini_price_for_one_delivery, :prepend => '£', :placeholder => '10.00', :label => 'Price per mini box when paying for one delivery'
-    =form.input :standard_price_for_one_delivery, :prepend => '£', :placeholder => '10.00', :label => 'Price per standard box when paying for one delivery'
-    =form.input :mini_price_for_three_deliveries, :prepend => '£', :placeholder => '10.00', :label => 'Price per mini box when paying for three deliveries'
-    =form.input :standard_price_for_three_deliveries, :prepend => '£', :placeholder => '10.00', :label => 'Price per standard box when paying for three deliveries'
-    =form.input :mini_price_for_six_deliveries, :prepend => '£', :placeholder => '10.00', :label => 'Price per mini box when paying for six deliveries'
-    =form.input :standard_price_for_six_deliveries, :prepend => '£', :placeholder => '10.00', :label => 'Price per standard box when paying for six deliveries'
-    =form.input :mini_price_for_twelve_deliveries, :prepend => '£', :placeholder => '10.00', :label => 'Price per mini box when paying for twelve deliveries'
-    =form.input :standard_price_for_twelve_deliveries, :prepend => '£', :placeholder => '10.00', :label => 'Price per standard box when paying for twelve deliveries'
-    =form.input :mini_price_for_twenty_four_deliveries, :prepend => '£', :placeholder => '10.00', :label => 'Price per mini box when paying for twenty four deliveries'
-    =form.input :standard_price_for_twenty_four_deliveries, :prepend => '£', :placeholder => '10.00', :label => 'Price per standard box when paying for twenty four deliveries'
+    %h4 Prices per box
+    %table
+      %tr
+        %th
+        %th one box
+        %th three boxes
+        %th six boxes
+        %th twelve boxes
+        %th twenty four boxes
+      %tr
+        %th mini
+        %td=form.input :mini_price_for_one_delivery, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :mini_price_for_three_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :mini_price_for_six_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :mini_price_for_twelve_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :mini_price_for_twenty_four_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+      %tr
+        %th standard
+        %td=form.input :standard_price_for_one_delivery, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :standard_price_for_three_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :standard_price_for_six_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :standard_price_for_twelve_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :standard_price_for_twenty_four_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
   =form.buttons do
     =form.commit_button "Save"
