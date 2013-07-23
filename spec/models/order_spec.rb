@@ -35,7 +35,7 @@ describe Order do
     it "should take payment and have the correct number of deliveries paid for" do      
       order.take_payment!
       order.vps_transaction_id.should_not be_blank
-      order.number_of_deliveries_paid_for.should eq(order.number_of_months)
+      order.number_of_deliveries_paid_for.should eq(order.number_of_deliveries_paid_for_each_billing)
     end
     
     it "should take repeat payment and have the correct number of deliveries paid for" do
@@ -44,7 +44,7 @@ describe Order do
       RepeatPayment.any_instance.stub(:order_number).and_return("TESTR#{Time.now.to_i}")
       order.take_repeat_payment!
       order.reload
-      order.number_of_deliveries_paid_for.should eq(2 * order.number_of_months)
+      order.number_of_deliveries_paid_for.should eq(2 * order.number_of_deliveries_paid_for_each_billing)
     end
   end
   

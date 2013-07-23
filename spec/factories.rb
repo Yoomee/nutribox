@@ -1,9 +1,10 @@
 FactoryGirl.define do
   
   factory :order do |f|  
-    f.box_type Order::COST_MATRIX.keys.first.to_s
-    f.number_of_months 1
-    f.full_price_amount_in_pence Order.cost_in_pence(Order::COST_MATRIX.keys.first.to_s,1)
+    f.box_type 'standard'
+    f.theme_id 1
+    f.number_of_deliveries_paid_for_each_billing 1
+    f.full_price_amount_in_pence 1395
     f.delivery_address1 '6 Aldreth Grove'
     f.delivery_city 'York'
     f.delivery_postcode 'YO23 1LB'
