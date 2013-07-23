@@ -17,5 +17,20 @@ FactoryGirl.define do
     f.email "charles@barrett.com"
     f.password "password"
   end
+
+  factory :available_order_option do |f|
+   f.name 'The Nutribox'
+   f.position 1
+   f.mini_price_for_one_delivery_in_pence 1395
+   f.standard_price_for_one_delivery_in_pence 2700
+   f.mini_price_for_three_deliveries_in_pence 1295
+   f.standard_price_for_three_deliveries_in_pence 2500
+   f.mini_price_for_six_deliveries_in_pence 1195
+   f.standard_price_for_six_deliveries_in_pence 2300
+   f.mini_price_for_twelve_deliveries_in_pence 1150
+   f.standard_price_for_twelve_deliveries_in_pence 2200
+   f.mini_price_for_twenty_four_deliveries_in_pence 1095
+   f.standard_price_for_twenty_four_deliveries_in_pence 210
+  end
   
 end
