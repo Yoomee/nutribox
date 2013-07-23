@@ -38,5 +38,14 @@ namespace :nutribox do
     end
   end
   
-  
+  desc 'test rake task'
+  task :test => :environment do
+    test_logger = Logger.new("#{Rails.root}/log/test.log")
+    test_logger.info "\n\n____________________________________________________"
+    test_logger.info "Testing rake - #{Time.now}"
+    (1..10).to_a.each do |x|
+      test_logger.info x
+    end
+  end
+
 end
