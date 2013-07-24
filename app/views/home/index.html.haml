@@ -1,3 +1,12 @@
+-content_for :head do
+  :javascript
+    $(document).ready(function() {
+      $('.slideshow').cycle(
+
+      
+      );
+    });
+
 .container
 .home-header
   .container
@@ -44,8 +53,17 @@
                 works
           -if @home_page_image.try(:image)
             #front-page-image.span6
-              =link_to @home_page_image.text do
-                =image_tag @home_page_image.image.thumb('460x313').url
+              .slideshow
+                .slideshow-item
+                  =image_tag("my-nutribox/1-polly-noble.jpg")
+                  %p
+                    %span Polly Noble - Author 
+                    “Perfect for the busy person. Healthy snacks delivered to your door - what more could you want?!”
+                .slideshow-item
+                  =image_tag("my-nutribox/2-julius-francis.jpg")
+                  %p
+                    %span Julius Francis - Boxer 
+                    “I like The Nutribox because it makes it so easy to get a healthy snack while you're training.”            
           -else      
             =link_to "Give a gift", gift_path, :class=>"christmas-link span6"
           

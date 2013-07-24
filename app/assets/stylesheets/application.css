@@ -54,6 +54,29 @@
 .fade_in.fade_five {-webkit-animation-delay: 0, 1.2s;}
 .fade_in.fade_six {-webkit-animation-delay: 0, 1.5s;}
 
+.slideshow, .slideshow-item{
+  height:310px;
+}
+
+.slideshow-item img{
+  position:absolute;
+  z-index: -1;
+}
+
+.slideshow-item p{
+  background-color:#fff;
+  position:relative;
+  top:258px;
+  left: 0;
+  padding: 3px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.slideshow-item p span{
+  font-weight:bold;
+}
+
 /* ========== Fonts ========== */
 
 @font-face {
