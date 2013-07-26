@@ -1,10 +1,9 @@
 -content_for :head do
   :javascript
     $(document).ready(function() {
-      $('.slideshow').cycle(
-
-      
-      );
+      $('.slideshow-my-nutribox').cycle({
+        speed:5000
+      });
     });
 
 .container
@@ -53,17 +52,67 @@
                 works
           -if @home_page_image.try(:image)
             #front-page-image.span6
-              .slideshow
+              .slideshow-my-nutribox
                 .slideshow-item
                   =image_tag("my-nutribox/1-polly-noble.jpg")
-                  %p
+                  %p.larger-text
                     %span Polly Noble - Author 
                     “Perfect for the busy person. Healthy snacks delivered to your door - what more could you want?!”
                 .slideshow-item
                   =image_tag("my-nutribox/2-julius-francis.jpg")
-                  %p
+                  %p.larger-text
                     %span Julius Francis - Boxer 
-                    “I like The Nutribox because it makes it so easy to get a healthy snack while you're training.”            
+                    “I like The Nutribox because it makes it so easy to get a healthy snack while you're training.”
+                .slideshow-item
+                  =image_tag("my-nutribox/3-edward-chapman.jpg")
+                  %p
+                    %span Edward Chapman - Agent & Distributor and Ultra Distance Runner
+                    “Eating well is a big part of keeping my body healthy for challenging multi-day events.”
+                .slideshow-item
+                  =image_tag("my-nutribox/4-laura-agar-wilson.jpg")
+                  %p
+                    %span Laura Agar Wilson - Holistic Health Coach and Blogger
+                    “I love getting parcels in the post! The box contains a great range of snacks that would be difficult to get hold of otherwise."
+                .slideshow-item
+                  =image_tag("my-nutribox/5-nichola-whitehead.jpg")
+                  %p
+                    %span Nichola Whitehead - Specialist Dietician and Blogger
+                    "I love receiving raw chocolate/seed/fruit/nut bites. They're a tasty treat but are really good for you!"
+                .slideshow-item
+                  =image_tag("my-nutribox/6-ben-healey.jpg")
+                  %p
+                    %span Ben Healey - Sports Marketing Assistant
+                    “A new healthy snacking option to support me during my university studies and stop me from buying expensive, unhealthy snacks.”
+                .slideshow-item
+                  =image_tag("my-nutribox/7-heather-adamson.jpg")
+                  %p
+                    %span Heather Adamson – Student and Blogger
+                    “You don't know what you are going to receive but you can put your trust in the fact that it will be healthy, good for you and delicious.”
+                .slideshow-item
+                  =image_tag("my-nutribox/8-richard-hookham.jpg")
+                  %p.larger-text
+                    %span Richard Hookham - Retired Teacher and Keen Runner
+                    “It's like Christmas each month with The Nutribox!”
+                .slideshow-item
+                  =image_tag("my-nutribox/10-peter-mayne.jpg")
+                  %p
+                    %span Peter Mayne - University Lecturer and Cyclist
+                    “It's a quick and easy way for me to always have healthy snacks available whether I'm at work or on my bike.”
+                .slideshow-item
+                  =image_tag("my-nutribox/11-ros-arksey.jpg")
+                  %p.larger-text
+                    %span Ros Arksey - Communications Specialist
+                    "I do lots of exercise so I want to put the right foods in to get the best out."
+                .slideshow-item
+                  =image_tag("my-nutribox/12-tamzin-pettitt.jpg")
+                  %p
+                    %span Tamzin Pettitt – Personal Trainer and Nutritionist
+                    “I love my Nutribox because it saves me having to go out of my way to try and find snacks that are gluten free and healthy."
+                .slideshow-item
+                  =image_tag("my-nutribox/13-lucy-chan.jpg")
+                  %p
+                    %span Lucy Chan - Health Care Professional
+                    “Finding treats which are healthy means that I can indulge without guilt and these healthy snacks help to fuel my active lifestyle.”
           -else      
             =link_to "Give a gift", gift_path, :class=>"christmas-link span6"
           

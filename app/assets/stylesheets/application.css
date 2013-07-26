@@ -54,27 +54,36 @@
 .fade_in.fade_five {-webkit-animation-delay: 0, 1.2s;}
 .fade_in.fade_six {-webkit-animation-delay: 0, 1.5s;}
 
-.slideshow, .slideshow-item{
+.slideshow-my-nutribox, .slideshow-item{
   height:310px;
+  width:460px;
+  position:relative;
 }
 
 .slideshow-item img{
   position:absolute;
-  z-index: -1;
+  z-index:0;  
+  left: 0;
 }
 
 .slideshow-item p{
   background-color:#fff;
-  position:relative;
-  top:258px;
+  position:absolute;
+  bottom:0;
   left: 0;
+  right:0;
   padding: 3px;
-  font-size: 16px;
+  font-size: 14px;
   text-align: center;
+  -webkit-margin-after:0;
 }
 
 .slideshow-item p span{
-  font-weight:bold;
+  font-family: 'Museo Sans W01 700', arial, sans-serif;
+}
+
+.slideshow-item p.larger-text{
+  font-size:16px;
 }
 
 /* ========== Fonts ========== */
