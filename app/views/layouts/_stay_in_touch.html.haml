@@ -10,21 +10,21 @@
             =form_tag('/newsletter/subscribe') do #'http://thenutribox.us6.list-manage1.com/subscribe/post?u=44bdbc0e5b3036d3b03028268&amp;id=f573663757') do
               %input#email-signup-input{:name => "email", :type=>"text", :placeholder=>"your email address"}
               =submit_tag("Submit", :class=>'btn email-signup-button')
-        =link_to "https://twitter.com/intent/follow?screen_name=thenutribox", :class=>"twitter-btn social-media-btn follow-twitter" do
+        =link_to "https://twitter.com/intent/follow?screen_name=thenutribox", :rel => "nofollow", :class=>"twitter-btn social-media-btn follow-twitter" do
           %i.icon-twitter
           %span
             Twitter          
-        =link_to "https://plus.google.com/u/1/108471056834850272863/posts", :target=>"_blank", :class=>"google-plus-btn social-media-btn" do
+        =link_to "https://plus.google.com/u/1/108471056834850272863/posts", :rel => "nofollow", :target=>"_blank", :class=>"google-plus-btn social-media-btn" do
           %i.icon-google-plus
           %span
             Google+
-        =link_to "http://www.linkedin.com/company/the-nutribox", :target=>"_blank", :class=>"linkedin-btn social-media-btn" do
+        =link_to "http://www.linkedin.com/company/the-nutribox", :rel => "nofollow", :target=>"_blank", :class=>"linkedin-btn social-media-btn" do
           %i.icon-linkedin
           %span
             LinkedIn
             
       #facebook-box.span6
-        =link_to "http://facebook.com/thenutribox", :target=>"_blank", :class=>"facebook-btn social-media-btn" do
+        =link_to "http://facebook.com/thenutribox", :rel => "nofollow", :target=>"_blank", :class=>"facebook-btn social-media-btn" do
           %i.icon-facebook
           %span
             Facebook

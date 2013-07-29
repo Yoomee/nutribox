@@ -9,7 +9,7 @@ module ShareHelper
       :description => options[:share_description],
       :picture => options[:share_picture]
     }
-    link_to("<icon class='icon-facebook'></icon> #{options[:text]}".html_safe, "https://www.facebook.com/dialog/feed?#{share_params.to_query}", :target => "_blank", :class => 'btn share-link facebook-share-link')
+    link_to("<icon class='icon-facebook'></icon> #{options[:text]}".html_safe, "https://www.facebook.com/dialog/feed?#{share_params.to_query}", :rel => "nofollow", :target => "_blank", :class => 'btn share-link facebook-share-link')
   end
   
   
@@ -21,7 +21,7 @@ module ShareHelper
       :via => "thenutribox",
       :related => "thenutribox"
     }
-    link_to("<icon class='icon-twitter'></icon> #{options[:text]}".html_safe, "https://twitter.com/intent/tweet?#{share_params.to_query}", :target => "_blank",  :class => 'btn share-link twitter-share-link')
+    link_to("<icon class='icon-twitter'></icon> #{options[:text]}".html_safe, "https://twitter.com/intent/tweet?#{share_params.to_query}", :rel => "nofollow", :target => "_blank",  :class => 'btn share-link twitter-share-link')
   end
   
   
@@ -34,7 +34,7 @@ module ShareHelper
     })
     options[:class] = "twitter-share-button #{options[:class]}".strip
     "".tap do |out|
-      out << link_to(options[:link_text], "http://twitter.com/share", :class=>"twitter-share-button", :data => options.slice(:count, :url, :text, :via, :related))
+      out << link_to(options[:link_text], "http://twitter.com/share", :rel => "nofollow", :class=>"twitter-share-button", :data => options.slice(:count, :url, :text, :via, :related))
       unless @included_twitter_widgets_js
         out << javascript_include_tag('https://platform.twitter.com/widgets.js')
         @included_twitter_widgets_js = true
@@ -53,7 +53,7 @@ module ShareHelper
       :height => 20,
       :appId => Settings.facebook_app_id
     }
-    content_tag(:iframe, '', :src => "//www.facebook.com/plugins/like.php?href=#{Settings.site_url + url_for(resource)}&#{url_options.to_query}", :scrolling => "no", :frameborder => "0", :allowTransparency => true, :style => "border:none; overflow:hidden; width:90px; height:20px;")
+    content_tag(:iframe, '', :src => "//www.facebook.com/plugins/like.php?href=#{Settings.site_url + url_for(resource)}&#{url_options.to_query}", :rel => "nofollow", :scrolling => "no", :frameborder => "0", :allowTransparency => true, :style => "border:none; overflow:hidden; width:90px; height:20px;")
   end
 end
 
@@ -64,7 +64,7 @@ def pinterest_pin_button(resource)
       :description => resource.to_s
     }
 
-    link_to "//pinterest.com/pin/create/button/?#{url_options.to_query}", :"data-pin-do" => "buttonPin", :"data-pin-config" => "above"  do
+    link_to "//pinterest.com/pin/create/button/?#{url_options.to_query}", :rel => "nofollow", :"data-pin-do" => "buttonPin", :"data-pin-config" => "above"  do
       image_tag("//assets.pinterest.com/images/pidgets/pin_it_button.png")
     end
 end
