@@ -13,6 +13,7 @@
  *= require sticky-footer 
  *= require_self
  *= require mobile
+ *= require chosen
  
 */
 
@@ -1435,6 +1436,15 @@ margin-left: 40px ;
   width: 558px;
   clear: both; 	
   border-bottom: 1px solid #99b936;
+}
+
+.related-posts h2.related-title{
+  margin-left:20px;
+}
+
+.external-related-links a{
+  display:block;
+  margin:10px 0 5px 0;
 }
 
 .post-summary-left {

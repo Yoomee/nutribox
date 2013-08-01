@@ -14,6 +14,10 @@ class AdminController < ApplicationController
       redirect_to root_path
     end
   end
+
+  def related_articles
+    authorize! :admin, :related_articles
+  end
   
   private
   def get_snippet
