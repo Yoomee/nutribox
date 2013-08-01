@@ -1801,6 +1801,12 @@ color: #99b936;
 .share-btn-facebook:hover {
   background: #3b5998;
 }
+/*--------Pages--------*/
 
+#page_related_pages_input.select.control-group.optional div.controls{
+  height:300px;
+}
 
-
+#page_related_pages_input.select.control-group.optional div.controls input.default{
+  width:185px !important;
+}

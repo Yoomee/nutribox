@@ -6,6 +6,6 @@
 %hr
 =semantic_form_for(@page, :multipart => true) do |form|
   =#render(['pages/tabs/details', 'pages/tabs/related_link_tab'], :form => form)
-  =tabs('details',['related_links', "Related Pages"], :form => form)
+  =@page.parent.try(:slug) == "blog" ? tabs('details',['related_links', "Related Pages"], :form => form) : tabs('details', :form => form)
   =form.buttons do
     =form.commit_button "Save", :button_html => {:class => "pull-right"}
