@@ -56,7 +56,7 @@
           =options_panel do
             =link_if_can("Edit post", [:edit, @page])
             =link_if_can("Delete post", [:destroy, @page], :confirm => "Are you sure?") unless @page.slug.present?
-            =link_if_can("New post", [:new, Page.new])
+            =link_if_can("New blog post", new_page_path(:parent => Page.find_by_slug("blog").id))
           .clearfix
                 
       #blog_right_col.span4
@@ -87,11 +87,8 @@
                 %p Related
                 .ul.unstyled
                 -@related_external_links.each do |link|
-                  %li.related-link-item.mt-2
-                    =image_for(link, "100x")
-                    =link_to link.title, link.url
-                    %p
-                      =link.description
+                  %li.related-link-item.mt-2                    
+                    =link_to link.title, link.url                 
 
         -#
           #blog_archive.blog_box
