@@ -14,6 +14,8 @@
 #= require jquery.cycle
 #= require jquery.smooth-scroll
 #= require twitter
+#= require cocoon
+#= require chosen.jquery
 
 
 $(document).ready ->

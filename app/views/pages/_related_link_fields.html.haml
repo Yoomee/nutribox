@@ -1,0 +1,7 @@
+.nested-fields
+  = f.inputs do
+    = f.input :url
+    = f.input :title
+    = f.input :description
+    = f.input :image, :as => :image
+    = link_to_remove_association "Remove link", f

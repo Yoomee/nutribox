@@ -14,10 +14,15 @@ class AdminController < ApplicationController
       redirect_to root_path
     end
   end
+
+  def related_articles
+    authorize! :admin, :related_articles
+  end
   
   private
   def get_snippet
     @snippet = YmSnippets::Snippet.find_by_slug(:home_page_image)
+    @snippets = YmSnippets::Snippet.all
   end
   
 end

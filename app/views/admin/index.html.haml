@@ -12,9 +12,8 @@
     %h2.mt-3.mb-1 Text snippets
     %ul.unstyled
       %li=link_to("Manage text snippets", snippets_path)
+      %li=link_to("Manage box month intro snippets", box_month_intro_path)
       %li=link_to("Change home page image", home_page_admin_path)
-
-
     
     %h2.mt-3.mb-1 Archive
     %ul.unstyled
@@ -48,4 +47,7 @@
               %i.icon-asterisk
       %i.icon-asterisk
       Not yet downloaded
-    
+
+    %h2.mt-3.mb-1 Manage related articles
+    %ul.unstyled
+      %li=link_to("Blog post related articles", blog_post_related_articles_path)  

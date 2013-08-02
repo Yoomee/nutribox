@@ -1,0 +1,17 @@
+=content_for(:head) do
+  :javascript
+    $(document).ready(function() {
+      $("select#page_related_page_ids").chosen({width: "95%", allow_single_deselect: true}); 
+    });
+
+-if @page.parent.try(:slug) == "blog"
+  / =form.semantic_fields_for :page_connections
+  =hidden_field_tag 'page[related_page_ids][]'
+  =form.input :related_pages, :collection => Page.where(:parent_id => '4'), :label => "Related internal blog posts"
+  %hr
+  %label Related external links
+  #related-links
+    =form.semantic_fields_for :related_links do |related_link|
+      =render 'related_link_fields', :f => related_link
+    .links
+      =link_to_add_association 'Add new external link for this page', form, :related_links
