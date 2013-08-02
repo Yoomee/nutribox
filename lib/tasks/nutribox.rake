@@ -13,7 +13,7 @@ namespace :nutribox do
         end
       end
       Order.active.reload
-      ShippingDate.create(:date => Date.today)
+      shipping_date = ShippingDate.create(:date => Date.today)
       shipping_list_logger.info "Created shipping_date ##{shipping_date.id}"
     end
   end  
