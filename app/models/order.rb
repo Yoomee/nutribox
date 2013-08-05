@@ -2,11 +2,11 @@ class Order < ActiveRecord::Base
   include YmCore::Model
   include YmCore::Multistep
   include Xero::Order
-    
+
   belongs_to :user
-  has_many :deliveries
+  has_many :deliveries, :dependent => :destroy
   has_many :order_options
-  has_many :options, :through => :order_options, :class_name => 'AvailableOrderOption', :source => :available_order_option
+  has_many :options, :through => :order_options, :class_name => 'AvailableOrderOption', :source => :available_order_option, :dependent => :destroy
   has_many :repeat_payments
   amount_accessor :amount, :full_price_amount
   
@@ -23,7 +23,7 @@ class Order < ActiveRecord::Base
   before_create :set_hash_id
   before_validation :set_amount
   before_validation :set_billing_name
-  before_validation :set_shipping_day
+  before_validation :set_shipping_week
   before_save :nullify_discount_code_code_if_invalid
   belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
   
@@ -35,9 +35,19 @@ class Order < ActiveRecord::Base
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
   scope :repeatable_for_shipping_day, lambda {|day| active.where(:gift => false, :number_of_months => 1, :shipping_day => day).where("DATE(orders.created_at) < ?", Date.today.change(:day => day) - 1.month)}
   scope :repeatable_for_shipping_day_with_3_or_6_months, lambda {|day| active.where(:gift => false, :shipping_day => day).where('number_of_months = 1 OR (number_of_months IN (3, 6) AND orders.created_at > ?)', Time.parse('11/04/2013')).where("(number_of_months = 1 AND DATE(orders.created_at) < ?) OR (number_of_months = 3 AND DATE(orders.created_at) < ?) OR  (number_of_months = 6 AND DATE(orders.created_at) < ?)", Date.today.change(:day => day) - 1.month, Date.today.change(:day => day) - 3.month, Date.today.change(:day => day) - 6.month)}
-  
+  scope :repeatable, active.where(:gift => false).where('number_of_months <> 12').where('deliveries_count >= number_of_deliveries_paid_for')
+
   class << self
     
+    def repeatable_by_week(date)
+      date_for_correct_week = date - 1.day
+      if date_for_correct_week.shipping_week == 4 && !date_for_correct_week.five_fridays_in_month?
+        repeatable.where(:shipping_week => [4, 5])
+      else
+        repeatable.where(:shipping_week => date_for_correct_week.shipping_week)
+      end
+    end
+
     def number_of_snacks(box_type)
       case box_type
       when "mini" then "8-10"
@@ -107,13 +117,13 @@ class Order < ActiveRecord::Base
     self.class.box_name(box_type)
   end
 
-def box_name_with_options
-  if options.present?
-    box_name + " (#{options.join(', ')})"
-  else
-    box_name
+  def box_name_with_options
+    if options.present?
+      box_name + " (#{options.join(', ')})"
+    else
+      box_name
+    end
   end
-end
 
   def box_type_and_number_of_months
     [box_type,number_of_months].compact.join('-')
@@ -187,14 +197,9 @@ end
   end
   
   def next_shipping_date(date = Date.today)
-    return Date.new(2013, 1, 11) if (created_at || date).year == 2012
-    if date.day < shipping_day
-      # Hasn't been shipped yet this month
-      date.change(:day => shipping_day)
-    else
-      # Will be shipped next month
-      (date >> 1).change(:day => shipping_day)
-    end
+    # Next friday
+    date += 7.days if date.wday == 5
+    date + (5 - date.wday) % 7
   end
   
   def order_number
@@ -279,7 +284,7 @@ end
       related[:id] = order_number
       sage_pay_response = gateway.repeat(
         full_price_amount_in_pence,
-        :order_id => (Rails.env.development? ? "devR#{repeat.id}" : "NBR#{repeat.id}"),
+        :order_id => repeat.order_number,
         :related_transaction => related
       )
       begin
@@ -351,11 +356,19 @@ end
   def process_response(sage_pay_response,transaction)
     logger.info sage_pay_response.inspect
     if sage_pay_response.success?
-      transaction.update_attributes(
+      transaction_attributes = {
       :vps_transaction_id => sage_pay_response.params["VPSTxId"],
       :security_key => sage_pay_response.params["SecurityKey"],
       :transaction_auth_number => sage_pay_response.params["TxAuthNo"]
-      )
+      }
+      order = transaction.is_a?(Order) ? transaction : transaction.order
+      new_number_of_deliveries_paid_for = (order.number_of_deliveries_paid_for.to_i + order.number_of_months)
+      if transaction.is_a?(Order)
+        transaction_attributes[:number_of_deliveries_paid_for] = new_number_of_deliveries_paid_for
+      else
+        order.update_attributes(:number_of_deliveries_paid_for => new_number_of_deliveries_paid_for)
+      end
+      transaction.update_attributes(transaction_attributes)
     else
       raise Order::PaymentError, sage_pay_response.message
     end
@@ -371,17 +384,13 @@ end
       self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
     end
   end
-  
-  def set_shipping_day
-    return true if shipping_day.present?
+
+  def set_shipping_week
+    return true if shipping_week.present?
     order_date = (created_at || Time.now)
-    if order_date.year == 2012
-      self.shipping_day = 11
-    else
-      self.shipping_day = (order_date.day.between?(2,15) ? 25 : 11)
-    end
+    self.shipping_week = order_date.to_date.shipping_week
   end
-  
+
   def nullify_discount_code_code_if_invalid
     if discount_code_code.present? && !discounted?
       self.discount_code_code = nil

@@ -50,5 +50,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'capybara'
   gem 'guard-rspec'
+  gem 'rb-fsevent', '~> 0.9.1'
   gem 'sqlite3'
+  gem 'timecop'
 end

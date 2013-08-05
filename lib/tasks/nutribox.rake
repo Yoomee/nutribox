@@ -5,15 +5,15 @@ namespace :nutribox do
     shipping_list_logger = Logger.new("#{Rails.root}/log/shipping_list.log")
     shipping_list_logger.info "\n\n____________________________________________________"
     shipping_list_logger.info "Create a shipping date and generate deliveries - #{Time.now}"
-    if Date.today.day.in?([2,16])
+    if Date.today.wday == 5    
       Order.active.where("orders.gift = 1 OR orders.number_of_months = 12").each do |order|
-        if order.deliveries.count >= order.number_of_months
+        if order.deliveries.count >= order.number_of_deliveries_paid_for
           order.update_attribute(:status,"ended")
           shipping_list_logger.info "Ended order ##{order.id}"
         end
       end
       Order.active.reload
-      shipping_date = ShippingDate.create(:date => 9.days.from_now)
+      shipping_date = ShippingDate.create(:date => Date.today)
       shipping_list_logger.info "Created shipping_date ##{shipping_date.id}"
     end
   end  
@@ -40,8 +40,8 @@ namespace :nutribox do
     payment_logger = Logger.new("#{Rails.root}/log/payments_and_sync.log")
     payment_logger.info "\n\n____________________________________________________"
     payment_logger.info "Take repeat payments and sync with Xero - #{Time.now}"
-    if Date.today.day.in?([1,15])
-      Order.repeatable_for_shipping_day_with_3_or_6_months(Date.today.day + 10).each do |order|
+    if Date.today.wday == 5
+      Order.repeatable_by_week(Date.today).each do |order|
         order.take_repeat_payment!
         payment_logger.info "Attempted repeat payment for order ##{order.id}"
       end

@@ -1,5 +1,5 @@
 class Delivery < ActiveRecord::Base
-  belongs_to :order
+  belongs_to :order, :counter_cache => true
   belongs_to :shipping_date
   has_one :survey
   
