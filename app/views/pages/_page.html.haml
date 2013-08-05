@@ -1,0 +1,13 @@
+-if can?(:show, page)  
+  -if current_user.try(:admin?)
+    %li
+      =link_to_self(page)
+      %span.draft="(Draft)" if page.draft?
+  -else
+    -unless page.draft?
+      %li
+        =link_to_self(page) 
+  -if page.all_children.present?
+    %ul
+      -page.all_children.each do |child|
+        =render("page", :page => child)
