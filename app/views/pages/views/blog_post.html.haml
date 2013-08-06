@@ -17,7 +17,8 @@
         .blog-roll-inner
           .blog-post
             %h1.mb-2=title(@page.title)
-            =image_for(@page, "558x", :class => 'mb-2') if @page.image
+            -if @page.image                         
+              =@page.alt_text.nil? || @page.alt_text.empty? ? image_for(@page, "558x", :class => 'mb-2') : image_for(@page, "558x", :class => 'mb-2', :alt => @page.alt_text)
             =raw @page.text
           .clearfix
           .disqus_thread=disqus_thread(@page, Settings.disqus_shortname)          
