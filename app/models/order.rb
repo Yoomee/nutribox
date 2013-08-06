@@ -197,9 +197,21 @@ class Order < ActiveRecord::Base
   end
   
   def next_shipping_date(date = Date.today)
-    # Next friday
-    date += 7.days if date.wday == 5
-    date + (5 - date.wday) % 7
+    if (created_at || date).year == 2012
+      Date.new(2013, 1, 11)
+    elsif (created_at || date) < Date.new(2013, 8, 2)  # Order placed before weekly deliveries
+      if date.day < shipping_day
+        # Hasn't been shipped yet this month
+        date.change(:day => shipping_day)
+      else
+        # Will be shipped next month
+        (date >> 1).change(:day => shipping_day)
+      end
+    else
+      # Next friday
+      date += 7.days if date.wday == 5
+      date + (5 - date.wday) % 7
+    end
   end
   
   def order_number
