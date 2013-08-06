@@ -19,6 +19,12 @@
             %h1.mb-2=title(@page.title)
             -if @page.image                         
               =@page.alt_text.nil? || @page.alt_text.empty? ? image_for(@page, "558x", :class => 'mb-2') : image_for(@page, "558x", :class => 'mb-2', :alt => @page.alt_text)
+            -if @page.slug == "blogs-we-love"
+              %p.blogs-we-love
+                %b Does your blog feature on this page? Embed the code below to get a Nutribox "Blogs We Love" button on your site
+                =image_tag("blogs-we-love.png")                 
+                %textarea
+                  <img src="http://thenutribox.com/assets/blogs-we-love.png" alt="Healthy snack boxes delivered"></img>
             =raw @page.text
           .clearfix
           .disqus_thread=disqus_thread(@page, Settings.disqus_shortname)          

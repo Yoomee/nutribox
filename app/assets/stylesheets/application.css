@@ -1438,6 +1438,16 @@ margin-left: 40px ;
   border-bottom: 1px solid #99b936;
 }
 
+.blog-post .blogs-we-love{
+  margin-bottom:50px;
+}
+
+.blog-post textarea{
+  min-width: 360px;  
+  min-height: 50px;
+  resize:none;
+}
+
 .related-posts h2.related-title{
   margin-left:20px;
 }
