@@ -1438,13 +1438,14 @@ margin-left: 40px ;
   border-bottom: 1px solid #99b936;
 }
 
-.blog-post .blogs-we-love{
-  margin-bottom:50px;
+.blog-post .blogs-we-love b{
+  margin:30px 0 15px 0;
+  display:block; 
 }
 
 .blog-post textarea{
   min-width: 360px;  
-  min-height: 50px;
+  min-height: 60px;
   resize:none;
 }
 
