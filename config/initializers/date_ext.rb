@@ -6,10 +6,13 @@ class Date
     shipping_week = five_fridays_in_month? ? 5 : 1 if shipping_week == 5
     shipping_week
   end
+  
+  def fridays_in_month
+    (beginning_of_month..end_of_month).to_enum.select { |day| day.wday == 5 }
+  end
 
   def five_fridays_in_month?
-    fridays = (beginning_of_month..end_of_month).to_enum.select { |day| day.wday == 5 }
-    fridays.size == 5
+    fridays_in_month.size == 5
   end
   
 end
