@@ -25,6 +25,7 @@
     =form.input :remove_image, :as => :boolean
     =form.input :retained_image, :as => :hidden
     =form.input :image, :as => :file, :label => "Image"
+    =form.input :alt_text, :label => "Image alternative text"
     =form.input :view_name, :as => page_view_name_input_type(form.object), :collection => Page::view_names, :include_blank => false, :member_label => "titleize", :label => "Layout"
     =form.input :permalink_path, :label => "Permalink"
     =form.input :slug if current_user.try(:yoomee_staff?)

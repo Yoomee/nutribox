@@ -17,8 +17,15 @@
         .blog-roll-inner
           .blog-post
             %h1.mb-2=title(@page.title)
-            =image_for(@page, "558x", :class => 'mb-2') if @page.image
+            -if @page.image                         
+              =@page.alt_text.nil? || @page.alt_text.empty? ? image_for(@page, "558x", :class => 'mb-2') : image_for(@page, "558x", :class => 'mb-2', :alt => @page.alt_text) 
             =raw @page.text
+            -if @page.slug == "blogs-we-love"
+              %p.blogs-we-love
+                %b Does your blog feature on this page? Embed the code below to get a Nutribox "Blogs We Love" button on your site
+                =image_tag("blogs-we-love.png")                 
+                %textarea
+                  <a href=https://thenutribox.com/blogs-we-love><img src="https://thenutribox.com/assets/blogs-we-love.png" alt="Healthy snack boxes delivered"></img></a>
           .clearfix
           .disqus_thread=disqus_thread(@page, Settings.disqus_shortname)          
           .related-posts
