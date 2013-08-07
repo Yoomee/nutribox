@@ -29,4 +29,11 @@ class PagesController < ApplicationController
       @page.view_name = "blog_post"
     end
   end
+
+  def index
+    respond_to do |format|
+      format.html
+      format.xml # index.xml.builder
+    end    
+  end
 end

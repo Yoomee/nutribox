@@ -1,0 +1,16 @@
+%h1 Sitemap
+-unless Page.count.zero?  
+  %ul
+    %li
+      =link_to "Join", join_path
+    %li
+      =link_to "Gift", gift_path
+    %li
+      =link_to "Boxes", latest_box_path
+    -Page.root.each do |page|
+      =render("page", :page => page)
+
+=options_panel do
+  =back_link
+  =link_if_can("New page", [:new, Page.new])
+  =link_if_can("Set root order", [:order, :pages])
