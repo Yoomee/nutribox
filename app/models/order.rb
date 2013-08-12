@@ -324,7 +324,7 @@ class Order < ActiveRecord::Base
 
   def warn_if_changing_status?
     return false if gift? && number_of_months == 1
-    (shipping_day - 10 <= Date.today.day) && (Date.today.day <= shipping_day)
+    Date.tomorrow == next_shipping_date
   end
 
   def xero_order_number
