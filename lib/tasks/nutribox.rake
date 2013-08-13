@@ -5,7 +5,7 @@ namespace :nutribox do
     shipping_list_logger = Logger.new("#{Rails.root}/log/shipping_list.log")
     shipping_list_logger.info "\n\n____________________________________________________"
     shipping_list_logger.info "Create a shipping date and generate deliveries - #{Time.now}"
-    if Date.today.wday == 5    
+    if Date.today.wday.in?([4,5])
       Order.active.where("orders.gift = 1 OR orders.number_of_months = 12").each do |order|
         if order.deliveries.count >= order.number_of_deliveries_paid_for
           order.update_attribute(:status,"ended")

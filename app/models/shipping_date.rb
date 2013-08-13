@@ -43,7 +43,12 @@ class ShippingDate < ActiveRecord::Base
       weeks = week
     end
     Order.active.alphabetical_by_user.where(:shipping_week => weeks).each do |order|
-      self.deliveries.build(:order => order).set_fields_from_order
+      most_recent_delivery = order.deliveries.joins(:shipping_date).order("shipping_dates.date DESC").first
+      # Only add to shipping list if order isn't in a shipping list from the last 5 days
+      # i.e. allow shipping list to be generated on Thursday and Friday without duplication
+      unless most_recent_delivery && most_recent_delivery.shipping_date.date > Date.today - 5
+        self.deliveries.build(:order => order).set_fields_from_order
+      end
     end
   end
 
