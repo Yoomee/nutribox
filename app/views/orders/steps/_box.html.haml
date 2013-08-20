@@ -4,21 +4,18 @@
       $('a.theme-btn').click(function(event){
         event.preventDefault();
         $('#order_theme_id').val($(this).data('theme-id'));
+        $('#order_box_type').val($(this).data('box-type'));
         $('form.order').submit();
       });
     });
 
 .row
   .span10
-    %p
-      Signing up for your Nutribox is easy! Just decide whether you want a Mini-box - great as a gift or if you want to try out our snacks - or a full size Nutribox.
-    -unless @order.gift?
-      %p.mt-2
-        You can sign up on a monthly plan or pay upfront for a 3 or 6 month subscription, and save up to 16%.  With any of these options you can cancel simply by emailing us if you feel The Nutribox isn’t the healthy snacking option for you.
-      %p.mt-2
-        If you're from a business or organisation with an interest in supplying healthy snacks to a group of staff,
-        =link_to 'click here', corporate_box_enquiry_path
-        for more information.
+    =snippet_text(:order_first_page_intro_text, "<p>The Nutribox is a box healthy snacks delivered to your home or office door. Choose from<ul><li>two different sizes – the mini has 10 portions and is great as a gift or if you want to try us out, or the full size box has 20 portions and can be your own healthy vending machine on your desk</li><li>Three different themes – <a href='#'>the classic, the vegan, the sports performance</a></li><li>Prices from £12.95 per box</li><li>Buy a single box as a <a href='/gift'>gift</a> or <a href='/join'>subscribe</a> and get a box as frequently as you need it</li></ul></p><p>Signing up for your Nutribox is easy! Just decide whether you want a Mini-box - great as a gift or if you want to try out our snacks - or a full size Nutribox.</p>").html_safe
+    %p.mt-2
+      If you're from a business or organisation with an interest in supplying healthy snacks to a group of staff,
+      =link_to 'click here', corporate_box_enquiry_path
+      for more information.
     -if @order.discount_code && @order.discount_code.available_to?(current_user)
       .row
         .span10
@@ -33,34 +30,42 @@
 
 -@themes.each do |theme|
   .row
-    .span10.choose-box.choose-box-theme
+    .span10.choose-box.choose-box-theme.thumbnail.center
       .row
-        .span4.center
-          =image_tag('box-standard-1.png', :class => 'box-photo')
-          =image_for(theme, '120x', :class => 'box mb-2')
-        .span6.mb-2
+        .span3
+          %ul.unstyled
+            %li.lead.mt-2 Mini
+            %li=image_tag('box-mini-1.png', :class => 'box-photo')
+            %li 10 portions
+            %li="£#{theme.mini_price_for_one_delivery} per box"
+          =link_to 'Select', '#', :class => 'btn choose-btn theme-btn', :data => { :theme_id => theme.id, :box_type => 'mini' }
+        .span4
           %h3.mt-1=theme.name
-          %p=raw(theme.description)
-          %p
-            .free-delivery Free delivery
-            ="from £#{theme.mini_price_for_six_deliveries} per box"
-          =link_to 'Select', '#', :class => 'btn choose-btn theme-btn', :data => { :theme_id => theme.id }
+          %ul.unstyled
+            -unless @order.gift?
+              %li Renews automatically
+            %li Cancel anytime
+            %li.free-delivery Free delivery
+        .span3
+          %ul.unstyled
+            %li.lead.mt-2 Standard
+            %li=image_tag('box-standard-1.png', :class => 'box-photo')
+            %li 20 portions
+            %li="£#{theme.mini_price_for_one_delivery} per box"
+          =link_to 'Select', '#', :class => 'btn choose-btn theme-btn', :data => { :theme_id => theme.id, :box_type => 'standard' }
 
 -unless @order.gift?
   .row
-    .span10
-      %h3.box-title The Nutribox Corporate
-      .span10.choose-box.choose-box-corporate
-        .thumbnail
-          .caption
-            %p
-              Healthy snacking can make a real difference to your performance at work, positively impacting energy levels, concentration and mood swings (see our
-              =link_to_slug 'blog article', :blood_sugar_balance
-              ).
-            %p.mt-2
-              If you're from a business or organisation with an interest in supplying healthy snacks to a group of staff,
-              =link_to 'click here', corporate_box_enquiry_path
-              for more information.
+    .span10.choose-box.choose-box-corporate.thumbnail
+      %h3.mt-1.center The Nutribox Corporate
+      %p
+        Healthy snacking can make a real difference to your performance at work, positively impacting energy levels, concentration and mood swings (see our
+        =link_to_slug 'blog article', :blood_sugar_balance
+        ).
+      %p.mt-2
+        If you're from a business or organisation with an interest in supplying healthy snacks to a group of staff,
+        =link_to 'click here', corporate_box_enquiry_path
+        for more information.
   .row
     .span10
       .thumbnail#discount-bar

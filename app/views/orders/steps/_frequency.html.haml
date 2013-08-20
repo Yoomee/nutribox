@@ -1,44 +1,33 @@
 .row
   .span10
-    .thumbnail#delivery-bar
-      .caption
-        .delivery-bar-left
-          %h2.mb-0 Deliveries
-        .delivery-bar-right
-          -Order::FREQUENCIES.each do |frequency|
-            %label.radio.inline
-              =form.radio_button(:frequency, frequency)
-              =frequency
-        .clearfix
--AvailableOrderOption::SIZES.each do |size|
-  .row
-    .span10.choose-box.choose-box-theme
-      .row
-        .span4.center
-          =image_tag("box-#{size}-1.png", :class => 'box-photo')
-          .free-delivery Free delivery
-        .span6.mb-2
-          %h3.mt-1=@order.box_name_from_size(size)
-          %h4 How many boxes will you pay for at once?
-          -AvailableOrderOption::DURATIONS.each do |duration|
-            %label.radio
-              =form.radio_button(:box_type_and_number_of_deliveries_paid_for_each_billing, "#{size}-#{duration[0]}")
-              =pluralize(duration[0], 'box')
-              at
-              ="£#{@order.theme.try(:send, "#{size}_price_for_#{duration[1]}")}"
-              per box
-          =#link_to 'Select', '#', :class => 'btn choose-btn size-btn', :data => { :size => size }
-          =form.submit('Select', :class => 'btn choose-btn size-btn')
-
-
-  -#
-    %p.ml-3.mr-3
-      %strong How many boxes will you pay for at a time?
-      .radio.control-group.required
-        -[1, 3, 6].each do |number_of_deliveries|
-          .choices.controls
-            %label.choice.radio
-              =form.radio_button(:number_of_deliveries_paid_for_each_billing, number_of_deliveries)
-              =pluralize(number_of_deliveries, 'box')
-              ="- £#{@order.cost_by_number_of_deliveries(number_of_deliveries)}"
-              per box
+    .row
+      .span10.center.mb-2
+        %h3.mt-1=@order.box_name
+        %h4 How frequently do you want this box delivered?
+        -Order::FREQUENCIES.each do |frequency|
+          %label.radio.inline
+            =form.radio_button(:frequency, frequency)
+            =frequency
+      .clearfix
+    .row
+      .span4.center
+        =image_tag("box-#{@order.box_type}-1.png", :class => 'box-photo')
+        %ul.unstyled
+          -unless @order.gift?
+            %li Renews automatically
+          %li Cancel anytime
+          %li.free-delivery Free delivery
+      .span6.mb-2
+        %h4 Want to pay for multiple boxes up front and get a discount?
+        -AvailableOrderOption::DURATIONS.each do |duration|
+          %label.radio
+            =form.radio_button(:number_of_deliveries_paid_for_each_billing, duration[0])
+            Pay for
+            =pluralize(duration[0], 'box')
+            at
+            ="£#{@order.theme.try(:send, "#{@order.box_type}_price_for_#{duration[1]}")}"
+            per box
+        -unless @order.gift?
+          %em.choose-smallprint renews automatically but you can cancel your next renewal at any time
+        %br
+        =form.submit('Select', :class => 'btn choose-btn size-btn')

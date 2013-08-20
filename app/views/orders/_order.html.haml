@@ -20,6 +20,7 @@
           =@order.gift? ? "Your friend" : "You"
           will receive one box
           ="#{@order.frequency}."
+          %br
           =@order.number_of_deliveries_paid_for_each_billing
           boxes will be delivered.
     -if @order.status == 'active' && @order.gift?
