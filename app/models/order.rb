@@ -78,26 +78,6 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
         ""
       end
     end
-    
-    # def box_name(box_type)
-    #   case box_type.to_s
-    #   when "mini" then "The Nutribox Mini"
-    #   when "standard" then "The Nutribox"
-    #   end
-    # end
-  
-    # def cost_in_pence(box_type,number_of_deliveries_paid_for_each_billing)
-    #   return 0 unless box_type
-    #   Order::COST_MATRIX[box_type.to_sym].try(:[], number_of_deliveries_paid_for_each_billing).to_i
-    # end
-  
-    # def cost(box_type,number_of_deliveries_paid_for_each_billing)
-    #   YmCore::Model::AmountAccessor::Float.new((self.cost_in_pence(box_type,number_of_deliveries_paid_for_each_billing).to_f / 100).round(2))
-    # end
-
-    # def cost_per_month(box_type,number_of_deliveries_paid_for_each_billing)
-    #   YmCore::Model::AmountAccessor::Float.new(((self.cost_in_pence(box_type,number_of_deliveries_paid_for_each_billing).to_f / 100) / number_of_deliveries_paid_for_each_billing).round(2))
-    # end
 
     def saving_in_pence(box_type,number_of_deliveries_paid_for_each_billing)
       (cost_in_pence(box_type,1) * number_of_deliveries_paid_for_each_billing) - cost_in_pence(box_type,number_of_deliveries_paid_for_each_billing)
@@ -143,14 +123,6 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
     "#{theme} #{ size == 'mini' ? 'Mini' : '' }"
   end
 
-  # def box_name_with_options
-  #   if options.present?
-  #     box_name + " (#{options.join(', ')})"
-  #   else
-  #     box_name
-  #   end
-  # end
-
   def box_type_and_number_of_deliveries_paid_for_each_billing
     [box_type,number_of_deliveries_paid_for_each_billing].compact.join('-')
   end
@@ -159,22 +131,6 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
     self.box_type, self.number_of_deliveries_paid_for_each_billing = value.split('-')
     self.full_price_amount_in_pence = theme.cost_in_pence(box_type, number_of_deliveries_paid_for_each_billing)
   end
-  
-  # def cost(box_type, number_of_deliveries_paid_for_each_billing)
-  #   if discount_code.try(:available?)
-  #     YmCore::Model::AmountAccessor::Float.new(((Order.cost_in_pence(box_type,number_of_deliveries_paid_for_each_billing) - (discount_code.fraction * Order.cost_in_pence(box_type,1)).ceil) / 100.to_f).round(2))
-  #   else
-  #     Order.cost(box_type,number_of_deliveries_paid_for_each_billing)
-  #   end
-  # end
-
-  # def cost_per_month(box_type, number_of_deliveries_paid_for_each_billing)
-  #   if discount_code.try(:available?)
-  #     YmCore::Model::AmountAccessor::Float.new((((Order.cost_in_pence(box_type,number_of_deliveries_paid_for_each_billing) - (discount_code.fraction * Order.cost_in_pence(box_type,1)).ceil) / 100.to_f) / number_of_deliveries_paid_for_each_billing).round(2))
-  #   else
-  #     Order.cost_per_month(box_type,number_of_deliveries_paid_for_each_billing)
-  #   end
-  # end
 
   def cost
     return 0 unless theme.present? && box_type.present? && number_of_deliveries_paid_for_each_billing.present?
