@@ -19,4 +19,8 @@ class BoxesController < ApplicationController
     redirect_to box_path(:year => Box.latest_year, :month => Box.latest_month, :box_type => 'standard')
   end
 
+  def special_diets
+    @pages = Page.where(:view_name => "special_diets")
+  end
+
 end
