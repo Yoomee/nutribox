@@ -30,36 +30,7 @@
           .disqus_thread=disqus_thread(@page, Settings.disqus_shortname)          
           .related-posts
             %hr            
-            -unless @related_blog_posts.empty?
-              %h2.related-title Related blog posts
-            %ul.unstyled
-              -@related_blog_posts.each do |connection|
-                %li
-                  -page = Page.find(connection.related_page_id)             
-                  .blog-post.post-summary
-                    .post-summary-left
-                      -if page.image
-                        =link_to page, :class=>"post-summary-img" do
-                          =image_for(page, "200x160#")
-                      %ul.unstyled.post-info  
-                        %li.post-author
-                          =image_for(page.user, "20x20#")
-                          =link_to '#', :class=>"post-author-img" do
-                            %span=page.user
-                        %li.post-date
-                          %i.icon-calendar
-                          %span=page.publication_date.try(:stamp,"Nov 31, 2012")
-                        %li.post-comments
-                          %i.icon-comments-alt
-                          %span=link_to 'Comments', page_path(page, :anchor => 'disqus_thread'), "data-disqus-identifier" => disqus_id(page), :class => 'comment-count'
-                    .post-summary-right
-                      %h2.summary-title
-                        =link_to page do
-                          =page.title
-                      %p.summary-intro
-                        =summary_or_truncated_text(page,350)
-                      =link_to "Read more", page, :class=>"summary-read-more"
-                  .clearfix
+            =render('shared/related_blog_posts')
           =options_panel do
             =link_if_can("Edit post", [:edit, @page])
             =link_if_can("Delete post", [:destroy, @page], :confirm => "Are you sure?") unless @page.slug.present?

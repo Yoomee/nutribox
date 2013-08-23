@@ -20,7 +20,8 @@
       =li_with_active slug_active?(:blog) do
         =link_to_slug "Blog", :blog, :class=>"nav-blog nav-link"
       =li_with_active current_page?(latest_box_path) do
-        =link_to "Boxes", latest_box_path, :class=>"nav-boxes nav-link"
+        =link_to "Boxes", latest_box_path, :class=>"nav-boxes nav-link"           
+
       %li
         %ul.nav.pull-right
           -if logged_in?

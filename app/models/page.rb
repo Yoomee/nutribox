@@ -10,7 +10,7 @@ class Page < ActiveRecord::Base
   accepts_nested_attributes_for :related_links, :reject_if => :all_blank, :allow_destroy => true
   
   def self.view_names
-    %w{basic tiled list how_it_works blog blog_post join_gift}
+    %w{basic tiled list how_it_works blog blog_post join_gift special_diets}
   end
   
 end
