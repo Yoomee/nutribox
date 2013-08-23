@@ -592,14 +592,10 @@ a.twitter-link {
   box-shadow:0 0px 5px rgba(0,0,0,0.2);
 }
 #top-nav a.nav-link {
-  font-size: 19px;
+  font-size: 20px;
   color: #999;
   padding: 20px 13px;
   text-shadow: none;
-}
-a.nav-link i.icon-caret-down{
-  font-size:15px;
-  padding-top: 4px;
 }
 #top-nav a.nav-how-it-works {
 	padding-left: 14px;

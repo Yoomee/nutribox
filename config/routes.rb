@@ -28,7 +28,6 @@ Nutribox::Application.routes.draw do
 
   match "box/:box_type/:year/:month" => 'boxes#show', :as => 'box'
   match "boxes" => "boxes#latest", :as => 'latest_box'
-  match "boxes/special-diets" => "boxes#special_diets", :as => 'special_diets'
   
   match "surveys/:year/:month/:box_type/preview" => 'surveys#preview', :as => 'survey_preview'
   match "surveys/:year/:month/results" => 'surveys#results', :as => 'survey_results'

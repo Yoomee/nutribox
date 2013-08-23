@@ -19,23 +19,8 @@
         =link_to_slug "About", :about, :class=>"nav-about nav-link"        
       =li_with_active slug_active?(:blog) do
         =link_to_slug "Blog", :blog, :class=>"nav-blog nav-link"
-      %li.dropdown
-        =link_to("#", :class => "nav-boxes nav-link", :data => {:toggle => "dropdown"}) do
-          Boxes
-          %i.icon-caret-down
-        %ul.dropdown-menu
-          %li            
-            =link_to box_path(:year => DateTime.now.year, :month => 1.month.ago.month, :box_type => 'standard') do
-              %i.icon-calendar-empty
-              Previous Month              
-          %li            
-            =link_to latest_box_path do
-              %i.icon-calendar
-              This Month              
-          %li            
-            =link_to special_diets_path do
-              %i.icon-lemon
-              Special Diets              
+      =li_with_active current_page?(latest_box_path) do
+        =link_to "Boxes", latest_box_path, :class=>"nav-boxes nav-link"           
 
       %li
         %ul.nav.pull-right
