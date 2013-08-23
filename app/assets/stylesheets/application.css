@@ -1823,12 +1823,12 @@ color: #99b936;
 }
 
 .special-diets .box-theme-title-image{
-  height:150px;
+  height:99px;  
 }
 
-.special-diets .nutribox-image{
-  margin-left: 100px;
+.special-diets .nutribox-image{ 
   margin-right: 15px;
+  float:left;
 }
 
 .special-diets .blog-post h2{
