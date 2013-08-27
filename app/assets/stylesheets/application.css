@@ -1788,3 +1788,7 @@ color: #99b936;
 form.available_order_option table .controls {
   margin-left: 50px;
 }
+
+textarea#available_order_option_small_description{
+  height:100px;
+}

@@ -61,6 +61,7 @@
           =link_to 'Select', '#', :class => 'btn choose-btn theme-btn', :data => { :theme_id => theme.id, :box_type => 'mini' }
         .span4
           %h3.mt-1=theme.name
+          %p=theme.small_description
           %ul.unstyled
             -unless @order.gift?
               %li Renews automatically
