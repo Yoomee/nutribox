@@ -51,7 +51,7 @@
             %li.lead.mt-2 Standard
             %li=image_tag('box-standard-1.png', :class => 'box-photo')
             %li 20 portions
-            %li="£#{theme.mini_price_for_one_delivery} per box"
+            %li="£#{theme.standard_price_for_one_delivery} per box"
           =link_to 'Select', '#', :class => 'btn choose-btn theme-btn', :data => { :theme_id => theme.id, :box_type => 'standard' }
 
 -unless @order.gift?
