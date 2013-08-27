@@ -1084,6 +1084,10 @@ h3.box-title {
   width:80%;
   margin:0px 10%;
 }
+#box_step .box-photo.no-box{  
+  width:40%;
+  margin-bottom:25px;
+}
 #box_step #discount-applied{
   padding-right:14px;
   text-align:center;

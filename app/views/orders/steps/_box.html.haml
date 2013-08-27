@@ -1,12 +1,24 @@
 -content_for :head do
   :javascript
     $(document).ready(function() {
-      $('a.theme-btn').click(function(event){
-        event.preventDefault();
-        $('#order_theme_id').val($(this).data('theme-id'));
-        $('#order_box_type').val($(this).data('box-type'));
+      
+      function orderTheme(element){        
+        $('#order_theme_id').val(element.data('theme-id'));
+        $('#order_box_type').val(element.data('box-type'));
         $('form.order').submit();
+      }
+
+      $('a.theme-btn').click(function(event) {
+        event.preventDefault();
+        orderTheme($(this));       
       });
+
+      $('.box-link-image').click(function(event) {
+        event.preventDefault();
+        orderTheme($(this));
+      });
+
+      
     });
 
 .row
@@ -33,11 +45,19 @@
     .span10.choose-box.choose-box-theme.thumbnail.center
       .row
         .span3
-          %ul.unstyled
+          %ul.unstyled            
             %li.lead.mt-2 Mini
-            %li=image_tag('box-mini-1.png', :class => 'box-photo')
-            %li 10 portions
-            %li="£#{theme.mini_price_for_one_delivery} per box"
+            -if theme != AvailableOrderOption.find_by_name("The sports performance")
+              %li
+                =link_to '#', :class => 'box-link-image', :data => { :theme_id => theme.id, :box_type => 'mini' } do
+                  =image_tag('box-mini-1.png', :class => 'box-photo')
+              %li 10 portions
+              %li="£#{theme.mini_price_for_one_delivery} per box"
+            -else
+              %li
+                =image_tag('500.jpg', :class => 'box-photo no-box')
+              %li
+                =YmSnippets::Snippet.find_by_slug('sorry_no_box_yet').try(:text) || "Sorry! There isn't a mini box for sports performance"
           =link_to 'Select', '#', :class => 'btn choose-btn theme-btn', :data => { :theme_id => theme.id, :box_type => 'mini' }
         .span4
           %h3.mt-1=theme.name
@@ -49,7 +69,9 @@
         .span3
           %ul.unstyled
             %li.lead.mt-2 Standard
-            %li=image_tag('box-standard-1.png', :class => 'box-photo')
+            %li
+              =link_to '#', :class => 'box-link-image', :data => { :theme_id => theme.id, :box_type => 'standard' } do
+                =image_tag('box-standard-1.png', :class => 'box-photo')
             %li 20 portions
             %li="£#{theme.standard_price_for_one_delivery} per box"
           =link_to 'Select', '#', :class => 'btn choose-btn theme-btn', :data => { :theme_id => theme.id, :box_type => 'standard' }
