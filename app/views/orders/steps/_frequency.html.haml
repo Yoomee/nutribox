@@ -17,9 +17,10 @@
             %li Renews automatically
           %li Cancel anytime
           %li.free-delivery Free delivery
-      .span6.mb-2
-        %h4 Want to pay for multiple boxes up front and get a discount?
+      .span6.mb-2        
         -AvailableOrderOption::DURATIONS.each do |duration|
+          -if duration == [3, 'three_deliveries']
+            %h4.mt-2 Want to pay for multiple boxes up front and get a discount?
           %label.radio
             =form.radio_button(:number_of_deliveries_paid_for_each_billing, duration[0])
             Pay for

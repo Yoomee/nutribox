@@ -95,6 +95,9 @@ h2, h3 {
 	line-height: 1.1;
 	margin: 0 0 20px;
 }
+h3 a{
+  color:#5f4b3b;
+}
 th, h4, h5, h6, strong, .header-alert a.close,
 p.email-signup-intro,
 p b,
@@ -1473,6 +1476,10 @@ ul.post-info li, ul.post-info li a, ul.post-info li a:hover {
   text-decoration: none;
   color: #999;
 }
+.theme-name{
+  text-transform: capitalize;
+}
+
 
 .disqus_thread {
   padding:20px;
