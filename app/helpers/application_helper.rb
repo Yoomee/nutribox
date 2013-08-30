@@ -22,7 +22,8 @@ module ApplicationHelper
         _gaq.push(['_trackPageview']);
       JS
       
-      if @order && controller_name.orders? && action_name.thanks?
+      referrer_path = request.referrer.present? ? URI(request.referrer).path : ''
+      if @order && controller_name.orders? && action_name.thanks? && referrer_path.match(/^\/join/)
         analytics_js << <<-JS
         _gaq.push(['_addTrans',
           '#{@order.order_number}',   // transaction ID - required
