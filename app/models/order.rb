@@ -40,11 +40,10 @@ class Order < ActiveRecord::Base
   class << self
     
     def repeatable_by_week(date)
-      date_for_correct_week = date - 1.day
-      if date_for_correct_week.shipping_week == 4 && !date_for_correct_week.five_fridays_in_month?
+      if date.shipping_week == 4 && !date.five_fridays_in_month?
         repeatable.where(:shipping_week => [4, 5])
       else
-        repeatable.where(:shipping_week => date_for_correct_week.shipping_week)
+        repeatable.where(:shipping_week => date.shipping_week)
       end
     end
 
