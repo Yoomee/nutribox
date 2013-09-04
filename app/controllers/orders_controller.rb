@@ -27,6 +27,9 @@ class OrdersController < ApplicationController
     send_file File.join(Rails.root,"lib/downloads/gifts/#{@order.box_type}-#{@order.number_of_months}.pdf"), :type => 'application/pdf', :filename => "The Nutribox Gift Certificate"
   end
 
+  def edit
+  end
+
   def list
     @orders = Order.order("created_at DESC")
   end
@@ -44,9 +47,9 @@ class OrdersController < ApplicationController
 
   def update
     @order.assign_attributes(params[:order])
-    if @order.editing_by_admin
+    if @order.editing_completed_order
       if @order.save
-        redirect_to list_orders_path
+        redirect_to current_user.admin? ? list_orders_path : orders_path
       else
         render :action => 'edit'
       end

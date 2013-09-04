@@ -4,7 +4,12 @@
       .caption
         =image_tag("#{@order.box_type}-box.png")
   .span6
-    %h4 Product
+    %h4
+      Product
+      -unless @order.active?
+        \-
+        =@order.status
+
     -if @order.repeatable?
       %p
         =@order.box_name
@@ -58,6 +63,6 @@
       -if @order.recurring?
         ="Then £#{@order.cost} for each #{pluralize(@order.number_of_deliveries_paid_for_each_billing, 'box').gsub('1', '')} after that."
     -elsif @order.recurring?
-      ="£#{@order.cost} per month."
+      ="£#{@order.cost} for each #{pluralize(@order.number_of_deliveries_paid_for_each_billing, 'box').gsub('1', '')}."
     -else
       ="£#{@order.amount}"

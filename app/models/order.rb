@@ -13,7 +13,7 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   amount_accessor :amount, :full_price_amount
   
   attr_accessor :login_email, :login_password
-  boolean_accessor :editing_by_admin
+  boolean_accessor :editing_completed_order
 
   validates :box_type, :theme_id, :presence => true, :if => :current_step_box?
   validates :frequency, :presence => true, :inclusion=> { :in => Order::FREQUENCIES }, :if => :current_step_frequency?
@@ -95,7 +95,11 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
     end
 
   end
-  
+
+  def active?
+    status == 'active'
+  end
+
   def amount_ex_vat
     unrounded = amount.to_f * ((100 - Order::VAT_PERCENTAGES[box_type.to_sym]) / 100.to_f)
     # Round down for tax purposes
@@ -281,11 +285,6 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
       :year => "2017",  
       :verification_value => "123"  
     }  
-  end  
-
-  def warn_if_changing_status?
-    return false if gift? && number_of_deliveries_paid_for_each_billing == 1
-    (shipping_day - 10 <= Date.today.day) && (Date.today.day <= shipping_day)
   end
 
   def xero_order_number

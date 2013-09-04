@@ -9,23 +9,18 @@
 %h1=title("Edit order")
 =semantic_form_for @order, :html => {:class => "form-horizontal"} do |form|
   =form.inputs do
-    =form.input :editing_by_admin, :as => :hidden, :input_html => {:value => true}
+    =form.input :editing_completed_order, :as => :hidden, :input_html => {:value => true}
     %h4 Details
-    .control-group
-      %label.control-label Customer
-      .controls
-        %p=@order.user
-    .control-group
-      %label.control-label Product
-      .controls
-        %p=@order.product
-    =form.input :options, :collection => AvailableOrderOption.all, :as => :check_boxes
+    -if current_user.admin?
+      =form.input :user, :as => :string, :label => 'Customer', :input_html => { :disabled => true }
+      =form.input :theme, :collection => AvailableOrderOption.all, :as => :check_boxes
+    -else
+      =form.input :theme, :as => :string, :input_html => { :disabled => true }
+    =form.input :frequency, :collection => Order::FREQUENCIES, :include_blank => false
     =form.input :comment, :input_html => { :class => 'input-xxlarge'}
-    %h4 Status
-    =form.input :status, :collection => Order.statuses.collect{|s| [s.titleize,s]}, :include_blank => false
-    -if @order.warn_if_changing_status?
-      .status-warning.alert.alert-block.alert-info.hide
-        Payment has already been taken for this month and the delivery has not yet been shipped.  If you cancel or pause now there will be issues with the shipping list.
+    -if current_user.admin?
+      %h4 Status
+      =form.input :status, :collection => Order.statuses.collect{|s| [s.titleize,s]}, :include_blank => false
         
     %h4 Delivery address
     =form.input :delivery_name, :label => "Name", :placeholder => "e.g. John Smith"
