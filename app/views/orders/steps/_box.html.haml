@@ -18,6 +18,10 @@
         orderTheme($(this));
       });
 
+      $('#theme-name').click(function(event) {
+        event.preventDefault();             
+        $(this).popover('toggle');
+      });
       
     });
 
@@ -56,8 +60,8 @@
             %li="£#{theme.mini_price_for_one_delivery} per box"
             =link_to 'Select', '#', :class => 'btn choose-btn theme-btn', :data => { :theme_id => theme.id, :box_type => 'mini' }                      
         .span4
-          %h3.mt-1=theme.name
-          %p=theme.small_description
+          %h3.mt-1=link_to theme.name, '#', :id => 'theme-name', :'data-toggle' => 'popover', :'data-content' => "the classic"
+          %p.small-description=theme.small_description
           %ul.unstyled
             -unless @order.gift?
               %li Renews automatically
