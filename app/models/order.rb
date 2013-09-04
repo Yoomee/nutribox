@@ -208,9 +208,9 @@ class Order < ActiveRecord::Base
         (date >> 1).change(:day => shipping_day)
       end
     else
-      shipping_date = date.fridays_in_month[shipping_week - 1]
+      shipping_date = date.fridays_in_month[shipping_week - 1] || date.fridays_in_month.last
       if shipping_date < date
-        shipping_date = date.next_month.fridays_in_month[shipping_week - 1]
+        shipping_date = date.next_month.fridays_in_month[shipping_week - 1] || date.next_month.fridays_in_month.last
       end
       shipping_date
     end
