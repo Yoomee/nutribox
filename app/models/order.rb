@@ -67,7 +67,6 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
       else
         shipping_weeks = date_for_correct_week.shipping_week
       end
-
       repeatable.for_delivery_or_payment_by_weeks(shipping_weeks, date)
     end
 
@@ -181,9 +180,24 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   end
   
   def next_shipping_date(date = Date.today)
-    # Next friday
-    date += 7.days if date.wday == 5
-    date + (5 - date.wday) % 7
+    case date
+    when (Date.new(2012,1,1)..Date.new(2013,1,1))
+      Date.new(2013, 1, 11)
+    when (Date.new(2013,1,1)..Date.new(2013, 7, 15))
+      if date.day < shipping_day
+        # Hasn't been shipped yet this month
+        date.change(:day => shipping_day)
+      else
+        # Will be shipped next month
+        (date >> 1).change(:day => shipping_day)
+      end
+    else
+      shipping_date = date.fridays_in_month[shipping_week - 1] || date.fridays_in_month.last
+      if shipping_date < date
+        shipping_date = date.next_month.fridays_in_month[shipping_week - 1] || date.next_month.fridays_in_month.last
+      end
+      shipping_date
+    end
   end
   
   def order_number
@@ -284,7 +298,12 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
       :month => "10",  
       :year => "2017",  
       :verification_value => "123"  
-    }  
+    }
+  end  
+
+  def warn_if_changing_status?
+    return false if gift? && number_of_months == 1
+    Date.tomorrow == next_shipping_date
   end
 
   def xero_order_number

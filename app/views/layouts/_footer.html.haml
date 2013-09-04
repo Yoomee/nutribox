@@ -11,9 +11,11 @@
           =link_to_slug "FAQs", :faq, :class=>"footer-link"
         %li
           =link_to_slug "Contact us", :contact, :class=>"footer-link"
+        %li
+          =link_to "Sitemap", pages_path, :class=>"footer-link"
       =#link_to("Yoomee", "http://www.yoomee.com", :id => "siteby", :target=>"_blank")
     
--if root_slug_is?(:blog)
+-if slug_is?(:"blogs-we-love")
   .container
     .row.footer  
       .span10

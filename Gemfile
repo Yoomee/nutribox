@@ -16,6 +16,7 @@ gem "xeroizer"
 gem "delayed_job_active_record"
 gem "daemons"
 gem 'squeel'
+gem "cocoon"
 
 gem "ym_core", "~>0.1.70"           #, :path => "~/Rails/Gems/ym_core"
 gem "ym_cms", "0.3.7"   #, :path => "~/Rails/Gems/ym_cms"

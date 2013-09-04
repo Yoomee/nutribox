@@ -2,7 +2,7 @@ namespace :nutribox do
   
   desc 'Create a shipping date and generate deliveries'
   task :ship => :environment do
-    if Date.today.wday == 5
+    if Date.today.wday.in?([4,5])
       shipping_list_logger = Logger.new("#{Rails.root}/log/shipping_list.log")
       shipping_list_logger.info "\n\n____________________________________________________"
       shipping_list_logger.info "Create a shipping date and generate deliveries - #{Time.now}"
@@ -35,12 +35,12 @@ namespace :nutribox do
     end
   end
   
-  desc 'Take repeat payments'
+  desc 'Take repeat payments and sync with Xero'
   task :repeat => :environment do
-    if Date.today.wday == 5
-      payment_logger = Logger.new("#{Rails.root}/log/payments_and_sync.log")
-      payment_logger.info "\n\n____________________________________________________"
-      payment_logger.info "Take repeat payments and sync with Xero - #{Time.now}"
+    payment_logger = Logger.new("#{Rails.root}/log/payments_and_sync.log")
+    payment_logger.info "\n\n____________________________________________________"
+    payment_logger.info "Take repeat payments and sync with Xero - #{Time.now}"
+    if Date.today.wday == 4
       Order.repeatable_by_week(Date.today).each do |order|
         order.take_repeat_payment!
         payment_logger.info "Attempted repeat payment for order ##{order.id}"
@@ -52,6 +52,5 @@ namespace :nutribox do
       end
     end
   end
-  
-  
+
 end

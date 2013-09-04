@@ -8,8 +8,7 @@
     =form.input :short_title, :label => 'Optional short title'
     =form.input :title_tag, :label => 'Title tag contents', :input_html => {:rows => 1, :class => "span6"} 
     =form.input :description_tag, :label => 'Description tag contents', :input_html => {:rows => 4, :class => "span6"} 
-    =form.input :keywords_tag, :label => 'Keywords tag contents', :input_html => {:rows => 4, :class => "span6"} 
-    
+    =form.input :keywords_tag, :label => 'Keywords tag contents', :input_html => {:rows => 4, :class => "span6"}    
     -if @page.parent.try(:slug) == "blog" 
       =form.input :user, :label => "Author", :include_blank => false, :collection => User.where(:role => "admin").where("email NOT IN (?)",YmUsers::YOOMEE_EMAILS)
     -if @page.parent.try(:slug) == "blog"
@@ -26,6 +25,7 @@
     =form.input :remove_image, :as => :boolean
     =form.input :retained_image, :as => :hidden
     =form.input :image, :as => :file, :label => "Image"
+    =form.input :alt_text, :label => "Image alternative text"
     =form.input :view_name, :as => page_view_name_input_type(form.object), :collection => Page::view_names, :include_blank => false, :member_label => "titleize", :label => "Layout"
     =form.input :permalink_path, :label => "Permalink"
     =form.input :slug if current_user.try(:yoomee_staff?)

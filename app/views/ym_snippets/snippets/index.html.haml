@@ -1,0 +1,10 @@
+%h1 All site snippets
+
+-@snippets.each do |snippet|
+  -if ! snippet.slug.match(/^box_intro_/)
+    %dl
+      %dt
+        =snippet.slug
+        %dd
+          =snippet.text
+          =edit_snippet_link(snippet.slug)

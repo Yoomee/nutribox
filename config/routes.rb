@@ -51,8 +51,9 @@ Nutribox::Application.routes.draw do
   
   match "sign-up" => redirect("/login")
   
-  match "admin/home-page" => 'admin#home_page_image', :as => 'home_page_admin' 
-  
+  match "admin/home-page" => 'admin#home_page_image', :as => 'home_page_admin'
+  match "admin/box-month-intro-snippets" => 'admin#box_month_intro', :as => 'box_month_intro' 
+  match 'admin/blog-post-related-articles' => 'admin#blog_post_related_articles', :as => 'blog_post_related_articles'
   
 
   # The priority is based upon order of creation:

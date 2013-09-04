@@ -2,9 +2,6 @@
   Boxes for delivery
   %small
     =@shipping_date.date.stamp("Monday 11th January 2013")
--if @shipping_date.deliveries.empty?
-  %p.lead There are no deliveries for this date.
-
 .clearfix
 -@deliveries.group_by(&:box_name).each do |box_name, deliveries|
   %h2.pull-left
@@ -45,6 +42,7 @@
                 %br
                 =link_to 'Try&nbsp;again'.html_safe, shipping_date_delivery_path(@shipping_date, delivery), :method => :put, :id => 'repeat-repeat-payment'
           %td=delivery.tx_code
+
   %br
   %hr
   %br

@@ -57,7 +57,7 @@
             =@box.year  
     .span12
       .archive-intro-text
-        =simple_format(snippet_text(:about_boxes,"Each box comes with a variety of gluten-free snacks. You can expect to receive some energy-boosting dried-fruit and nut mixes , all-natural energy bars and balls (packed with super ingredients like sprouted almonds, hemp seeds, flax and maca) and other deliciously nutritious snacks like raw chocolate. The Nutribox (full size – not mini) may also include vegetable and fruit crisps. We promise the normal retail value of the snacks in your box will always be more than the price you pay."))     
+        =simple_format(YmSnippets::Snippet.find_by_slug("box_intro_#{@box.month}").text || snippet_text(:about_boxes,"Each box comes with a variety of gluten-free snacks. You can expect to receive some energy-boosting dried-fruit and nut mixes , all-natural energy bars and balls (packed with super ingredients like sprouted almonds, hemp seeds, flax and maca) and other deliciously nutritious snacks like raw chocolate. The Nutribox (full size – not mini) may also include vegetable and fruit crisps. We promise the normal retail value of the snacks in your box will always be more than the price you pay."))     
 
    
   -if current_user.try(:admin?) || !@box.in_the_future?          
