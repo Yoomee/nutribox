@@ -197,7 +197,6 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
       end
       shipping_date
     when 'bi-monthly'
-      debugger
       if last_delivery = deliveries.last
         (last_delivery.created_at.to_date + 2.months).fridays_in_month[shipping_week - 1] || (last_delivery.created_at.to_date + 2.months).fridays_in_month.last
       else
