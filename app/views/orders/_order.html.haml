@@ -6,7 +6,7 @@
   .span6
     %h4
       Product
-      -unless @order.active?
+      -unless @order.active? || @order.status.blank?
         \-
         =@order.status
 
@@ -43,6 +43,11 @@
         was
       shipped on
       =@order.first_shipping_date.stamp("<u>January 11th 2013</u>.").html_safe
+      -if @order.first_shipping_date.past?
+        %br
+        =@order.gift? ? "The" : "Your"
+        next box will be shipped on
+        =@order.next_shipping_date.stamp("<u>January 11th 2013</u>.").html_safe
     %h4
       Cost
       -if @order.recurring? && @order.discounted?

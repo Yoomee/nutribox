@@ -172,31 +172,37 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   end  
 
   def first_shipping_date
-    next_shipping_date((created_at.presence || Time.now).to_date)
+    deliveries.present? ? deliveries.order(:created_at).first.created_at.to_date : Date.today.next_friday
   end
 
   def next_delivery_date
     next_shipping_date + 5.days
   end
   
-  def next_shipping_date(date = Date.today)
-    case date
-    when (Date.new(2012,1,1)..Date.new(2013,1,1))
-      Date.new(2013, 1, 11)
-    when (Date.new(2013,1,1)..Date.new(2013, 7, 15))
-      if date.day < shipping_day
-        # Hasn't been shipped yet this month
-        date.change(:day => shipping_day)
+  def next_shipping_date
+    date = Date.today
+    case frequency
+    when 'weekly'
+      date.next_friday
+    when 'fortnightly'
+      if last_delivery = deliveries.last
+        last_delivery.created_at.to_date.wday == 4 ? last_delivery.created_at.to_date + 15 : last_delivery.created_at.to_date + 14
       else
-        # Will be shipped next month
-        (date >> 1).change(:day => shipping_day)
+        date.next_friday
       end
-    else
+    when 'monthly'
       shipping_date = date.fridays_in_month[shipping_week - 1] || date.fridays_in_month.last
       if shipping_date < date
         shipping_date = date.next_month.fridays_in_month[shipping_week - 1] || date.next_month.fridays_in_month.last
       end
       shipping_date
+    when 'bi-monthly'
+      debugger
+      if last_delivery = deliveries.last
+        (last_delivery.created_at.to_date + 2.months).fridays_in_month[shipping_week - 1] || (last_delivery.created_at.to_date + 2.months).fridays_in_month.last
+      else
+        date.next_friday
+      end
     end
   end
   
