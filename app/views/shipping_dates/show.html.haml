@@ -3,15 +3,17 @@
   %small
     =@shipping_date.date.stamp("Monday 11th January 2013")
 .clearfix
--@deliveries.each do |box_type, deliveries|
+-@deliveries.each do |box_type, option, deliveries|
   %h2.pull-left
     =Order.box_name(box_type)
-  =link_to(shipping_date_path(@shipping_date, :format => 'xls', :box => box_type), :class => 'btn btn-primary pull-right') do
-    %i.icon-download-alt
-    Download
+    =option[1]
+  -unless deliveries.empty?
+    =link_to(shipping_date_path(@shipping_date, :format => 'xls', :box => box_type, :option_id => option[0]), :class => 'btn btn-primary pull-right') do
+      %i.icon-download-alt
+      Download
   .clearfix
   -if deliveries.empty?
-    %p.lead There are no deliveries for this date.
+    %p.lead.muted There are no deliveries for this date.
   -else
     %table.table.table-striped
       %thead
