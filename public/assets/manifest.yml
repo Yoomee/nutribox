@@ -74,6 +74,7 @@ give-christmas-bg.png: give-christmas-bg-8a18c1af1031c8d5b2123f8dde48fe15.png
 header_bg.jpg: header_bg-64d8427561d2e0eea75eef376bb5b416.jpg
 header_bg.png: header_bg-cf79c40e0316d3739c0db0bfaf990855.png
 healthy-snacking-made-easier.png: healthy-snacking-made-easier-b1196be4f3ed3f287a70ff64ffe1be9e.png
+healthy-snacks.png: healthy-snacks-32a9a3cbd52ca83963cb36f8f9f39c2e.png
 home-strip-2.png: home-strip-2-80d95e34031b344e25176dc76ec2692e.png
 homepage-messages-1.png: homepage-messages-1-6ab4731c60d335385d79d5799ffc40dc.png
 homepage-messages-2.png: homepage-messages-2-65a6df885dba96d8150fa9d60ae05cc4.png
@@ -255,7 +256,7 @@ jquery.ui.core.css: jquery.ui.core-179ef218158e0eaf4d2dc20df9d27fd7.css
 jquery.ui.datepicker.css: jquery.ui.datepicker-88bb20aa688b7a047dd8ec913234ee2a.css
 jquery.ui.dialog.css: jquery.ui.dialog-997b908342c3fbd9de5c7752702863fe.css
 jquery.ui.menu.css: jquery.ui.menu-d31cf127a79a30df3dd981afff33c63f.css
-jquery.ui.progressbar.css: jquery.ui.progressbar-df7525e917401704ef453cb56bf16697.css
+jquery.ui.progressbar.css: jquery.ui.progressbar-edef533d5817f6292ad8f4b8594b532f.css
 jquery.ui.resizable.css: jquery.ui.resizable-85f847c98e2fd692f3ac202a3fcaa960.css
 jquery.ui.selectable.css: jquery.ui.selectable-55231976c45ef21f598fd7a198f06844.css
 jquery.ui.slider.css: jquery.ui.slider-b8e1a21f895cdf5316f9ad3620e29ce6.css
@@ -283,5 +284,5 @@ jquery-ui.min.js: jquery-ui.min-261bf7a9e55e851952f6f5ede08a5413.js
 jquery.min.js: jquery.min-26e44749446e5f2102a116e446877038.js
 jquery.min.map: jquery.min-4dd6a891215c2bd74b32b727b828c2ed.map
 application.js: application-26b3cb4a34099d78ce4dfd44b9180a2d.js
-application.css: application-a6b26cd5c308580b46f54e86ec74c552.css
+application.css: application-2dd4bbf3d9f803bdb4c6c4cad43bdff3.css
 ie7.css: ie7-5c07855604e48094a4ed86ff0b96b7a6.css
