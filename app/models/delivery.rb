@@ -1,6 +1,7 @@
 class Delivery < ActiveRecord::Base
   belongs_to :order, :counter_cache => true
   belongs_to :shipping_date
+  belongs_to :option, :class_name => "AvailableOrderOption"
   has_one :survey
   
   delegate :user, :to => :order
@@ -23,6 +24,7 @@ class Delivery < ActiveRecord::Base
   def set_fields_from_order
     if order
       self.box_type ||= order.box_type
+      self.option_id ||= order.options.first.try(:id)
       self.number_of_months ||= order.number_of_months
       self.gift ||= order.gift
       self.name ||= order.delivery_name

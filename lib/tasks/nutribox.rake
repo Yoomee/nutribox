@@ -40,7 +40,7 @@ namespace :nutribox do
     payment_logger = Logger.new("#{Rails.root}/log/payments_and_sync.log")
     payment_logger.info "\n\n____________________________________________________"
     payment_logger.info "Take repeat payments and sync with Xero - #{Time.now}"
-    if Date.today.wday == 5
+    if Date.today.wday == 4
       Order.repeatable_by_week(Date.today).each do |order|
         order.take_repeat_payment!
         payment_logger.info "Attempted repeat payment for order ##{order.id}"
