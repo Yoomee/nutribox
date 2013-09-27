@@ -32,6 +32,7 @@
       -unless controller_name.home?
         =yield_with_bootstrap(render("layouts/header"))
       =yield_with_bootstrap(yield)
-      .push
+      -unless controller_name.orders? && (action_name.create? || action_name.new?)
+        .push
     .footer-wrapper
       =render("layouts/footer")

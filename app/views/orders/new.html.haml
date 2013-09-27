@@ -18,13 +18,6 @@
                   Your discount code will give you
                   ="#{@order.discount_code.percentage_with_default}%"
                   OFF your first box!
-                .clearfix
-              .clearfix
-            .clearfix
-          .clearfix
-        .clearfix
-
-
 
 .container
 .cardboard-wrapper{:class => "order-step-#{@order.current_step}"}
@@ -62,7 +55,10 @@
               =form.submit(@order.last_step? ? "Place order" : "Next", :class => "btn btn-primary pull-right order-btn")
               =form.submit('Back', :name => 'back', :class => "btn pull-left back-btn order-btn")
 
-  -if @order.current_step_box?
-    =render 'box_size_modal'
-  -elsif @order.current_step_billing?
-    =render "cvv_help_modal"
+-if @order.current_step_box?
+  =render 'box_size_modal'
+-elsif @order.current_step_billing?
+  =render "cvv_help_modal"
+
+
+.push
