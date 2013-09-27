@@ -43,7 +43,7 @@
         was
       shipped on
       =@order.first_shipping_date.stamp("<u>January 11th 2013</u>.").html_safe
-      -if @order.first_shipping_date.past?
+      -if @order.first_shipping_date.past? && @order.active?
         %br
         =@order.gift? ? "The" : "Your"
         next box will be shipped on

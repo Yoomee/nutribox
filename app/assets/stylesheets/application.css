@@ -232,6 +232,9 @@ a:hover {
 .btn-primary, .btn-primary:hover, .btn-group > .btn-primary + .dropdown-toggle {
   background-color: #99b936;
 }
+.btn-danger, .btn-danger:hover {
+  background-color: #da4f49;
+}
 .btn-primary.disabled {
   background: #bdd27d;
 }

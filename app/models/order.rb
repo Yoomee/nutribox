@@ -123,6 +123,10 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
     "#{theme} #{ box_type == 'mini' ? 'Mini' : '' }"
   end
 
+  def cancelled?
+    status == 'cancelled'
+  end
+
   def cost
     return 0 unless theme.present? && box_type.present? && number_of_deliveries_paid_for_each_billing.present?
     theme.cost(box_type, number_of_deliveries_paid_for_each_billing)
@@ -210,7 +214,11 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
     return "NB3" if Rails.env.production? && id == 214
     Rails.env.development? ? "dev#{id}" : "NB#{id}"
   end
-  
+
+  def paused?
+    status == 'paused'
+  end
+
   def product
     "#{box_name} delivered #{frequency} #{gift? ? '- a gift' : ''}"
   end
@@ -246,7 +254,7 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   end
   
   def recurring?
-    number_of_deliveries_paid_for_each_billing != 12 && !gift?
+    !gift?
   end
   
   def successful?
