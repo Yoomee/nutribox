@@ -1,6 +1,7 @@
 class Delivery < ActiveRecord::Base
   belongs_to :order, :counter_cache => true
   belongs_to :shipping_date
+  belongs_to :option, :class_name => "AvailableOrderOption"
   has_one :survey
   
   delegate :box_name, :theme, :user, :to => :order
