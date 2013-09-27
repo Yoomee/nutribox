@@ -1277,6 +1277,10 @@ p.delivery-notice-text {
   box-shadow:1px 1px 1px rgba(0,0,0,0.3), 0px 0px 10px rgba(0,0,0,0.2);
 
 }
+.order-step-box .order-box {
+  background: none;
+  box-shadow: none;
+}
 .order-box form {
  margin: 0;
 }
@@ -1292,20 +1296,8 @@ p.delivery-notice-text {
  background: #f5f5f5;  
  color: #755436;
 }
-
-.order-step-box.cardboard-wrapper {
-background: none;
-}
-.order-step-box .cardboard-wrapper-top {
-  display: none;
-}
-.order-step-box .order-box {
-  box-shadow:none;
-  background: none;
-  
-}
-.order-step-box .order-box .inner {
-	padding: 0;
+.order-step-header {
+  margin-bottom: 70px;
 }
 .order-box-title {
   margin: 30px 30px 35px;
@@ -1338,7 +1330,6 @@ background: none;
   display: none;
 }
 
-
 .choose-box {
   background: #fff;
   box-shadow:0 2px 10px rgba(0,0,0,0.07);
@@ -1352,8 +1343,15 @@ background: none;
 }
 .choose-box-corporate,
 .choose-box-theme {
-  width: 95%;
-  margin-bottom: 60px;
+  padding: 40px;
+  width: 36%;
+  overflow: hidden;
+  height: 330px;
+  position: relative;
+  text-align:justify;
+}
+.choose-box-corporate {
+  background: #eee7df;
 }
 
 .small-description{
@@ -1369,9 +1367,14 @@ input[type="submit"].choose-btn {
   padding: 10px 0;
   margin: 10px 0 10px;
 }
-input[type="submit"].size-btn,
-.theme-btn {
+input[type="submit"].size-btn {
   width: 40%;
+}
+.theme-btn {
+  margin-top: 20px;
+  position: absolute;
+  bottom: 30px;
+  width: 250px;
 }
 .choose-price {
   font-size: 20px;
@@ -1392,6 +1395,30 @@ a.order-option {
 #register_step #accordion {
 margin-left: 40px ;
 }
+#box-size-selection {
+  padding: 30px 70px 50px 70px;
+  width: 630px;
+  margin-left: -383px;
+}
+#box-size-selection .modal-body {
+  overflow-y: visible;
+}
+#box-size-selection .modal-body .or-line,
+#box-size-selection .modal-body .standard-box {
+  margin-left: 40px;
+}
+#box-size-selection h3 {
+  padding-bottom: 40px;
+}
+#box-size-selection button.close {
+  margin-top: -41px;
+  margin-right: -74px;
+}
+#box-size-selection ul.unstyled li:first-child {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
 
 /*  For christmas- comment out afterwards  */
 .gift-wrapper {

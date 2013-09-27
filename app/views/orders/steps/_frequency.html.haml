@@ -28,5 +28,6 @@
             at
             ="£#{@order.theme.try(:send, "#{@order.box_type}_price_for_#{duration[1]}")}"
             per box
+            ="(£#{@order.theme.try(:cost, @order.box_type, duration[0])})"
         -unless @order.gift?
           %em.choose-smallprint renews automatically but you can cancel your next renewal at any time

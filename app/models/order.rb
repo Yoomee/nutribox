@@ -120,7 +120,7 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   end
   
   def box_name
-    "#{theme} #{ box_type == 'mini' ? 'mini' : '' }"
+    "#{theme} #{ box_type == 'mini' ? 'Mini' : '' }"
   end
 
   def cost
