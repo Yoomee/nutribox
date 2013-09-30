@@ -40,7 +40,7 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   scope :fortnightly, where(:frequency => 'fortnightly')
   scope :monthly, where(:frequency => 'monthly')
   scope :not_failed, where("status != 'failed'")
-  scope :repeatable, active.where(:gift => false).where('number_of_deliveries_paid_for_each_billing <> 12').where('deliveries_count >= number_of_deliveries_paid_for')
+  scope :repeatable, active.where(:gift => false).where('number_of_deliveries_paid_for_each_billing <> 12 OR orders.created_at > ?', Date.new(2013, 9, 30)).where('deliveries_count >= number_of_deliveries_paid_for')
   scope :weekly, where(:frequency => 'weekly')
 
   class << self
