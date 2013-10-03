@@ -1,7 +1,7 @@
 source "https://yoomee:wLjuGMTu30AvxVyIrq3datc73LVUkvo@gems.yoomee.com"
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0'
+gem 'rails', '~> 3.1.0'
 gem 'mysql2'
 
 
