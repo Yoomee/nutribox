@@ -23,11 +23,16 @@
             %h4.mt-2 Want to pay for multiple boxes up front and get a discount?
           %label.radio
             =form.radio_button(:number_of_deliveries_paid_for_each_billing, duration[0])
-            Pay for
-            =pluralize(duration[0], 'box')
-            at
-            ="£#{@order.theme.try(:send, "#{@order.box_type}_price_for_#{duration[1]}")}"
-            per box
-            ="(£#{@order.theme.try(:cost, @order.box_type, duration[0])})"
+            -if duration[0] == 1
+              Pay per delivery at
+              ="£#{@order.theme.try(:send, "#{@order.box_type}_price_for_#{duration[1]}")}"
+              per box
+            -else
+              Pay for
+              =pluralize(duration[0], 'box')
+              at
+              ="£#{@order.theme.try(:send, "#{@order.box_type}_price_for_#{duration[1]}")}"
+              per box
+              ="(£#{@order.theme.try(:cost, @order.box_type, duration[0])})"
         -unless @order.gift?
           %em.choose-smallprint renews automatically but you can cancel your next renewal at any time
