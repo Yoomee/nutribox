@@ -24,7 +24,7 @@ class OrdersController < ApplicationController
   end
 
   def download
-    send_file File.join(Rails.root,"lib/downloads/gifts/#{@order.box_type}-#{@order.number_of_months}.pdf"), :type => 'application/pdf', :filename => "The Nutribox Gift Certificate"
+    send_file File.join(Rails.root,"lib/downloads/gifts/#{@order.box_type}-#{@order.number_of_deliveries_paid_for}.pdf"), :type => 'application/pdf', :filename => "The Nutribox Gift Certificate"
   end
 
   def edit
