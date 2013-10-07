@@ -9,8 +9,10 @@
   .span6
     %h1=title "My referrals"
     -if @referrals.blank?
-      %p.lead You haven't referred anyone yet
-    %table.table.table-striped
+      %p.lead You haven't referred anyone yet.
+    %p.lead=snippet_text(:referral_intro_text, "<p class='lead'>Share your referral code and get free snacks!</p><p>For each person who signs up for The Nutribox with your code, we'll pop an extra snack into your box.</p>").html_safe
+      
+    %table.table.table-striped.mt-2
       %tbody
         -@referrals.each do |referral|
           %tr
