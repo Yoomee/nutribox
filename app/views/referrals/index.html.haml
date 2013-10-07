@@ -18,10 +18,17 @@
             %td
               =time_ago_in_words(referral.created_at)
               ago
-  .span4.offset2
+  .span5.offset1
     .thumbnail
       .caption
-        %h2 My referral link
-        =text_field_tag(:code, new_referral_url(:code => current_user.referral_code), :readonly => true, :id => "referral_code")
-        =twitter_share_link(new_referral_url(:code => current_user.referral_code), :share_text => "The Nutribox", :class => "mb-1")
-        =facebook_share_link(new_referral_url(:code => current_user.referral_code), :share_name => "The Nutribox")
+        %h2 Share your referral link
+        %ul.unstyled
+          %li
+            =text_field_tag(:code, new_referral_url(:code => current_user.referral_code), :readonly => true, :id => "referral_code", :class => 'span4')
+        %ul.unstyled
+          %li
+            =link_to_with_icon 'Twitter', "http://twitter.com/share?url=http://thenutribox.com/#{current_user.referral_code}&related=thenutribox&text=The%20Nutribox", :class => 'btn share-btn share-btn-twitter', :target => '_blank', :icon => 'twitter'
+          %li
+            =link_to_with_icon 'Facebook', "https://www.facebook.com/sharer/sharer.php?s=100&p[title]=the+nutribox&p[summary]=%20Check%20out%20The%20Nutribox%20at%20http://thenutribox.com/#{current_user.referral_code}.%20Healthy%20snacks%20delivered.&p[url]=http://thenutribox.com/#{current_user.referral_code}&p[images][0]=https://www.thenutribox.com/assets/logo.png", :class=>"btn share-btn share-btn-facebook", :target => '_blank', :icon => 'facebook'
+
+        .clearfix
