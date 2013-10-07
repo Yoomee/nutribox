@@ -56,9 +56,6 @@
               =form.submit('Back', :name => 'back', :class => "btn pull-left back-btn order-btn")
 
 -if @order.current_step_box?
-  =render 'box_size_modal'
+  =render 'orders/box_size_modal'
 -elsif @order.current_step_billing?
-  =render "cvv_help_modal"
-
-
-.push
+  =render "orders/cvv_help_modal"
