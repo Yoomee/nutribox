@@ -1,6 +1,8 @@
 Nutribox::Application.routes.draw do
   root :to => 'home#index'
-  
+
+  match 'corporate-box-enquiry' => 'enquiries#new', :id => 'corporate_box_enquiry', :as => 'corporate_box_enquiry'
+
   resources :orders, :except => [:destroy], :path => "subscriptions" do
     collection do
       get 'list'
@@ -10,6 +12,8 @@ Nutribox::Application.routes.draw do
       get 'thanks'
     end
   end
+
+  resources :available_order_options, :path => 'themes'
   
   resources :referrals, :only => :index
   get 'referrals/:code', :to => "referrals#new", :as => 'new_referral'
@@ -50,8 +54,9 @@ Nutribox::Application.routes.draw do
   
   match "sign-up" => redirect("/login")
   
-  match "admin/home-page" => 'admin#home_page_image', :as => 'home_page_admin' 
-  
+  match "admin/home-page" => 'admin#home_page_image', :as => 'home_page_admin'
+  match "admin/box-month-intro-snippets" => 'admin#box_month_intro', :as => 'box_month_intro' 
+  match 'admin/blog-post-related-articles' => 'admin#blog_post_related_articles', :as => 'blog_post_related_articles'
   
 
   # The priority is based upon order of creation:

@@ -61,12 +61,14 @@ Nutribox::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
   config.action_mailer.smtp_settings = {
-
-    :address        => 'mail.studentbabble.com',
-    :domain         => 'mail.studentbabble.com',
+    :address        => 'mail.yoomeedigital.com',
+    :domain         => 'mail.yoomeedigital.com',
     :authentication => :login,
-    :user_name      => 'info@studentbabble.com',
+    :user_name      => 'info@yoomeedigital.com',
     :password       => 'm:HE4,4JF2KL_{mG*;IG;(xGGjOA.;r',
     :enable_starttls_auto => false
   }
+  
+  
+
 end

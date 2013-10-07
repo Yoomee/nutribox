@@ -2,23 +2,29 @@
 %html
   %head
     %title=@custom_page_title ? "#{@custom_page_title}" : "#{Settings.site_name} #{@page_title}"
-    -if @page.try(:description_tag)
+    -if @page.try(:description_tag).present?
       %meta{ :name => "description", :content => @page.description_tag }
-    -if @custom_page_description
+    -if @page.try(:keywords_tag).present?
+      %meta{ :name => "keywords", :content => @page.keywords_tag }
+    -if @custom_page_description.present?
       %meta{ :name => "description", :content => @custom_page_description }
+    -if @custom_page_keywords
+      %meta{ :name => "keywords", :content => @custom_page_keywords }
+    %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1.0'}
     =stylesheet_link_tag 'https://fast.fonts.com/cssapi/bb868a11-c5d5-4bea-a682-2dcd52ad1e63.css'
     =stylesheet_link_tag("application")
     :plain
       <!--[if IE 7]>
         <link href="/assets/ie7.css" media="screen" rel="stylesheet" type="text/css" />
       <![endif]-->
-    =javascript_include_tag("application")
+    =javascript_include_tag("application")    
+    =javascript_include_tag "https://apis.google.com/js/plusone.js"    
     =csrf_meta_tags
     =favicon_link_tag('/assets/favicon2.ico')
     =auto_discovery_link_tag(:rss, "#{Settings.site_url}/feed.rss")
     =yield :head
     =google_analytics_js_with_ecommerce
-  -body_tag do
+  -body_tag do          
     .main-wrapper{:class => ('gift-wrapper' if @order && !action_name.show? && (@order.gift? && @order.current_step_box?))}
       -if flash.present?
         .header-alert
@@ -26,6 +32,7 @@
       -unless controller_name.home?
         =yield_with_bootstrap(render("layouts/header"))
       =yield_with_bootstrap(yield)
-      .push
+      -unless controller_name.orders? && (action_name.create? || action_name.new?)
+        .push
     .footer-wrapper
       =render("layouts/footer")

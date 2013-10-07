@@ -1,0 +1,38 @@
+.row
+  .span10
+    .row
+      .span10.center.mb-2
+        %h3.mt-1=@order.box_name
+        %h4 How frequently do you want this box delivered?
+        -Order::FREQUENCIES.each do |frequency|
+          %label.radio.inline
+            =form.radio_button(:frequency, frequency)
+            =frequency
+      .clearfix
+    .row
+      .span4.center
+        =image_tag("box-#{@order.box_type}-1.png", :class => 'box-photo')
+        %ul.unstyled
+          -unless @order.gift?
+            %li Renews automatically
+          %li Cancel anytime
+          %li.free-delivery Free delivery
+      .span6.mb-2        
+        -AvailableOrderOption::DURATIONS.each do |duration|
+          -if duration == [3, 'three_deliveries']
+            %h4.mt-2 Want to pay for multiple boxes up front and get a discount?
+          %label.radio
+            =form.radio_button(:number_of_deliveries_paid_for_each_billing, duration[0])
+            -if duration[0] == 1
+              Pay per delivery at
+              ="£#{@order.theme.try(:send, "#{@order.box_type}_price_for_#{duration[1]}")}"
+              per box
+            -else
+              Pay for
+              =pluralize(duration[0], 'box')
+              at
+              ="£#{@order.theme.try(:send, "#{@order.box_type}_price_for_#{duration[1]}")}"
+              per box
+              ="(£#{@order.theme.try(:cost, @order.box_type, duration[0])})"
+        -unless @order.gift?
+          %em.choose-smallprint renews automatically but you can cancel your next renewal at any time

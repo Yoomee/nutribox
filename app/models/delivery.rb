@@ -1,9 +1,10 @@
 class Delivery < ActiveRecord::Base
-  belongs_to :order
+  belongs_to :order, :counter_cache => true
   belongs_to :shipping_date
+  belongs_to :option, :class_name => "AvailableOrderOption"
   has_one :survey
   
-  delegate :user, :to => :order
+  delegate :box_name, :theme, :user, :to => :order
   
   validates :order_id, :uniqueness => { :scope => :shipping_date_id }
     
@@ -23,7 +24,7 @@ class Delivery < ActiveRecord::Base
   def set_fields_from_order
     if order
       self.box_type ||= order.box_type
-      self.number_of_months ||= order.number_of_months
+      self.number_of_months ||= order.number_of_deliveries_paid_for_each_billing
       self.gift ||= order.gift
       self.name ||= order.delivery_name
       self.address1 ||= order.delivery_address1
@@ -38,11 +39,7 @@ class Delivery < ActiveRecord::Base
   def address(separator = ', ')
     [name,address1,address2,city,postcode].select(&:present?).join(separator)
   end
-  
-  def box_name
-    Order.box_name(box_type)
-  end
-  
+
   def find_or_create_survey
     survey = Survey.new(:delivery_id => id) if (survey=Survey.find_by_delivery_id(id)).nil?
     survey.save 

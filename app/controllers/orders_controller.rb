@@ -1,26 +1,33 @@
 class OrdersController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :find_by => "hash_id"
 
   def new
     gift = params[:gift].present?
     @order = Order.new(:gift => gift)
+    @themes = AvailableOrderOption.order(:position)
     if gift
-      @custom_page_title = YmSnippets::Snippet.find_by_slug('gift_page_title').text
-      @custom_page_description = YmSnippets::Snippet.find_by_slug('gift_page_description')
+      @custom_page_title = YmSnippets::Snippet.find_by_slug('meta_gift_page_title').text
+      @custom_page_description = YmSnippets::Snippet.find_by_slug('meta_gift_page_description')
+      @custom_page_keywords = YmSnippets::Snippet.find_by_slug('meta_gift_page_keywords')
     else
       @order.discount_code = DiscountCode.default
-      @custom_page_title = YmSnippets::Snippet.find_by_slug('join_page_title')
-      @custom_page_description = YmSnippets::Snippet.find_by_slug('join_page_description')
+      @custom_page_title = YmSnippets::Snippet.find_by_slug('meta_join_page_title')
+      @custom_page_description = YmSnippets::Snippet.find_by_slug('meta_join_page_description')
+      @custom_page_keywords = YmSnippets::Snippet.find_by_slug('meta_join_page_keywords')
     end
   end
 
   def create
+    @themes = AvailableOrderOption.order(:position)
     @order = Order.new(params[:order])
     handle_order
   end
 
   def download
-    send_file File.join(Rails.root,"lib/downloads/gifts/#{@order.box_type}-#{@order.number_of_months}.pdf"), :type => 'application/pdf', :filename => "The Nutribox Gift Certificate"
+    send_file File.join(Rails.root,"lib/downloads/gifts/#{@order.box_type}-#{@order.number_of_deliveries_paid_for}.pdf"), :type => 'application/pdf', :filename => "The Nutribox Gift Certificate"
+  end
+
+  def edit
   end
 
   def list
@@ -30,8 +37,9 @@ class OrdersController < ApplicationController
   def index
     @orders = current_user.orders.not_failed.where(:gift => false).order("created_at DESC")
     @gifts  = current_user.orders.not_failed.where(:gift => true).order("created_at DESC")
-    @custom_page_title = YmSnippets::Snippet.find_by_slug('my_subscriptions_page_title')
-    @custom_page_description = YmSnippets::Snippet.find_by_slug('my_subscriptions_page_description')
+    @custom_page_title = YmSnippets::Snippet.find_by_slug('meta_my_subscriptions_page_title')
+    @custom_page_description = YmSnippets::Snippet.find_by_slug('meta_my_subscriptions_page_description')
+    @custom_page_keywords = YmSnippets::Snippet.find_by_slug('meta_my_subscriptions_page_keywords')    
   end
 
   def thanks
@@ -39,9 +47,9 @@ class OrdersController < ApplicationController
 
   def update
     @order.assign_attributes(params[:order])
-    if @order.editing_by_admin
+    if @order.editing_completed_order
       if @order.save
-        redirect_to list_orders_path
+        redirect_to current_user.admin? ? list_orders_path : orders_path
       else
         render :action => 'edit'
       end

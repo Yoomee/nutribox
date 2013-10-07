@@ -1,9 +1,5 @@
 module OrdersHelper
   
-  def box_name(box_type)
-    Order.box_name(box_type)
-  end
-  
   def discount_code_class(order)
     if order.discount_code_code.present? && order.discount_code != DiscountCode.default
       if order.discount_code && order.discount_code.available_to?(current_user)

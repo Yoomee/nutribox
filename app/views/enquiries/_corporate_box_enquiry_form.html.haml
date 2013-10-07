@@ -1,0 +1,6 @@
+=form.inputs(:class => 'mt-2') do
+  =form.input :name
+  =form.input :organisation
+  =form.input :email, :label => 'Email address'
+  =form.input :phone_number
+  =form.input :message, :as => :text, :input_html => {:class => 'span8', :rows => 10}

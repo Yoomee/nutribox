@@ -1,0 +1,7 @@
+%h1 Blog post related articles
+%ul.unstyled
+  -Page.all.each do |page|
+    -if page.parent == Page.find_by_slug(:blog)
+      %li
+        =page.title
+        

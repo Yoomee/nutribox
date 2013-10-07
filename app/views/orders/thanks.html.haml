@@ -49,13 +49,21 @@
             =link_to(download_order_path(@order), :class => 'btn mb-1 ml-1 btn-primary') do
               %i.icon-download-alt.mr-1
               Download gift certificate
+            .clearfix
         
       
-      -else      
+      -else
         %p.lead
-          Your first box will be shipped on
-          =@order.next_shipping_date.stamp("Monday 1st September")
-          and should be with you by
-          =@order.next_delivery_date.stamp("Monday 1st September.")
+          Your first box will be shipped on Friday and should be with you by Monday subject to your postie.         
 
-        =link_to("Manage my orders", orders_path, :class => "btn btn-primary btn-large")
+      =link_to("Manage my orders", orders_path, :class => "btn btn-primary btn-large")
+
+      .mt-2
+        %h4.nutribox-brown.mt-2 Why not share your Nutribox purchase with your friends and followers?
+        %ul.unstyled
+          %li
+            =link_to_with_icon 'Twitter', "http://twitter.com/share?url=http://thenutribox.com/&related=thenutribox&text=I%20just%20subscribed%20to%20The%20Nutribox.%20Can't%20wait%20to%20receive%20my%20box%20of%20healthy%20snacks.%20Check%20them%20out%20at%20", :class => 'btn share-btn share-btn-twitter', :target => '_blank', :icon => 'twitter'
+          %li
+            =link_to_with_icon 'Facebook', "https://www.facebook.com/sharer/sharer.php?s=100&p[title]=the+nutribox&p[summary]=I%20just%20subscribed%20to%20The%20Nutribox.%20Can't%20wait%20to%20receive%20my%20box%20of%20healthy%20snacks.%20Check%20them%20out%20at%20http://thenutribox.com/&p[url]=http://thenutribox.com&p[images][0]=https://www.thenutribox.com/assets/logo.png", :class=>"btn share-btn share-btn-facebook", :target => '_blank', :icon => 'facebook'
+      .clearfix
+

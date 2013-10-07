@@ -1,0 +1,10 @@
+%h1 Box month intro snippets
+
+-@snippets.each do |snippet|
+  -if snippet.slug.match(/^box_intro_/)
+    %dl
+      %dt
+        =snippet.slug + " (" + Date::MONTHNAMES[snippet.slug[-1,1].to_i] + ")"
+        %dd
+          =snippet.text
+          =edit_snippet_link(snippet.slug)

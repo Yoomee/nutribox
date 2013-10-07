@@ -1,117 +1,35 @@
 -content_for :head do
-  :javascript
-    $(document).ready(function() {
-      $('#box_step .box-radio').click(function(){
-        $(this).children('input').attr('checked','checked');
-        $('#box_step label.active').removeClass('active');
-        $(this).parent().addClass('active');
-        $('form.order').submit();
-      })
-    });
-=form.input :gift, :as => :hidden
+  :coffeescript
+    $(document).ready ->
+      $('a.theme-btn').click (event) ->
+        event.preventDefault()
+        data = $(this).data()
+        $('#order_theme_id').val(data.themeId)
+        $('#box-size-selection li span#theme-name-mini').html(data.boxName)
+        $('#box-size-selection li span#theme-name-standard').html(data.boxName)
+        $('#box-size-selection li span#mini-price').html(data.miniPrice)
+        $('#box-size-selection li span#standard-price').html(data.standardPrice)
+        $('#box-size-selection').modal('show')
+
+      $('a.size-btn').click (event) ->
+        event.preventDefault()
+        data = $(this).data()
+        $('#order_box_type').val(data.boxType)
+        $('form.order').submit()
+
 .row
   .span10
-    %p
-      Signing up for your Nutribox is easy! Just decide whether you want a Mini-box - great as a gift or if you want to try out our snacks - or a full size Nutribox.
+    -@themes.each do |theme|
+      .span4.choose-box.choose-box-theme.thumbnail
+        =image_for(theme, '281x', :class => 'mb-1')
+        =raw(theme.description)
+        =link_to 'Select', '#', :class => 'btn btn-primary theme-btn', :data => { :theme_id => theme.id, :mini_price => "£#{theme.mini_price_for_one_delivery} ", :standard_price => "£#{theme.standard_price_for_one_delivery} ", :box_name => theme.name }
+
     -unless @order.gift?
-      %p.mt-2
-        You can sign up on a monthly plan or pay upfront for a 3 or 6 month subscription, and save up to 16%.  With any of these options you can cancel simply by emailing us if you feel The Nutribox isn’t the healthy snacking option for you.
-    -if @order.discount_code && @order.discount_code.available_to?(current_user)
-      .row
-        .span10
-          .alert.alert-success#discount-applied
-            -if @order.discount_code == DiscountCode.default
-              =snippet_text(:default_discount_message, "Save 25% off your first box!")
-              =edit_snippet_link(:default_discount_message)
-            -else
-              Your discount code will give you
-              ="#{@order.discount_code.percentage_with_default}%"
-              OFF your first box!
-
--["standard", "mini"].each do |box_type|
-  .row
-    .span10
-      %h3.box-title
-        =box_name(box_type)
-        %small="#{Order.number_of_snacks(box_type)} snacks"
-      -Order::COST_MATRIX[box_type.to_sym].each do |months, cost|
-        .span4.choose-box.choose-box-small
-          .thumbnail
-            .caption
-              .box-illustration
-                =image_tag("box-#{box_type}-#{months}.png", :class => "box-photo")
-              %h4
-                -if months == 1 && !@order.gift?
-                  Monthly
-                -else
-                  =months
-                  month
-                -unless @order.gift?
-                  subscription
-              %label.box-radio
-                =form.radio_button('box_type_and_number_of_months',"#{box_type}-#{months}")
-                .btn.choose-btn Select
-              %h5.choose-price
-                ="£#{Order.cost_per_month(box_type, months)}&nbsp;/&nbsp;month".html_safe
-
-              %p.free-delivery Free delivery
-              -unless @order.gift?
-                .choose-smallprint
-                  %ul.unstyled
-                  -if months == 1
-                    %p
-                      Billed monthly.
-                      %br
-                      Cancel anytime.
-                      %br
-                      &nbsp;
-                  -else
-                    %p
-                      Pay upfront.
-                      %br
-                      Renews automatically.
-                      %br
-                      Cancel anytime.
-        
--#
-  .thumbnails.choose-boxes
-    -["mini","standard"].each do |box_type|
-      %li.span5.choose-box
-        .thumbnail
-          .caption
-            %h4
-              =box_name(box_type)
-              %small="#{Order.number_of_snacks(box_type)} snacks"
-            =image_tag("#{box_type}-box.png", :class => "box-photo")
-            %ul.unstyled.box-options
-              -Order::COST_MATRIX[:mini].keys.each do |num|
-                %li
-                  .pull-left
-                    %h4
-                      -if num == 1 && !@order.gift?
-                        Monthly
-                      -else
-                        =pluralize(num,'month')
-                      %br
-                      %small
-                        -if @order.discount_code && @order.discount_code.available_to?(current_user)
-                          %span.line-through="£#{Order.cost(box_type,num)}&nbsp;".html_safe
-                        ="£#{@order.cost(box_type,num)}"
-                        -if num > 1 && !(@order.discount_code && @order.discount_code.available_to?(current_user))
-                          %span.saving
-                            \- save
-                            %span.percentage="#{Order.saving_percentage(box_type,num)}%"
-                  .pull-right
-                    %label.box-radio
-                      =form.radio_button('box_type_and_number_of_months',"#{box_type}-#{num}")
-                      .btn
-                        -if num == 1  && !@order.gift?
-                          Subscribe
-                        -else
-                          Buy
-            .clearfix
-
--unless @order.gift?
+      .span4.choose-box.choose-box-corporate.thumbnail
+        =image_tag('box-label-corporate.png')
+        =snippet_text(:corporate_box_description, "<p>Healthy snacking can make a real difference to your performance at work, positively impacting energy levels, concentration and mood swings (see our <a href='/blood-sugar-balance-3'>blog article</a>).</p><p class='mt-2'>If you're from a business or organisation with an interest in supplying healthy snacks to a group of staff, <a href='/corporate-box-enquiry'>click here for more information.</a></p></div>").html_safe
+          
   .row
     .span10
       .thumbnail#discount-bar
@@ -129,3 +47,4 @@
           .discount-bar-right
             =form.submit('Apply', :name => 'discount_code', :class => "btn pull-right")
           .clearfix
+

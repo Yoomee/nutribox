@@ -12,9 +12,8 @@
     %h2.mt-3.mb-1 Text snippets
     %ul.unstyled
       %li=link_to("Manage text snippets", snippets_path)
+      %li=link_to("Manage box month intro snippets", box_month_intro_path)
       %li=link_to("Change home page image", home_page_admin_path)
-
-
     
     %h2.mt-3.mb-1 Archive
     %ul.unstyled
@@ -24,10 +23,21 @@
     %h2.mt-3.mb-1 Survey
     %ul.unstyled
       %li=link_to("Manage surveys", surveys_path)
+      
+    %h2.mt-3.mb-1 Corporate box enquiries
+    %ul.unstyled
+      %li=link_to("List all", enquiries_path)
 
+    %h2.mt-3.mb-1 Themes
+    %ul.unstyled
+      %li=link_to("Manage themes", available_order_options_path)    
+
+    %h2.mt-3.mb-1 Manage related articles
+    %ul.unstyled
+      %li=link_to("Blog post related articles", blog_post_related_articles_path)
 
   .span6
-    %h2.mb-1 Shipping dates
+    %h2.mb-1 Shipping lists
     -if ShippingDate.count.zero?
       %ul.unstyled
         %li No shipping dates yet
@@ -37,8 +47,3 @@
           %li
             =link_to(shipping_date) do
               =shipping_date.date.stamp("31/12/2012 - Monday 11th January")
-            -unless shipping_date.downloaded?
-              %i.icon-asterisk
-      %i.icon-asterisk
-      Not yet downloaded
-    

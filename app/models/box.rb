@@ -6,6 +6,7 @@ class Box
     @month = month.to_i
     @year = year.to_i
     @type = type
+    YmSnippets::Snippet.find_or_create_by_slug("box_intro_#{@month}")
   end
   
   def products

@@ -1,0 +1,37 @@
+-content_for :head do
+  :coffeescript
+    $ ->
+      Redactor.init()
+
+=semantic_form_for @available_order_option, :html => {:class => "form-horizontal"} do |form|
+  =form.inputs do    
+    =form.input :name
+    =form.input :position
+    =form.input :image, :as => :image
+    .clearfix
+    =form.input :description, :as => :redactor
+    %h4 Prices per box
+    %table
+      %tr
+        %th
+        %th one box
+        %th three boxes
+        %th six boxes
+        %th twelve boxes
+        %th twenty four boxes
+      %tr
+        %th mini
+        %td=form.input :mini_price_for_one_delivery, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :mini_price_for_three_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :mini_price_for_six_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :mini_price_for_twelve_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :mini_price_for_twenty_four_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+      %tr
+        %th standard
+        %td=form.input :standard_price_for_one_delivery, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :standard_price_for_three_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :standard_price_for_six_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :standard_price_for_twelve_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+        %td=form.input :standard_price_for_twenty_four_deliveries, :prepend => '£', :placeholder => '10.00', :label => false, :input_html => { :class => 'input-mini' }
+  =form.buttons do
+    =form.commit_button "Save"

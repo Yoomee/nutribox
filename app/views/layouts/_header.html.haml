@@ -20,51 +20,47 @@
       =li_with_active slug_active?(:blog) do
         =link_to_slug "Blog", :blog, :class=>"nav-blog nav-link"
       =li_with_active current_page?(latest_box_path) do
-        =link_to "Boxes", latest_box_path, :class=>"nav-boxes nav-link"                    
-      %ul.nav.pull-right
-        -if logged_in?
-          %li#my-account.user-link.dropdown
-            =link_to("#", :class => "dropdown-toggle", :data => {:toggle => "dropdown"}) do
-              My account
-              %i.caret
-            %ul.dropdown-menu
-              -if current_user.admin?
-                %li
-                  =link_to(admin_path) do
-                    %i.icon-briefcase
-                    Admin
-                %li
-                  =link_to(pages_path) do
-                    %i.icon-sitemap
-                    Sitemap                    
-              %li
-                =link_to(orders_path) do
-                  %i.icon-shopping-cart
-                  My subscriptions
-              %li
-                =link_to(referrals_path) do
-                  %i.icon-share-alt
-                  My referrals
-              %li
-                =link_to(sign_out_path, :method => :delete) do
-                  %i.icon-signout
-                  =t(:logout)
-        -else
-          %li#login.user-link
-            =link_to("Login", sign_in_path)
+        =link_to "Boxes", latest_box_path, :class=>"nav-boxes nav-link"           
 
-        
-    -if false    
-      %ul#top-subnav.nav
-        %li
-          =link_to(orders_path) do
-            %i.icon-shopping-cart
-            My subscriptions
-        -if logged_in?
-          %li
-            =link_to(sign_out_path, :method => :delete) do
-              %i.icon-signout
-              =t(:logout)
+      %li
+        %ul.nav.pull-right
+          -if logged_in?
+            %li#my-account.user-link.dropdown
+              =link_to("#", :class => "dropdown-toggle", :data => {:toggle => "dropdown"}) do
+                My account
+                %i.caret
+              %ul.dropdown-menu
+                -if current_user.admin?
+                  %li
+                    =link_to(admin_path) do
+                      %i.icon-briefcase
+                      Admin                
+                  %li
+                    =link_to(pages_path) do
+                      %i.icon-sitemap
+                      Sitemap
+                %li
+                  =link_to(edit_user_path(current_user)) do
+                    %i.icon-pencil
+                    Edit account details
+                %li
+                  =link_to(orders_path) do
+                    %i.icon-shopping-cart
+                    My subscriptions
+                %li
+                  =link_to(referrals_path) do
+                    %i.icon-share-alt
+                    My referrals
+                %li
+                  =link_to(sign_out_path, :method => :delete) do
+                    %i.icon-signout
+                    =t(:logout)
           -else
-            %li
+            %li#login.user-link
               =link_to("Login", sign_in_path)
+    %ul.mt-3.unstyled.social-links
+      %li     
+        %iframe{:src => "//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.thenutribox.com&send=false&layout=button_count&width=100&show_faces=false&font&colorscheme=light&action=like&height=21", :scrolling => "no", :frameborder => "0", :style => "border:none; overflow:hidden; width:85px; height:21px; padding:15px 0 0 10px", :allowTransparency => "true"}
+      %li
+        =link_to "Follow @thenutribox", "https://twitter.com/thenutribox", :rel => "nofollow", :class => "twitter-follow-button", :"data-show-count" => "false", :"data-show-screen-name" => "false"
+

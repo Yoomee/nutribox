@@ -4,12 +4,11 @@ class ShippingDatesController < ApplicationController
     authorize! :show, @shipping_date
     respond_to do |format|
       format.html do
-        @deliveries = [:mini,:standard].map{|box_type| [box_type,@shipping_date.deliveries.where(:box_type => box_type)]}
+        @deliveries = @shipping_date.deliveries
       end
       format.xls do
-        headers["Content-Disposition"] = "attachment; filename=\"#{params[:id]}-#{params[:box]}.xls\"" 
-        @deliveries = @shipping_date.deliveries.where(:box_type => params[:box])
-        @shipping_date.update_downloaded(params[:box])
+        headers["Content-Disposition"] = "attachment; filename=\"#{params[:id]}-#{AvailableOrderOption.find_by_id(params[:theme_id]).filename}-#{params[:box_type]}.xls\"" 
+        @deliveries = @shipping_date.deliveries.joins(:order).where(:box_type => params[:box_type], :orders => {:theme_id => params[:theme_id]})
       end
     end
   end

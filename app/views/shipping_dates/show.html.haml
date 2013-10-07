@@ -2,47 +2,52 @@
   Boxes for delivery
   %small
     =@shipping_date.date.stamp("Monday 11th January 2013")
--if @shipping_date.deliveries.empty?
-  %p.lead There are no deliveries for this date.
-
 .clearfix
--@deliveries.each do |box_type, deliveries|
+
+-@deliveries.group_by(&:box_name).each do |box_name, deliveries|
   %h2.pull-left
-    =Order.box_name(box_type)
-  =link_to(shipping_date_path(@shipping_date, :format => 'xls', :box => box_type), :class => 'btn btn-primary pull-right') do
-    %i.icon-download-alt
-    Download
-  %table.table.table-striped
-    %thead
-      %tr
-        %th ID
-        %th Customer
-        %th Subscription type
-        %th Gift
-        %th Comment
-        %th Delivery address
-        %th Paid
-        %th Tx&nbsp;Code
-    %tbody
-      -deliveries.each do |delivery|
+    =box_name
+  -unless deliveries.empty?
+    =link_to(shipping_date_path(@shipping_date, :format => 'xls', :box_type => deliveries.first.box_type, :theme_id => deliveries.first.theme.id), :class => 'btn btn-primary pull-right') do
+      %i.icon-download-alt
+      Download
+  -if deliveries.empty?
+    %p.lead.muted There are no deliveries for this date.
+  -else
+    %table.table.table-striped
+      %thead
         %tr
-          %td.span1
-            =delivery.id
-          %td="#{delivery.user.last_name}, #{delivery.user.first_name}"
-          %td=pluralize(delivery.number_of_months,"month")
-          %td
-            =delivery.gift? ? "Yes" : "No"
-          %td=delivery.order.comment
-          %td.span4=delivery.address
-          %td
-            -if delivery.paid_for?
-              .label.label-success YES
-            -else
-              .label.label-important NO
-              -if delivery.in_current_month?
-                %br
-                =link_to 'Try&nbsp;again'.html_safe, shipping_date_delivery_path(@shipping_date, delivery), :method => :put, :id => 'repeat-repeat-payment'
-          %td=delivery.tx_code
+          %th ID
+          %th Customer
+          %th Number of boxes paid for each billing
+          %th Delivery frequency
+          %th Gift
+          %th Comment
+          %th Delivery address
+          %th Paid
+          %th Tx&nbsp;Code
+      %tbody
+        -deliveries.each do |delivery|
+          %tr
+            %td.span1
+              =delivery.id
+            %td="#{delivery.user.last_name}, #{delivery.user.first_name}"
+            %td=delivery.number_of_months
+            %td=delivery.order.frequency
+            %td
+              =delivery.gift? ? "Yes" : "No"
+            %td=delivery.order.comment
+            %td.span4=delivery.address
+            %td
+              -if delivery.paid_for?
+                .label.label-success YES
+              -else
+                .label.label-important NO
+                -if delivery.in_current_month?
+                  %br
+                  =link_to 'Try&nbsp;again'.html_safe, shipping_date_delivery_path(@shipping_date, delivery), :method => :put, :id => 'repeat-repeat-payment'
+            %td=delivery.tx_code
+
   %br
   %hr
   %br
