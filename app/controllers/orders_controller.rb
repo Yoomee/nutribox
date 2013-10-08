@@ -48,7 +48,9 @@ class OrdersController < ApplicationController
   def update
     @order.assign_attributes(params[:order])
     if @order.editing_completed_order
+      status_changes = @order.changes[:status]
       if @order.save
+        send_pause_cancelation_email(status_changes)
         redirect_to current_user.admin? ? list_orders_path : orders_path
       else
         render :action => 'edit'
@@ -139,4 +141,10 @@ class OrdersController < ApplicationController
     end
 
   end
+
+  def send_pause_cancelation_email(status_changes)
+    return true unless status_changes.present?
+    OrderMailer.change_status_email(@order, status_changes).deliver
+  end
+
 end
