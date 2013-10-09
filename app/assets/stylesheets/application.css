@@ -703,8 +703,9 @@ text-shadow: none;
   width: 600px;
   position: absolute;
   z-index: 2;
-  top: -250px;
+  top: -105px;
   right: -60px;
+
 }
 
 
@@ -735,7 +736,7 @@ a.how_it_works_link {
 }
 .homepage-messages-wrap {
 	position: absolute;
-	bottom: -40px;
+	bottom: 40px;
 	right: 0;
 
 	width: 600px;
@@ -748,6 +749,7 @@ a.how_it_works_link {
 }
 .speech-bubble {
   width: 600px;
+  text-indent: -9000em;
   height: 400px;
   background-repeat: no-repeat;
   
