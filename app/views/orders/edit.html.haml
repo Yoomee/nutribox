@@ -33,7 +33,7 @@
             %h4 Details
             -if current_user.admin?
               =form.input :user, :as => :string, :label => 'Customer', :input_html => { :disabled => true }
-              =form.input :theme, :collection => AvailableOrderOption.order(:position), :as => :check_boxes
+              =form.input :theme, :collection => AvailableOrderOption.order(:position), :as => :select, :include_blank => false
             -else
               =form.input :theme, :as => :string, :input_html => { :disabled => true }
             =form.input :box_type, :as => :string, :input_html => { :disabled => true }
