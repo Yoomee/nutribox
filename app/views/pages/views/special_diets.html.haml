@@ -10,13 +10,13 @@
           %b Inspired by how Nutribox is supporting sports nutrition diets? Embed the code below to get a Nutribox button on your site
           =image_tag("sports-nutrition.png", :width =>150, :height => 150)              
           %textarea
-            <a href="https://thenutribox.com"<img src="https://thenutribox.com/assets/sports-nutrition.png" alt="Sports nutrition snacks"></img></a>
+            <a href="https://thenutribox.com"><img src="https://thenutribox.com/assets/sports-nutrition.png" alt="Sports nutrition snacks"></img></a>
       -elsif @page.slug == "vegan-snacks"
         %p.blogs-we-love
-          %b Inspired by how Nutribox is supporting vegan diets? Embed the code below to get a Nutribox "Blogs We Love" button on your site
-          =image_tag("vegan-snacks.png")              
+          %b Inspired by how Nutribox is supporting vegan diets? Embed the code below to get a Nutribox button on your site
+          =image_tag("vegan-snacks.png", :width =>150, :height => 150)             
           %textarea
-            <a href="https://thenutribox.com"<img src="https://thenutribox.com/assets/vegan-snacks.png" alt="Vegan snacks"></img></a>
+            <a href="https://thenutribox.com"><img src="https://thenutribox.com/assets/vegan-snacks.png" alt="Vegan snacks"></img></a>
   .row
     .span12
       =render('shared/related_blog_posts')
