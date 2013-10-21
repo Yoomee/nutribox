@@ -1,0 +1,31 @@
+#box-size-selection.modal.fade.hide
+  .modal-body
+    %button{:type=>"button", :class=>"close", :"data-dismiss"=>"modal"}
+      &times;
+    %h3.center Select your box size
+    .pull-left.mini-box
+      %ul.unstyled.center
+        %li.strong
+          %span#theme-name-mini
+          Mini
+        %li=image_tag('box-mini-1.png', :class => 'box-photo')
+        %li At least 9 portions
+        %li.mb-2
+          %span#mini-price
+          per box
+        =link_to 'Select', '#', :class => 'btn choose-btn size-btn', :data => { :box_type => 'mini' }
+
+    .pull-left.or-line
+      =image_tag('or-line.png')
+
+    .pull-left.standard-box
+      %ul.unstyled.center
+        %li
+          %span#theme-name-standard
+          Standard
+        %li=image_tag('box-standard-1.png', :class => 'box-photo')
+        %li At least 18 portions
+        %li.mb-2
+          %span#standard-price
+          per box
+        =link_to 'Select', '#', :class => 'btn choose-btn size-btn', :data => { :box_type => 'standard' }

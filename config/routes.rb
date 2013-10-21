@@ -13,7 +13,7 @@ Nutribox::Application.routes.draw do
     end
   end
 
-  resources :available_order_options
+  resources :available_order_options, :path => 'themes'
   
   resources :shipping_dates, :only => :show, :path => "shippings" do
     resources :deliveries, :only => :update

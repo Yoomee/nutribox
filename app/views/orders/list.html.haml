@@ -25,7 +25,11 @@
           %a.popover-link{:title => order.user.full_name, :'data-content' => "<p>#{mail_to(order.user.email)}</p><p>#{order.delivery_address('<br/>')}</p>".html_safe}
             ="#{order.user.last_name}, #{order.user.first_name}"
           =link_to 'edit customer', edit_user_path(order.user, :return_to => list_orders_path), :class => 'pull-right'
-        %td=order.product
+        %td
+          =order.product
+          \-
+          =pluralize(order.number_of_deliveries_paid_for_each_billing, 'box')
+          paid for each billing
         %td=order.created_at.to_s(:date)
         %td
           %span.badge{:class => order.status_class("badge-")}

@@ -14,5 +14,9 @@ class Date
   def five_fridays_in_month?
     fridays_in_month.size == 5
   end
+
+  def next_friday
+    self.wday == 5 ? self + 7 : self + ((5 - wday) % 7)    
+  end
   
 end

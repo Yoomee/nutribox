@@ -1,38 +1,53 @@
--content_for :head do
-  :javascript
-    $(document).ready(function() {
-      $('#order_status').change(function() {
-        $('.status-warning').show();
-      });
-    });
+.row
+  .span10
+    %h1=title("Order ##{@order.hash_id}")
+.row.order-box-row
+  .span2
+    =image_tag("#{@order.box_type}-box.png")
+  .span6
+    -if @order.repeatable?
+      %h4
+        =@order.box_name
+        subscription.
+      %p
+        You will receive one box
+        =@order.frequency
+        until you cancel your subscription.
+        -if @order.recurring?
+          %br
+          ="£#{@order.cost} for each #{pluralize(@order.number_of_deliveries_paid_for_each_billing, 'box').gsub('1', '')}."
+    -else
+      %h4=@order.box_name
 
-%h1=title("Edit order")
-=semantic_form_for @order, :html => {:class => "form-horizontal"} do |form|
-  =form.inputs do
-    =form.input :editing_by_admin, :as => :hidden, :input_html => {:value => true}
-    %h4 Details
-    .control-group
-      %label.control-label Customer
-      .controls
-        %p=@order.user
-    .control-group
-      %label.control-label Product
-      .controls
-        %p=@order.product
-    =form.input :options, :collection => AvailableOrderOption.all, :as => :check_boxes
-    =form.input :comment, :input_html => { :class => 'input-xxlarge'}
-    %h4 Status
-    =form.input :status, :collection => Order.statuses.collect{|s| [s.titleize,s]}, :include_blank => false
-    -if @order.warn_if_changing_status?
-      .status-warning.alert.alert-block.alert-info.hide
-        Payment has already been taken for this month and the delivery has not yet been shipped.  If you cancel or pause now there will be issues with the shipping list.
+
+.row
+  .span10
+    =semantic_form_for @order, :html => {:class => "form-horizontal"} do |form|
+      =form.inputs do
+        =form.input :editing_completed_order, :as => :hidden, :input_html => {:value => true}
+        %ul.nav.nav-tabs
+          %li.active=link_to 'Delivery details', '#delivery-details', :data => { :toggle => 'tab' }
+          %li=link_to 'Order details', '#order-details', :data => { :toggle => 'tab' }
+        .tab-content
+          #order-details.tab-pane.fade
+            %h4 Details
+            -if current_user.admin?
+              =form.input :user, :as => :string, :label => 'Customer', :input_html => { :disabled => true }
+              =form.input :theme, :collection => AvailableOrderOption.order(:position), :as => :select, :include_blank => false
+            -else
+              =form.input :theme, :as => :string, :input_html => { :disabled => true }
+            =form.input :box_type, :as => :string, :input_html => { :disabled => true }
+            =form.input :frequency, :collection => Order::FREQUENCIES, :include_blank => false
+            -if current_user.admin?
+              %h4 Status
+              =form.input :status, :collection => Order.statuses.collect{|s| [s.titleize,s]}, :include_blank => false
+          #delivery-details.tab-pane.fade.active.in
+            %h4 Delivery address
+            =form.input :delivery_name, :label => "Name", :placeholder => "e.g. John Smith"
+            =form.input :delivery_address1, :label => "Address"
+            =form.input :delivery_address2, :label => false
+            =form.input :delivery_city, :label => "City"
+            =form.input :delivery_postcode, :label => "Postcode", :input_html => {:class => "input-small"}
+      =form.buttons do
+        =form.commit_button "Save"
         
-    %h4 Delivery address
-    =form.input :delivery_name, :label => "Name", :placeholder => "e.g. John Smith"
-    =form.input :delivery_address1, :label => "Address"
-    =form.input :delivery_address2, :label => false
-    =form.input :delivery_city, :label => "City"
-    =form.input :delivery_postcode, :label => "Postcode", :input_html => {:class => "input-small"}
-  =form.buttons do
-    =form.commit_button "Save"
-    

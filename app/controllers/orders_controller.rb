@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   def new
     gift = params[:gift].present?
     @order = Order.new(:gift => gift)
-    @available_order_options = AvailableOrderOption.order("created_at DESC")
+    @themes = AvailableOrderOption.order(:position)
     if gift
       @custom_page_title = YmSnippets::Snippet.find_by_slug('meta_gift_page_title').text
       @custom_page_description = YmSnippets::Snippet.find_by_slug('meta_gift_page_description')
@@ -18,13 +18,16 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @available_order_options = AvailableOrderOption.order("created_at DESC")
+    @themes = AvailableOrderOption.order(:position)
     @order = Order.new(params[:order])
     handle_order
   end
 
   def download
-    send_file File.join(Rails.root,"lib/downloads/gifts/#{@order.box_type}-#{@order.number_of_months}.pdf"), :type => 'application/pdf', :filename => "The Nutribox Gift Certificate"
+    send_file File.join(Rails.root,"lib/downloads/gifts/#{@order.box_type}-#{@order.number_of_deliveries_paid_for}.pdf"), :type => 'application/pdf', :filename => "The Nutribox Gift Certificate"
+  end
+
+  def edit
   end
 
   def list
@@ -44,9 +47,11 @@ class OrdersController < ApplicationController
 
   def update
     @order.assign_attributes(params[:order])
-    if @order.editing_by_admin
+    if @order.editing_completed_order
+      status_changes = @order.changes[:status]
       if @order.save
-        redirect_to list_orders_path
+        send_pause_cancelation_email(status_changes)
+        redirect_to current_user.admin? ? list_orders_path : orders_path
       else
         render :action => 'edit'
       end
@@ -136,4 +141,10 @@ class OrdersController < ApplicationController
     end
 
   end
+
+  def send_pause_cancelation_email(status_changes)
+    return true unless status_changes.present?
+    OrderMailer.change_status_email(@order, status_changes).deliver
+  end
+
 end

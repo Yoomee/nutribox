@@ -28,9 +28,13 @@
     %ul.unstyled
       %li=link_to("List all", enquiries_path)
 
-    %h2.mt-3.mb-1 Available order options
+    %h2.mt-3.mb-1 Themes
     %ul.unstyled
-      %li=link_to("Manage order options", available_order_options_path)    
+      %li=link_to("Manage themes", available_order_options_path)    
+
+    %h2.mt-3.mb-1 Manage related articles
+    %ul.unstyled
+      %li=link_to("Blog post related articles", blog_post_related_articles_path)
 
   .span6
     %h2.mb-1 Shipping lists
@@ -43,7 +47,3 @@
           %li
             =link_to(shipping_date) do
               =shipping_date.date.stamp("31/12/2012 - Monday 11th January")
-
-    %h2.mt-3.mb-1 Manage related articles
-    %ul.unstyled
-      %li=link_to("Blog post related articles", blog_post_related_articles_path)  

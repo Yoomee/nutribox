@@ -102,7 +102,7 @@
 }
 
 body,
-#box_step h4 .saving{
+#box_step h4 .saving, .popover-content p{
 	font-family: 'Museo Sans W01 300', arial, sans-serif;
 	color: #666666;
 	font-size: 15px;
@@ -127,6 +127,9 @@ h2, h3 {
   	font-size: 27px;
 	line-height: 1.1;
 	margin: 0 0 20px;
+}
+h3 a{
+  color:#5f4b3b;
 }
 th, h4, h5, h6, strong, .header-alert a.close,
 p.email-signup-intro,
@@ -229,13 +232,16 @@ a:hover {
 .btn-primary, .btn-primary:hover, .btn-group > .btn-primary + .dropdown-toggle {
   background-color: #99b936;
 }
+.btn-danger, .btn-danger:hover {
+  background-color: #da4f49;
+}
 .btn-primary.disabled {
   background: #bdd27d;
 }
 .btn-info, .btn-info:hover {
   background-color: #4a8270;
 } 
-select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input, .input-append .add-on:first-child, .input-prepend .add-on:first-child {
   padding: 9px 10px;
 }
 textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-input:focus {
@@ -697,8 +703,9 @@ text-shadow: none;
   width: 600px;
   position: absolute;
   z-index: 2;
-  top: -250px;
+  top: -105px;
   right: -60px;
+
 }
 
 
@@ -729,7 +736,7 @@ a.how_it_works_link {
 }
 .homepage-messages-wrap {
 	position: absolute;
-	bottom: -40px;
+	bottom: 40px;
 	right: 0;
 
 	width: 600px;
@@ -742,6 +749,7 @@ a.how_it_works_link {
 }
 .speech-bubble {
   width: 600px;
+  text-indent: -9000em;
   height: 400px;
   background-repeat: no-repeat;
   
@@ -1088,6 +1096,12 @@ ul.box-options li {
   width: 100%;
   padding:8px 0px;
 }
+
+li.no-box{
+  padding-top:50px;
+  height:169x;
+}
+
 #box_step .thumbnails .btn{
   padding:5px 7px;
   margin-top:5px;
@@ -1117,6 +1131,7 @@ h3.box-title {
   width:80%;
   margin:0px 10%;
 }
+
 #box_step #discount-applied{
   padding-right:14px;
   text-align:center;
@@ -1126,26 +1141,38 @@ h3.box-title {
   margin:0px;
 }
 
-#discount-bar {
+#discount-bar,
+#delivery-bar {
   background: url(/assets/discount-bar.png) top center;
   border: none;
   margin-top: 10px;
   
    
 }
-
+#delivery-bar {
+  margin-left: 40px;
+  margin-top: 30px;
+}
 .discount-bar-left,
 .discount-bar-center,
-.discount-bar-right{
+.discount-bar-right,
+.delivery-bar-left,
+.delivery-bar-right {
   float:left;
 }
-.discount-bar-left{
+.discount-bar-left,
+.delivery-bar-left {
   width: 200px;
   padding-top:2px;
   margin: 0 0 0 10px;
 }
-.discount-bar-left h2 {
+.discount-bar-left h2,
+.delivery-bar-left h2 {
   font-size: 25px;
+  color: #fff;
+}
+#delivery-bar label {
+  font-size: 16px;
   color: #fff;
 }
 .discount-bar-center{
@@ -1255,6 +1282,10 @@ p.delivery-notice-text {
   box-shadow:1px 1px 1px rgba(0,0,0,0.3), 0px 0px 10px rgba(0,0,0,0.2);
 
 }
+.order-step-box .order-box {
+  background: none;
+  box-shadow: none;
+}
 .order-box form {
  margin: 0;
 }
@@ -1270,20 +1301,8 @@ p.delivery-notice-text {
  background: #f5f5f5;  
  color: #755436;
 }
-
-.order-step-box.cardboard-wrapper {
-background: none;
-}
-.order-step-box .cardboard-wrapper-top {
-  display: none;
-}
-.order-step-box .order-box {
-  box-shadow:none;
-  background: none;
-  
-}
-.order-step-box .order-box .inner {
-	padding: 0;
+.order-step-header {
+  margin-bottom: 70px;
 }
 .order-box-title {
   margin: 30px 30px 35px;
@@ -1311,10 +1330,10 @@ background: none;
 	float: right;
 	text-align: right;
 }
-.order-step-box .secure-padlock {
+.order-step-box .secure-padlock,
+.order-step-frequency .secure-padlock {
   display: none;
 }
-
 
 .choose-box {
   background: #fff;
@@ -1327,17 +1346,40 @@ background: none;
   text-align: center;
   margin-bottom: 20px;
 }
+.choose-box-corporate,
+.choose-box-theme {
+  padding: 40px;
+  width: 36%;
+  overflow: hidden;
+  height: 330px;
+  position: relative;
+  text-align:justify;
+}
 .choose-box-corporate {
-  width: 95%%;
-  margin-bottom: 60px;
+  background: #eee7df;
+}
+
+.small-description{
+  height:104px;
+  margin-top:50px;
 }
 .box-illustration {
   height: 160px;
 }
-.choose-btn {
+.choose-btn,
+input[type="submit"].choose-btn {
   width: 100%;
   padding: 10px 0;
-  margin: 0 0 10px;
+  margin: 10px 0 10px;
+}
+input[type="submit"].size-btn {
+  width: 40%;
+}
+.theme-btn {
+  margin-top: 20px;
+  position: absolute;
+  bottom: 30px;
+  width: 250px;
 }
 .choose-price {
   font-size: 20px;
@@ -1358,6 +1400,30 @@ a.order-option {
 #register_step #accordion {
 margin-left: 40px ;
 }
+#box-size-selection {
+  padding: 30px 70px 50px 70px;
+  width: 640px;
+  margin-left: -383px;
+}
+#box-size-selection .modal-body {
+  overflow-y: visible;
+}
+#box-size-selection .modal-body .or-line,
+#box-size-selection .modal-body .standard-box {
+  margin-left: 40px;
+}
+#box-size-selection h3 {
+  padding-bottom: 40px;
+}
+#box-size-selection button.close {
+  margin-top: -41px;
+  margin-right: -74px;
+}
+#box-size-selection ul.unstyled li:first-child {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
 
 /*  For christmas- comment out afterwards  */
 .gift-wrapper {
@@ -1503,6 +1569,10 @@ ul.post-info li, ul.post-info li a, ul.post-info li a:hover {
   text-decoration: none;
   color: #999;
 }
+.theme-name{
+  text-transform: capitalize;
+}
+
 
 .disqus_thread {
   padding:20px;
@@ -1822,6 +1892,15 @@ color: #99b936;
   width:185px !important;
 }
 
+/* ====================== Available order options form ====================== */
+
+form.available_order_option table .controls {
+  margin-left: 50px;
+}
+
+textarea#available_order_option_small_description{
+  height:100px;
+}
 .special-diets .box-theme-title-image{
   height:99px;  
 }

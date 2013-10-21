@@ -1,17 +1,33 @@
 .row
-  .span8
+  .span10
     -if @orders.present?
       %h2=title("My subscriptions")
       %table.table.table-striped
         %tbody
           -@orders.each do |order|
             %tr
+              %td.span8
+                %p.lead
+                  =order.box_name
+                  \-
+                  =order.frequency
+                  -unless order.active? || order.paused?
+                    \-
+                    =order.status
+                %p="Order ##{order.hash_id}"
+                -if order.active?
+                  %p
+                  Your next box will be posted on
+                  =order.next_shipping_date.stamp("<u>January 11th 2013</u>.").html_safe
               %td.span1
-                =image_tag("#{order.box_type}-box.png")
-              %td
-                %p.lead=order.product
-              %td.span2
                 =link_to("View",order, :class => 'btn pull-right')
+              -unless order.cancelled?
+                %td.span1
+                  =link_to("Edit",edit_order_path(order), :class => 'btn pull-right')
+                %td.span1
+                  =link_to(order.paused? ? 'Resume' : 'Pause', order_path(order, :order => {:editing_completed_order => true, :status => order.paused? ? 'active' : 'paused'}), :method => :put, :class => 'btn btn-info pull-right')
+                %td.span1
+                  =link_to("Cancel", order_path(order, :order => {:editing_completed_order => true, :status => 'cancelled'}), :method => :put, :confirm => "Are you sure? #{'You have paid for ' + pluralize((order.number_of_deliveries_paid_for - order.deliveries_count), 'more box') + '.  Unfortunately, you won\'t get a refund.' if order.number_of_deliveries_paid_for - order.deliveries_count > 0  }", :class => 'btn btn-danger pull-right')
     -if @gifts.present?
       %h2 Gifts to other people
       %table.table.table-striped

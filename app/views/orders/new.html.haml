@@ -1,3 +1,24 @@
+-if @order.current_step_box?
+  .container
+    .row
+      .span10.offset1.order-step-header
+        =snippet_text(:order_first_page_intro_text, "<p class='lead'>The Nutribox is a healthy snack box full of deliciously nutricious gluten free snacks, delivered FREE to your work or home anywhere in the UK.</p><p>Signing up for your Nutribox is easy!</p><p>Firstly, select your preferred box theme and whether you want a Mini-box or a full size Nutribox.</p><p>You can then sign up on a weekly, fortnightly, monthyl or bi-monthly, 'pay as you go plan', or pay upfront for 3, 6, 12 or 24 deliveries and save up to 15%. With any of these options you can cancel simply by emailing us if you feel The Nutribox isn't the healthy snacking option for you.</p><p>If you're from a business or organisation with an interest in supplying healthy snacks to a group of staff <a href='/corporate-box-enquiry'>click here</a> for more information.</p>").html_safe
+        %p.mt-2
+          If you're from a business or organisation with an interest in supplying healthy snacks to a group of staff,
+          =link_to 'click here', corporate_box_enquiry_path
+          for more information.
+        -if @order.discount_code && @order.discount_code.available_to?(current_user)
+          .row
+            .span10
+              .alert.alert-success#discount-applied
+                -if @order.discount_code == DiscountCode.default
+                  =snippet_text(:default_discount_message, "Save 25% off your first box!")
+                  =edit_snippet_link(:default_discount_message)
+                -else
+                  Your discount code will give you
+                  ="#{@order.discount_code.percentage_with_default}%"
+                  OFF your first box!
+
 .container
 .cardboard-wrapper{:class => "order-step-#{@order.current_step}"}
   .cardboard-wrapper-top
@@ -12,12 +33,15 @@
             Shopping
         =semantic_form_for @order, :url => gift_or_join_path(@order), :html => {:class => 'form-horizontal loading-text-disabled'}  do |form|
           .inner
-            .hide
-              =form.input :options, :collection => AvailableOrderOption.all
+            =form.hidden_field :theme_id
+            =form.hidden_field :box_type
             =form.hidden_field :current_step
+            =form.hidden_field :gift
             #box_step{:class => @order.current_step_box? ? '' : 'hide'}
               =render("orders/steps/box", :form => form)
-            -unless @order.current_step_box?
+            #frequency_step{:class => @order.current_step_frequency? ? '' : 'hide'}
+              =render("orders/steps/frequency", :form => form)
+            -unless @order.current_step_box? || @order.current_step_frequency?
               #register_step{:class => @order.current_step_register? ? '' : 'hide'}
                 =render("orders/steps/register", :form => form)
             #delivery_step{:class => @order.current_step_delivery? ? '' : 'hide'}
@@ -27,8 +51,14 @@
             -if @order.current_step_confirm?
               #confirm_step
                 =render("orders/steps/confirm", :form => form)
-          .form-actions{:class => ('hide' if @order.first_step?)}
-            =form.submit(@order.last_step? ? "Place order" : "Next", :class => "btn btn-primary pull-right order-btn")
-            =form.submit('Back', :name => 'back', :class => "btn pull-left back-btn order-btn")
+            .form-actions{:class => ('hide' if @order.first_step?)}
+              =form.submit(@order.last_step? ? "Place order" : "Next", :class => "btn btn-primary pull-right order-btn")
+              =form.submit('Back', :name => 'back', :class => "btn pull-left back-btn order-btn")
 
-=render "cvv_help_modal"
+-if @order.current_step_box?
+  =render 'box_size_modal'
+-elsif @order.current_step_billing?
+  =render "cvv_help_modal"
+
+
+.push

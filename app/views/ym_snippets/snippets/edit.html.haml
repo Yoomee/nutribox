@@ -7,6 +7,6 @@
 
 =semantic_form_for(@snippet, :as => :snippet, :url => snippet_path) do |form|
   =form.inputs do
-    =form.input :text, :label => false, :input_html => {:rows => 20, :class => "span6", :placeholder => "Add a snippet..."}, :as => @snippet.slug == 'home_page_more_text' ? :redactor : :text
+    =form.input :text, :label => false, :input_html => {:rows => 20, :class => "span6", :placeholder => "Add a snippet..."}, :as => @snippet.use_redactor? ? :redactor : :text
   =form.buttons do
     =form.commit_button "Save"

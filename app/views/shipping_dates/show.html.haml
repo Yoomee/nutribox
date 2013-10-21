@@ -3,15 +3,14 @@
   %small
     =@shipping_date.date.stamp("Monday 11th January 2013")
 .clearfix
--@deliveries.each do |box_type, option, deliveries|
+
+-@deliveries.group_by(&:box_name).each do |box_name, deliveries|
   %h2.pull-left
-    =Order.box_name(box_type)
-    =option[1]
+    =box_name
   -unless deliveries.empty?
-    =link_to(shipping_date_path(@shipping_date, :format => 'xls', :box => box_type, :option_id => option[0]), :class => 'btn btn-primary pull-right') do
+    =link_to(shipping_date_path(@shipping_date, :format => 'xls', :box_type => deliveries.first.box_type, :theme_id => deliveries.first.theme.id), :class => 'btn btn-primary pull-right') do
       %i.icon-download-alt
       Download
-  .clearfix
   -if deliveries.empty?
     %p.lead.muted There are no deliveries for this date.
   -else
@@ -20,8 +19,8 @@
         %tr
           %th ID
           %th Customer
-          %th Subscription type
-          %th Options
+          %th Number of boxes paid for each billing
+          %th Delivery frequency
           %th Gift
           %th Comment
           %th Delivery address
@@ -33,8 +32,8 @@
             %td.span1
               =delivery.id
             %td="#{delivery.user.last_name}, #{delivery.user.first_name}"
-            %td=pluralize(delivery.number_of_months,"month")
-            %td=delivery.order.options.join(', ')
+            %td=delivery.number_of_months
+            %td=delivery.order.frequency
             %td
               =delivery.gift? ? "Yes" : "No"
             %td=delivery.order.comment
@@ -48,6 +47,7 @@
                   %br
                   =link_to 'Try&nbsp;again'.html_safe, shipping_date_delivery_path(@shipping_date, delivery), :method => :put, :id => 'repeat-repeat-payment'
             %td=delivery.tx_code
+
   %br
   %hr
   %br

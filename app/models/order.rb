@@ -1,19 +1,23 @@
 class Order < ActiveRecord::Base
+
+Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
+
   include YmCore::Model
   include YmCore::Multistep
   include Xero::Order
 
   belongs_to :user
   has_many :deliveries, :dependent => :destroy
-  has_many :order_options
-  has_many :options, :through => :order_options, :class_name => 'AvailableOrderOption', :source => :available_order_option, :dependent => :destroy
+  belongs_to :theme, :class_name => 'AvailableOrderOption'
   has_many :repeat_payments
   amount_accessor :amount, :full_price_amount
   
   attr_accessor :login_email, :login_password
-  boolean_accessor :editing_by_admin
+  boolean_accessor :editing_completed_order
 
-  validates :box_type, :number_of_months, :presence => true, :if => :current_step_box?
+  validates :box_type, :theme_id, :presence => true, :if => :current_step_box?
+  validates :frequency, :presence => true, :inclusion=> { :in => Order::FREQUENCIES }, :if => :current_step_frequency?
+  validates :number_of_deliveries_paid_for_each_billing, :presence => true, :if => :current_step_frequency?
   validates :user, :delivery_address1, :delivery_city, :delivery_postcode, :delivery_country,  :presence => true, :if => :current_step_delivery?
   #validates :delivery_postcode, :postcode => true, :if => :current_step_delivery?, :allow_blank => true
   validates :billing_address1, :billing_city, :billing_postcode, :billing_country,  :presence => true, :if => :current_step_billing?
@@ -21,6 +25,7 @@ class Order < ActiveRecord::Base
   validate  :credit_card_is_valid, :if => :current_step_billing? 
   
   before_create :set_hash_id
+  before_validation :set_full_price_amount
   before_validation :set_amount
   before_validation :set_billing_name
   before_validation :set_shipping_week
@@ -28,23 +33,41 @@ class Order < ActiveRecord::Base
   belongs_to :discount_code, :primary_key => :code, :foreign_key => :discount_code_code
   
   accepts_nested_attributes_for :user
-  accepts_nested_attributes_for :options, :reject_if => :all_blank
   
   scope :active, where(:status => 'active')
-  scope :not_failed, where("status != 'failed'")
   scope :alphabetical_by_user, joins(:user).order("users.last_name,users.first_name")
-  scope :repeatable_for_shipping_day, lambda {|day| active.where(:gift => false, :number_of_months => 1, :shipping_day => day).where("DATE(orders.created_at) < ?", Date.today.change(:day => day) - 1.month)}
-  scope :repeatable_for_shipping_day_with_3_or_6_months, lambda {|day| active.where(:gift => false, :shipping_day => day).where('number_of_months = 1 OR (number_of_months IN (3, 6) AND orders.created_at > ?)', Time.parse('11/04/2013')).where("(number_of_months = 1 AND DATE(orders.created_at) < ?) OR (number_of_months = 3 AND DATE(orders.created_at) < ?) OR  (number_of_months = 6 AND DATE(orders.created_at) < ?)", Date.today.change(:day => day) - 1.month, Date.today.change(:day => day) - 3.month, Date.today.change(:day => day) - 6.month)}
-  scope :repeatable, active.where(:gift => false).where('number_of_months <> 12').where('deliveries_count >= number_of_deliveries_paid_for')
+  scope :bi_monthly, where(:frequency => 'bi-monthly')
+  scope :fortnightly, where(:frequency => 'fortnightly')
+  scope :monthly, where(:frequency => 'monthly')
+  scope :not_failed, where("status != 'failed'")
+  scope :repeatable, active.where(:gift => false).where('number_of_deliveries_paid_for_each_billing <> 12 OR orders.created_at > ?', Date.new(2013, 9, 30)).where('deliveries_count >= number_of_deliveries_paid_for')
+  scope :weekly, where(:frequency => 'weekly')
 
   class << self
-    
+    def for_shipping_date_by_weeks(weeks)
+      for_delivery_or_payment_by_weeks(weeks)
+    end
+
+    def for_delivery_or_payment_by_weeks(weeks, date=Date.today)
+      fortnightly_orders_with_deliveries_in_last_ten_days = fortnightly.joins(:deliveries).where('deliveries.created_at > ?', date - 10.days)
+      bi_monthly_orders_with_deliveries_in_last_thirty_five_days = bi_monthly.joins(:deliveries).where{(deliveries.created_at > date - 35.days) & (shipping_week.in(weeks))}
+
+      where{
+             (frequency == 'weekly') |
+             ((frequency == 'fortnightly') & (id.not_in(fortnightly_orders_with_deliveries_in_last_ten_days.select{id}))) |
+             ((frequency == 'monthly') & (shipping_week.in(weeks))) |
+             ((frequency == 'bi-monthly') & (shipping_week.in(weeks)) & (id.not_in(bi_monthly_orders_with_deliveries_in_last_thirty_five_days.select{id})))
+            }
+    end
+
     def repeatable_by_week(date)
-      if date.shipping_week == 4 && !date.five_fridays_in_month?
-        repeatable.where(:shipping_week => [4, 5])
+      date_for_correct_week = date - 1.day
+      if date_for_correct_week.shipping_week == 4 && !date_for_correct_week.five_fridays_in_month?
+        shipping_weeks = [4, 5]
       else
-        repeatable.where(:shipping_week => date.shipping_week)
+        shipping_weeks = date_for_correct_week.shipping_week
       end
+      repeatable.for_delivery_or_payment_by_weeks(shipping_weeks, date)
     end
 
     def number_of_snacks(box_type)
@@ -55,33 +78,13 @@ class Order < ActiveRecord::Base
         ""
       end
     end
-    
-    def box_name(box_type)
-      case box_type.to_s
-      when "mini" then "The Nutribox Mini"
-      when "standard" then "The Nutribox"
-      end
-    end
-  
-    def cost_in_pence(box_type,number_of_months)
-      return 0 unless box_type
-      Order::COST_MATRIX[box_type.to_sym].try(:[], number_of_months).to_i
-    end
-  
-    def cost(box_type,number_of_months)
-      YmCore::Model::AmountAccessor::Float.new((self.cost_in_pence(box_type,number_of_months).to_f / 100).round(2))
-    end
 
-    def cost_per_month(box_type,number_of_months)
-      YmCore::Model::AmountAccessor::Float.new(((self.cost_in_pence(box_type,number_of_months).to_f / 100) / number_of_months).round(2))
-    end
-
-    def saving_in_pence(box_type,number_of_months)
-      (cost_in_pence(box_type,1) * number_of_months) - cost_in_pence(box_type,number_of_months)
+    def saving_in_pence(box_type,number_of_deliveries_paid_for_each_billing)
+      (cost_in_pence(box_type,1) * number_of_deliveries_paid_for_each_billing) - cost_in_pence(box_type,number_of_deliveries_paid_for_each_billing)
     end
     
-    def saving_percentage(box_type,number_of_months)
-      saving = ((saving_in_pence(box_type,number_of_months).to_f / (cost_in_pence(box_type,1) * number_of_months)) * 100)
+    def saving_percentage(box_type,number_of_deliveries_paid_for_each_billing)
+      saving = ((saving_in_pence(box_type,number_of_deliveries_paid_for_each_billing).to_f / (cost_in_pence(box_type,1) * number_of_deliveries_paid_for_each_billing)) * 100)
       saving = saving + 0.1 # Hack so that 3 month Nutribox-mini discount is rounded from 9.91% to 10%
       saving.to_i
     end
@@ -91,7 +94,11 @@ class Order < ActiveRecord::Base
     end
 
   end
-  
+
+  def active?
+    status == 'active'
+  end
+
   def amount_ex_vat
     unrounded = amount.to_f * ((100 - Order::VAT_PERCENTAGES[box_type.to_sym]) / 100.to_f)
     # Round down for tax purposes
@@ -113,40 +120,21 @@ class Order < ActiveRecord::Base
   end
   
   def box_name
-    self.class.box_name(box_type)
+    "#{theme} #{ box_type == 'mini' ? 'Mini' : '' }"
   end
 
-  def box_name_with_options
-    if options.present?
-      box_name + " (#{options.join(', ')})"
-    else
-      box_name
-    end
+  def cancelled?
+    status == 'cancelled'
   end
 
-  def box_type_and_number_of_months
-    [box_type,number_of_months].compact.join('-')
-  end
-  
-  def box_type_and_number_of_months=(value)
-    self.box_type, self.number_of_months = value.split('-')
-    self.full_price_amount_in_pence = Order.cost_in_pence(box_type,number_of_months)
-  end
-  
-  def cost(box_type, number_of_months)
-    if discount_code.try(:available?)
-      YmCore::Model::AmountAccessor::Float.new(((Order.cost_in_pence(box_type,number_of_months) - (discount_code.fraction * Order.cost_in_pence(box_type,1)).ceil) / 100.to_f).round(2))
-    else
-      Order.cost(box_type,number_of_months)
-    end
+  def cost
+    return 0 unless theme.present? && box_type.present? && number_of_deliveries_paid_for_each_billing.present?
+    theme.cost(box_type, number_of_deliveries_paid_for_each_billing)
   end
 
-  def cost_per_month(box_type, number_of_months)
-    if discount_code.try(:available?)
-      YmCore::Model::AmountAccessor::Float.new((((Order.cost_in_pence(box_type,number_of_months) - (discount_code.fraction * Order.cost_in_pence(box_type,1)).ceil) / 100.to_f) / number_of_months).round(2))
-    else
-      Order.cost_per_month(box_type,number_of_months)
-    end
+  def cost_by_number_of_deliveries(number_of_deliveries)
+    return 0 unless theme.present? && box_type.present?
+    theme.cost(box_type, number_of_deliveries)
   end
 
   def credit_card  
@@ -171,8 +159,8 @@ class Order < ActiveRecord::Base
   end
   
   def discount_in_pence
-    return 0 unless box_type.present? && discount_code.try(:available_to?,user)
-    (discount_code.fraction * Order.cost_in_pence(box_type,1)).ceil
+    return 0 unless box_type.present? && theme.present? && discount_code.try(:available_to?,user)
+    (discount_code.fraction * theme.cost_in_pence(box_type, 1)).ceil
   end
   
   def discounted?
@@ -188,31 +176,36 @@ class Order < ActiveRecord::Base
   end  
 
   def first_shipping_date
-    next_shipping_date((created_at.presence || Time.now).to_date)
+    deliveries.present? ? deliveries.order(:created_at).first.created_at.to_date : Date.today.next_friday
   end
 
   def next_delivery_date
     next_shipping_date + 5.days
   end
   
-  def next_shipping_date(date = Date.today)
-    case date
-    when (Date.new(2012,1,1)..Date.new(2013,1,1))
-      Date.new(2013, 1, 11)
-    when (Date.new(2013,1,1)..Date.new(2013, 7, 15))
-      if date.day < shipping_day
-        # Hasn't been shipped yet this month
-        date.change(:day => shipping_day)
+  def next_shipping_date
+    date = Date.today
+    case frequency
+    when 'weekly'
+      date.next_friday
+    when 'fortnightly'
+      if last_delivery = deliveries.last
+        last_delivery.created_at.to_date.wday == 4 ? last_delivery.created_at.to_date + 15 : last_delivery.created_at.to_date + 14
       else
-        # Will be shipped next month
-        (date >> 1).change(:day => shipping_day)
+        date.next_friday
       end
-    else
+    when 'monthly'
       shipping_date = date.fridays_in_month[shipping_week - 1] || date.fridays_in_month.last
       if shipping_date < date
         shipping_date = date.next_month.fridays_in_month[shipping_week - 1] || date.next_month.fridays_in_month.last
       end
       shipping_date
+    when 'bi-monthly'
+      if last_delivery = deliveries.last
+        (last_delivery.created_at.to_date + 2.months).fridays_in_month[shipping_week - 1] || (last_delivery.created_at.to_date + 2.months).fridays_in_month.last
+      else
+        date.next_friday
+      end
     end
   end
   
@@ -221,23 +214,23 @@ class Order < ActiveRecord::Base
     return "NB3" if Rails.env.production? && id == 214
     Rails.env.development? ? "dev#{id}" : "NB#{id}"
   end
-  
+
+  def paused?
+    status == 'paused'
+  end
+
   def product
-    if number_of_months == 1 && !gift
-      "#{box_name_with_options} monthly"
-    else
-      "#{box_name_with_options} for #{number_of_months} month#{'s' if number_of_months > 1}"
-    end
+    "#{box_name} delivered #{frequency} #{gift? ? '- a gift' : ''}"
   end
 
   def repeatable?
-    !gift? && (number_of_months == 1 || ([3 ,6].include?(number_of_months) && (new_record? || created_at > Time.parse('11/04/2013'))))
+    !gift? && (number_of_deliveries_paid_for_each_billing == 1 || ([3 ,6, 12, 24].include?(number_of_deliveries_paid_for_each_billing) && (new_record? || created_at > Time.parse('11/04/2013'))))
   end
 
   def sage_pay_id
     vps_transaction_id.to_s.gsub(/[{}]/,'').presence
   end
-  
+
   def status_class(prefix = "")
     prefix + case status
     when "active" then "success"
@@ -251,7 +244,7 @@ class Order < ActiveRecord::Base
   def sku
     "NB".tap do |str|
       str << box_type[0].upcase
-      str << number_of_months.to_s
+      str << number_of_deliveries_paid_for_each_billing.to_s
       str << "G" if gift?
     end
   end
@@ -261,7 +254,7 @@ class Order < ActiveRecord::Base
   end
   
   def recurring?
-    number_of_months == 1 && !gift?
+    !gift?
   end
   
   def successful?
@@ -269,7 +262,7 @@ class Order < ActiveRecord::Base
   end
   
   def steps
-    %w{box register delivery billing confirm}
+    %w{box frequency register delivery billing confirm}
   end
   
   def take_payment!
@@ -318,7 +311,7 @@ class Order < ActiveRecord::Base
       :month => "10",  
       :year => "2017",  
       :verification_value => "123"  
-    }  
+    }
   end  
 
   def warn_if_changing_status?
@@ -376,7 +369,7 @@ class Order < ActiveRecord::Base
       :transaction_auth_number => sage_pay_response.params["TxAuthNo"]
       }
       order = transaction.is_a?(Order) ? transaction : transaction.order
-      new_number_of_deliveries_paid_for = (order.number_of_deliveries_paid_for.to_i + order.number_of_months)
+      new_number_of_deliveries_paid_for = (order.number_of_deliveries_paid_for.to_i + order.number_of_deliveries_paid_for_each_billing)
       if transaction.is_a?(Order)
         transaction_attributes[:number_of_deliveries_paid_for] = new_number_of_deliveries_paid_for
       else
@@ -394,8 +387,14 @@ class Order < ActiveRecord::Base
   
   def set_amount
     # Only change amount if it hasn't been charged
-    if vps_transaction_id.blank?
-      self.amount_in_pence = Order.cost_in_pence(box_type,number_of_months) - discount_in_pence.to_i
+    if vps_transaction_id.blank? && full_price_amount_in_pence.present?
+      self.amount_in_pence = full_price_amount_in_pence - discount_in_pence.to_i
+    end
+  end  
+  def set_full_price_amount
+    # Only change amount if it hasn't been charged and theme is set
+    if vps_transaction_id.blank? && theme.present?
+      self.full_price_amount_in_pence = theme.cost_in_pence(box_type, number_of_deliveries_paid_for_each_billing)
     end
   end
 
@@ -412,11 +411,8 @@ class Order < ActiveRecord::Base
   end  
 end
 
+
 Order::VAT_PERCENTAGES = {
   :mini => 11.28,
   :standard => 8.29
-}
-Order::COST_MATRIX = {
-  :mini => { 1 => 1295, 3 => 3585, 6 => 6570 },
-  :standard  => { 1 => 2500, 3 => 6900, 6 => 12600 }
 }

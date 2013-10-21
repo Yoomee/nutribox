@@ -3,5 +3,5 @@
 -if @enquiry.form_intro.present?
   =@enquiry.form_intro
 -if @enquiry.form_name == 'corporate_box_enquiry'
-  =Page.find_by_slug(:corporate_box_enquiry).text.html_safe
+  =Page.find_by_slug('corporate_box_enquiry').text.html_safe
 =render("form", :enquiry => @enquiry)

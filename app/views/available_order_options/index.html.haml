@@ -1,12 +1,12 @@
 .row
   .span8
-    %h1 Available Order Options
+    %h1 Themes
   .span4
     =link_to(new_available_order_option_path, :class => "btn btn-primary pull-right mt-1") do
       %i.icon-plus
-      New order option
+      New theme
 -if @available_order_options.empty?
-  %p There aren't any order options available
+  %p There aren't themes
 -else
   %table.table.table-striped
     %thead

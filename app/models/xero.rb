@@ -47,25 +47,29 @@ class Xero
         Xero.logger.info "Syncing #{record_name}"   
         sync_user_with_xero
         contact = Xero.client.Contact.find(user.xero_id)
-        invoice = Xero.client.Invoice.build(
-          :contact => contact,
-          :type => "ACCREC",
-          :status => "AUTHORISED",
-          :date => created_at.to_date,
-          :due_date => created_at.to_date,
-          :line_amount_types => "Exclusive",
-          :invoice_number => xero_order_number
-        )
-        invoice.add_line_item(
-          :description => product,
-          :quantity => 1,
-          :unit_amount => amount_ex_vat,
-          :tax_amount => vat,
-          :account_code => gift? ? "210" : "200",
-          :tax_type => "OUTPUT2"
-        )
-        invoice.save
-        self.xero_id = invoice.id
+        if xero_id.present?
+          invoice = Xero.client.Invoice.find(xero_id)
+        else
+          invoice = Xero.client.Invoice.build(
+            :contact => contact,
+            :type => "ACCREC",
+            :status => "AUTHORISED",
+            :date => created_at.to_date,
+            :due_date => created_at.to_date,
+            :line_amount_types => "Exclusive",
+            :invoice_number => xero_order_number
+          )
+          invoice.add_line_item(
+            :description => product,
+            :quantity => 1,
+            :unit_amount => amount_ex_vat,
+            :tax_amount => vat,
+            :account_code => gift? ? "210" : "200",
+            :tax_type => "OUTPUT2"
+          )
+          invoice.save
+          self.xero_id = invoice.id
+        end
         payment = Xero.client.Payment.build(
           :invoice => invoice,
           :account => Xero.client.Account.build(:code => (Rails.env.development? ? '091' : 605)),

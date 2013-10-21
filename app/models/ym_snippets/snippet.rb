@@ -6,6 +6,10 @@ class YmSnippets::Snippet < ActiveRecord::Base
   
   validates :slug, :presence => true
 
+  def use_redactor?
+  	slug == 'home_page_more_text' || slug == 'order_first_page_intro_text'
+  end
+
   def to_s
     text
   end
