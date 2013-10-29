@@ -49,7 +49,9 @@ class OrdersController < ApplicationController
     @order.assign_attributes(params[:order])
     if @order.editing_completed_order
       status_changes = @order.changes[:status]
+      frequency_changes = @order.changes[:frequency]
       if @order.save
+        send_frequency_change_email(frequency_changes)
         send_pause_cancelation_email(status_changes)
         redirect_to current_user.admin? ? list_orders_path : orders_path
       else
@@ -140,6 +142,11 @@ class OrdersController < ApplicationController
       end
     end
 
+  end
+
+  def send_frequency_change_email(frequency_changes)
+    return true unless frequency_changes.present?
+    OrderMailer.change_frequency_email(@order, frequency_changes).deliver
   end
 
   def send_pause_cancelation_email(status_changes)
