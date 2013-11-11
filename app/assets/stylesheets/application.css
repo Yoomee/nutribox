@@ -1621,12 +1621,6 @@ td.right {
   text-align:right;
 }
 
-input#referral_code {
-  cursor:pointer;
-  cursor: pointer;
-  width: 250px;
-}
-
 #cvv2-help a {
 	padding-left: 12px;
 	width: 200px;
@@ -1926,4 +1920,19 @@ textarea#available_order_option_small_description{
   padding:0;
   padding-bottom:20px;
 }
->>>>>>> master
+
+
+/*=============Referrals===========*/
+input#referral_code {
+  cursor: pointer;
+  width: 330px;
+}
+
+.referral-link-thumbnail .share-btn{
+  padding:10px 13px;
+  margin:10px 10px 10px 0px;
+}
+
+.referral-link-thumbnail .share-btn-email {
+  margin-right:0px;
+}
