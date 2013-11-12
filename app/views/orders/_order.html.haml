@@ -59,9 +59,18 @@
             %tr
               %td Full price
               %td.right="£#{@order.full_price_amount}"
-            %tr
-              %td Discount
-              %td.right="-£%.2f" % (@order.full_price_amount - @order.amount)
+            -if @order.referrer
+              -if @order.amount_in_pence + Order::REFEREE_DISCOUNT_IN_PENCE < @order.full_price_amount_in_pence
+                %tr
+                  %td Discount
+                  %td.right="-£%.2f" % (@order.full_price_amount - @order.amount - (Order::REFEREE_DISCOUNT_IN_PENCE/100))
+              %tr
+                %td Referral
+                %td.right="-£%.2f" % (Order::REFEREE_DISCOUNT_IN_PENCE/100)
+            -else
+              %tr
+                %td Discount
+                %td.right="-£%.2f" % (@order.full_price_amount - @order.amount)
             %tr
               %th Total
               %th.right="£#{@order.amount}"

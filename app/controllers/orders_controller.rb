@@ -4,6 +4,9 @@ class OrdersController < ApplicationController
   def new
     gift = params[:gift].present?
     @order = Order.new(:gift => gift)
+    if session[:referral_code]
+      @order.referrer = User.find_by_referral_code(session[:referral_code])
+    end
     @themes = AvailableOrderOption.order(:position)
     if gift
       @custom_page_title = YmSnippets::Snippet.find_by_slug('meta_gift_page_title').text
@@ -60,6 +63,9 @@ class OrdersController < ApplicationController
 
   private
   def handle_order
+    if @order.discount_code_code.present? && referrer = User.find_by_referral_code(@order.discount_code_code.upcase)
+      @order.referrer = referrer
+    end
     unless @order.gift? || (@order.discount_code && @order.discount_code.available_to?(current_user))
       @order.discount_code = DiscountCode.default
     end
@@ -87,7 +93,7 @@ class OrdersController < ApplicationController
           begin
             @order.take_payment!
             @order.update_attribute(:status,'active')
-            handle_referral_code
+            handle_referral
             OrderMailer.confirmation_email(@order).deliver
             redirect_to thanks_order_path(@order)
           rescue Order::PaymentError => e
@@ -140,10 +146,10 @@ class OrdersController < ApplicationController
     end
   end
   
-  def handle_referral_code
-    referral_code = session.delete(:referral_code)
-    if referral_code.present? && (referrer = User.find_by_referral_code(referral_code)) && @order.user.orders.count == 1
-      referrer.referrals.create(:referree => @order.user)
+  def handle_referral
+    session.delete(:referral_code)
+    if @order.referrer.present?
+      @order.referrer.referrals.create(:referree => @order.user)
     end
   end
   

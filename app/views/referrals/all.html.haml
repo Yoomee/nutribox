@@ -1,0 +1,16 @@
+.row
+  .span8
+    %h1=title "All referrals"
+    -if @users.blank?
+      %p.lead There haven't been any referrals yet.
+      
+    %table.table.table-striped.mt-2
+      %thead
+        %tr
+          %th Customer
+          %th Total referrals
+      %tbody
+        -@users.each do |user|
+          %tr
+            %td=link_to("#{user.last_name}, #{user.first_name}", user_referrals_path(user))
+            %td=user.referrals.count

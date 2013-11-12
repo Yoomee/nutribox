@@ -7,14 +7,22 @@
     });
 .row
   .span6
-    %h1=title "My referrals"
-    -if @referrals.blank?
+    -if current_user.is_admin?
+      =link_to "< Back to all referrals", referrals_path
+    %h1
+      -if current_user == @user
+        =title "My referrals"
+      -else
+        =title "#{@user}'s referrals"
+    -if @user.referrals.blank?
       %p.lead You haven't referred anyone yet.
     %p.lead=snippet_text(:referral_intro_text, "<p class='lead'>Share your referral code and get free snacks!</p><p>For each person who signs up for The Nutribox with your code, we'll pop an extra snack into your box.</p>").html_safe
-      
+    -unless @user.referrals.blank?
+      %p.mt-2
+        %strong People you've already referred
     %table.table.table-striped.mt-2
       %tbody
-        -@referrals.each do |referral|
+        -@user.referrals.each do |referral|
           %tr
             %td=referral.referree
             %td
@@ -26,13 +34,14 @@
         %h2 Share your referral link
         %ul.unstyled
           %li
-            =text_field_tag(:code, new_referral_url(:code => current_user.referral_code), :readonly => true, :id => "referral_code", :class => 'span4')
-        %ul.unstyled
-          %li
-            =link_to_with_icon 'Twitter', "http://twitter.com/share?url=http://thenutribox.com/#{current_user.referral_code}&related=thenutribox&text=The%20Nutribox", :class => 'btn share-btn share-btn-twitter mb-1', :target => '_blank', :icon => 'twitter'
-          %li
-            =link_to_with_icon 'Facebook', "https://www.facebook.com/sharer/sharer.php?s=100&p[title]=The+Nutribox&p[summary]=%20Check%20out%20The%20Nutribox%20at%20http://thenutribox.com/#{current_user.referral_code}.%20Healthy%20snacks%20delivered.&p[url]=http://thenutribox.com/#{current_user.referral_code}&p[images][0]=https://www.thenutribox.com/assets/logo.png", :class=>"btn share-btn share-btn-facebook", :target => '_blank', :icon => 'facebook'
-          %li
-            =link_to_with_icon 'Email', "mailto:?#{{:subject => "The Nutribox - Healthy snacks delivered", :body => "Check out The Nutribox at http://thenutribox.com/#{current_user.referral_code}. Healthy snacks delivered."}.to_query}", :class=>"btn share-btn share-btn-email mr-0", :target => '_blank', :icon => 'envelope'
+            =text_field_tag(:code, new_referral_url(:code => @user.referral_code), :readonly => true, :id => "referral_code", :class => 'span4')
+        -if @user == current_user
+          %ul.unstyled
+            %li
+              =link_to_with_icon 'Twitter', "http://twitter.com/share?url=http://thenutribox.com/referrals/#{@user.referral_code}&related=thenutribox&text=The%20Nutribox%20-%20healthy%20snacks%20delivered", :class => 'btn share-btn share-btn-twitter mb-1', :target => '_blank', :icon => 'twitter'
+            %li
+              =link_to_with_icon 'Facebook', "https://www.facebook.com/sharer/sharer.php?s=100&p[title]=The+Nutribox&p[summary]=%20Check%20out%20The%20Nutribox%20at%20http://thenutribox.com/referrals/#{@user.referral_code}.%20Healthy%20snacks%20delivered.&p[url]=http://thenutribox.com/referrals/#{@user.referral_code}&p[images][0]=https://www.thenutribox.com/assets/logo.png", :class=>"btn share-btn share-btn-facebook", :target => '_blank', :icon => 'facebook'
+            %li
+              =link_to_with_icon 'Email', "mailto:?#{{:subject => "The Nutribox - Healthy snacks delivered", :body => "Check out The Nutribox at http://thenutribox.com/referrals/#{@user.referral_code}. Healthy snacks delivered."}.to_query}", :class=>"btn share-btn share-btn-email mr-0", :target => '_blank', :icon => 'envelope'
 
         .clearfix

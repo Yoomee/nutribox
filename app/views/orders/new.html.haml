@@ -1,5 +1,11 @@
 -if @order.current_step_box?
   .container
+    -if @order.referrer
+      .row
+        .span10.offset1
+          .alert.alert-success
+            ="You've been referred by #{@order.referrer.first_name}!"
+            £1 will be deducted from the price of your first box at checkout.
     .row
       .span10.offset1.order-step-header
         =snippet_text(:order_first_page_intro_text, "<p class='lead'>The Nutribox is a healthy snack box full of deliciously nutricious gluten free snacks, delivered FREE to your work or home anywhere in the UK.</p><p>Signing up for your Nutribox is easy!</p><p>Firstly, select your preferred box theme and whether you want a Mini-box or a full size Nutribox.</p><p>You can then sign up on a weekly, fortnightly, monthyl or bi-monthly, 'pay as you go plan', or pay upfront for 3, 6, 12 or 24 deliveries and save up to 15%. With any of these options you can cancel simply by emailing us if you feel The Nutribox isn't the healthy snacking option for you.</p><p>If you're from a business or organisation with an interest in supplying healthy snacks to a group of staff <a href='/corporate-box-enquiry'>click here</a> for more information.</p>").html_safe
@@ -34,6 +40,7 @@
         =semantic_form_for @order, :url => gift_or_join_path(@order), :html => {:class => 'form-horizontal loading-text-disabled'}  do |form|
           .inner
             =form.hidden_field :theme_id
+            =form.hidden_field :referrer_id
             =form.hidden_field :box_type
             =form.hidden_field :current_step
             =form.hidden_field :gift

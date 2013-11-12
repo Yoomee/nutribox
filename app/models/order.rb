@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
 
 Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
+Order::REFEREE_DISCOUNT_IN_PENCE = 100
 
   include YmCore::Model
   include YmCore::Multistep
@@ -12,7 +13,7 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   has_many :repeat_payments
   amount_accessor :amount, :full_price_amount
   
-  attr_accessor :login_email, :login_password
+  attr_accessor :login_email, :login_password, :referrer_id
   boolean_accessor :editing_completed_order
 
   validates :box_type, :theme_id, :presence => true, :if => :current_step_box?
@@ -222,6 +223,14 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   def product
     "#{box_name} delivered #{frequency} #{gift? ? '- a gift' : ''}"
   end
+  
+  def referrer
+    User.find_by_id(referrer_id) if referrer_id.present?
+  end
+  
+  def referrer=(value)
+    self.referrer_id = value.try(:id)
+  end
 
   def repeatable?
     !gift? && (number_of_deliveries_paid_for_each_billing == 1 || ([3 ,6, 12, 24].include?(number_of_deliveries_paid_for_each_billing) && (new_record? || created_at > Time.parse('11/04/2013'))))
@@ -312,7 +321,7 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
       :year => "2017",  
       :verification_value => "123"  
     }
-  end  
+  end
 
   def warn_if_changing_status?
     return false if gift? && number_of_months == 1
@@ -345,8 +354,7 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
       message = "can't be blank" if message == "cannot be empty"  
       credit_card.errors.add(:name, message)  
     end  
-  end  
-  
+  end
   
   def gateway
     @gateway ||= begin
@@ -388,7 +396,7 @@ Order::FREQUENCIES = %w{ weekly fortnightly monthly bi-monthly }
   def set_amount
     # Only change amount if it hasn't been charged
     if vps_transaction_id.blank? && full_price_amount_in_pence.present?
-      self.amount_in_pence = full_price_amount_in_pence - discount_in_pence.to_i
+      self.amount_in_pence = full_price_amount_in_pence - discount_in_pence.to_i - (referrer.present? ? Order::REFEREE_DISCOUNT_IN_PENCE : 0)
     end
   end  
   def set_full_price_amount

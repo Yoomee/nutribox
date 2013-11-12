@@ -24,7 +24,7 @@ module OrdersHelper
         "Sorry, that isn't a valid discount code"
       end
     else
-      "If you have a discount code, enter it here"
+      "Enter your discount code or referral code"
     end
   end
   

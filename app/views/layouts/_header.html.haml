@@ -47,10 +47,11 @@
                   =link_to(orders_path) do
                     %i.icon-shopping-cart
                     My subscriptions
-                %li
-                  =link_to(referrals_path) do
-                    %i.icon-share-alt
-                    My referrals
+                -unless current_user.is_admin?
+                  %li
+                    =link_to(referrals_path) do
+                      %i.icon-share-alt
+                      My referrals
                 %li
                   =link_to(sign_out_path, :method => :delete) do
                     %i.icon-signout

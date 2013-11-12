@@ -16,6 +16,9 @@ Nutribox::Application.routes.draw do
   resources :available_order_options, :path => 'themes'
   
   resources :referrals, :only => :index
+  resources :users, :only => [] do
+    resources :referrals, :only => :index
+  end
   get 'referrals/:code', :to => "referrals#new", :as => 'new_referral'
 
   resources :shipping_dates, :only => :show, :path => "shippings" do

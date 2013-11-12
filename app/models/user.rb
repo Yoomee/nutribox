@@ -4,12 +4,25 @@ class User < ActiveRecord::Base
   validates :referral_code, :uniqueness => true
   
   has_many :orders
+  has_many :deliveries, :through => :orders
   has_many :referrals, :foreign_key => :referrer_id
   
   before_create :generate_referral_code
   after_create  :record_referral
   
   attr_accessor :referrer_code
+  
+  def referrals_since_last_delivery
+    case deliveries.count
+    when 0
+      referrals
+    when 1
+      referrals.where("referrals.created_at > ?", deliveries.first.created_at)
+    else
+      last_two_deliveries = deliveries.joins(:shipping_date).order(:shipping_date => :created_at).last(2)
+      referrals.where("referrals.created_at > ? AND referrals.created_at <= ?", last_two_deliveries.first.created_at, last_two_deliveries.last.created_at)
+    end
+  end
   
   private
   def generate_referral_code
