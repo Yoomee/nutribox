@@ -49,18 +49,18 @@ class Delivery < ActiveRecord::Base
   def in_current_month?
     created_at.year == Date.today.year && created_at.month == Date.today.month
   end
-
+  
   def paid_for?
-    if gift? || (number_of_months > 1)
+    if gift?
+      true
+    elsif (order.created_at > (shipping_date.date - 1.month)) || (shipping_date == ShippingDate.first)
+      true
+    elsif order.number_of_deliveries_paid_for >= order.deliveries_count
+      true
+    elsif order.repeat_payments.with_transaction_auth_number.exists?(["YEAR(created_at) = ? AND MONTH(created_at) = ?",created_at.year,created_at.month])
       true
     else
-      if (order.created_at > (shipping_date.date - 1.month)) || (shipping_date == ShippingDate.first)
-        true
-      elsif order.repeat_payments.with_transaction_auth_number.exists?(["YEAR(created_at) = ? AND MONTH(created_at) = ?",created_at.year,created_at.month])
-        true
-      else
-        false
-      end
+      false
     end
   end
   
