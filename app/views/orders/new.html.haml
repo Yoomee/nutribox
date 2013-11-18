@@ -8,7 +8,10 @@
             £1 will be deducted from the price of your first box at checkout.
     .row
       .span10.offset1.order-step-header
-        =snippet_text(:order_first_page_intro_text, "<p class='lead'>The Nutribox is a healthy snack box full of deliciously nutricious gluten free snacks, delivered FREE to your work or home anywhere in the UK.</p><p>Signing up for your Nutribox is easy!</p><p>Firstly, select your preferred box theme and whether you want a Mini-box or a full size Nutribox.</p><p>You can then sign up on a weekly, fortnightly, monthyl or bi-monthly, 'pay as you go plan', or pay upfront for 3, 6, 12 or 24 deliveries and save up to 15%. With any of these options you can cancel simply by emailing us if you feel The Nutribox isn't the healthy snacking option for you.</p><p>If you're from a business or organisation with an interest in supplying healthy snacks to a group of staff <a href='/corporate-box-enquiry'>click here</a> for more information.</p>").html_safe
+        -if @order.gift?
+          =snippet_text(:order_first_page_intro_text_gift, snippet_text(:order_first_page_intro_text)).html_safe
+        -else
+          =snippet_text(:order_first_page_intro_text, "<p class='lead'>The Nutribox is a healthy snack box full of deliciously nutricious gluten free snacks, delivered FREE to your work or home anywhere in the UK.</p><p>Signing up for your Nutribox is easy!</p><p>Firstly, select your preferred box theme and whether you want a Mini-box or a full size Nutribox.</p><p>You can then sign up on a weekly, fortnightly, monthyl or bi-monthly, 'pay as you go plan', or pay upfront for 3, 6, 12 or 24 deliveries and save up to 15%. With any of these options you can cancel simply by emailing us if you feel The Nutribox isn't the healthy snacking option for you.</p><p>If you're from a business or organisation with an interest in supplying healthy snacks to a group of staff <a href='/corporate-box-enquiry'>click here</a> for more information.</p>").html_safe
         %p.mt-2
           If you're from a business or organisation with an interest in supplying healthy snacks to a group of staff,
           =link_to 'click here', corporate_box_enquiry_path
@@ -63,6 +66,9 @@
               =form.submit('Back', :name => 'back', :class => "btn pull-left back-btn order-btn")
 
 -if @order.current_step_box?
-  =render 'orders/box_size_modal'
+  =render 'box_size_modal'
 -elsif @order.current_step_billing?
-  =render "orders/cvv_help_modal"
+  =render "cvv_help_modal"
+
+
+.push

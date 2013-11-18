@@ -2,6 +2,6 @@ disqus_shortname: yoomeedev
 site_url: http://localhost:3000
 facebook_app_id: '137557166307145'
 xero:
-  consumer_key: 6XTOPBWLR0BWAFWILOG6JLSMKB3PTZ
-  consumer_secret: TG3RUFELS1JG7HTH6ENEROV8GBN2GL
+  consumer_key: 0SNJMCJGMIVJRBSXVBNOCGTTCODN7K
+  consumer_secret: QQXKL40CUOOPRXB9I6U2IR1PEP8TT7
   privatekey_path: lib/xero/development/privatekey.pem
