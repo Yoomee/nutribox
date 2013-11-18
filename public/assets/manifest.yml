@@ -115,24 +115,14 @@ sign_up_below.png: sign_up_below-56588c87a1b80dd79990b5645c93ff52.png
 sketch-notice-left.png: sketch-notice-left-6ffd41b0ab541ab231156e4555092d1b.png
 sketch-notice-right.png: sketch-notice-right-37ae90abe8a458cba5614ec96d827a8a.png
 snacks.png: snacks-534d447e2af7b22db820b00af0eaec72.png
-<<<<<<< HEAD
 sports-nutrition.png: sports-nutrition-32a9a3cbd52ca83963cb36f8f9f39c2e.png
-=======
-sports-nutrition.png: sports-nutrition-f302f4044acb70c771e507167d5bfb91.png
->>>>>>> referrals
 standard-box.png: standard-box-65f9043c82fdb24fd104f5f34af4c68c.png
 summary-img.jpg: summary-img-a0e11bc6e0be7abe34c08c3791053f45.jpg
 twitter-link.png: twitter-link-90b0fee95823937c07f3a59b22bc9211.png
 valentines.jpg: valentines-cffc2059c2d5e95134c2993ca50190bb.jpg
-<<<<<<< HEAD
 vegan-snacks.png: vegan-snacks-32a9a3cbd52ca83963cb36f8f9f39c2e.png
 yoomee_logo.png: yoomee_logo-fa022040f9bce3877704c4fb6ff6d934.png
-application.js: application-5d28d65f87587fe1830ca038fd35b37c.js
-=======
-vegan-snacks.png: vegan-snacks-f302f4044acb70c771e507167d5bfb91.png
-yoomee_logo.png: yoomee_logo-fa022040f9bce3877704c4fb6ff6d934.png
 application.js: application-932d343361f626adb41520e273b078b9.js
->>>>>>> referrals
 application.css: application-0b97111c91cd881fed80d50466df7fc6.css
 ie7.css: ie7-5c07855604e48094a4ed86ff0b96b7a6.css
 jquery-ui/animated-overlay.gif: jquery-ui/animated-overlay-ed5ac02483d8155287c7235974bca6f0.gif
@@ -165,3 +155,4 @@ loader-circle.gif: loader-circle-f863c9563af2ecc2d5c317b50a762550.gif
 loader-long.gif: loader-long-caa0f066d2677a830935b6ee49898da9.gif
 loader-square.gif: loader-square-385b70624cc94017209ecc4a21490252.gif
 redactor_image_upload_error.png: redactor_image_upload_error-813aad6b1e2ce7476faca6e60a759623.png
+jquery.min.map: jquery.min-4dd6a891215c2bd74b32b727b828c2ed.map
