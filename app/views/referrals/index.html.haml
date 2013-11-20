@@ -38,10 +38,10 @@
         -if @user == current_user
           %ul.unstyled
             %li
-              =link_to_with_icon 'Twitter', "http://twitter.com/share?url=http://thenutribox.com/referrals/#{@user.referral_code}&related=thenutribox&text=I%20think%20you'd%20like%20the%20Nutribox!%20Click%20on%20this%20link%20for%20info%20%26%20£1%20off%20your%20first%20box", :class => 'btn share-btn share-btn-twitter mb-1', :target => '_blank', :icon => 'twitter'
+              =link_to_with_icon 'Twitter', "http://twitter.com/share?url=https://thenutribox.com/referrals/#{@user.referral_code}&related=thenutribox&text=I%20think%20you'd%20like%20the%20Nutribox!%20Click%20on%20this%20link%20for%20info%20%26%20£1%20off%20your%20first%20box", :class => 'btn share-btn share-btn-twitter mb-1', :target => '_blank', :icon => 'twitter'
             %li
-              =link_to_with_icon 'Facebook', "https://www.facebook.com/sharer/sharer.php?s=100&p[title]=I%20think%20you'd%20like%20the%20Nutribox&p[summary]=Click%20on%20this%20link%20for%20more%20info%20and%20£1%20off%20your%20first%20box&p[url]=http://thenutribox.com/referrals/#{@user.referral_code}&p[images][0]=https://www.thenutribox.com/assets/logo.png", :class=>"btn share-btn share-btn-facebook", :target => '_blank', :icon => 'facebook'
+              =link_to_with_icon 'Facebook', "https://www.facebook.com/sharer/sharer.php?s=100&p[title]=I%20think%20you'd%20like%20the%20Nutribox&p[summary]=Click%20on%20this%20link%20for%20more%20info%20and%20£1%20off%20your%20first%20box&p[url]=https://thenutribox.com/referrals/#{@user.referral_code}&p[images][0]=https://www.thenutribox.com/assets/logo.png", :class=>"btn share-btn share-btn-facebook", :target => '_blank', :icon => 'facebook'
             %li
-              =link_to_with_icon 'Email', "mailto:?#{{:subject => "I think you'd like the Nutribox", :body => "I subscribe to the Nutribox and I think you'd like their boxes of healthy snacks too.  Click on this link for more information, and a special referral discount code that will get you £1 off your first box http://thenutribox.com/referrals/#{@user.referral_code}. Healthy snacks delivered."}.to_query}", :class=>"btn share-btn share-btn-email mr-0", :target => '_blank', :icon => 'envelope'
+              =link_to_with_icon 'Email', "mailto:?#{{:subject => "I think you'd like the Nutribox", :body => "I subscribe to the Nutribox and I think you'd like their boxes of healthy snacks too.  Click on this link for more information, and a special referral discount code that will get you £1 off your first box https://thenutribox.com/referrals/#{@user.referral_code}."}.to_query}", :class=>"btn share-btn share-btn-email mr-0", :target => '_blank', :icon => 'envelope'
 
         .clearfix
